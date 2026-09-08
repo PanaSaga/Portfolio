@@ -107,17 +107,31 @@ skills: [ { icons: [ 'assets/images/ps.png', 'assets/images/ai.png' ],
 {
   id: 'check-matter',
   title: '', tagline: '',
-  kind: 'pdf',          // pdf | site | game | image | doc  — 카드 좌상단 라벨/아이콘
+  kind: 'project',      // project | pdf | site | game | image | doc  — 카드 좌상단 라벨/아이콘
   thumb: 'assets/images/thumb.jpg',
   tags: ['기획', '시스템'],
-  meta: [                              // 상세 페이지에서 2행 2열로 표시됩니다
+  meta: [                              // 상세 페이지에서 표시되는 항목(팀·역할·기간·플랫폼·링크 등)
     { label: '기간', value: '' }, { label: '플랫폼', value: '' },
     { label: '팀',   value: '' }, { label: '역할',   value: '' }
   ],
-  links: [ { label: 'PDF 열기', href: 'assets/docs/기획서.pdf', style: 'violet' } ],
-  sections: [ { heading: '', body: '', bullets: [], images: [ { src: '', caption: '' } ] } ]
+  embed: '',            // 웹빌드/사이트 재생 주소 — 있으면 상세에 재생 플레이어 표시
+  // 기획서 PDF 뷰어 — 아래 둘 중 하나만 채웁니다
+  pages: [ { img: 'assets/docs/p1.png' } ],       // ① 단일 PDF: 페이지 이미지 배열
+  plans: [                                        // ② 여러 PDF: 상단에 기획서 토글 버튼 표시
+    { title: '기획서 1', pages: [ { img: '' } ] },
+    { title: '기획서 2', pages: [ { img: '' } ] }
+  ],
+  experience: {         // 하단 "프로젝트 경험" — 제목 + (부제목·본문) 여러 개
+    title: '',
+    items: [ { sub: '', body: '' }, { sub: '', body: '' }, { sub: '', body: '' } ]
+  }
 }
 ```
+
+- **여러 기획서**를 넣으려면 `plans` 배열을 채우세요 — 상세 상단에 `기획서 1 / 기획서 2 …`
+  토글 버튼이 생기고 각 버튼이 해당 PDF 뷰어로 전환됩니다. PDF 가 하나면 `pages` 만 채우면 됩니다.
+- 본문(`experience` 의 `body` 등)에서 **강조할 부분은 `**형광펜**`** 처럼 `**…**` 로 감싸면
+  연보라 형광펜 박스로 표시됩니다.
 
 상세 페이지는 **제목과 한 줄 설명만 왼쪽 정렬**이고, 그 아래는 전부 중앙 정렬입니다.
 
@@ -135,12 +149,15 @@ freshness: [                                            // 도넛 그래프 (합
   { label: '최신 게임', value: 25, note: '1~7년 내 출시작 플레이 비율' },
   { label: '고전 게임', value: 9,  note: '8년 이상된 출시작 플레이 비율' }
 ],
-axes: [ { label: '로그라이트 덱빌딩', value: 5 }, ... ]   // value 0~5, 항목을 늘리면 8각형까지 그대로
-total: { value: '128', label: '플레이한 게임' },
-platforms: [ { label: 'PC', value: '68', percent: 53 }, ... ],
+axes: [ { label: '로그라이트 덱빌딩', value: 5 }, ... ],  // value 0~5, 항목을 늘리면 8각형까지 그대로
+counts: [                                               // 육각형 카드 하단 총 개수(큰 제목 + 작은 설명 + 숫자)
+  { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 등', value: '' },
+  { title: '오프라인 게임', desc: 'TRPG · 보드 등', value: '' }
+],
 games: [ { title: '', image: '', platform: '', genre: '', playtime: '', ending: '' } ]
 ```
 
+- 왼쪽 카드에 **육각형 + 총 개수**가 한 네모로 묶여 있고, 오른쪽 도넛 카드와 세로 높이가 같습니다.
 - 축 이름은 **다각형 위에만** 표시됩니다 (별도 범례 없음).
 - 게임 커버는 **4:3**, 하단에 **6열**(모바일 2~4열)로 나열됩니다.
 - 카드에는 이미지 · 이름 · 태그(플랫폼 / 장르 / 플레이타임 / 엔딩)가 들어갑니다.

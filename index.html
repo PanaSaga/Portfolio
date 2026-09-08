@@ -231,13 +231,18 @@ a.card:active{transform:scale(.995);}
 .hero{position:relative;padding:0;}
 .hero__inner{position:relative;z-index:1;}
 .hero__logline{font-size:clamp(30px,8vw,64px);line-height:1.06;letter-spacing:-.03em;font-weight:700;
-  color:var(--graphite);max-width:100%;display:flex;flex-direction:column;}
+  color:var(--graphite);max-width:100%;display:flex;flex-direction:column;align-items:flex-start;}
 .hero__logline .zl{display:block;}
 .hero__logline .zl:nth-child(even){align-self:flex-end;text-align:right;}
-@media (min-width:820px){.hero__logline .zl:nth-child(even){margin-right:6vw;}
-  .hero__logline .zl:nth-child(odd){margin-left:2vw;}}
+/* 도입 문단(헤드라인)은 오른쪽으로 */
+.hero__sub{margin-left:auto;text-align:right;}
+/* 히어로 안 작은 연락처 — 헤드라인 아래, 오른쪽, 텍스트만(아이콘·링크 없음) */
+.hero__contact{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px var(--s16);
+  margin-top:var(--s12);color:var(--graphite);font-weight:600;text-align:right;}
+.hero__contact span{display:inline-flex;align-items:center;font-size:clamp(11px,1.4vw,14px);letter-spacing:-.01em;}
+.hero__contact span + span::before{content:"·";margin-right:var(--s16);color:var(--fog);}
 /* 도입 문단 = 로그라인의 2/3 크기 */
-.hero__sub{margin-top:var(--s20);max-width:34ch;color:var(--violet-deep);font-size:clamp(20px,5.33vw,42px);line-height:1.3;letter-spacing:-.025em;font-weight:500;}
+.hero__sub{margin-top:var(--s20);max-width:34ch;color:var(--violet-deep);font-size:clamp(20px,5.33vw,42px);line-height:1.3;letter-spacing:-.025em;font-weight:500;margin-left:auto;text-align:right;}
 .hero__sub p + p{margin-top:var(--s16);}
 .hero__cta{display:flex;flex-wrap:wrap;gap:var(--s8);margin-top:var(--s24);}
 
@@ -343,17 +348,24 @@ a.card:active{transform:scale(.995);}
 .bcard__b{padding:var(--s16);}
 .bcard__kind{display:inline-flex;font-size:10px;font-weight:700;letter-spacing:.04em;
   color:var(--violet-deep);background:var(--accent-soft);border-radius:4px;padding:2px 6px;margin-bottom:8px;}
-.bcard__t{font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;line-height:1.35;}
-.bcard__d{margin-top:5px;color:var(--slate);font-size:13px;line-height:1.55;}
+.bcard__t{display:block;font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;line-height:1.35;}
+.bcard__d{display:block;margin-top:5px;color:var(--slate);font-size:13px;line-height:1.55;}
 .bcard--c1 .bcard__t{font-size:var(--text-subheading);}
 @media (min-width:820px){
   .bento{grid-template-columns:2fr 1fr 1fr;grid-auto-rows:1fr;}
   .bcard--c1{grid-column:1;grid-row:1 / 3;}
-  .bcard--c2{grid-column:2 / 4;grid-row:1;}
+  .bcard--c2{grid-column:2 / 4;grid-row:1;flex-direction:row;}
+  .bcard--c2 .bcard__thumb,.bcard--c2 .bcard__thumb-ph{width:46%;flex:0 0 46%;min-height:0;}
+  .bcard--c2 .bcard__b{flex:1 1 auto;align-self:center;}
   .bcard--c3{grid-column:2;grid-row:2;}
   .bcard--c4{grid-column:3;grid-row:2;}
 }
 @media (max-width:819px){.bento{grid-template-columns:repeat(2,minmax(0,1fr));}.bcard--c1{grid-column:1 / -1;}}
+/* 작은 카드(c3·c4): 이미지 크게, 하단은 태그+제목 한 줄만 */
+.bcard--sm .bcard__b{padding:10px var(--s12);display:flex;align-items:center;gap:8px;}
+.bcard--sm .bcard__kind{margin-bottom:0;flex:0 0 auto;}
+.bcard--sm .bcard__t{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.bcard--sm .bcard__d{display:none;}
 
 /* 경험 섹션 (상세 하단) — 자기소개서와 같은 리듬 */
 .exp{margin-top:var(--s48);}
@@ -403,7 +415,7 @@ a.card:active{transform:scale(.995);}
   gap:var(--s24) var(--s48);text-align:left;}
 .profile__name{font-size:clamp(32px,7.5vw,52px);font-weight:700;letter-spacing:-.03em;line-height:1.1;
   color:var(--graphite);display:flex;align-items:baseline;flex-wrap:wrap;gap:10px;}
-.profile__name-en{font-size:clamp(17px,4vw,26px);font-weight:500;letter-spacing:-.01em;color:var(--violet-deep);}
+.profile__name-en{font-size:clamp(17px,4vw,26px);font-weight:500;letter-spacing:-.01em;color:#f98a17;}
 .profile__logline{margin-top:var(--s12);color:var(--violet-deep);font-weight:500;font-size:clamp(16px,3.8vw,20px);line-height:1.6;}
 .profile__desc{margin-top:var(--s20);color:var(--slate);font-size:var(--text-body);line-height:1.8;max-width:60ch;}
 
@@ -518,7 +530,7 @@ a.card:active{transform:scale(.995);}
 .qsec + .qsec{border-top:1px solid var(--ash);}
 .qsec__q{font-size:clamp(19px,3.4vw,26px);font-weight:700;letter-spacing:-.025em;line-height:1.3;color:var(--graphite);}
 .qsec__a{margin-top:var(--s16);color:var(--slate);font-size:clamp(15px,3.6vw,17px);line-height:1.9;max-width:70ch;}
-mark.hl{background:linear-gradient(transparent 55%,var(--accent-soft) 55%);color:inherit;padding:0 2px;border-radius:2px;}
+mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
 .qsec__a p + p{margin-top:var(--s16);}
 
 /* ============================================================
@@ -592,6 +604,11 @@ mark.hl{background:linear-gradient(transparent 55%,var(--accent-soft) 55%);color
 
 /* 프로젝트 기획서 뷰어 — 왼쪽 페이지 목록, 오른쪽 크게 */
 .planner{margin-top:var(--s48);}
+.planner__tabs{display:flex;flex-wrap:wrap;gap:8px;margin:var(--s16) 0;}
+.ptab{padding:8px 16px;border-radius:var(--r-pill);border:1px solid var(--ash);background:var(--surface);
+  font-size:var(--text-body-sm);font-weight:500;color:var(--slate);white-space:nowrap;transition:all .14s ease;}
+.ptab:hover{border-color:var(--steel);}
+.ptab.on{background:var(--accent-soft);border-color:var(--accent-soft);color:var(--violet-deep);font-weight:600;}
 .planner__grid{display:grid;gap:var(--s20);margin-top:var(--s16);}
 @media (min-width:820px){.planner__grid{grid-template-columns:150px minmax(0,1fr);align-items:start;}}
 .planner__list{display:grid;gap:var(--s12);align-content:start;
@@ -663,24 +680,28 @@ img.ppage__img{display:block;}
 /* ============================================================
    History — 그래프 · 카운터 · 게임
    ============================================================ */
+/* 좌·우 같은 높이 */
 .hist__top{display:grid;gap:var(--s24);}
-@media (min-width:900px){.hist__top{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s40);align-items:start;}}
-.radar-wrap{background:var(--surface);border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s20);}
-.radar{width:100%;height:auto;display:block;max-width:480px;margin:0 auto;overflow:visible;}
-
-.count--hero{background:var(--cloud);border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s20);margin-top:var(--s16);}
-.count--hero .count__v{font-size:clamp(26px,6vw,38px);font-weight:600;letter-spacing:-.03em;line-height:1;color:var(--graphite);}
-.count--hero .count__l{margin-top:8px;color:var(--steel);font-size:var(--text-body-sm);}
-.plat{margin-top:var(--s16);display:grid;gap:1px;background:var(--ash);border:1px solid var(--ash);border-radius:var(--r-card);overflow:hidden;}
-@media (min-width:480px){.plat{grid-template-columns:repeat(3,minmax(0,1fr));}}
-.plat__cell{background:var(--surface);padding:var(--s16);}
-.plat__l{color:var(--steel);font-size:var(--text-caption);font-weight:500;}
-.plat__v{margin-top:4px;font-size:var(--text-heading-sm);font-weight:600;letter-spacing:-.02em;line-height:1.1;}
-.plat__bar{margin-top:8px;height:4px;border-radius:2px;background:var(--frost);overflow:hidden;}
-.plat__bar i{display:block;height:100%;background:var(--violet);}
+@media (min-width:900px){.hist__top{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s40);align-items:stretch;}}
+.hist__top > *{min-width:0;}
+/* 왼쪽: 육각형 + 총 개수 한 카드 */
+.histcard{background:var(--surface);border:1px solid var(--ash);border-radius:var(--r-card);
+  padding:var(--s20);display:flex;flex-direction:column;height:100%;}
+.radar-wrap-inner{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;}
+.radar{width:100%;height:auto;display:block;max-width:460px;margin:0 auto;overflow:visible;}
+.gcounts{margin-top:var(--s20);padding-top:var(--s20);border-top:1px solid var(--frost);display:grid;gap:var(--s16);}
+.gcount{display:flex;align-items:center;justify-content:space-between;gap:var(--s16);}
+.gcount__l{display:inline-grid;}
+.gcount__t{font-size:var(--text-subheading);font-weight:700;letter-spacing:-.02em;line-height:1.2;color:var(--graphite);}
+.gcount__d{margin-top:4px;font-size:var(--text-caption);color:var(--slate);line-height:1.4;}
+.gcount__v{font-size:clamp(30px,6vw,44px);font-weight:700;letter-spacing:-.03em;line-height:1;
+  color:var(--violet-deep);flex:0 0 auto;font-variant-numeric:tabular-nums;}
+/* 오른쪽 카드가 왼쪽과 같은 높이로 늘어나도록 */
+.hist__right{display:flex;flex-direction:column;gap:var(--s16);height:100%;}
 
 /* 출시 연식 도넛 그래프 */
-.donut{background:var(--surface);border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s20);}
+.donut{background:var(--surface);border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s20);
+  flex:1;display:flex;flex-direction:column;justify-content:center;}
 .donut__legend{display:flex;flex-wrap:wrap;gap:8px var(--s16);margin-bottom:var(--s16);}
 .donut__lg{display:inline-flex;align-items:center;gap:7px;font-size:var(--text-body-sm);font-weight:600;color:var(--graphite);}
 .donut__sw{width:11px;height:11px;border-radius:2px;flex:0 0 auto;}
@@ -830,11 +851,20 @@ function SAMPLE_POST(id, title, kind, withPdf) {
     experience: {   // 프로젝트에서 경험한 일들 (제목 + 부제목·본문 여러 개)
       title: '',
       items: [ { sub: '', body: '' }, { sub: '', body: '' }, { sub: '', body: '' } ]
-    }
+    },
+    plans: []       // 여러 기획서 PDF: [{ title:'기획서 1', pages:[{img:''}] }, ...] — 있으면 상단 토글
   };
-  if (k === 'pdf' || k === 'doc' || withPdf) {
-    /* 기획서 샘플 — 빈 페이지 여러 장으로 스크롤 확인 */
-    for (var i = 0; i < 8; i++) post.pages.push({ img: '', href: '' });
+  function blankPages(n) { var a = []; for (var i = 0; i < n; i++) a.push({ img: '', href: '' }); return a; }
+  if (withPdf) {
+    /* 프로젝트 게시물 — 여러 기획서 PDF 를 상단 토글로 전환 */
+    post.plans = [
+      { title: '기획서 1', pages: blankPages(8) },
+      { title: '기획서 2', pages: blankPages(5) },
+      { title: '기획서 3', pages: blankPages(6) }
+    ];
+  } else if (k === 'pdf' || k === 'doc') {
+    /* 기획서 게시물 — 단일 PDF 페이지 나열 */
+    post.pages = blankPages(8);
   }
   return post;
 }
@@ -997,12 +1027,10 @@ var CONTENT = {
       { label: '고전 게임', value: 9,  note: '8년 이상된 출시작 플레이 비율' }
     ],
 
-    /* 게임 총 개수 | 플랫폼 선호도 */
-    total: { value: '', label: '' },
-    platforms: [
-      { label: 'PC',    value: '', percent: 0 },
-      { label: '모바일', value: '', percent: 0 },
-      { label: '콘솔',   value: '', percent: 0 }
+    /* 총 개수 — 큰 제목 + 작은 내용 + 오른쪽 큰 숫자, 육각형 아래에 표시 */
+    counts: [
+      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 등', value: '' },
+      { title: '오프라인 게임', desc: 'TRPG · 보드 등', value: '' }
     ],
 
     /* 플레이한 게임 — 100개 이상 들어가도 됩니다. 커버 이미지는 3:4 비율.
@@ -1172,6 +1200,10 @@ var CONTENT = {
         ? a.logline.split('\n').map(function (ln) { return '<span class="zl">' + esc(ln) + '</span>'; }).join('')
         : '<span class="zl">' + ph('로그라인 1 — 첫 페이지 헤드라인') + '</span>') + '</h1>');
     h.push('<div class="hero__sub">' + body(a.intro, '헤드라인 아래 도입 문단') + '</div>');
+    var pf0 = (CONTENT.resume || {}).profile || {};
+    h.push('<div class="hero__contact">' +
+      '<span>' + txt(pf0.phone, '전화번호') + '</span>' +
+      '<span>' + txt(pf0.email, '이메일') + '</span></div>');
     h.push('</div></div>');
 
     /* Work style — 도입 문단과 같은 글 안에 있는 것처럼 바짝 붙인다 */
@@ -1194,15 +1226,6 @@ var CONTENT = {
     h.push('<div class="band band--cloud"><div class="wrap">' +
       headBlock('project', 'Featured', '대표 프로젝트', 'featured', 'sec-head--tight') +
       bento((CONTENT.portfolio || {}).main) + '</div></div>');
-
-    /* 큰 전화번호·이메일 */
-    var pf = (CONTENT.resume || {}).profile || {};
-    h.push('<div class="band"><div class="wrap"><div class="bigcontact">' +
-      '<a ' + (has(pf.email) ? 'href="mailto:' + esc(pf.email) + '"' : 'href="#" aria-disabled="true"') + '>' +
-        pico('email') + '<span>' + txt(pf.email, '이메일') + '</span></a>' +
-      '<a ' + (has(pf.phone) ? 'href="tel:' + esc(pf.phone.replace(/\s/g,'')) + '"' : 'href="#" aria-disabled="true"') + '>' +
-        pico('phone') + '<span>' + txt(pf.phone, '전화번호') + '</span></a>' +
-      '</div></div></div>');
 
     /* 하단 바로가기 — 버튼 */
     h.push('<div class="band"><div class="wrap"><div class="jump">' + [
@@ -1228,11 +1251,11 @@ var CONTENT = {
     if (!hasList(list)) return phBlock('대표 프로젝트에 표시할 게시물', 'CONTENT.portfolio.main');
     function bcard(it, i) {
       var kind = has(it.kind) ? (KIND_LABEL[it.kind] || String(it.kind).toUpperCase()) : '';
-      return '<a class="bcard bcard--c' + (i + 1) + '" href="#post/' + esc(it.id || '') + '">' +
+      return '<a class="bcard bcard--c' + (i + 1) + (i >= 2 ? ' bcard--sm' : '') + '" href="#post/' + esc(it.id || '') + '">' +
         imgOr(it.thumb, it.title || '', 'bcard__thumb', 'bcard__thumb-ph', '대표 이미지') +
         '<span class="bcard__b">' + (kind ? '<span class="bcard__kind">' + esc(kind) + '</span>' : '') +
-          '<span class="bcard__t" style="display:block">' + txt(it.title, '게시물 제목') + '</span>' +
-          '<span class="bcard__d" style="display:block">' + txt(it.tagline, '한 줄 설명') + '</span></span>' +
+          '<span class="bcard__t">' + txt(it.title, '게시물 제목') + '</span>' +
+          '<span class="bcard__d">' + txt(it.tagline, '한 줄 설명') + '</span></span>' +
         '</a>';
     }
     var head = list.slice(0, 4).map(bcard).join('');
@@ -1541,42 +1564,73 @@ var CONTENT = {
     return null;
   }
 
-  var PAGES = [];
-  function bindPlanner() {
-    if (!PAGES.length) return;
-    var scroll = document.getElementById('planScroll');
-    var thumbs = document.querySelectorAll('[data-page]');
+  var PLANS = [];
+  function paintPlanner(pi) {
+    var grid = document.getElementById('plannerGrid');
+    if (!grid) return;
+    var pl = PLANS[pi] || {};
+    var pages = pl.pages || [];
+    grid.innerHTML =
+      '<div class="planner__list">' + pages.map(function (d, i) {
+        return '<button type="button" class="ppage' + (i === 0 ? ' is-on' : '') + '" data-page="' + i + '">' +
+          (has(d.img) ? '<img class="ppage__img" src="' + esc(d.img) + '" alt="' + (i + 1) + '쪽" loading="lazy">'
+                      : '<span class="ppage__img">' + (i + 1) + '쪽</span>') +
+          '<span class="ppage__n">' + (i + 1) + '</span></button>';
+      }).join('') + '</div>' +
+      '<div class="planner__view"><div class="planner__scroll" id="planScroll">' +
+        pages.map(function (d, i) {
+          return '<div class="pv-page" data-pv="' + i + '">' +
+            (has(d.img) ? '<img src="' + esc(d.img) + '" alt="' + (i + 1) + '쪽" loading="lazy">'
+                        : '<span>' + (i + 1) + '쪽 — 왼쪽 페이지의 img 경로를 넣으면 여기에 크게 표시됩니다.</span>') +
+            '</div>';
+        }).join('') + '</div></div>';
+    wirePages(grid);
+    var tabs = document.querySelectorAll('[data-plan]');
+    for (var k = 0; k < tabs.length; k++) {
+      tabs[k].classList.toggle('on', Number(tabs[k].getAttribute('data-plan')) === pi);
+    }
+  }
+  /* 왼쪽 썸네일 ↔ 오른쪽 스크롤 동기화 */
+  function wirePages(grid) {
+    var scroll = grid.querySelector('#planScroll');
+    var thumbs = grid.querySelectorAll('[data-page]');
     var views = scroll ? scroll.querySelectorAll('[data-pv]') : [];
     if (!scroll) return;
-
-    function markThumb(i) {
+    function mark(i) {
       for (var k = 0; k < thumbs.length; k++) {
         thumbs[k].classList.toggle('is-on', Number(thumbs[k].getAttribute('data-page')) === i);
       }
     }
-    /* 왼쪽 썸네일 클릭 → 오른쪽을 그 페이지로 스크롤 */
     for (var i = 0; i < thumbs.length; i++) {
       (function (idx) {
         thumbs[idx].addEventListener('click', function () {
           if (views[idx]) scroll.scrollTo({ top: views[idx].offsetTop - scroll.offsetTop, behavior: 'smooth' });
-          markThumb(idx);
+          mark(idx);
         });
       })(Number(thumbs[i].getAttribute('data-page')));
     }
-    /* 오른쪽 스크롤 → 현재 페이지에 맞춰 왼쪽 표시 갱신 */
     var ticking = false;
     scroll.addEventListener('scroll', function () {
       if (ticking) return; ticking = true;
       window.requestAnimationFrame(function () {
         ticking = false;
-        var mid = scroll.scrollTop + scroll.clientHeight * 0.4, cur = 0;
+        var midY = scroll.scrollTop + scroll.clientHeight * 0.4, cur = 0;
         for (var j = 0; j < views.length; j++) {
-          if (views[j].offsetTop - scroll.offsetTop <= mid) cur = j;
+          if (views[j].offsetTop - scroll.offsetTop <= midY) cur = j;
         }
-        markThumb(cur);
+        mark(cur);
       });
     }, { passive: true });
-    markThumb(0);
+    mark(0);
+  }
+  function bindPlanner() {
+    if (!PLANS.length) return;
+    var tabs = document.querySelectorAll('[data-plan]');
+    for (var i = 0; i < tabs.length; i++) {
+      (function (idx) { tabs[idx].addEventListener('click', function () { paintPlanner(idx); }); })(
+        Number(tabs[i].getAttribute('data-plan')));
+    }
+    paintPlanner(0);   /* 눌러본 게 없으면 첫 기획서 */
   }
 
   function renderPost(id) {
@@ -1643,31 +1697,24 @@ var CONTENT = {
       h.push(o.join('') + '</section>');
     });
 
-    /* 프로젝트 기획서 — 한 PDF 의 페이지를 왼쪽에 쭉 나열, 오른쪽에 크게.
-       실제 PDF(페이지)가 없으면 이 구역은 표시되지 않는다. */
-    if (hasList(m.pages)) {
+    /* 프로젝트 기획서 — 여러 PDF(plans)면 상단 토글, 하나면 그대로.
+       왼쪽 페이지 나열 / 오른쪽 크게. 실제 PDF 가 없으면 이 구역은 안 나온다. */
+    var planList = hasList(m.plans) ? m.plans
+      : (hasList(m.pages) ? [{ title: '', pages: m.pages }] : []);
+    if (planList.length) {
       h.push('<section class="planner">');
       h.push('<h2 class="detail-sec__h">' + pico('pdf') + '프로젝트 기획서</h2>');
-      h.push('<div class="planner__grid">');
-      h.push('<div class="planner__list">' + m.pages.map(function (d, i) {
-        return '<button type="button" class="ppage' + (i === 0 ? ' is-on' : '') + '" data-page="' + i + '">' +
-          (has(d.img)
-            ? '<img class="ppage__img" src="' + esc(d.img) + '" alt="' + (i + 1) + '쪽" loading="lazy">'
-            : '<span class="ppage__img">' + (i + 1) + '쪽</span>') +
-          '<span class="ppage__n">' + (i + 1) + '</span></button>';
-      }).join('') + '</div>');
-      h.push('<div class="planner__view"><div class="planner__scroll" id="planScroll">' +
-        m.pages.map(function (d, i) {
-          return '<div class="pv-page" data-pv="' + i + '">' +
-            (has(d.img) ? '<img src="' + esc(d.img) + '" alt="' + (i + 1) + '쪽" loading="lazy">'
-                        : '<span>' + (i + 1) + '쪽 — 왼쪽 페이지의 img 경로를 넣으면 여기에 크게 표시됩니다.</span>') +
-            '</div>';
-        }).join('') + '</div></div>');
-      h.push('</div>');
+      if (planList.length > 1) {
+        h.push('<div class="planner__tabs">' + planList.map(function (pl, i) {
+          return '<button type="button" class="ptab' + (i === 0 ? ' on' : '') + '" data-plan="' + i + '">' +
+            txt(pl.title, '기획서 ' + (i + 1)) + '</button>';
+        }).join('') + '</div>');
+      }
+      h.push('<div class="planner__grid" id="plannerGrid"></div>');
       h.push('</section>');
-      PAGES = m.pages;
+      PLANS = planList;
     } else {
-      PAGES = [];
+      PLANS = [];
     }
 
     /* 프로젝트에서 경험한 일들 — 제목 + (부제목·본문) 여러 개 */
@@ -1844,22 +1891,21 @@ var CONTENT = {
     h.push(sectionHead('chart', 'History', '선호 장르 · 플레이 기록', 'history'));
 
     h.push('<div class="hist__top">');
-    h.push('<div><div class="radar-wrap">' + radarSVG(t.axes || []) + '</div>' +
-      '<div class="count--hero">' +
-        '<div class="count__v">' + txt(t.total && t.total.value, '총 개수') + '</div>' +
-        '<div class="count__l">' + txt(t.total && t.total.label, '게임 총 개수') + '</div></div>' +
-      '</div>');
+    /* 왼쪽 — 육각형 + 총 개수 한 카드 */
+    h.push('<div class="histcard">' +
+      '<div class="radar-wrap-inner">' + radarSVG(t.axes || []) + '</div>' +
+      '<div class="gcounts">' + (t.counts || []).map(function (c) {
+        return '<div class="gcount"><div class="gcount__l">' +
+          '<span class="gcount__t">' + txt(c.title, '큰 제목') + '</span>' +
+          '<span class="gcount__d">' + txt(c.desc, '작은 내용') + '</span></div>' +
+          '<span class="gcount__v">' + txt(c.value, '0') + '</span></div>';
+      }).join('') + '</div></div>');
 
-    h.push('<div>');
+    /* 오른쪽 — 도넛 + 필터 */
+    h.push('<div class="hist__right">');
     h.push(donut(t.freshness));
-    h.push('<div class="plat">' + (t.platforms || []).map(function (pf) {
-      var pct = Math.max(0, Math.min(100, Number(pf.percent) || 0));
-      return '<div class="plat__cell"><div class="plat__l">' + txt(pf.label, '플랫폼') + '</div>' +
-        '<div class="plat__v">' + txt(pf.value, '수치') + '</div>' +
-        '<div class="plat__bar"><i style="width:' + pct + '%"></i></div></div>';
-    }).join('') + '</div>');
 
-    /* 태그 드롭다운 — 수치 바로 아래 */
+    /* 태그 드롭다운 */
     h.push('<div class="filter">');
     FILTER_KEYS.forEach(function (f) {
       var list = groups[f.key] || [];
