@@ -5,7 +5,7 @@
 - **파일**: `index.html` 단일 파일 + 해시 라우팅
   (`#about`, `#resume`, `#resume/intro`, `#portfolio`, `#post/<id>`, `#history`)
 - **폰트**: Pretendard (jsDelivr CDN, 동적 서브셋)
-- **디자인**: Lightdash 스타일을 따르되 배경은 크림 톤 — 기본 `#fffdfa`, 한 단계 진한 구역 `#f9f5ea`,
+- **디자인**: Lightdash 스타일을 따르되 배경은 크림 톤 — 기본 `#fffdfa`, 한 단계 진한 구역 `#fcf7ec`,
   액센트는 Volt Violet `#5e4cff`. 모든 페이지 우상단에 픽셀 모자이크가 붙습니다.
 - **아이콘**: `assets/icons/*.png` (보라 + 주황 라인 아이콘 15종).
   `CONTENT` 에서는 `gamepad` · `poker` · `video` · `domino` · `target` · `project` · `office` ·
