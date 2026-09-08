@@ -29,25 +29,46 @@ var CONTENT = { ... };
 | 영역 | CONTENT 경로 | 비고 |
 |---|---|---|
 | 대단원 설명문 | `descs` | 비우면 전부 `상세 설명 첨부` 로 표시 |
-| About | `about` | 로그라인 1(헤드라인), 도입 문단, 핵심 지표, 요약 카드 |
+| About · 헤드라인 | `about.logline` / `about.intro` | 도입 문단은 로그라인의 2/3 크기 |
+| About · Work style | `about.workStyle` | 3열, 큰 픽토그램 + 제목 / 하단 설명 |
+| About · 대표 프로젝트 | (자동) | 메인 · 기획서 · AI 작업물이 오른쪽 → 왼쪽으로 흐르는 띠 |
 | Resume · 프로필 | `resume.profile` | 사진 · 이름 · 로그라인 2 · **이메일/연락처(한 행)** · 학력 |
-| 기술 아이콘 | `resume.skills[].icon` | 1:1 이미지 경로 (예: `assets/images/photoshop.png`) |
-| Resume · 경력 | `resume.career` | **왼쪽 2/3** |
-| Resume · 프로젝트 | `resume.projects` | **오른쪽 1/3**, `relatedCareer` 에 회사 `id` → 경력과 연관 표시 |
-| Resume · 대외활동 | `resume.activities` | **왼쪽 1/3** |
-| Resume · 기술 | `resume.skills` | **오른쪽 2/3**, 1:1 아이콘 + 이름 + 하단 설명 |
+| 기술 아이콘 | `resume.skills[].icons` | 1:1 이미지 경로 **배열** (여러 개 가능) |
+| Resume · 경력 | `resume.career` | 연도별 묶음, 테두리 없는 줄로 이어짐 |
+| Resume · 프로젝트 | `portfolio.main` | Portfolio 메인 프로젝트와 같은 게시물 (누르면 상세로) |
+| Resume · 기술 | `resume.skills` | 탭 하나가 통째로 한 판, 그 안에서 2열 |
+| Resume · 대외활동 | `resume.activities` | 경력과 같은 칸 구성 |
 | 자기소개 (탭) | `intro` | 문항 4개를 한 페이지로 나열. 탭을 바꿔도 프로필·인적사항은 그대로 유지 |
 | Portfolio · 메인 | `portfolio.main` | **3열** |
 | Portfolio · 기획서 | `portfolio.docs` | **4열** |
 | Portfolio · AI 작업물 | `portfolio.ai` | **3열** |
 | History | `history` | 다각형 그래프 · 게임 총 개수 · 플랫폼 선호도 · 게임 목록 |
 
-### 경력 ↔ 프로젝트 ↔ 게시물 연결
+### 경력 · 대외활동 칸
+
+연도별로 묶고, 한 칸에 1:1 이미지 / 이름 / 기간 / 설명이 들어갑니다.
 
 ```js
-career:   [ { id: 'actionfit', org: '㈜ 액션핏', relatedProjects: ['blocknyang'] } ]
-projects: [ { id: 'blocknyang', name: '블럭냥!', relatedCareer: 'actionfit', postId: 'blocknyang-post' } ]
-portfolio: { main: [ { id: 'blocknyang-post', title: '블럭냥!' } ] }
+career: [
+  { year: '2025', items: [
+      { image: 'assets/images/logo.png', org: '㈜ 액션핏',
+        start: '2023.03.01', end: '2025.04.30',
+        desc: '한 문단 설명',
+        posts: [ 'blocknyang' ]      // 선택 — Portfolio 게시물 id, 칩으로 연결됩니다
+      }
+  ] }
+]
+activities: [ { image: '', title: '', start: '', end: '', desc: '' } ]
+```
+
+Resume 의 프로젝트 칸은 `CONTENT.portfolio.main` 을 그대로 보여줍니다.
+따로 입력할 필요 없이 Portfolio 쪽만 채우면 됩니다.
+
+### 기술
+
+```js
+skills: [ { icons: [ 'assets/images/ps.png', 'assets/images/ai.png' ],
+            name: 'Adobe', level: 5, note: '설명 1~2줄' } ]
 ```
 
 ### 게시물 (메인 · 기획서 · AI 작업물)
@@ -90,7 +111,8 @@ games: [ { title: '', image: '', platform: '', genre: '', playtime: '', ending: 
 - 축 이름은 **다각형 위에만** 표시됩니다 (별도 범례 없음).
 - 게임 커버는 **3:4**, 하단에 **6열**(모바일 2~4열)로 나열됩니다.
 - 카드에는 이미지 · 이름 · 태그(플랫폼 / 장르 / 플레이타임 / 엔딩)가 들어갑니다.
-- 필터는 **플랫폼 · 장르 드롭다운** 두 개입니다. 목록은 게임 데이터에서 자동으로 만들어집니다.
+- 필터는 **플랫폼 · 장르 드롭다운** 두 개이고 수치 카드 바로 아래에 있습니다.
+  목록은 게임 데이터에서 자동으로 만들어집니다.
 - `playtime` 은 자유 입력이라 표시만 되고 필터에는 쓰이지 않습니다.
   `ending` 은 `'엔딩'` 또는 `'진행 중'` 두 값만 씁니다.
 

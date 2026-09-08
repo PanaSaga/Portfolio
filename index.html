@@ -201,19 +201,21 @@ a.card:active{transform:scale(.995);}
    ============================================================ */
 .pico{display:inline-block;vertical-align:-.14em;width:1.1em;height:1.1em;flex:0 0 auto;}
 .pico rect{fill:currentColor;}
+.pico rect.p2{opacity:.34;}
 .pico--lg{width:28px;height:28px;}
 
 /* ============================================================
    Hero + 코너 픽셀 모자이크
    ============================================================ */
-.hero{position:relative;padding:var(--s48) 0 var(--s40);overflow:hidden;}
-@media (min-width:900px){.hero{padding:var(--s80) 0 var(--s64);}}
+.hero{position:relative;padding:var(--s48) 0 var(--s24);overflow:hidden;}
+@media (min-width:900px){.hero{padding:var(--s80) 0 var(--s32);}}
 .hero__inner{position:relative;z-index:1;}
 .hero__logline{font-size:clamp(30px,8vw,64px);line-height:1.04;letter-spacing:-.03em;font-weight:600;color:var(--graphite);max-width:100%;}
 /* 데스크톱에서는 우상단 모자이크를 피할 만큼만 남기고 오른쪽으로 길게 */
 @media (min-width:900px){.hero__logline{max-width:calc(100% - 290px);}}
-.hero__sub{margin-top:var(--s20);max-width:46ch;color:var(--slate);font-size:clamp(15px,3.6vw,18px);line-height:1.65;}
-.hero__sub p + p{margin-top:var(--s12);}
+/* 도입 문단 = 로그라인의 2/3 크기 */
+.hero__sub{margin-top:var(--s20);max-width:34ch;color:var(--slate);font-size:clamp(20px,5.33vw,42px);line-height:1.3;letter-spacing:-.025em;font-weight:500;}
+.hero__sub p + p{margin-top:var(--s16);}
 .hero__cta{display:flex;flex-wrap:wrap;gap:var(--s8);margin-top:var(--s24);}
 
 .mosaic{--tile:28px;display:flex;flex-direction:column;line-height:0;pointer-events:none;}
@@ -235,6 +237,52 @@ a.card:active{transform:scale(.995);}
   .mosaic{--tile:clamp(15px,4.6vw,26px);margin:0 0 var(--s24) auto;width:-webkit-fit-content;width:fit-content;}
   .mrow:nth-child(n+8){display:none;}
 }
+
+/* Work style — 3열, 헤어라인만으로 구분 */
+.ws{display:grid;border-top:1px solid var(--ash);}
+@media (min-width:820px){.ws{grid-template-columns:repeat(3,minmax(0,1fr));}}
+.ws__item{padding:var(--s24) 0 var(--s32);border-bottom:1px solid var(--frost);}
+@media (min-width:820px){
+  .ws__item{padding:var(--s24) var(--s24) var(--s32) 0;border-bottom:0;}
+  .ws__item + .ws__item{padding-left:var(--s24);border-left:1px solid var(--frost);}
+}
+.ws__top{display:flex;align-items:center;gap:var(--s12);}
+.ws__icon{width:34px;height:34px;flex:0 0 auto;color:var(--violet);}
+.ws__title{font-size:var(--text-subheading);font-weight:600;letter-spacing:-.02em;line-height:1.25;color:var(--graphite);}
+.ws__desc{margin-top:var(--s12);color:var(--slate);font-size:var(--text-body-sm);line-height:1.7;}
+
+/* 대표 프로젝트 — 오른쪽에서 왼쪽으로 흐르는 가느다란 띠 */
+.marquee{position:relative;overflow:hidden;border-top:1px solid var(--ash);border-bottom:1px solid var(--ash);background:#fff;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);}
+.marquee__track{display:flex;width:-webkit-max-content;width:max-content;animation:marq 44s linear infinite;}
+.marquee__track:hover{animation-play-state:paused;}
+.marquee__set{display:flex;align-items:center;flex:0 0 auto;}
+.mitem{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;white-space:nowrap;
+  font-size:var(--text-body-sm);font-weight:500;color:var(--slate);transition:color .15s ease;}
+.mitem:hover{color:var(--violet);}
+.mitem__kind{font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--violet);
+  background:var(--lilac);border-radius:4px;padding:2px 6px;}
+.mitem__dot{width:5px;height:5px;border-radius:1px;background:var(--lavender);flex:0 0 auto;}
+@keyframes marq{from{transform:translate3d(0,0,0);}to{transform:translate3d(-50%,0,0);}}
+@media (prefers-reduced-motion:reduce){.marquee__track{animation:none;}}
+
+/* 하단 바로가기 — 버튼처럼 */
+.jump{display:grid;gap:var(--s12);}
+@media (min-width:720px){.jump{grid-template-columns:repeat(3,minmax(0,1fr));}}
+.jump__btn{display:flex;align-items:center;justify-content:space-between;gap:var(--s12);
+  min-height:64px;padding:16px 20px;border-radius:var(--r-btn);
+  background:#fff;border:1px solid var(--ash);box-shadow:rgba(39,40,53,.06) 0 2px 4px 0;
+  transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease,transform .12s ease;}
+.jump__btn:hover{border-color:var(--violet);box-shadow:rgba(94,76,255,.16) 0 4px 14px 0;}
+.jump__btn:active{transform:translateY(1px);}
+.jump__btn--primary{background:var(--violet);border-color:var(--violet);color:#fff;}
+.jump__btn--primary:hover{background:#4f3ff0;border-color:#4f3ff0;}
+.jump__l{display:grid;gap:2px;min-width:0;}
+.jump__t{font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;}
+.jump__d{font-size:var(--text-caption);color:var(--steel);}
+.jump__btn--primary .jump__d{color:rgba(255,255,255,.72);}
+.jump__arrow{flex:0 0 auto;font-size:15px;opacity:.7;}
 
 /* Stats */
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--ash);border:1px solid var(--ash);border-radius:var(--r-card);overflow:hidden;}
@@ -272,6 +320,28 @@ a.card:active{transform:scale(.995);}
 }
 
 /* ============================================================
+   경력 · 대외활동 — 테두리 없이 줄로 이어지는 연도별 나열
+   ============================================================ */
+.yrow{border-top:1px solid var(--ash);padding:var(--s24) 0;}
+.yrow:last-child{border-bottom:1px solid var(--ash);}
+@media (min-width:900px){
+  .yrow{display:grid;grid-template-columns:120px minmax(0,1fr);gap:var(--s32);padding:var(--s32) 0;}
+  .yrow--full{grid-template-columns:minmax(0,1fr);}
+}
+.yrow__year{font-size:var(--text-heading-sm);font-weight:600;letter-spacing:-.02em;color:var(--graphite);line-height:1;}
+.yrow__year .ph{font-size:14px;}
+@media (max-width:899px){.yrow__year{margin-bottom:var(--s16);}}
+.cells{display:grid;gap:var(--s24);}
+@media (min-width:640px){.cells{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (min-width:1000px){.cells{grid-template-columns:repeat(3,minmax(0,1fr));}}
+.cell__img{width:64px;height:64px;border-radius:10px;object-fit:cover;background:var(--frost);}
+.cell__img-ph{width:64px;height:64px;border-radius:10px;border:1px dashed var(--mist);background:var(--cloud);display:grid;place-items:center;color:var(--fog);font-size:10px;text-align:center;}
+.cell__name{margin-top:var(--s12);font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;line-height:1.3;}
+.cell__date{margin-top:4px;color:var(--violet);font-size:var(--text-caption);font-weight:500;font-variant-numeric:tabular-nums;}
+.cell__desc{margin-top:var(--s8);color:var(--slate);font-size:var(--text-body-sm);line-height:1.65;}
+.cell__links{margin-top:var(--s12);}
+
+/* ============================================================
    Timeline
    ============================================================ */
 .timeline{display:grid;gap:var(--s16);}
@@ -289,18 +359,18 @@ a.card:active{transform:scale(.995);}
 .tl__foot{margin-top:var(--s16);padding-top:var(--s12);border-top:1px solid var(--frost);}
 .tl__footlabel{color:var(--steel);font-size:var(--text-caption);margin-bottom:6px;}
 
-/* Skills — 1:1 도구 아이콘 + 이름, 하단 설명 */
-.skills{display:grid;gap:var(--s12);}
-@media (min-width:640px){.skills{grid-template-columns:repeat(2,minmax(0,1fr));}}
-.skill{background:#fff;border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s16);}
-.skill__top{display:flex;align-items:center;gap:var(--s12);}
-.skill__icon{width:44px;height:44px;border-radius:10px;object-fit:contain;background:var(--cloud);flex:0 0 auto;padding:4px;}
+/* Skills — 탭 하나가 통째로 하나의 판, 그 안에서 2열 */
+.skills{background:#fff;border:1px solid var(--ash);border-radius:var(--r-card);
+  padding:var(--s24);display:grid;gap:var(--s32) var(--s40);}
+@media (min-width:720px){.skills{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.skill__icons{display:flex;flex-wrap:wrap;gap:8px;}
+.skill__icon{width:44px;height:44px;border-radius:10px;object-fit:contain;background:var(--cloud);padding:4px;flex:0 0 auto;}
 .skill__icon-ph{width:44px;height:44px;border-radius:10px;border:1px dashed var(--mist);background:var(--cloud);display:grid;place-items:center;color:var(--fog);font-size:10px;flex:0 0 auto;text-align:center;line-height:1.2;}
-.skill__name{font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;line-height:1.3;min-width:0;}
-.skill__dots{display:flex;gap:4px;margin-top:5px;}
+.skill__name{margin-top:var(--s12);font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;line-height:1.3;}
+.skill__dots{display:flex;gap:4px;margin-top:6px;}
 .skill__dots i{width:8px;height:8px;border-radius:2px;background:var(--frost);display:block;}
 .skill__dots i.on{background:var(--violet);}
-.skill__note{margin-top:var(--s12);color:var(--slate);font-size:var(--text-body-sm);line-height:1.65;}
+.skill__note{margin-top:var(--s8);color:var(--slate);font-size:var(--text-body-sm);line-height:1.65;}
 
 /* ============================================================
    자기소개 — 한 페이지 나열 (이력서와 같은 카드 리듬)
@@ -326,28 +396,26 @@ a.card:active{transform:scale(.995);}
 /* 상세 */
 .detail-back{display:inline-flex;align-items:center;gap:6px;color:var(--slate);font-size:var(--text-body-sm);font-weight:500;margin-bottom:var(--s20);}
 .detail-back:hover{color:var(--violet);}
-/* 제목과 한 줄 설명만 왼쪽 정렬 */
+/* 본문 블록은 가운데, 글자는 왼쪽 */
+.detail-col{max-width:840px;margin:0 auto;text-align:left;}
 .detail__head{text-align:left;}
 .detail__title{font-size:clamp(28px,7vw,48px);font-weight:600;letter-spacing:-.03em;line-height:1.05;}
 .detail__tagline{margin-top:var(--s12);color:var(--slate);font-size:clamp(15px,3.8vw,18px);line-height:1.6;max-width:60ch;}
-/* 그 아래는 모두 중앙 정렬 */
-.detail__body{text-align:center;margin-top:var(--s24);}
-.detail__body .chips,.detail__body .hero__cta{justify-content:center;}
-.detail__body .bullets{display:inline-grid;text-align:left;justify-items:start;}
+.detail__body{margin-top:var(--s24);}
 
-.meta2{display:grid;gap:1px;background:var(--ash);border:1px solid var(--ash);border-radius:var(--r-card);overflow:hidden;max-width:640px;margin:var(--s24) auto 0;}
+.meta2{display:grid;gap:1px;background:var(--ash);border:1px solid var(--ash);border-radius:var(--r-card);overflow:hidden;margin-top:var(--s24);}
 @media (min-width:560px){.meta2{grid-template-columns:repeat(2,minmax(0,1fr));}}
-.meta2__cell{background:#fff;padding:14px var(--s16);display:flex;align-items:baseline;justify-content:center;gap:var(--s12);}
+.meta2__cell{background:#fff;padding:14px var(--s16);display:grid;grid-template-columns:76px minmax(0,1fr);align-items:baseline;gap:var(--s12);}
 .meta2__k{color:var(--steel);font-size:var(--text-caption);font-weight:500;flex:0 0 auto;}
 .meta2__v{font-size:var(--text-body-sm);color:var(--graphite);overflow-wrap:anywhere;}
 
 .detail-sec{margin-top:var(--s48);}
 .detail-sec__h{font-size:var(--text-heading-sm);font-weight:600;letter-spacing:-.02em;margin-bottom:var(--s12);display:inline-flex;align-items:center;gap:8px;}
 .detail-sec__h .pico{color:var(--violet);}
-.detail-sec__body{color:var(--slate);font-size:var(--text-body-sm);line-height:1.8;max-width:70ch;margin:0 auto;}
+.detail-sec__body{color:var(--slate);font-size:var(--text-body-sm);line-height:1.8;}
 .detail-sec__body p + p{margin-top:var(--s12);}
-.detail-hero{max-width:820px;margin:var(--s24) auto 0;}
-.figure{margin:var(--s16) auto 0;max-width:760px;}
+.detail-hero{margin-top:var(--s24);}
+.figure{margin-top:var(--s16);}
 .figure img{width:100%;border-radius:var(--r-card);border:1px solid var(--ash);}
 .figure figcaption{margin-top:6px;color:var(--steel);font-size:var(--text-caption);}
 .notice{margin-bottom:var(--s24);padding:var(--s16);border:1px dashed var(--mist);border-radius:var(--r-card);background:var(--cloud);color:var(--slate);font-size:var(--text-body-sm);text-align:left;}
@@ -372,9 +440,9 @@ a.card:active{transform:scale(.995);}
 .plat__bar{margin-top:8px;height:4px;border-radius:2px;background:var(--frost);overflow:hidden;}
 .plat__bar i{display:block;height:100%;background:var(--violet);}
 
-/* 태그 드롭다운 필터 */
-.filter{background:#fff;border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s16);display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--s12);}
-.fsel{display:grid;gap:6px;min-width:0;flex:1 1 190px;}
+/* 태그 드롭다운 필터 — 수치 하단, 좁게 */
+.filter{margin-top:var(--s16);display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--s12);}
+.fsel{display:grid;gap:6px;min-width:0;flex:1 1 120px;max-width:220px;}
 .fsel__l{color:var(--steel);font-size:var(--text-caption);font-weight:600;letter-spacing:.04em;}
 .fsel__box{position:relative;}
 .fsel select{
@@ -385,15 +453,12 @@ a.card:active{transform:scale(.995);}
 }
 .fsel select:focus{outline:2px solid rgba(94,76,255,.35);outline-offset:0;border-color:var(--violet);}
 .fsel__caret{position:absolute;right:12px;top:50%;margin-top:-3px;pointer-events:none;color:var(--fog);}
-.filter__foot{display:flex;align-items:center;gap:var(--s12);flex:0 0 auto;margin-left:auto;padding-bottom:2px;}
-.filter__count{color:var(--slate);font-size:var(--text-body-sm);font-weight:500;white-space:nowrap;}
+.filter__foot{display:flex;align-items:center;gap:var(--s12);flex:0 0 auto;padding-bottom:2px;}
+.filter__count{color:var(--slate);font-size:var(--text-caption);font-weight:500;white-space:nowrap;}
 .filter__count b{color:var(--violet);font-weight:600;}
-@media (max-width:639px){
-  .filter__foot{margin-left:0;width:100%;justify-content:space-between;}
-}
 
 /* 게임 그리드 — 6열 */
-.games{display:grid;gap:var(--s12);grid-template-columns:repeat(2,minmax(0,1fr));margin-top:var(--s20);}
+.games{display:grid;gap:var(--s12);grid-template-columns:repeat(2,minmax(0,1fr));}
 @media (min-width:520px){.games{grid-template-columns:repeat(3,minmax(0,1fr));}}
 @media (min-width:760px){.games{grid-template-columns:repeat(4,minmax(0,1fr));}}
 @media (min-width:1000px){.games{grid-template-columns:repeat(6,minmax(0,1fr));}}
@@ -490,6 +555,15 @@ function SAMPLE_SECTIONS() {
     { heading: '', body: '', bullets: [], images: [] }
   ];
 }
+/* 레이아웃 확인용 빈 게시물. 실제 게시물을 넣을 때 해당 줄을 지우세요. */
+function SAMPLE_POST(id, title, kind) {
+  return {
+    id: id, sample: true, title: title, tagline: '', kind: kind || '',
+    thumb: '', tags: [], meta: SAMPLE_META(),
+    links: [ { label: '', href: '', style: 'violet' } ],
+    sections: SAMPLE_SECTIONS()
+  };
+}
 
 var CONTENT = {
 
@@ -504,23 +578,23 @@ var CONTENT = {
 
   /* 각 대단원 제목 밑 설명. 비우면 '상세 설명 첨부' 로 표시됩니다. */
   descs: {
-    summary: '', career: '', projects: '', skills: '', activities: '',
+    workStyle: '', featured: '', career: '', projects: '', skills: '', activities: '',
     intro: '', main: '', docs: '', ai: '', history: '', games: ''
   },
 
   /* ── 1. About ────────────────────────────────────────────── */
   about: {
     logline: '',          // 헤드라인(로그라인 1). 줄바꿈은 \n
-    intro: '',            // 도입 문단. 문단 구분은 빈 줄(\n\n)
-    ctas: [
-      // { label: '', href: '#resume', style: 'violet' }   // violet | dark | ghost
+    intro: '',            // 도입 문단(로그라인의 2/3 크기). 문단 구분은 빈 줄(\n\n)
+
+    /* Work style — 3열. icon 은 아래 이름 중 하나:
+       blocks · target · bars · bolt · flag · chat · box                     */
+    workStyle: [
+      { icon: 'blocks', title: '', desc: '' },
+      { icon: 'target', title: '', desc: '' },
+      { icon: 'bars',   title: '', desc: '' }
     ],
-    stats: [
-      // { value: '', label: '' }
-    ],
-    summary: [
-      // { title: '', body: '' }
-    ],
+
     closing: ''
   },
 
@@ -537,42 +611,35 @@ var CONTENT = {
       education: ''
     },
 
-    /* 경력 (중요도 1) */
+    /* 경력 (중요도 1) — 연도별로 묶어서 나열합니다.
+       한 칸 = 1:1 이미지 / 회사명 / 시작 ~ 종료 / 설명                       */
     career: [
-      // {
-      //   id: 'company-a',
-      //   org: '', role: '', period: '', type: '',
-      //   summary: '',
-      //   points: [ '' ],
-      //   tags: [ '' ],
-      //   relatedProjects: [ 'project-a' ]
-      // }
+      {
+        year: '',                   // 예: '2025'
+        items: [
+          { image: '', org: '', start: '', end: '', desc: '', posts: [] },
+          { image: '', org: '', start: '', end: '', desc: '', posts: [] },
+          { image: '', org: '', start: '', end: '', desc: '', posts: [] }
+        ]
+      }
+      // 연도를 추가하려면 위 블록을 통째로 복사하세요.
+      // { year: '2024', items: [ { image:'', org:'', start:'', end:'', desc:'', posts:[] } ] }
     ],
 
-    /* 프로젝트 (중요도 2) — relatedCareer 로 경력과 연결 */
-    projects: [
-      // {
-      //   id: 'project-a',
-      //   name: '', period: '', role: '',
-      //   summary: '',
-      //   points: [ '' ],
-      //   tags: [ '' ],
-      //   relatedCareer: 'company-a',
-      //   postId: ''            // Portfolio 게시물 상세와 연결할 id
-      // }
-    ],
-
-    /* 기술 (중요도 3)
-       icon: 1:1 도구 아이콘 이미지 경로 (예: 'assets/images/photoshop.png')
-       level: 0~5 (0 이면 숙련도 점을 표시하지 않습니다)
-       note: 아이콘·이름 하단에 들어가는 설명                                */
+    /* 기술 (중요도 3) — 탭 하나가 통째로 한 판이고 그 안에서 2열.
+       icons: 1:1 아이콘 경로 배열 (여러 개 가능)
+       level: 0~5 (0 이면 숙련도 점을 표시하지 않습니다)                       */
     skills: [
-      // { icon: '', name: '', level: 0, note: '' }
+      { icons: [ '' ], name: '', level: 0, note: '' },
+      { icons: [ '' ], name: '', level: 0, note: '' },
+      { icons: [ '' ], name: '', level: 0, note: '' }
     ],
 
-    /* 대외활동 (중요도 4) */
+    /* 대외활동 (중요도 4) — 경력과 같은 칸 구성 */
     activities: [
-      // { title: '', period: '', desc: '' }
+      { image: '', title: '', start: '', end: '', desc: '' },
+      { image: '', title: '', start: '', end: '', desc: '' },
+      { image: '', title: '', start: '', end: '', desc: '' }
     ]
   },
 
@@ -591,50 +658,27 @@ var CONTENT = {
 
     /* 메인 프로젝트 — 3열 */
     main: [
-      {
-        id: 'sample',
-        sample: true,                 // ← 레이아웃 확인용 샘플. 실제 게시물을 넣을 때 이 항목을 지우세요.
-        title: '샘플 게시물',
-        tagline: '',
-        kind: '',
-        thumb: '',
-        tags: [],
-        meta: SAMPLE_META(),
-        links: [
-          { label: '', href: '', style: 'violet' }
-        ],
-        sections: SAMPLE_SECTIONS()
-      }
+      SAMPLE_POST('sample',   '샘플 게시물 1'),
+      SAMPLE_POST('sample-2', '샘플 게시물 2'),
+      SAMPLE_POST('sample-3', '샘플 게시물 3')
       // { id: '', title: '', tagline: '', kind: '', thumb: '', tags: [],
       //   meta: [], links: [], sections: [] }
     ],
 
     /* 기획서 — 4열 */
     docs: [
-      {
-        id: 'sample-doc',
-        sample: true,                 // ← 레이아웃 확인용 샘플. 실제 게시물을 넣을 때 이 항목을 지우세요.
-        title: '샘플 기획서',
-        tagline: '', kind: 'pdf', thumb: '', tags: [],
-        meta: SAMPLE_META(),
-        links: [ { label: '', href: '', style: 'violet' } ],
-        sections: SAMPLE_SECTIONS()
-      }
+      SAMPLE_POST('sample-doc',   '샘플 기획서 1', 'pdf'),
+      SAMPLE_POST('sample-doc-2', '샘플 기획서 2', 'pdf'),
+      SAMPLE_POST('sample-doc-3', '샘플 기획서 3', 'pdf')
       // { id: '', title: '', tagline: '', kind: 'pdf', thumb: '', tags: [],
       //   meta: [], links: [ { label: 'PDF 열기', href: 'assets/docs/파일.pdf' } ], sections: [] }
     ],
 
     /* AI 활용 작업물 — 3열 */
     ai: [
-      {
-        id: 'sample-ai',
-        sample: true,                 // ← 레이아웃 확인용 샘플. 실제 게시물을 넣을 때 이 항목을 지우세요.
-        title: '샘플 AI 작업물',
-        tagline: '', kind: 'game', thumb: '', tags: [],
-        meta: SAMPLE_META(),
-        links: [ { label: '', href: '', style: 'violet' } ],
-        sections: SAMPLE_SECTIONS()
-      }
+      SAMPLE_POST('sample-ai',   '샘플 AI 작업물 1', 'game'),
+      SAMPLE_POST('sample-ai-2', '샘플 AI 작업물 2', 'game'),
+      SAMPLE_POST('sample-ai-3', '샘플 AI 작업물 3', 'game')
       // { id: '', title: '', tagline: '', kind: 'game', thumb: '', tags: [],
       //   meta: [], links: [ { label: '웹빌드 실행', href: 'https://...' } ], sections: [] }
     ]
@@ -666,7 +710,9 @@ var CONTENT = {
        playtime         : 자유 입력 (표시만, 필터에는 쓰이지 않음)
        ending           : '엔딩' 또는 '진행 중'                                   */
     games: [
-      // { title: '', image: '', platform: '', genre: '', playtime: '', ending: '엔딩' }
+      { title: '', image: '', platform: '', genre: '', playtime: '', ending: '' },
+      { title: '', image: '', platform: '', genre: '', playtime: '', ending: '' },
+      { title: '', image: '', platform: '', genre: '', playtime: '', ending: '' }
     ]
   }
 };
@@ -780,14 +826,98 @@ var CONTENT = {
       '.#.',
       '#.#',
       '.#.'
+    ],
+
+    /* ↓ 큰 크기에서도 형태가 또렷한 픽토그램 (#=진하게, +=옅게) */
+    blocks: [
+      '####.####',
+      '####.####',
+      '####.####',
+      '####.####',
+      '.........',
+      '++++.####',
+      '++++.####',
+      '++++.####',
+      '++++.####'
+    ],
+    target: [
+      '..#####..',
+      '.#.....#.',
+      '#.......#',
+      '#..###..#',
+      '#..###..#',
+      '#..###..#',
+      '#.......#',
+      '.#.....#.',
+      '..#####..'
+    ],
+    bars: [
+      '.........',
+      '......##.',
+      '......##.',
+      '...++.##.',
+      '...++.##.',
+      '++.++.##.',
+      '++.++.##.',
+      '++.++.##.',
+      '++.++.##.'
+    ],
+    bolt: [
+      '....###..',
+      '...###...',
+      '..###....',
+      '.######..',
+      '....+##..',
+      '...###...',
+      '..###....',
+      '.###.....',
+      '##.......'
+    ],
+    flag: [
+      '##.......',
+      '##+++++..',
+      '#######+.',
+      '#######+.',
+      '##+++++..',
+      '##.......',
+      '##.......',
+      '##.......',
+      '##.......'
+    ],
+    chat: [
+      '#########',
+      '#+++++++#',
+      '#+#####+#',
+      '#+++++++#',
+      '#+#####+#',
+      '#+++++++#',
+      '#########',
+      '..##.....',
+      '.##......'
+    ],
+    box: [
+      '...###...',
+      '..#####..',
+      '.#######.',
+      '#########',
+      '#+++++++#',
+      '#+++++++#',
+      '#+++++++#',
+      '#+++++++#',
+      '#########'
     ]
   };
+  var BIG_ICONS = ['blocks', 'target', 'bars', 'bolt', 'flag', 'chat', 'box'];
   function pico(name, cls) {
     var g = PICTO[name] || PICTO.sparkle;
     var w = g[0].length, h = g.length, r = [];
     for (var y = 0; y < h; y++) {
       for (var x = 0; x < w; x++) {
-        if (g[y].charAt(x) === '#') r.push('<rect x="' + x + '" y="' + y + '" width="1" height="1"/>');
+        var c = g[y].charAt(x);
+        if (c === '#' || c === '+') {
+          r.push('<rect x="' + x + '" y="' + y + '" width="1" height="1"' +
+            (c === '+' ? ' class="p2"' : '') + '/>');
+        }
       }
     }
     return '<svg class="pico ' + (cls || '') + '" viewBox="0 0 ' + w + ' ' + h +
@@ -839,47 +969,51 @@ var CONTENT = {
     var a = CONTENT.about || {};
     var h = [];
 
+    /* 히어로 — 버튼 없음 */
     h.push('<div class="hero"><div class="hero__anchor"><div class="wrap">' + mosaic() +
       '</div></div><div class="wrap hero__inner">');
     h.push('<h1 class="hero__logline">' +
       (has(a.logline) ? esc(a.logline).replace(/\n/g, '<br>') : ph('로그라인 1 — 첫 페이지 헤드라인')) + '</h1>');
     h.push('<div class="hero__sub">' + body(a.intro, '헤드라인 아래 도입 문단') + '</div>');
-    if (hasList(a.ctas)) {
-      h.push('<div class="hero__cta">' + a.ctas.map(function (c) {
-        var s = c.style === 'dark' ? 'btn--dark' : c.style === 'ghost' ? 'btn--ghost' : 'btn--violet';
-        return '<a class="btn ' + s + '" ' + linkAttrs(c.href) + '>' + txt(c.label, '버튼 이름') + '</a>';
+    h.push('</div></div>');
+
+    /* Work style — 도입 문단과 같은 글 안에 있는 것처럼 바짝 붙인다 */
+    h.push('<div class="wrap" style="padding-bottom:var(--s64)">');
+    h.push('<div class="sec-head" style="margin-bottom:var(--s16)">' +
+      '<div class="sec-eyebrow">' + pico('bolt') + '<span>Hello World!</span></div>' +
+      '<h2 class="sec-title">Work style</h2>' +
+      '<p class="sec-desc">' + desc('workStyle') + '</p></div>');
+    if (hasList(a.workStyle)) {
+      h.push('<div class="ws">' + a.workStyle.map(function (w, i) {
+        return '<div class="ws__item">' +
+          '<div class="ws__top">' + pico(w.icon || BIG_ICONS[i % BIG_ICONS.length], 'ws__icon') +
+          '<h3 class="ws__title">' + txt(w.title, '제목') + '</h3></div>' +
+          '<div class="ws__desc">' + body(w.desc, '설명') + '</div>' +
+          '</div>';
       }).join('') + '</div>');
-    } else if (SHOW_PLACEHOLDER) {
-      h.push('<div class="hero__cta"><span class="ph">버튼 — CONTENT.about.ctas</span></div>');
+    } else {
+      h.push(phBlock('Work style 항목', 'CONTENT.about.workStyle'));
     }
-    h.push('</div></div>');
+    h.push('</div>');
 
-    h.push('<div class="band band--tight" style="padding-top:0"><div class="wrap">');
-    h.push(hasList(a.stats)
-      ? '<div class="stats">' + a.stats.map(function (s) {
-          return '<div class="stat"><div class="stat__value">' + txt(s.value, '수치') + '</div>' +
-            '<div class="stat__label">' + txt(s.label, '항목명') + '</div></div>';
-        }).join('') + '</div>'
-      : phBlock('핵심 지표', 'CONTENT.about.stats'));
-    h.push('</div></div>');
+    /* 대표 프로젝트 — 오른쪽에서 왼쪽으로 흐르는 가느다란 띠 */
+    h.push('<div class="wrap" style="padding-bottom:var(--s16)">' +
+      '<div class="sec-head" style="margin-bottom:var(--s16)">' +
+      '<div class="sec-eyebrow">' + pico('sparkle') + '<span>Featured</span></div>' +
+      '<h2 class="sec-title">대표 프로젝트</h2>' +
+      '<p class="sec-desc">' + desc('featured') + '</p></div></div>');
+    h.push(marquee());
 
-    h.push('<div class="band band--cloud"><div class="wrap">');
-    h.push(sectionHead('eye', 'Summary', '나를 설명하는 요약', 'summary'));
-    h.push(hasList(a.summary)
-      ? '<div class="grid grid--2">' + a.summary.map(function (s) {
-          return '<div class="card card--pad"><h3 class="card__title">' + txt(s.title, '요약 제목') + '</h3>' +
-            '<div class="card__body">' + body(s.body, '요약 본문') + '</div></div>';
-        }).join('') + '</div>'
-      : phBlock('요약 카드', 'CONTENT.about.summary'));
-    h.push('</div></div>');
-
-    h.push('<div class="band"><div class="wrap"><div class="grid grid--3">' + [
-      ['Resume', '경력 · 프로젝트 · 기술 · 자기소개', '#resume'],
-      ['Portfolio', '메인 프로젝트 · 기획서 · AI 작업물', '#portfolio'],
-      ['History', '선호 장르 그래프 · 플레이한 게임', '#history']
+    /* 하단 바로가기 — 버튼 */
+    h.push('<div class="band"><div class="wrap"><div class="jump">' + [
+      ['Resume', '경력 · 프로젝트 · 기술 · 자기소개', '#resume', true],
+      ['Portfolio', '메인 프로젝트 · 기획서 · AI 작업물', '#portfolio', false],
+      ['History', '선호 장르 그래프 · 플레이한 게임', '#history', false]
     ].map(function (x) {
-      return '<a class="card card--pad" href="' + x[2] + '"><h3 class="card__title">' + x[0] + '</h3>' +
-        '<p class="card__body">' + x[1] + '</p></a>';
+      return '<a class="jump__btn' + (x[3] ? ' jump__btn--primary' : '') + '" href="' + x[2] + '">' +
+        '<span class="jump__l"><span class="jump__t">' + x[0] + '</span>' +
+        '<span class="jump__d">' + x[1] + '</span></span>' +
+        '<span class="jump__arrow" aria-hidden="true">→</span></a>';
     }).join('') + '</div>');
     if (has(a.closing)) {
       h.push('<div class="card card--pad card--soft" style="margin-top:var(--s24)">' +
@@ -887,6 +1021,26 @@ var CONTENT = {
     }
     h.push('</div></div>');
     return h.join('');
+  }
+
+  /* 메인 프로젝트 · 기획서 · AI 작업물이 오른쪽에서 왼쪽으로 흐른다 */
+  function marquee() {
+    var p = CONTENT.portfolio || {};
+    var list = [].concat(p.main || [], p.docs || [], p.ai || []);
+    if (!list.length) return '<div class="wrap">' + phBlock('대표 프로젝트에 표시할 게시물', 'CONTENT.portfolio') + '</div>';
+
+    var set = list.map(function (it) {
+      var kind = has(it.kind) ? (KIND_LABEL[it.kind] || String(it.kind).toUpperCase()) : '';
+      return '<a class="mitem" href="#post/' + esc(it.id || '') + '">' +
+        (kind ? '<span class="mitem__kind">' + esc(kind) + '</span>' : '') +
+        '<span>' + txt(it.title, '게시물 제목') + '</span>' +
+        '<span class="mitem__dot" aria-hidden="true"></span></a>';
+    }).join('');
+
+    return '<div class="marquee"><div class="marquee__track">' +
+      '<div class="marquee__set">' + set + '</div>' +
+      '<div class="marquee__set" aria-hidden="true">' + set + '</div>' +
+      '</div></div>';
   }
 
   /* ================================================================
@@ -897,16 +1051,6 @@ var CONTENT = {
       '<a class="tab' + (sub !== 'intro' ? ' is-active' : '') + '" href="#resume">이력서</a>' +
       '<a class="tab' + (sub === 'intro' ? ' is-active' : '') + '" href="#resume/intro">자기소개</a>' +
       '</div></div>';
-  }
-  function careerName(id) {
-    var l = (CONTENT.resume && CONTENT.resume.career) || [];
-    for (var i = 0; i < l.length; i++) if (l[i].id === id) return l[i].org || id;
-    return id;
-  }
-  function projectName(id) {
-    var l = (CONTENT.resume && CONTENT.resume.projects) || [];
-    for (var i = 0; i < l.length; i++) if (l[i].id === id) return l[i].name || id;
-    return id;
   }
 
   function profileBlock() {
@@ -928,6 +1072,31 @@ var CONTENT = {
       '</div></div></div>';
   }
 
+  /* 경력 · 대외활동 공통 칸 — 1:1 이미지 / 이름 / 기간 / 설명 */
+  function cell(it, nameKey, nameLabel) {
+    var range = (has(it.start) || has(it.end))
+      ? esc(it.start || '') + ' ~ ' + esc(it.end || '')
+      : ph('0000.00.00 ~ 0000.00.00');
+    var posts = (it.posts || []).filter(has);
+    return '<article>' +
+      imgOr(it.image, it[nameKey] || '', 'cell__img', 'cell__img-ph', '이미지') +
+      '<h3 class="cell__name">' + txt(it[nameKey], nameLabel) + '</h3>' +
+      '<div class="cell__date">' + range + '</div>' +
+      '<div class="cell__desc">' + body(it.desc, '설명') + '</div>' +
+      (posts.length
+        ? '<div class="cell__links chips">' + posts.map(function (id) {
+            return '<a class="chip chip--violet" href="#post/' + esc(id) + '">' + esc(postTitle(id)) + '</a>';
+          }).join('') + '</div>'
+        : '') +
+      '</article>';
+  }
+  function postTitle(id) {
+    var p = CONTENT.portfolio || {};
+    var l = [].concat(p.main || [], p.docs || [], p.ai || []);
+    for (var i = 0; i < l.length; i++) if (l[i].id === id) return l[i].title || id;
+    return id;
+  }
+
   function renderResume(sub) {
     /* 프로필·인적사항은 두 탭 모두에서 그대로 유지된다 */
     var h = [resumeTabs(sub), profileBlock()];
@@ -935,83 +1104,57 @@ var CONTENT = {
 
     var r = CONTENT.resume || {};
 
-    /* 경력 2/3 · 프로젝트 1/3 — 한 행 */
-    h.push('<div class="band band--cloud"><div class="wrap"><div class="split split--21">');
+    /* 01 경력 — 연도별, 테두리 없이 줄로 이어진다 */
+    h.push('<div class="band"><div class="wrap">');
+    h.push(sectionHead('node', '01 · Career', '경력', 'career'));
+    h.push(hasList(r.career)
+      ? r.career.map(function (g) {
+          return '<div class="yrow">' +
+            '<div class="yrow__year">' + txt(g.year, '연도') + '</div>' +
+            '<div class="cells">' + (g.items || []).map(function (it) {
+              return cell(it, 'org', '회사명');
+            }).join('') + '</div></div>';
+        }).join('')
+      : phBlock('경력 항목', 'CONTENT.resume.career'));
+    h.push('</div></div>');
 
-    h.push('<div>' + sectionHead('node', '01 · Career', '경력', 'career') +
-      (hasList(r.career)
-        ? '<div class="timeline">' + r.career.map(function (c) {
-            var t = ['<article class="tl"><div class="tl__aside">'];
-            t.push('<div class="tl__period">' + txt(c.period, '재직 기간') + '</div>');
-            if (has(c.type)) t.push('<div><span class="chip">' + esc(c.type) + '</span></div>');
-            t.push('</div><div>');
-            t.push('<h3 class="tl__org">' + txt(c.org, '회사명') + '</h3>');
-            t.push('<div class="tl__role">' + txt(c.role, '직무') + '</div>');
-            t.push('<div class="tl__summary">' + body(c.summary, '담당 업무 요약') + '</div>');
-            t.push(bullets(c.points));
-            if (hasList(c.tags)) t.push('<div style="margin-top:var(--s12)">' + chips(c.tags) + '</div>');
-            if (hasList(c.relatedProjects)) {
-              t.push('<div class="tl__foot"><div class="tl__footlabel">연관 프로젝트</div><div class="chips">' +
-                c.relatedProjects.map(function (id) {
-                  return '<span class="chip chip--violet">' + esc(projectName(id)) + '</span>';
-                }).join('') + '</div></div>');
-            }
-            return t.join('') + '</div></article>';
-          }).join('') + '</div>'
-        : phBlock('경력 항목', 'CONTENT.resume.career')) + '</div>');
+    /* 02 프로젝트 — Portfolio 메인 프로젝트와 같은 게시물, 누르면 상세로 */
+    h.push('<div class="band band--cloud"><div class="wrap">');
+    h.push(sectionHead('sparkle', '02 · Projects', '프로젝트', 'projects'));
+    h.push(postGrid((CONTENT.portfolio || {}).main, 3,
+      '프로젝트 게시물', 'CONTENT.portfolio.main'));
+    h.push('</div></div>');
 
-    h.push('<div>' + sectionHead('sparkle', '02 · Projects', '프로젝트', 'projects') +
-      (hasList(r.projects)
-        ? '<div class="grid">' + r.projects.map(function (pr) {
-            var t = ['<article class="card card--pad">'];
-            t.push('<div class="chips" style="margin-bottom:var(--s8)">' +
-              (has(pr.relatedCareer) ? '<span class="chip chip--violet">' + esc(careerName(pr.relatedCareer)) + '</span>'
-                                     : '<span class="chip">개인 프로젝트</span>') +
-              (has(pr.period) ? '<span class="chip">' + esc(pr.period) + '</span>' : '') + '</div>');
-            t.push('<h3 class="card__title">' + txt(pr.name, '프로젝트명') + '</h3>');
-            if (has(pr.role)) t.push('<div class="tl__role">' + esc(pr.role) + '</div>');
-            t.push('<div class="card__body">' + body(pr.summary, '프로젝트 요약') + '</div>');
-            t.push(bullets(pr.points));
-            if (hasList(pr.tags)) t.push('<div style="margin-top:var(--s12)">' + chips(pr.tags) + '</div>');
-            if (has(pr.postId)) t.push('<div class="tl__foot"><a class="btn btn--ghost btn--sm" href="#post/' +
-              esc(pr.postId) + '">상세 보기</a></div>');
-            return t.join('') + '</article>';
-          }).join('') + '</div>'
-        : phBlock('프로젝트 항목', 'CONTENT.resume.projects')) + '</div>');
+    /* 03 기술 — 탭 하나가 통째로 한 판, 그 안에서 2열 */
+    h.push('<div class="band"><div class="wrap">');
+    h.push(sectionHead('code', '03 · Skills', '기술', 'skills'));
+    h.push(hasList(r.skills)
+      ? '<div class="skills">' + r.skills.map(function (sk) {
+          var lv = Math.max(0, Math.min(5, Number(sk.level) || 0)), dots = '';
+          for (var i = 0; i < 5; i++) dots += '<i class="' + (i < lv ? 'on' : '') + '"></i>';
+          var icons = (sk.icons && sk.icons.length ? sk.icons : ['']);
+          return '<article>' +
+            '<div class="skill__icons">' + icons.map(function (ic) {
+              return imgOr(ic, sk.name || '', 'skill__icon', 'skill__icon-ph', '아이콘');
+            }).join('') + '</div>' +
+            '<h3 class="skill__name">' + txt(sk.name, '기술명') + '</h3>' +
+            (lv ? '<div class="skill__dots" aria-label="숙련도 ' + lv + '/5">' + dots + '</div>' : '') +
+            '<div class="skill__note">' + txt(sk.note, '설명 1~2줄') + '</div>' +
+            '</article>';
+        }).join('') + '</div>'
+      : phBlock('기술 항목 — 아이콘 · 이름 · 설명', 'CONTENT.resume.skills'));
+    h.push('</div></div>');
 
-    h.push('</div></div></div>');
+    /* 04 대외활동 — 경력과 같은 칸, 테두리 없이 */
+    h.push('<div class="band band--cloud"><div class="wrap">');
+    h.push(sectionHead('flag', '04 · Activity', '대외활동', 'activities'));
+    h.push(hasList(r.activities)
+      ? '<div class="yrow yrow--full"><div class="cells">' + r.activities.map(function (it) {
+          return cell(it, 'title', '활동명');
+        }).join('') + '</div></div>'
+      : phBlock('대외활동', 'CONTENT.resume.activities'));
+    h.push('</div></div>');
 
-    /* 대외활동 1/3 · 기술 2/3 */
-    h.push('<div class="band"><div class="wrap"><div class="split">');
-
-    h.push('<div>' + sectionHead('spark', 'Activity', '대외활동', 'activities') +
-      (hasList(r.activities)
-        ? '<div class="grid">' + r.activities.map(function (ac) {
-            return '<div class="card card--pad">' +
-              '<h3 class="card__title" style="font-size:var(--text-body)">' + txt(ac.title, '활동명') + '</h3>' +
-              (has(ac.period) ? '<div class="card__meta">' + esc(ac.period) + '</div>' : '') +
-              (has(ac.desc) ? '<div class="card__body">' + esc(ac.desc) + '</div>' : '') + '</div>';
-          }).join('') + '</div>'
-        : phBlock('대외활동', 'CONTENT.resume.activities')) + '</div>');
-
-    h.push('<div>' + sectionHead('code', 'Skills', '기술', 'skills') +
-      (hasList(r.skills)
-        ? '<div class="skills">' + r.skills.map(function (sk) {
-            var lv = Math.max(0, Math.min(5, Number(sk.level) || 0)), dots = '';
-            for (var i = 0; i < 5; i++) dots += '<i class="' + (i < lv ? 'on' : '') + '"></i>';
-            return '<article class="skill">' +
-              '<div class="skill__top">' +
-                imgOr(sk.icon, sk.name || '', 'skill__icon', 'skill__icon-ph', '아이콘') +
-                '<div><div class="skill__name">' + txt(sk.name, '기술명') + '</div>' +
-                (lv ? '<div class="skill__dots" aria-label="숙련도 ' + lv + '/5">' + dots + '</div>' : '') +
-                '</div>' +
-              '</div>' +
-              '<div class="skill__note">' + txt(sk.note, '설명') + '</div>' +
-              '</article>';
-          }).join('') + '</div>'
-        : phBlock('기술 항목 — 아이콘 · 이름 · 설명', 'CONTENT.resume.skills')) + '</div>');
-
-    h.push('</div></div></div>');
     return h.join('');
   }
 
@@ -1019,7 +1162,7 @@ var CONTENT = {
   function renderIntro() {
     var list = CONTENT.intro || [];
     var h = ['<div class="band band--cloud"><div class="wrap">'];
-    h.push(sectionHead('eye', 'Introduction', '자기소개', 'intro'));
+    h.push(sectionHead('chat', 'Introduction', '자기소개', 'intro'));
     if (!list.length) {
       h.push(phBlock('자기소개 문항', 'CONTENT.intro'));
     } else {
@@ -1094,13 +1237,13 @@ var CONTENT = {
 
   function renderPost(id) {
     var m = findPost(id);
-    var h = ['<div class="band"><div class="wrap">'];
+    var h = ['<div class="band"><div class="wrap"><div class="detail-col">'];
     h.push('<a class="detail-back" href="#portfolio">← Portfolio</a>');
 
     if (!m) {
       h.push('<h1 class="detail__title">게시물을 찾을 수 없습니다</h1>');
       h.push('<p class="detail__tagline">CONTENT.portfolio 안에 id \'' + esc(id) + '\' 항목이 있는지 확인하세요.</p>');
-      return h.join('') + '</div></div>';
+      return h.join('') + '</div></div></div>';
     }
 
     if (m.sample) {
@@ -1158,7 +1301,7 @@ var CONTENT = {
     h.push('</div>');
 
     h.push('<div style="margin-top:var(--s40)"><a class="btn btn--ghost" href="#portfolio">← 목록으로</a></div>');
-    return h.join('') + '</div></div>';
+    return h.join('') + '</div></div></div>';
   }
 
   /* ================================================================
@@ -1280,19 +1423,14 @@ var CONTENT = {
     h.push('<div class="count--hero">' +
       '<div class="count__v">' + txt(t.total && t.total.value, '총 개수') + '</div>' +
       '<div class="count__l">' + txt(t.total && t.total.label, '게임 총 개수') + '</div></div>');
-    h.push('<div class="plat">' + (t.platforms || []).map(function (p) {
-      var pct = Math.max(0, Math.min(100, Number(p.percent) || 0));
-      return '<div class="plat__cell"><div class="plat__l">' + txt(p.label, '플랫폼') + '</div>' +
-        '<div class="plat__v">' + txt(p.value, '수치') + '</div>' +
+    h.push('<div class="plat">' + (t.platforms || []).map(function (pf) {
+      var pct = Math.max(0, Math.min(100, Number(pf.percent) || 0));
+      return '<div class="plat__cell"><div class="plat__l">' + txt(pf.label, '플랫폼') + '</div>' +
+        '<div class="plat__v">' + txt(pf.value, '수치') + '</div>' +
         '<div class="plat__bar"><i style="width:' + pct + '%"></i></div></div>';
     }).join('') + '</div>');
-    h.push('</div></div>');
-    h.push('</div></div>');
 
-    /* 게임 목록 + 태그 검색 */
-    h.push('<div class="band band--cloud"><div class="wrap">');
-    h.push(sectionHead('sparkle', 'Games', '플레이한 게임', 'games'));
-
+    /* 태그 드롭다운 — 수치 바로 아래 */
     h.push('<div class="filter">');
     FILTER_KEYS.forEach(function (f) {
       var list = groups[f.key] || [];
@@ -1314,6 +1452,12 @@ var CONTENT = {
       '</div>');
     h.push('</div>');
 
+    h.push('</div></div>');
+    h.push('</div></div>');
+
+    /* 게임 목록 — 제목 바로 아래에 게임이 뜬다 */
+    h.push('<div class="band band--cloud"><div class="wrap">');
+    h.push(sectionHead('sparkle', 'Games', '플레이한 게임', 'games'));
     h.push('<div id="gamesHost"></div>');
     h.push('</div></div>');
     return h.join('');
