@@ -35,10 +35,10 @@ var CONTENT = { ... };
 | About · Work style | `about.workStyle` | 3열, 큰 픽토그램 + 제목 / 하단 설명. `icon` 은 게임 아이콘(`gamepad` · `pawn` · `monitor` · `dice` · `trophy` · `heart`) 또는 `blocks` · `target` · `bars` · `bolt` · `flag` · `chat` · `box` |
 | About · 대표 프로젝트 | (자동) | 메인 · 기획서 · AI 작업물 게시물 카드가 오른쪽 → 왼쪽으로 흐름. 엷은 회색 구역, 좌우 페이드 |
 | 푸터 | `meta.footerName` / `meta.updated` | 오른쪽에 이름과 최종 수정 일자. **파일을 고칠 때마다 `updated` 를 함께 바꿔 주세요** |
-| Resume · 프로필 | `resume.profile` | 증명사진(3:4) · 이름 + `nameEn`(영어 이름) · 로그라인 2 · **이메일/연락처(한 행)** · 학력 |
+| Resume · 프로필 | `resume.profile` | 증명사진(3:4) · 이름 + `nameEn` · 로그라인 2 · 인적사항 3줄 |
 | 기술 아이콘 | `resume.skills[].icons` | 1:1 이미지 경로 **배열** (여러 개 가능) |
-| Resume · 경력 | `resume.career` | **왼쪽 2/3**, 연도별 묶음 · 세로선을 따라 내려오는 타임라인 |
-| Resume · 프로젝트 | `portfolio.main` | **오른쪽 1/3**, Portfolio 메인 프로젝트와 같은 게시물 (누르면 상세로) |
+| Resume · 경력 | `resume.career` | **왼쪽 3/5**, 연도별 묶음 · 세로선을 따라 내려오는 타임라인 |
+| Resume · 프로젝트 | `portfolio.main` | **오른쪽 2/5**, 납작한 카드(이미지 + 제목/설명). 4개까지 보이고 나머지는 '더 보기' 로 펼침 |
 | Resume · 대외활동 | `resume.activities` | **왼쪽 1/3**, 경력과 같은 세로 타임라인 |
 | Resume · 기술 | `resume.skills` | **오른쪽 2/3**, 탭 하나가 통째로 한 판이고 그 안에서 2열 |
 | 자기소개 (탭) | `intro` | 문항 4개를 한 페이지로 나열. 탭을 바꿔도 프로필·인적사항은 그대로 유지 |
@@ -46,6 +46,22 @@ var CONTENT = { ... };
 | Portfolio · 기획서 | `portfolio.docs` | **4열** |
 | Portfolio · AI 작업물 | `portfolio.ai` | **3열** |
 | History | `history` | 다각형 그래프 · 게임 총 개수 · 플랫폼 선호도 · 게임 목록 |
+
+### 인적사항
+
+아이콘과 함께 세 줄로 표시됩니다.
+
+```js
+profile: {
+  photo: 'assets/images/id.jpg',   // 증명사진 3:4
+  name: '', nameEn: '', logline2: '',
+  birth: '0000.00.00',             // 🎂  |  🏫
+  education: 'OO대학교 OOO학과 (4년제 졸업)',
+  email: 'jisoo752@naver.com',     // ✉︎  ·  ☎︎
+  phone: '010 6747 6881',
+  address: 'OO도 OO시 ...'          // 📍
+}
+```
 
 ### 경력 · 대외활동 칸
 
