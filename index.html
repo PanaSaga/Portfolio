@@ -199,8 +199,8 @@ a.card:active{transform:scale(.995);}
 /* ============================================================
    Placeholder
    ============================================================ */
-.ph{color:inherit;opacity:.5;font-weight:400;}
-.ph--plain{color:inherit;opacity:.5;}
+.ph{color:inherit;opacity:.6;font-weight:400;}
+.ph--plain{color:inherit;opacity:.6;}
 .ph-block{display:block;padding:var(--s20);border-radius:var(--r-card);background:var(--frost);color:var(--slate);opacity:.72;font-size:var(--text-body-sm);text-align:center;}
 .ph-block code{font-family:var(--font-mono);font-size:12px;color:var(--violet-deep);background:var(--accent-soft);border-radius:4px;padding:1px 5px;}
 .ph-img{display:grid;place-items:center;border-radius:var(--r-card);background:var(--frost);color:var(--steel);font-size:var(--text-caption);aspect-ratio:16/9;width:100%;}
@@ -354,18 +354,20 @@ a.card:active{transform:scale(.995);}
    Profile
    ============================================================ */
 .profile{display:grid;gap:var(--s20);}
-/* 왼쪽: 이름·로그라인·소개 / 오른쪽: 인적사항 */
-.profile{display:grid;gap:var(--s24) var(--s40);text-align:left;}
-@media (min-width:820px){.profile{grid-template-columns:minmax(0,1fr) -webkit-max-content;grid-template-columns:minmax(0,1fr) max-content;align-items:start;}}
+/* 이름 블록과 인적사항 블록을 일정 간격으로 붙여 하나의 그룹으로 가운데 정렬 */
+.profile{display:flex;flex-wrap:wrap;justify-content:center;align-items:flex-start;
+  gap:var(--s24) var(--s48);text-align:left;}
 .profile__name{font-size:clamp(32px,7.5vw,52px);font-weight:700;letter-spacing:-.03em;line-height:1.1;
   color:var(--graphite);display:flex;align-items:baseline;flex-wrap:wrap;gap:10px;}
 .profile__name-en{font-size:clamp(17px,4vw,26px);font-weight:500;letter-spacing:-.01em;color:var(--violet-deep);}
 .profile__logline{margin-top:var(--s12);color:var(--violet-deep);font-weight:500;font-size:clamp(16px,3.8vw,20px);line-height:1.6;}
 .profile__desc{margin-top:var(--s20);color:var(--slate);font-size:var(--text-body);line-height:1.8;max-width:60ch;}
 
-.pinfo{display:grid;gap:10px;}
+.pinfo{display:grid;gap:12px;}
 @media (min-width:820px){.pinfo{margin-top:6px;}}
 .pinfo__row{display:flex;flex-wrap:wrap;align-items:center;gap:8px var(--s20);}
+.pinfo__row--big{font-size:1.5em;}
+.pinfo__row--big .pico{width:1.4em;height:1.4em;}
 .pinfo__i{display:inline-flex;align-items:center;gap:8px;font-size:var(--text-body);
   color:var(--graphite);letter-spacing:-.01em;overflow-wrap:anywhere;}
 .pinfo__i .pico{width:18px;height:18px;color:var(--violet);}
@@ -516,8 +518,8 @@ a.card:active{transform:scale(.995);}
 .stick--chess{width:41px;left:-18px;top:36%;transform:rotate(-8deg);}
 .stick--dice{width:46px;left:24%;top:-26px;transform:rotate(6deg);}
 .stick--sword{width:43px;left:63%;top:34%;transform:rotate(4deg);}
-.stick--pad{width:49px;left:50%;bottom:-16px;transform:rotate(-6deg);}
-.stick--dpad{width:37px;right:-16px;top:12%;transform:rotate(9deg);}
+.stick--pad{width:49px;left:calc(50% + 73px);bottom:-16px;transform:rotate(-6deg);}
+.stick--dpad{width:37px;right:-16px;top:calc(12% + 148px);transform:rotate(9deg);}
 @media (max-width:899px){
   .stick{width:32px !important;}
   .stick--chess{left:-10px;}
@@ -549,7 +551,11 @@ a.card:active{transform:scale(.995);}
 .planner__grid{display:grid;gap:var(--s20);margin-top:var(--s16);}
 @media (min-width:820px){.planner__grid{grid-template-columns:150px minmax(0,1fr);align-items:start;}}
 .planner__list{display:grid;gap:var(--s12);align-content:start;
-  max-height:600px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:2px;}
+  max-height:600px;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:2px;
+  scrollbar-width:thin;scrollbar-color:var(--mist) transparent;}
+.planner__list::-webkit-scrollbar{width:5px;}
+.planner__list::-webkit-scrollbar-track{background:transparent;}
+.planner__list::-webkit-scrollbar-thumb{background:var(--mist);border-radius:3px;}
 .ppage{display:block;width:100%;text-align:left;background:transparent;border:0;padding:0;cursor:pointer;}
 .ppage__img{aspect-ratio:297/210;width:100%;border-radius:8px;object-fit:cover;
   background:var(--frost);border:2px solid transparent;
@@ -559,14 +565,19 @@ img.ppage__img{display:block;}
 .ppage:hover .ppage__img{box-shadow:var(--sh-card);}
 .ppage.is-on .ppage__img{border-color:var(--violet);}
 .ppage__n{margin-top:5px;font-size:var(--text-caption);color:var(--slate);text-align:center;}
-.planner__view{position:relative;background:var(--frost);border-radius:var(--r-card);overflow:hidden;
-  aspect-ratio:297/210;width:100%;display:flex;align-items:center;justify-content:center;}
-.planner__view img{width:100%;height:100%;object-fit:contain;display:block;background:#fff;}
-.planner__view iframe{width:100%;height:100%;border:0;display:block;}
+.planner__view{position:relative;background:var(--frost);border-radius:var(--r-card);overflow:hidden;}
+/* 세로 스크롤로 페이지를 넘긴다 — 한 화면에 한 쪽 + 다음 쪽 살짝 */
+.planner__scroll{height:min(72vh,620px);overflow-y:auto;-webkit-overflow-scrolling:touch;
+  scroll-snap-type:y mandatory;scrollbar-width:none;padding:0;}
+.planner__scroll::-webkit-scrollbar{display:none;}
+.pv-page{scroll-snap-align:start;width:100%;aspect-ratio:297/210;background:#fff;
+  display:flex;align-items:center;justify-content:center;color:var(--slate);}
+.pv-page + .pv-page{margin-top:var(--s12);}
+.pv-page img{width:100%;height:100%;object-fit:contain;display:block;}
+/* 아래에 다음 쪽이 있음을 알리는 그라데이션 */
+.planner__view::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;pointer-events:none;
+  background:linear-gradient(to top,var(--frost),transparent);border-radius:0 0 var(--r-card) var(--r-card);}
 .planner__empty{color:var(--slate);opacity:.72;font-weight:500;text-align:center;line-height:1.7;padding:var(--s24);}
-.planner__down{position:absolute;right:var(--s16);bottom:var(--s16);width:36px;height:36px;
-  border-radius:50%;background:var(--violet);color:#fff;display:grid;place-items:center;
-  font-size:14px;line-height:1;box-shadow:0 4px 10px rgba(74,48,221,.3);}
 
 /* 상세 */
 .detail-back{display:inline-flex;align-items:center;gap:6px;color:var(--slate);font-size:var(--text-body-sm);font-weight:500;margin-bottom:var(--s20);}
@@ -764,7 +775,7 @@ function SAMPLE_SECTIONS() {
   ];
 }
 /* 레이아웃 확인용 빈 게시물. 실제 게시물을 넣을 때 해당 줄을 지우세요. */
-function SAMPLE_POST(id, title, kind) {
+function SAMPLE_POST(id, title, kind, withPdf) {
   var k = kind || '';
   var post = {
     id: id, sample: true, title: title, tagline: '', kind: k,
@@ -773,7 +784,7 @@ function SAMPLE_POST(id, title, kind) {
     embed: '',      // 웹빌드/사이트 재생 주소 (게임·사이트·프로젝트) — 비우면 자리표시
     pages: []       // 기획서 PDF 페이지 이미지 배열 — 비우면 기획서 탭이 안 보입니다
   };
-  if (k === 'pdf' || k === 'doc') {
+  if (k === 'pdf' || k === 'doc' || withPdf) {
     /* 기획서 샘플 — 빈 페이지 여러 장으로 스크롤 확인 */
     for (var i = 0; i < 8; i++) post.pages.push({ img: '', href: '' });
   }
@@ -827,12 +838,11 @@ var CONTENT = {
       logline2: '',
       desc: '',             // 이름·로그라인 아래 소개 문단
       /* 인적사항 — 아이콘과 함께 세 줄로 표시됩니다.
-         1줄: 생년월일 | 학력   2줄: 이메일 · 연락처   3줄: 주소            */
+         1줄: 생년월일 | 학력   2줄: 이메일 · 연락처(1.5배)                  */
       birth: '',                          // 0000.00.00
       education: '',                      // OO대학교 OOO학과 (4년제 졸업)
       email: 'jisoo752@naver.com',
-      phone: '010 6747 6881',
-      address: ''                         // OO도 OO시 ...
+      phone: '010 6747 6881'
     },
 
     /* 경력 (중요도 1) — 연도별로 묶어서 나열합니다.
@@ -890,7 +900,7 @@ var CONTENT = {
 
     /* 메인 프로젝트 — 3열 */
     main: [
-      SAMPLE_POST('sample',   '샘플 게시물 1', 'project'),
+      SAMPLE_POST('sample',   '샘플 게시물 1', 'project', true),
       SAMPLE_POST('sample-2', '샘플 게시물 2', 'project'),
       SAMPLE_POST('sample-3', '샘플 게시물 3', 'project')
       // { id: '', title: '', tagline: '', kind: '', thumb: '', tags: [],
@@ -1198,9 +1208,8 @@ var CONTENT = {
         '<div class="pinfo">' +
           '<div class="pinfo__row">' + line('birth', p.birth, '0000.00.00') +
             '<span class="pinfo__sep">|</span>' + line('school', p.education, '학력') + '</div>' +
-          '<div class="pinfo__row">' + line('email', p.email, '이메일') +
+          '<div class="pinfo__row pinfo__row--big">' + line('email', p.email, '이메일') +
             line('phone', p.phone, '연락처') + '</div>' +
-          '<div class="pinfo__row">' + line('pin', p.address, '주소') + '</div>' +
         '</div>' +
       '</div></div></div>';
   }
@@ -1471,31 +1480,41 @@ var CONTENT = {
   }
 
   var PAGES = [];
-  function paintPage(i) {
-    var host = document.getElementById('planView');
-    if (!host) return;
-    var d = PAGES[i];
-    if (d && has(d.img)) {
-      host.innerHTML = '<img src="' + esc(d.img) + '" alt="기획서 ' + (i + 1) + '쪽" loading="lazy">' +
-        (has(d.href) ? '<a class="planner__down" href="' + esc(d.href) +
-          '" target="_blank" rel="noopener noreferrer" aria-label="원본 열기">▾</a>' : '');
-    } else {
-      host.innerHTML = '<div class="planner__empty">' + (i + 1) + '쪽<br>' +
-        '왼쪽 페이지의 img 경로를 넣으면 여기에 크게 표시됩니다.</div>';
-    }
-    var btns = document.querySelectorAll('[data-page]');
-    for (var k = 0; k < btns.length; k++) {
-      btns[k].classList.toggle('is-on', Number(btns[k].getAttribute('data-page')) === i);
-    }
-  }
   function bindPlanner() {
     if (!PAGES.length) return;
-    var btns = document.querySelectorAll('[data-page]');
-    for (var i = 0; i < btns.length; i++) {
-      (function (idx) { btns[i].addEventListener('click', function () { paintPage(idx); }); })(
-        Number(btns[i].getAttribute('data-page')));
+    var scroll = document.getElementById('planScroll');
+    var thumbs = document.querySelectorAll('[data-page]');
+    var views = scroll ? scroll.querySelectorAll('[data-pv]') : [];
+    if (!scroll) return;
+
+    function markThumb(i) {
+      for (var k = 0; k < thumbs.length; k++) {
+        thumbs[k].classList.toggle('is-on', Number(thumbs[k].getAttribute('data-page')) === i);
+      }
     }
-    paintPage(0);   /* 눌러본 게 없으면 첫 페이지 */
+    /* 왼쪽 썸네일 클릭 → 오른쪽을 그 페이지로 스크롤 */
+    for (var i = 0; i < thumbs.length; i++) {
+      (function (idx) {
+        thumbs[idx].addEventListener('click', function () {
+          if (views[idx]) scroll.scrollTo({ top: views[idx].offsetTop - scroll.offsetTop, behavior: 'smooth' });
+          markThumb(idx);
+        });
+      })(Number(thumbs[i].getAttribute('data-page')));
+    }
+    /* 오른쪽 스크롤 → 현재 페이지에 맞춰 왼쪽 표시 갱신 */
+    var ticking = false;
+    scroll.addEventListener('scroll', function () {
+      if (ticking) return; ticking = true;
+      window.requestAnimationFrame(function () {
+        ticking = false;
+        var mid = scroll.scrollTop + scroll.clientHeight * 0.4, cur = 0;
+        for (var j = 0; j < views.length; j++) {
+          if (views[j].offsetTop - scroll.offsetTop <= mid) cur = j;
+        }
+        markThumb(cur);
+      });
+    }, { passive: true });
+    markThumb(0);
   }
 
   function renderPost(id) {
@@ -1575,7 +1594,13 @@ var CONTENT = {
             : '<span class="ppage__img">' + (i + 1) + '쪽</span>') +
           '<span class="ppage__n">' + (i + 1) + '</span></button>';
       }).join('') + '</div>');
-      h.push('<div class="planner__view" id="planView"></div>');
+      h.push('<div class="planner__view"><div class="planner__scroll" id="planScroll">' +
+        m.pages.map(function (d, i) {
+          return '<div class="pv-page" data-pv="' + i + '">' +
+            (has(d.img) ? '<img src="' + esc(d.img) + '" alt="' + (i + 1) + '쪽" loading="lazy">'
+                        : '<span>' + (i + 1) + '쪽 — 왼쪽 페이지의 img 경로를 넣으면 여기에 크게 표시됩니다.</span>') +
+            '</div>';
+        }).join('') + '</div></div>');
       h.push('</div>');
       h.push('</section>');
       PAGES = m.pages;
@@ -1743,13 +1768,14 @@ var CONTENT = {
     h.push(sectionHead('chart', 'History', '선호 장르 · 플레이 기록', 'history'));
 
     h.push('<div class="hist__top">');
-    h.push('<div class="radar-wrap">' + radarSVG(t.axes || []) + '</div>');
+    h.push('<div><div class="radar-wrap">' + radarSVG(t.axes || []) + '</div>' +
+      '<div class="count--hero">' +
+        '<div class="count__v">' + txt(t.total && t.total.value, '총 개수') + '</div>' +
+        '<div class="count__l">' + txt(t.total && t.total.label, '게임 총 개수') + '</div></div>' +
+      '</div>');
 
     h.push('<div>');
     h.push(donut(t.freshness));
-    h.push('<div class="count--hero">' +
-      '<div class="count__v">' + txt(t.total && t.total.value, '총 개수') + '</div>' +
-      '<div class="count__l">' + txt(t.total && t.total.label, '게임 총 개수') + '</div></div>');
     h.push('<div class="plat">' + (t.platforms || []).map(function (pf) {
       var pct = Math.max(0, Math.min(100, Number(pf.percent) || 0));
       return '<div class="plat__cell"><div class="plat__l">' + txt(pf.label, '플랫폼') + '</div>' +
