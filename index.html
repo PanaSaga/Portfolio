@@ -1,0 +1,1429 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="color-scheme" content="light" />
+<title>Portfolio</title>
+<meta name="description" content="게임 기획 포트폴리오" />
+
+<!-- Pretendard (variable, dynamic subset) -->
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css" />
+
+<style>
+/* ============================================================
+   Design tokens — Lightdash (violet pixel-grid on drafting paper)
+   ============================================================ */
+:root{
+  /* Colors */
+  --canvas:#ffffff;
+  --cloud:#f6f8fa;
+  --frost:#eceff3;
+  --ash:#cdd2d9;
+  --mist:#c1c7d0;
+  --fog:#a4abb8;
+  --steel:#818898;
+  --slate:#666d80;
+  --graphite:#36394a;
+  --midnight:#272835;
+  --onyx:#1a1b25;
+  --violet:#5e4cff;
+  --lavender:#c8ccf3;
+  --lilac:#dfdbff;
+
+  /* Type */
+  --font-sans:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',Roboto,'Helvetica Neue',sans-serif;
+  --font-mono:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Monaco,Consolas,monospace;
+
+  --text-caption:12px;
+  --text-body-sm:14px;
+  --text-body:16px;
+  --text-subheading:20px;
+  --text-heading-sm:24px;
+  --text-heading:32px;
+
+  /* Spacing */
+  --s4:4px; --s8:8px; --s12:12px; --s16:16px; --s20:20px; --s24:24px;
+  --s32:32px; --s40:40px; --s48:48px; --s64:64px; --s80:80px;
+
+  /* Layout */
+  --page-max:1200px;
+  --nav-h:60px;
+
+  /* Radius */
+  --r-card:12px;
+  --r-btn:8px;
+  --r-pill:999px;
+
+  /* Shadow — slate tinted */
+  --sh-hairline:rgba(39,40,53,.10) 0 0 0 1px;
+  --sh-card:rgba(39,40,53,.10) 0 0 0 1px, rgba(39,40,53,.08) 0 24px 24px -12px, rgba(39,40,53,.08) 0 12px 12px -6px, rgba(39,40,53,.08) 0 6px 6px -3px, rgba(39,40,53,.08) 0 2px 2px -1px;
+  --sh-soft:rgba(39,40,53,.05) 0 0 0 1px, rgba(39,40,53,.02) 0 30px 18px 0, rgba(39,40,53,.04) 0 13px 13px 0, rgba(39,40,53,.05) 0 3px 7px 0;
+
+  /* iOS safe-area */
+  --sa-l:env(safe-area-inset-left, 0px);
+  --sa-r:env(safe-area-inset-right, 0px);
+  --sa-b:env(safe-area-inset-bottom, 0px);
+}
+
+/* ============================================================
+   Reset / base
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;}
+html{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+  scroll-behavior:smooth;
+}
+body{
+  margin:0;
+  background:var(--canvas);
+  color:var(--graphite);
+  font-family:var(--font-sans);
+  font-size:var(--text-body);
+  line-height:1.5;
+  letter-spacing:-.01em;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  -webkit-tap-highlight-color:rgba(94,76,255,.12);
+  word-break:keep-all;
+  overflow-wrap:break-word;
+}
+img{max-width:100%;height:auto;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;}
+ul,ol{margin:0;padding:0;list-style:none;}
+h1,h2,h3,h4,p{margin:0;}
+:focus-visible{outline:2px solid var(--violet);outline-offset:2px;border-radius:4px;}
+
+/* ============================================================
+   Layout helpers
+   ============================================================ */
+.wrap{
+  width:100%;
+  max-width:var(--page-max);
+  margin:0 auto;
+  padding-left:calc(20px + var(--sa-l));
+  padding-right:calc(20px + var(--sa-r));
+}
+.band{padding:var(--s64) 0;}
+.band--cloud{background:var(--cloud);}
+.band--tight{padding:var(--s40) 0;}
+
+.sec-head{margin-bottom:var(--s24);}
+.sec-eyebrow{
+  font-size:var(--text-caption);
+  font-weight:600;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--violet);
+  margin-bottom:var(--s8);
+}
+.sec-title{
+  font-size:clamp(24px,5vw,var(--text-heading));
+  font-weight:600;
+  letter-spacing:-.025em;
+  line-height:1.15;
+  color:var(--graphite);
+}
+.sec-desc{
+  margin-top:var(--s8);
+  color:var(--slate);
+  font-size:var(--text-body-sm);
+}
+.grid{display:grid;gap:var(--s16);}
+@media (min-width:720px){
+  .grid--2{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .grid--3{grid-template-columns:repeat(3,minmax(0,1fr));}
+}
+@media (min-width:1000px){
+  .grid--4{grid-template-columns:repeat(4,minmax(0,1fr));}
+}
+.grid--wide{gap:var(--s40);}
+
+/* ============================================================
+   Nav
+   ============================================================ */
+.nav{
+  position:-webkit-sticky;
+  position:sticky;
+  top:0;
+  z-index:50;
+  background:rgba(255,255,255,.88);
+  -webkit-backdrop-filter:saturate(180%) blur(12px);
+  backdrop-filter:saturate(180%) blur(12px);
+  border-bottom:1px solid var(--ash);
+  padding-top:env(safe-area-inset-top, 0px);
+}
+.nav__inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:var(--s12);
+  height:var(--nav-h);
+}
+.brand{display:flex;align-items:center;gap:var(--s8);flex:0 0 auto;}
+.brand__mark{
+  width:22px;height:22px;border-radius:5px;
+  background:var(--violet);
+  display:grid;place-items:center;
+  color:#fff;font-size:12px;font-weight:700;letter-spacing:-.02em;
+}
+.brand__name{
+  font-size:var(--text-body-sm);
+  font-weight:600;
+  letter-spacing:-.02em;
+  white-space:nowrap;
+}
+.navlinks{
+  display:flex;
+  align-items:center;
+  gap:var(--s4);
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  margin:0 -4px;
+  padding:0 4px;
+}
+.navlinks::-webkit-scrollbar{display:none;}
+.navlink{
+  flex:0 0 auto;
+  padding:8px 12px;
+  border-radius:var(--r-btn);
+  font-size:var(--text-body-sm);
+  font-weight:500;
+  color:var(--slate);
+  white-space:nowrap;
+  transition:color .15s ease, background-color .15s ease;
+}
+.navlink:hover{color:var(--graphite);background:var(--cloud);}
+.navlink.is-active{color:var(--graphite);background:var(--frost);}
+@media (max-width:560px){
+  .brand__name{display:none;}
+  .navlink{padding:8px 10px;}
+}
+
+/* ============================================================
+   Buttons / chips
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  min-height:44px;
+  padding:11px 18px;
+  border-radius:var(--r-btn);
+  font-size:var(--text-body-sm);
+  font-weight:500;
+  letter-spacing:-.01em;
+  transition:background-color .15s ease,border-color .15s ease,color .15s ease;
+}
+.btn--violet{background:var(--violet);color:#fff;}
+.btn--violet:hover{background:#4f3ff0;}
+.btn--ghost{background:#fff;border:1px solid var(--ash);color:var(--graphite);}
+.btn--ghost:hover{border-color:var(--steel);}
+.btn--dark{background:var(--midnight);color:#fff;}
+.btn--dark:hover{background:var(--onyx);}
+.btn--sm{min-height:36px;padding:8px 14px;font-size:13px;}
+
+.chip{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:4px 10px;
+  border-radius:var(--r-pill);
+  background:var(--cloud);
+  color:var(--graphite);
+  font-size:var(--text-caption);
+  font-weight:500;
+  letter-spacing:-.01em;
+  white-space:nowrap;
+}
+.chip--violet{background:var(--lilac);color:var(--violet);}
+.chip--link{background:var(--frost);}
+.chip--link:hover{background:var(--lilac);color:var(--violet);}
+.chips{display:flex;flex-wrap:wrap;gap:6px;}
+
+/* ============================================================
+   Cards
+   ============================================================ */
+.card{
+  background:#fff;
+  border:1px solid var(--ash);
+  border-radius:var(--r-card);
+  padding:var(--s16);
+}
+.card--pad{padding:var(--s20);}
+.card--elev{border-color:transparent;box-shadow:var(--sh-card);}
+.card--soft{border-color:transparent;box-shadow:var(--sh-soft);}
+.card__title{
+  font-size:var(--text-subheading);
+  font-weight:600;
+  letter-spacing:-.02em;
+  line-height:1.3;
+}
+.card__body{margin-top:var(--s8);color:var(--slate);font-size:var(--text-body-sm);line-height:1.65;}
+.card__meta{margin-top:var(--s4);color:var(--steel);font-size:var(--text-caption);}
+
+a.card{display:block;transition:box-shadow .18s ease,border-color .18s ease,transform .18s ease;}
+a.card:hover{border-color:transparent;box-shadow:var(--sh-card);}
+a.card:active{transform:scale(.995);}
+
+/* ============================================================
+   Placeholder (renders where CONTENT is still empty)
+   ============================================================ */
+.ph{
+  display:inline-block;
+  padding:2px 8px;
+  border:1px dashed var(--mist);
+  border-radius:6px;
+  background:repeating-linear-gradient(135deg,rgba(94,76,255,.04) 0 6px,transparent 6px 12px);
+  color:var(--fog);
+  font-size:.9em;
+  font-weight:400;
+  letter-spacing:-.01em;
+}
+.ph-block{
+  display:block;
+  padding:var(--s20);
+  border:1px dashed var(--mist);
+  border-radius:var(--r-card);
+  background:repeating-linear-gradient(135deg,rgba(94,76,255,.04) 0 6px,transparent 6px 12px);
+  color:var(--steel);
+  font-size:var(--text-body-sm);
+  text-align:center;
+}
+.ph-block code{
+  font-family:var(--font-mono);
+  font-size:12px;
+  color:var(--violet);
+  background:var(--lilac);
+  border-radius:4px;
+  padding:1px 5px;
+}
+.ph-img{
+  display:grid;place-items:center;
+  border:1px dashed var(--mist);
+  border-radius:var(--r-card);
+  background:var(--cloud);
+  color:var(--fog);
+  font-size:var(--text-caption);
+  aspect-ratio:16/9;
+  width:100%;
+}
+
+/* ============================================================
+   Hero (About)
+   ============================================================ */
+.hero{padding:var(--s48) 0 var(--s40);}
+.hero__grid{display:grid;gap:var(--s32);align-items:center;}
+@media (min-width:900px){
+  .hero{padding:var(--s80) 0 var(--s64);}
+  .hero__grid{grid-template-columns:minmax(0,2fr) minmax(0,1fr);gap:var(--s48);}
+}
+.hero__logline{
+  font-size:clamp(30px,8.4vw,64px);
+  line-height:1.04;
+  letter-spacing:-.03em;
+  font-weight:600;
+  color:var(--graphite);
+}
+.hero__sub{
+  margin-top:var(--s20);
+  max-width:46ch;
+  color:var(--slate);
+  font-size:clamp(15px,3.6vw,18px);
+  line-height:1.65;
+}
+.hero__sub p + p{margin-top:var(--s12);}
+.hero__cta{display:flex;flex-wrap:wrap;gap:var(--s8);margin-top:var(--s24);}
+
+/* Pixel mosaic — the only ornament */
+.mosaic{display:grid;grid-template-columns:repeat(8,1fr);gap:5px;max-width:260px;margin-left:auto;}
+@media (max-width:899px){.mosaic{max-width:168px;margin:0;}}
+.mosaic i{display:block;aspect-ratio:1/1;border-radius:2px;background:transparent;}
+.mosaic i.c1{background:var(--violet);}
+.mosaic i.c2{background:var(--lavender);}
+.mosaic i.c3{background:var(--lilac);}
+
+/* Stats strip */
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--ash);border:1px solid var(--ash);border-radius:var(--r-card);overflow:hidden;}
+@media (min-width:720px){.stats{grid-template-columns:repeat(4,minmax(0,1fr));}}
+.stat{background:#fff;padding:var(--s16);}
+.stat__value{font-size:var(--text-heading-sm);font-weight:600;letter-spacing:-.02em;line-height:1.2;}
+.stat__label{margin-top:2px;color:var(--steel);font-size:var(--text-caption);}
+
+/* ============================================================
+   Tabs (Resume / 자기소개)
+   ============================================================ */
+.tabs{
+  display:inline-flex;
+  gap:4px;
+  padding:4px;
+  background:var(--cloud);
+  border-radius:var(--r-pill);
+  max-width:100%;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+}
+.tabs::-webkit-scrollbar{display:none;}
+.tab{
+  flex:0 0 auto;
+  padding:9px 20px;
+  border-radius:var(--r-pill);
+  font-size:var(--text-body-sm);
+  font-weight:500;
+  color:var(--slate);
+  white-space:nowrap;
+}
+.tab.is-active{
+  background:#fff;
+  color:var(--graphite);
+  border:1px solid var(--ash);
+  padding:8px 19px;
+  box-shadow:rgba(39,40,53,.06) 0 2px 4px 0;
+}
+
+/* ============================================================
+   Profile
+   ============================================================ */
+.profile{display:grid;gap:var(--s20);}
+@media (min-width:720px){.profile{grid-template-columns:180px minmax(0,1fr);gap:var(--s32);align-items:start;}}
+.profile__photo{
+  width:140px;height:140px;border-radius:var(--r-card);
+  object-fit:cover;background:var(--frost);
+}
+.profile__photo-ph{
+  width:140px;height:140px;border-radius:var(--r-card);
+  border:1px dashed var(--mist);background:var(--cloud);
+  display:grid;place-items:center;color:var(--fog);font-size:var(--text-caption);text-align:center;padding:8px;
+}
+.profile__name{font-size:clamp(26px,6vw,40px);font-weight:600;letter-spacing:-.03em;line-height:1.1;}
+.profile__logline{margin-top:var(--s12);color:var(--slate);font-size:clamp(15px,3.6vw,18px);line-height:1.6;}
+.deflist{margin-top:var(--s20);display:grid;gap:1px;background:var(--ash);border:1px solid var(--ash);border-radius:var(--r-card);overflow:hidden;}
+.deflist__row{background:#fff;display:grid;grid-template-columns:96px minmax(0,1fr);gap:var(--s12);padding:12px var(--s16);align-items:baseline;}
+.deflist__k{color:var(--steel);font-size:var(--text-caption);font-weight:500;}
+.deflist__v{font-size:var(--text-body-sm);color:var(--graphite);overflow-wrap:anywhere;}
+
+/* ============================================================
+   Timeline (경력 — 중요도 1)
+   ============================================================ */
+.timeline{position:relative;display:grid;gap:var(--s16);}
+.tl{
+  position:relative;
+  background:#fff;
+  border:1px solid var(--ash);
+  border-radius:var(--r-card);
+  padding:var(--s20);
+}
+@media (min-width:900px){
+  .tl{display:grid;grid-template-columns:200px minmax(0,1fr);gap:var(--s24);padding:var(--s24);}
+}
+.tl__aside{display:flex;flex-direction:column;gap:6px;}
+.tl__period{color:var(--steel);font-size:var(--text-caption);font-weight:500;}
+.tl__org{font-size:var(--text-subheading);font-weight:600;letter-spacing:-.02em;line-height:1.25;}
+.tl__role{margin-top:2px;color:var(--violet);font-size:var(--text-body-sm);font-weight:500;}
+.tl__summary{color:var(--slate);font-size:var(--text-body-sm);line-height:1.7;}
+@media (max-width:899px){.tl__summary{margin-top:var(--s12);}}
+.bullets{margin-top:var(--s12);display:grid;gap:8px;}
+.bullets li{position:relative;padding-left:16px;color:var(--slate);font-size:var(--text-body-sm);line-height:1.65;}
+.bullets li::before{
+  content:"";position:absolute;left:0;top:.62em;
+  width:5px;height:5px;border-radius:1px;background:var(--violet);
+}
+.tl__foot{margin-top:var(--s16);padding-top:var(--s12);border-top:1px solid var(--frost);}
+.tl__footlabel{color:var(--steel);font-size:var(--text-caption);margin-bottom:6px;}
+
+/* ============================================================
+   Skills (중요도 3)
+   ============================================================ */
+.skill{display:grid;gap:6px;padding:var(--s16) 0;border-bottom:1px solid var(--frost);}
+.skill:last-child{border-bottom:0;}
+.skill__top{display:flex;align-items:center;justify-content:space-between;gap:var(--s12);}
+.skill__name{font-size:var(--text-body);font-weight:500;letter-spacing:-.02em;}
+.skill__dots{display:flex;gap:4px;flex:0 0 auto;}
+.skill__dots i{width:8px;height:8px;border-radius:2px;background:var(--frost);display:block;}
+.skill__dots i.on{background:var(--violet);}
+.skill__note{color:var(--slate);font-size:var(--text-body-sm);line-height:1.6;}
+
+/* ============================================================
+   Q&A (자기소개)
+   ============================================================ */
+.qa{border:1px solid var(--ash);border-radius:var(--r-card);background:#fff;overflow:hidden;}
+.qa + .qa{margin-top:var(--s12);}
+.qa__q{
+  display:flex;align-items:flex-start;gap:var(--s12);
+  width:100%;text-align:left;
+  padding:var(--s20);
+  font-size:clamp(16px,4vw,var(--text-subheading));
+  font-weight:600;letter-spacing:-.02em;line-height:1.4;
+}
+.qa__no{
+  flex:0 0 auto;width:24px;height:24px;border-radius:6px;
+  background:var(--lilac);color:var(--violet);
+  display:grid;place-items:center;font-size:12px;font-weight:600;margin-top:2px;
+}
+.qa__caret{margin-left:auto;flex:0 0 auto;color:var(--fog);transition:transform .2s ease;margin-top:4px;}
+.qa.is-open .qa__caret{transform:rotate(180deg);}
+.qa__a{padding:0 var(--s20) var(--s20) calc(var(--s20) + 36px);color:var(--slate);font-size:var(--text-body-sm);line-height:1.8;}
+.qa__a p + p{margin-top:var(--s12);}
+.qa:not(.is-open) .qa__a{display:none;}
+
+/* ============================================================
+   Portfolio
+   ============================================================ */
+.pf-thumb{
+  aspect-ratio:16/10;width:100%;border-radius:8px;object-fit:cover;background:var(--frost);margin-bottom:var(--s16);
+}
+.pf-thumb-ph{
+  aspect-ratio:16/10;width:100%;border-radius:8px;margin-bottom:var(--s16);
+  border:1px dashed var(--mist);background:var(--cloud);
+  display:grid;place-items:center;color:var(--fog);font-size:var(--text-caption);
+}
+.att{display:flex;align-items:flex-start;gap:var(--s12);}
+.att__icon{
+  flex:0 0 auto;width:36px;height:36px;border-radius:8px;
+  background:var(--lilac);color:var(--violet);
+  display:grid;place-items:center;font-size:11px;font-weight:700;letter-spacing:.02em;
+}
+.att__ext{margin-left:auto;flex:0 0 auto;color:var(--fog);}
+
+/* Project detail */
+.detail-back{display:inline-flex;align-items:center;gap:6px;color:var(--slate);font-size:var(--text-body-sm);font-weight:500;margin-bottom:var(--s20);}
+.detail-back:hover{color:var(--violet);}
+.detail__title{font-size:clamp(28px,7vw,48px);font-weight:600;letter-spacing:-.03em;line-height:1.05;}
+.detail__tagline{margin-top:var(--s12);color:var(--slate);font-size:clamp(15px,3.8vw,18px);line-height:1.6;max-width:60ch;}
+.detail-sec{margin-top:var(--s40);}
+.detail-sec__h{font-size:var(--text-heading-sm);font-weight:600;letter-spacing:-.02em;margin-bottom:var(--s12);}
+.detail-sec__body{color:var(--slate);font-size:var(--text-body-sm);line-height:1.8;}
+.detail-sec__body p + p{margin-top:var(--s12);}
+.figure{margin-top:var(--s16);}
+.figure img{width:100%;border-radius:var(--r-card);border:1px solid var(--ash);}
+.figure figcaption{margin-top:6px;color:var(--steel);font-size:var(--text-caption);}
+
+/* ============================================================
+   Taste — radar + games
+   ============================================================ */
+.taste__grid{display:grid;gap:var(--s24);}
+@media (min-width:900px){.taste__grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s40);align-items:start;}}
+.radar-wrap{background:#fff;border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s20);}
+.radar{width:100%;height:auto;display:block;max-width:460px;margin:0 auto;overflow:visible;}
+.radar-legend{margin-top:var(--s16);display:grid;gap:1px;background:var(--frost);border-radius:8px;overflow:hidden;}
+.radar-legend__row{background:#fff;display:flex;align-items:center;gap:var(--s12);padding:9px var(--s12);font-size:var(--text-body-sm);}
+.radar-legend__no{
+  width:18px;height:18px;border-radius:4px;background:var(--lilac);color:var(--violet);
+  display:grid;place-items:center;font-size:11px;font-weight:600;flex:0 0 auto;
+}
+.radar-legend__v{margin-left:auto;color:var(--steel);font-size:var(--text-caption);font-variant-numeric:tabular-nums;}
+
+.count-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s12);}
+.count{background:#fff;border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s16);}
+.count__v{font-size:clamp(28px,7vw,40px);font-weight:600;letter-spacing:-.03em;line-height:1;color:var(--graphite);}
+.count__l{margin-top:6px;color:var(--steel);font-size:var(--text-caption);}
+.count--hero{grid-column:1 / -1;background:var(--onyx);border-color:transparent;}
+.count--hero .count__v{color:#fff;}
+.count--hero .count__l{color:var(--fog);}
+.count--hero .ph{color:var(--steel);border-color:#3a3b4a;}
+
+.gamelist{display:grid;gap:1px;background:var(--ash);border:1px solid var(--ash);border-radius:var(--r-card);overflow:hidden;}
+.game{background:#fff;display:flex;align-items:center;gap:var(--s12);padding:12px var(--s16);}
+.game__title{font-size:var(--text-body-sm);font-weight:500;}
+.game__note{color:var(--steel);font-size:var(--text-caption);margin-top:1px;}
+.game__genre{margin-left:auto;flex:0 0 auto;}
+
+/* ============================================================
+   Footer
+   ============================================================ */
+.footer{
+  border-top:1px solid var(--ash);
+  padding:var(--s40) 0 calc(var(--s40) + var(--sa-b));
+  background:var(--cloud);
+}
+.footer__row{display:flex;flex-wrap:wrap;gap:var(--s12);align-items:center;justify-content:space-between;}
+.footer__note{color:var(--steel);font-size:var(--text-caption);}
+
+/* ============================================================
+   Routes
+   ============================================================ */
+.route{display:none;}
+.route.is-active{display:block;}
+
+/* aspect-ratio 미지원(구형 iOS Safari) 대비 */
+@supports not (aspect-ratio: 1 / 1){
+  .mosaic i{height:0;padding-bottom:100%;}
+  .pf-thumb,.pf-thumb-ph{height:0;padding-bottom:62.5%;}
+  .ph-img{height:0;padding-bottom:56.25%;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *{transition-duration:.01ms !important;animation-duration:.01ms !important;}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav__inner">
+    <a class="brand" href="#about">
+      <span class="brand__mark" id="brandMark">P</span>
+      <span class="brand__name" id="brandName">Portfolio</span>
+    </a>
+    <nav class="navlinks" id="navlinks" aria-label="주요 메뉴">
+      <a class="navlink" href="#about"     data-route="about">About</a>
+      <a class="navlink" href="#resume"    data-route="resume">Resume</a>
+      <a class="navlink" href="#portfolio" data-route="portfolio">Portfolio</a>
+      <a class="navlink" href="#taste"     data-route="taste">Taste</a>
+    </nav>
+  </div>
+</header>
+
+<noscript>
+  <div class="wrap" style="padding-top:32px;padding-bottom:32px">
+    <div class="card card--pad">
+      이 페이지는 JavaScript로 내용을 표시합니다. 브라우저에서 JavaScript를 켜 주세요.
+    </div>
+  </div>
+</noscript>
+
+<main id="app">
+  <section class="route" id="route-about"     data-route="about"></section>
+  <section class="route" id="route-resume"    data-route="resume"></section>
+  <section class="route" id="route-portfolio" data-route="portfolio"></section>
+  <section class="route" id="route-project"   data-route="project"></section>
+  <section class="route" id="route-taste"     data-route="taste"></section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer__row">
+    <div class="footer__note" id="footerLeft"></div>
+    <div class="footer__note" id="footerRight"></div>
+  </div>
+</footer>
+
+<script>
+/* ================================================================
+ *  CONTENT — 여기만 채우면 페이지 전체가 완성됩니다.
+ *  ----------------------------------------------------------------
+ *  · 빈 문자열('')이나 빈 배열([])로 두면 화면에 점선 안내 박스가 표시됩니다.
+ *  · 아래 SHOW_PLACEHOLDER 를 false 로 바꾸면 빈 항목은 아예 숨겨집니다.
+ *  · 배열 항목은 형태를 유지한 채 복사해서 개수를 늘리면 됩니다.
+ * ================================================================ */
+
+var SHOW_PLACEHOLDER = true;
+
+var CONTENT = {
+
+  /* ── 사이트 공통 ─────────────────────────────────────────── */
+  meta: {
+    siteTitle: '',        // 예: '박지수 · 게임 기획 포트폴리오' (브라우저 탭 제목)
+    brandMark: '',        // 좌측 상단 사각형 안 글자 1자 (예: '박')
+    brandName: '',        // 좌측 상단 이름/타이틀
+    footerLeft: '',       // 푸터 왼쪽 (예: '© 2026 박지수')
+    footerRight: ''       // 푸터 오른쪽 (예: '최종 업데이트 2026.09')
+  },
+
+  /* ── 1. About ────────────────────────────────────────────
+     첫 페이지 헤드라인 = 로그라인 1
+     포트폴리오 전체 요약(나를 설명하는 내용)이 들어가는 영역 */
+  about: {
+    logline: '',          // 헤드라인. 한 문장. 줄바꿈은 \n 으로 넣으면 그대로 반영됩니다.
+    intro: '',            // 헤드라인 아래 도입 문단. 빈 줄(\n\n)로 문단 구분.
+    ctas: [
+      // { label: '이력서 보기', href: '#resume', style: 'violet' },   // style: violet | dark | ghost
+      // { label: '포트폴리오',  href: '#portfolio', style: 'ghost' }
+    ],
+    stats: [
+      // { value: '', label: '' }   // 예: { value: '3년+', label: '게임 그래픽 실무' }
+    ],
+    summary: [
+      // { title: '', body: '' }    // 나를 설명하는 요약 카드 (3~4개 권장)
+    ],
+    closing: ''           // About 하단 마무리 문장 (선택)
+  },
+
+  /* ── 2. Resume ─────────────────────────────────────────── */
+  resume: {
+
+    /* 2-1. 프로필 (중요도 4 — 간소하게) */
+    profile: {
+      photo: '',          // 이미지 경로. 예: 'assets/profile.jpg' (비우면 자리 표시)
+      name: '',
+      logline2: '',       // 로그라인 2 — 이력서용 한 줄 소개
+      fields: [
+        { label: '이메일',   value: '' },
+        { label: '연락처',   value: '' },
+        { label: '학력',     value: '' },
+        { label: '입사희망일', value: '' },
+        { label: '희망연봉',  value: '' }
+      ]
+    },
+
+    /* 2-2. 경력 (중요도 1 — 가장 크게, 가장 먼저) */
+    career: [
+      // {
+      //   id: 'company-a',                 // 프로젝트와 연결할 때 쓰는 식별자
+      //   org: '',                         // 회사명
+      //   role: '',                        // 직무
+      //   period: '',                      // 예: '2023.03 – 2025.04 (2년 1개월)'
+      //   type: '',                        // 예: '정규직' / '외주'
+      //   summary: '',                     // 한 문단 요약
+      //   points: [ '', '' ],              // 성과 · 담당 업무 불릿
+      //   tags: [ '', '' ],                // 대표작 · 사용 도구 등
+      //   relatedProjects: [ 'project-a' ] // 아래 projects[].id 와 연결 → 카드 하단에 링크로 표시
+      // }
+    ],
+
+    /* 2-3. 프로젝트 (중요도 2 — 경력과 연관 지어 표시) */
+    projects: [
+      // {
+      //   id: 'project-a',
+      //   name: '',
+      //   period: '',
+      //   role: '',                    // 예: '컨셉 기획 · 시스템 기획'
+      //   summary: '',
+      //   points: [ '' ],
+      //   tags: [ '' ],
+      //   relatedCareer: 'company-a',  // 위 career[].id 와 연결 (개인 프로젝트면 '')
+      //   portfolioId: ''              // Portfolio 메인 프로젝트 상세와 연결할 id (선택)
+      // }
+    ],
+
+    /* 2-4. 기술 (중요도 3) — level 은 0~5 */
+    skills: [
+      // { name: '', level: 0, note: '' }
+    ],
+
+    /* 2-5. 대외활동 (중요도 4 — 요약) */
+    activities: [
+      // { title: '', period: '', desc: '' }
+    ]
+  },
+
+  /* ── 2-tab. 자기소개 (문항 4개) ────────────────────────── */
+  intro: [
+    { q: '', a: '' },
+    { q: '', a: '' },
+    { q: '', a: '' },
+    { q: '', a: '' }
+  ],
+
+  /* ── 3. Portfolio ──────────────────────────────────────── */
+  portfolio: {
+
+    /* 3-1. 메인 프로젝트 — 카드 클릭 시 상세 페이지(#project/<id>)로 이동 */
+    main: [
+      // {
+      //   id: 'check-matter',
+      //   title: '',
+      //   tagline: '',            // 카드 · 상세 상단 한 줄 설명
+      //   thumb: '',              // 썸네일 이미지 경로
+      //   tags: [ '' ],
+      //   meta: [                 // 상세 상단 요약 정보
+      //     { label: '기간',     value: '' },
+      //     { label: '역할',     value: '' },
+      //     { label: '팀 구성',  value: '' },
+      //     { label: '플랫폼',   value: '' }
+      //   ],
+      //   links: [                // 상세 페이지 상단 버튼
+      //     { label: '기획서 보기', href: '', style: 'violet' }
+      //   ],
+      //   sections: [             // 상세 본문 — 필요한 만큼 추가
+      //     {
+      //       heading: '',
+      //       body: '',           // 빈 줄(\n\n)로 문단 구분
+      //       bullets: [ '' ],
+      //       images: [ { src: '', caption: '' } ]
+      //     }
+      //   ]
+      // }
+    ],
+
+    /* 3-2. 기획서 첨부 — PDF 중심 (새 탭에서 열립니다) */
+    docs: [
+      // { title: '', desc: '', type: 'pdf', href: '', tags: [ '' ] }
+      //   type: 'pdf' | 'site' | 'game' | 'image' | 'doc'
+      //   href: 저장소 안 파일이면 'assets/docs/파일명.pdf', 외부면 전체 URL
+    ],
+
+    /* 3-3. AI 활용 작업물 첨부 — 웹빌드 게임 · 사이트 · PDF 등 혼합 */
+    ai: [
+      // { title: '', desc: '', type: 'game', href: '', tags: [ '' ] }
+    ]
+  },
+
+  /* ── 4. 선호 장르 · 플레이 게임 ────────────────────────── */
+  taste: {
+    /* 육각형 그래프. label 을 채우면 축 이름이 표시됩니다.
+       value 는 0~5. 항목 수를 늘리거나 줄이면 그래프도 그만큼(예: 5각형·7각형) 그려집니다. */
+    axes: [
+      { label: '', value: 3 },
+      { label: '', value: 3 },
+      { label: '', value: 3 },
+      { label: '', value: 3 },
+      { label: '', value: 3 },
+      { label: '', value: 3 }
+    ],
+    axisNote: '',          // 그래프 아래 설명 (선택)
+
+    /* 게임 개수 표현 */
+    counts: {
+      total: { value: '', label: '' },        // 크게 표시되는 대표 수치
+      items: [
+        { value: '', label: '' },
+        { value: '', label: '' },
+        { value: '', label: '' },
+        { value: '', label: '' }
+      ]
+    },
+
+    /* 플레이 해본 게임 나열 */
+    games: [
+      // { title: '', genre: '', note: '' }
+    ],
+    gamesNote: ''          // 목록 하단 보충 문구 (선택)
+  }
+};
+
+/* ================================================================
+ *  이 아래는 화면을 그리는 코드입니다. 내용 수정은 위 CONTENT 에서만 하세요.
+ * ================================================================ */
+(function () {
+  'use strict';
+
+  /* ---------- 유틸 ---------- */
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+  function has(v) { return typeof v === 'string' ? v.trim() !== '' : !!v; }
+  function hasList(a) { return Array.isArray(a) && a.length > 0; }
+
+  /* 빈 값 → 점선 안내 (SHOW_PLACEHOLDER 가 false 면 빈 문자열) */
+  function ph(label) {
+    if (!SHOW_PLACEHOLDER) return '';
+    return '<span class="ph">' + esc(label) + '</span>';
+  }
+  function txt(value, label) { return has(value) ? esc(value) : ph(label); }
+  function phBlock(label, path) {
+    if (!SHOW_PLACEHOLDER) return '';
+    return '<div class="ph-block">' + esc(label) +
+      (path ? '<br><code>' + esc(path) + '</code>' : '') + '</div>';
+  }
+  function nl2p(text) {
+    return String(text).split(/\n\s*\n/).map(function (p) {
+      return '<p>' + esc(p).replace(/\n/g, '<br>') + '</p>';
+    }).join('');
+  }
+  function body(value, label) {
+    return has(value) ? nl2p(value) : '<p>' + ph(label) + '</p>';
+  }
+  function chips(list, cls) {
+    var arr = (list || []).filter(has);
+    if (!arr.length) return '';
+    return '<div class="chips">' + arr.map(function (t) {
+      return '<span class="chip ' + (cls || '') + '">' + esc(t) + '</span>';
+    }).join('') + '</div>';
+  }
+  function bullets(list) {
+    var arr = (list || []).filter(has);
+    if (!arr.length) return '';
+    return '<ul class="bullets">' + arr.map(function (b) {
+      return '<li>' + esc(b) + '</li>';
+    }).join('') + '</ul>';
+  }
+  function imgOr(src, alt, imgClass, phClass, phLabel) {
+    if (has(src)) return '<img class="' + imgClass + '" src="' + esc(src) + '" alt="' + esc(alt) + '" loading="lazy">';
+    if (!SHOW_PLACEHOLDER) return '';
+    return '<div class="' + phClass + '">' + esc(phLabel) + '</div>';
+  }
+  function isExternal(href) { return /^(https?:)?\/\//i.test(href); }
+  function linkAttrs(href) {
+    if (!has(href)) return 'href="#" aria-disabled="true"';
+    return 'href="' + esc(href) + '"' + (isExternal(href) || /\.pdf($|\?)/i.test(href)
+      ? ' target="_blank" rel="noopener noreferrer"' : '');
+  }
+  function sectionHead(eyebrow, title, desc) {
+    return '<div class="sec-head">' +
+      (eyebrow ? '<div class="sec-eyebrow">' + esc(eyebrow) + '</div>' : '') +
+      '<h2 class="sec-title">' + esc(title) + '</h2>' +
+      (desc ? '<p class="sec-desc">' + esc(desc) + '</p>' : '') +
+      '</div>';
+  }
+
+  /* ---------- 픽셀 모자이크 (유일한 장식 요소) ---------- */
+  var MOSAIC = [
+    '..3..1..',
+    '.3.11.2.',
+    '..112.3.',
+    '.1112...',
+    '3.1123..',
+    '..2113.1',
+    '.3.211..',
+    '..1.3.2.'
+  ];
+  function mosaic() {
+    var cells = [];
+    for (var r = 0; r < MOSAIC.length; r++) {
+      for (var c = 0; c < MOSAIC[r].length; c++) {
+        var ch = MOSAIC[r].charAt(c);
+        cells.push('<i class="' + (ch === '.' ? '' : 'c' + ch) + '"></i>');
+      }
+    }
+    return '<div class="mosaic" aria-hidden="true">' + cells.join('') + '</div>';
+  }
+
+  /* ================================================================
+   *  1. About
+   * ================================================================ */
+  function renderAbout() {
+    var a = CONTENT.about || {};
+    var h = [];
+
+    h.push('<div class="hero"><div class="wrap"><div class="hero__grid">');
+    h.push('<div>');
+    h.push('<h1 class="hero__logline">' +
+      (has(a.logline) ? esc(a.logline).replace(/\n/g, '<br>') : ph('로그라인 1 — 첫 페이지 헤드라인')) +
+      '</h1>');
+    h.push('<div class="hero__sub">' + body(a.intro, '헤드라인 아래 도입 문단') + '</div>');
+
+    if (hasList(a.ctas)) {
+      h.push('<div class="hero__cta">' + a.ctas.map(function (c) {
+        var style = c.style === 'dark' ? 'btn--dark' : c.style === 'ghost' ? 'btn--ghost' : 'btn--violet';
+        return '<a class="btn ' + style + '" ' + linkAttrs(c.href) + '>' + txt(c.label, '버튼 이름') + '</a>';
+      }).join('') + '</div>');
+    } else if (SHOW_PLACEHOLDER) {
+      h.push('<div class="hero__cta"><span class="ph">버튼 — CONTENT.about.ctas</span></div>');
+    }
+    h.push('</div>');
+    h.push('<div>' + mosaic() + '</div>');
+    h.push('</div></div></div>');
+
+    /* 지표 */
+    h.push('<div class="wrap band band--tight" style="padding-top:0">');
+    if (hasList(a.stats)) {
+      h.push('<div class="stats">' + a.stats.map(function (s) {
+        return '<div class="stat"><div class="stat__value">' + txt(s.value, '수치') + '</div>' +
+          '<div class="stat__label">' + txt(s.label, '항목명') + '</div></div>';
+      }).join('') + '</div>');
+    } else {
+      h.push(phBlock('핵심 지표 — 예: 실무 연차, 참여 프로젝트 수, 누적 다운로드', 'CONTENT.about.stats'));
+    }
+    h.push('</div>');
+
+    /* 요약 카드 */
+    h.push('<div class="band band--cloud"><div class="wrap">');
+    h.push(sectionHead('Summary', '나를 설명하는 요약', '포트폴리오 전체를 한눈에 볼 수 있는 요약 영역입니다.'));
+    if (hasList(a.summary)) {
+      h.push('<div class="grid grid--2">' + a.summary.map(function (s) {
+        return '<div class="card card--pad">' +
+          '<h3 class="card__title">' + txt(s.title, '요약 제목') + '</h3>' +
+          '<div class="card__body">' + body(s.body, '요약 본문') + '</div></div>';
+      }).join('') + '</div>');
+    } else {
+      h.push(phBlock('요약 카드 3~4개 — 강점 · 경험 · 지향점 등', 'CONTENT.about.summary'));
+    }
+    h.push('</div></div>');
+
+    /* 바로가기 */
+    h.push('<div class="band"><div class="wrap">');
+    h.push('<div class="grid grid--3">' + [
+      ['Resume', '경력 · 프로젝트 · 기술 · 자기소개', '#resume'],
+      ['Portfolio', '메인 프로젝트 · 기획서 · AI 작업물', '#portfolio'],
+      ['Taste', '선호 장르 그래프 · 플레이한 게임', '#taste']
+    ].map(function (x) {
+      return '<a class="card card--pad" href="' + x[2] + '">' +
+        '<h3 class="card__title">' + x[0] + '</h3>' +
+        '<p class="card__body">' + x[1] + '</p></a>';
+    }).join('') + '</div>');
+    if (has(a.closing)) {
+      h.push('<div class="card card--pad card--soft" style="margin-top:var(--s24)">' +
+        '<div class="card__body" style="font-size:var(--text-body)">' + nl2p(a.closing) + '</div></div>');
+    }
+    h.push('</div></div>');
+
+    return h.join('');
+  }
+
+  /* ================================================================
+   *  2. Resume (탭: 이력서 / 자기소개)
+   * ================================================================ */
+  function resumeTabs(sub) {
+    return '<div class="wrap" style="padding-top:var(--s32)">' +
+      '<div class="tabs" role="tablist">' +
+      '<a class="tab' + (sub !== 'intro' ? ' is-active' : '') + '" href="#resume">이력서</a>' +
+      '<a class="tab' + (sub === 'intro' ? ' is-active' : '') + '" href="#resume/intro">자기소개</a>' +
+      '</div></div>';
+  }
+
+  function careerName(id) {
+    var list = (CONTENT.resume && CONTENT.resume.career) || [];
+    for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i].org || id;
+    return id;
+  }
+  function projectName(id) {
+    var list = (CONTENT.resume && CONTENT.resume.projects) || [];
+    for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i].name || id;
+    return id;
+  }
+
+  function renderResume(sub) {
+    if (sub === 'intro') return resumeTabs(sub) + renderIntro();
+
+    var r = CONTENT.resume || {};
+    var p = r.profile || {};
+    var h = [resumeTabs(sub)];
+
+    /* 2-1. 프로필 */
+    h.push('<div class="band band--tight"><div class="wrap"><div class="profile">');
+    h.push('<div>' + imgOr(p.photo, '프로필 사진', 'profile__photo', 'profile__photo-ph', '프로필 사진') + '</div>');
+    h.push('<div>');
+    h.push('<h1 class="profile__name">' + txt(p.name, '이름') + '</h1>');
+    h.push('<p class="profile__logline">' + txt(p.logline2, '로그라인 2 — 이력서용 한 줄 소개') + '</p>');
+    if (hasList(p.fields)) {
+      h.push('<div class="deflist">' + p.fields.map(function (f) {
+        return '<div class="deflist__row"><div class="deflist__k">' + txt(f.label, '항목') + '</div>' +
+          '<div class="deflist__v">' + txt(f.value, '내용') + '</div></div>';
+      }).join('') + '</div>');
+    }
+    h.push('</div></div></div></div>');
+
+    /* 2-2. 경력 — 중요도 1 */
+    h.push('<div class="band band--cloud"><div class="wrap">');
+    h.push(sectionHead('01 · Career', '경력', '가장 비중이 큰 영역입니다. 회사별로 항목을 추가하세요.'));
+    if (hasList(r.career)) {
+      h.push('<div class="timeline">' + r.career.map(function (c) {
+        var s = ['<article class="tl">'];
+        s.push('<div class="tl__aside">');
+        s.push('<div class="tl__period">' + txt(c.period, '재직 기간') + '</div>');
+        if (has(c.type)) s.push('<div><span class="chip">' + esc(c.type) + '</span></div>');
+        s.push('</div>');
+        s.push('<div>');
+        s.push('<h3 class="tl__org">' + txt(c.org, '회사명') + '</h3>');
+        s.push('<div class="tl__role">' + txt(c.role, '직무') + '</div>');
+        s.push('<div class="tl__summary">' + body(c.summary, '담당 업무 요약') + '</div>');
+        s.push(bullets(c.points));
+        if (hasList(c.tags)) s.push('<div style="margin-top:var(--s12)">' + chips(c.tags) + '</div>');
+        if (hasList(c.relatedProjects)) {
+          s.push('<div class="tl__foot"><div class="tl__footlabel">연관 프로젝트</div><div class="chips">' +
+            c.relatedProjects.map(function (id) {
+              return '<span class="chip chip--violet">' + esc(projectName(id)) + '</span>';
+            }).join('') + '</div></div>');
+        }
+        s.push('</div></article>');
+        return s.join('');
+      }).join('') + '</div>');
+    } else {
+      h.push(phBlock('경력 항목 — 회사명 · 기간 · 직무 · 담당 업무', 'CONTENT.resume.career'));
+    }
+    h.push('</div></div>');
+
+    /* 2-3. 프로젝트 — 중요도 2 */
+    h.push('<div class="band"><div class="wrap">');
+    h.push(sectionHead('02 · Projects', '프로젝트', '경력과 연결해 표시됩니다. relatedCareer 에 회사 id 를 적으면 연관 표시가 붙습니다.'));
+    if (hasList(r.projects)) {
+      h.push('<div class="grid grid--2">' + r.projects.map(function (pr) {
+        var s = ['<article class="card card--pad">'];
+        s.push('<div class="chips" style="margin-bottom:var(--s8)">' +
+          (has(pr.relatedCareer)
+            ? '<span class="chip chip--violet">' + esc(careerName(pr.relatedCareer)) + '</span>'
+            : '<span class="chip">개인 프로젝트</span>') +
+          (has(pr.period) ? '<span class="chip">' + esc(pr.period) + '</span>' : '') +
+          '</div>');
+        s.push('<h3 class="card__title">' + txt(pr.name, '프로젝트명') + '</h3>');
+        if (has(pr.role)) s.push('<div class="tl__role">' + esc(pr.role) + '</div>');
+        s.push('<div class="card__body">' + body(pr.summary, '프로젝트 요약') + '</div>');
+        s.push(bullets(pr.points));
+        if (hasList(pr.tags)) s.push('<div style="margin-top:var(--s12)">' + chips(pr.tags) + '</div>');
+        if (has(pr.portfolioId)) {
+          s.push('<div class="tl__foot"><a class="btn btn--ghost btn--sm" href="#project/' +
+            esc(pr.portfolioId) + '">상세 보기</a></div>');
+        }
+        s.push('</article>');
+        return s.join('');
+      }).join('') + '</div>');
+    } else {
+      h.push(phBlock('프로젝트 항목 — 이름 · 역할 · 요약 · 연관 경력', 'CONTENT.resume.projects'));
+    }
+    h.push('</div></div>');
+
+    /* 2-4 / 2-5. 기술 · 대외활동 */
+    h.push('<div class="band band--cloud"><div class="wrap"><div class="grid grid--2 grid--wide">');
+
+    h.push('<div>' + sectionHead('03 · Skills', '기술') +
+      (hasList(r.skills)
+        ? '<div class="card card--pad">' + r.skills.map(function (sk) {
+            var lv = Math.max(0, Math.min(5, Number(sk.level) || 0));
+            var dots = '';
+            for (var i = 0; i < 5; i++) dots += '<i class="' + (i < lv ? 'on' : '') + '"></i>';
+            return '<div class="skill">' +
+              '<div class="skill__top"><span class="skill__name">' + txt(sk.name, '기술명') + '</span>' +
+              '<span class="skill__dots" aria-label="숙련도 ' + lv + '/5">' + dots + '</span></div>' +
+              (has(sk.note) ? '<div class="skill__note">' + esc(sk.note) + '</div>' : '') +
+              '</div>';
+          }).join('') + '</div>'
+        : phBlock('기술 항목 — 이름 · 숙련도(0~5) · 설명', 'CONTENT.resume.skills')) +
+      '</div>');
+
+    h.push('<div>' + sectionHead('04 · Activity', '대외활동') +
+      (hasList(r.activities)
+        ? '<div class="grid">' + r.activities.map(function (ac) {
+            return '<div class="card card--pad">' +
+              '<h3 class="card__title" style="font-size:var(--text-body)">' + txt(ac.title, '활동명') + '</h3>' +
+              (has(ac.period) ? '<div class="card__meta">' + esc(ac.period) + '</div>' : '') +
+              (has(ac.desc) ? '<div class="card__body">' + esc(ac.desc) + '</div>' : '') +
+              '</div>';
+          }).join('') + '</div>'
+        : phBlock('대외활동 요약 — 활동명 · 시기 · 설명', 'CONTENT.resume.activities')) +
+      '</div>');
+
+    h.push('</div></div></div>');
+    return h.join('');
+  }
+
+  /* ---------- 자기소개 (문항 4개) ---------- */
+  function renderIntro() {
+    var list = CONTENT.intro || [];
+    var h = ['<div class="band"><div class="wrap">'];
+    h.push(sectionHead('Introduction', '자기소개', '문항 4개. CONTENT.intro 의 q(질문) / a(답변)를 채우세요.'));
+    if (!list.length) {
+      h.push(phBlock('자기소개 문항', 'CONTENT.intro'));
+    } else {
+      h.push('<div style="max-width:820px">' + list.map(function (item, i) {
+        return '<div class="qa' + (i === 0 ? ' is-open' : '') + '">' +
+          '<button class="qa__q" type="button" data-qa="' + i + '" aria-expanded="' + (i === 0) + '">' +
+          '<span class="qa__no">' + (i + 1) + '</span>' +
+          '<span>' + txt(item.q, '문항 ' + (i + 1) + ' 질문') + '</span>' +
+          '<span class="qa__caret" aria-hidden="true">▾</span>' +
+          '</button>' +
+          '<div class="qa__a">' + body(item.a, '문항 ' + (i + 1) + ' 답변') + '</div>' +
+          '</div>';
+      }).join('') + '</div>');
+    }
+    h.push('</div></div>');
+    return h.join('');
+  }
+
+  /* ================================================================
+   *  3. Portfolio
+   * ================================================================ */
+  var TYPE_LABEL = { pdf: 'PDF', site: 'WEB', game: 'PLAY', image: 'IMG', doc: 'DOC' };
+
+  function attachmentList(items, emptyLabel, emptyPath) {
+    if (!hasList(items)) return phBlock(emptyLabel, emptyPath);
+    return '<div class="grid grid--2">' + items.map(function (it) {
+      var kind = TYPE_LABEL[it.type] || 'LINK';
+      return '<a class="card card--pad" ' + linkAttrs(it.href) + '>' +
+        '<div class="att">' +
+        '<span class="att__icon">' + esc(kind) + '</span>' +
+        '<span style="min-width:0">' +
+        '<span class="card__title" style="font-size:var(--text-body);display:block">' + txt(it.title, '제목') + '</span>' +
+        (has(it.desc) ? '<span class="card__body" style="display:block;margin-top:4px">' + esc(it.desc) + '</span>' : '') +
+        '</span>' +
+        '<span class="att__ext" aria-hidden="true">↗</span>' +
+        '</div>' +
+        (hasList(it.tags) ? '<div style="margin-top:var(--s12)">' + chips(it.tags) + '</div>' : '') +
+        (has(it.href) ? '' : (SHOW_PLACEHOLDER ? '<div style="margin-top:var(--s12)">' + ph('링크 주소 — href') + '</div>' : '')) +
+        '</a>';
+    }).join('') + '</div>';
+  }
+
+  function renderPortfolio() {
+    var p = CONTENT.portfolio || {};
+    var h = [];
+
+    h.push('<div class="band"><div class="wrap">');
+    h.push(sectionHead('Portfolio', '메인 프로젝트', '카드를 누르면 프로젝트 상세 페이지로 이동합니다.'));
+    if (hasList(p.main)) {
+      h.push('<div class="grid grid--2">' + p.main.map(function (m) {
+        return '<a class="card card--pad" href="#project/' + esc(m.id || '') + '">' +
+          imgOr(m.thumb, m.title || '프로젝트 썸네일', 'pf-thumb', 'pf-thumb-ph', '대표 이미지') +
+          '<h3 class="card__title">' + txt(m.title, '프로젝트명') + '</h3>' +
+          '<p class="card__body">' + txt(m.tagline, '한 줄 설명') + '</p>' +
+          (hasList(m.tags) ? '<div style="margin-top:var(--s12)">' + chips(m.tags) + '</div>' : '') +
+          '<div style="margin-top:var(--s16)"><span class="btn btn--ghost btn--sm">상세 보기 →</span></div>' +
+          '</a>';
+      }).join('') + '</div>');
+    } else {
+      h.push(phBlock('메인 프로젝트 — id · 제목 · 한 줄 설명 · 상세 섹션', 'CONTENT.portfolio.main'));
+    }
+    h.push('</div></div>');
+
+    h.push('<div class="band band--cloud"><div class="wrap">');
+    h.push(sectionHead('Documents', '기획서', 'PDF 파일을 새 탭으로 엽니다. 저장소에 올릴 경우 assets/docs/ 아래에 두고 경로를 적으세요.'));
+    h.push(attachmentList(p.docs, '기획서 첨부 — 제목 · 설명 · PDF 경로', 'CONTENT.portfolio.docs'));
+    h.push('</div></div>');
+
+    h.push('<div class="band"><div class="wrap">');
+    h.push(sectionHead('AI Works', 'AI 활용 작업물', '웹빌드 게임 · 사이트 · PDF 등 형태가 달라도 type 만 바꿔서 함께 넣을 수 있습니다.'));
+    h.push(attachmentList(p.ai, 'AI 활용 작업물 — 제목 · 설명 · 링크(웹빌드/사이트/PDF)', 'CONTENT.portfolio.ai'));
+    h.push('</div></div>');
+
+    return h.join('');
+  }
+
+  /* ---------- 프로젝트 상세 ---------- */
+  function findProject(id) {
+    var list = (CONTENT.portfolio && CONTENT.portfolio.main) || [];
+    for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i];
+    return null;
+  }
+
+  function renderProject(id) {
+    var m = findProject(id);
+    var h = ['<div class="band"><div class="wrap">'];
+    h.push('<a class="detail-back" href="#portfolio">← Portfolio</a>');
+
+    if (!m) {
+      h.push('<h1 class="detail__title">프로젝트를 찾을 수 없습니다</h1>');
+      h.push('<p class="detail__tagline">CONTENT.portfolio.main 에 <code>id: \'' + esc(id) + '\'</code> 항목이 있는지 확인하세요.</p>');
+      h.push('</div></div>');
+      return h.join('');
+    }
+
+    h.push('<h1 class="detail__title">' + txt(m.title, '프로젝트명') + '</h1>');
+    h.push('<p class="detail__tagline">' + txt(m.tagline, '한 줄 설명') + '</p>');
+    if (hasList(m.tags)) h.push('<div style="margin-top:var(--s16)">' + chips(m.tags) + '</div>');
+
+    if (hasList(m.links)) {
+      h.push('<div class="hero__cta">' + m.links.map(function (l) {
+        var style = l.style === 'violet' ? 'btn--violet' : l.style === 'dark' ? 'btn--dark' : 'btn--ghost';
+        return '<a class="btn ' + style + '" ' + linkAttrs(l.href) + '>' + txt(l.label, '링크 이름') + '</a>';
+      }).join('') + '</div>');
+    }
+
+    if (hasList(m.meta)) {
+      h.push('<div class="deflist" style="margin-top:var(--s24);max-width:560px">' + m.meta.map(function (f) {
+        return '<div class="deflist__row"><div class="deflist__k">' + txt(f.label, '항목') + '</div>' +
+          '<div class="deflist__v">' + txt(f.value, '내용') + '</div></div>';
+      }).join('') + '</div>');
+    }
+
+    h.push(imgOr(m.thumb, m.title || '', 'pf-thumb', 'pf-thumb-ph', '대표 이미지'));
+
+    if (hasList(m.sections)) {
+      h.push(m.sections.map(function (s) {
+        var o = ['<section class="detail-sec">'];
+        o.push('<h2 class="detail-sec__h">' + txt(s.heading, '섹션 제목') + '</h2>');
+        o.push('<div class="detail-sec__body">' + body(s.body, '섹션 본문') + '</div>');
+        o.push(bullets(s.bullets));
+        (s.images || []).forEach(function (im) {
+          o.push('<figure class="figure">' +
+            imgOr(im.src, im.caption || '', '', 'ph-img', '이미지') +
+            (has(im.caption) ? '<figcaption>' + esc(im.caption) + '</figcaption>' : '') +
+            '</figure>');
+        });
+        o.push('</section>');
+        return o.join('');
+      }).join(''));
+    } else {
+      h.push('<div style="margin-top:var(--s32)">' +
+        phBlock('상세 본문 섹션 — 기획 의도 / 핵심 시스템 / 문제와 해결 / 결과 등', 'CONTENT.portfolio.main[].sections') +
+        '</div>');
+    }
+
+    h.push('<div style="margin-top:var(--s40)"><a class="btn btn--ghost" href="#portfolio">← 목록으로</a></div>');
+    h.push('</div></div>');
+    return h.join('');
+  }
+
+  /* ================================================================
+   *  4. Taste — 육각형 그래프 · 게임 개수 · 플레이 목록
+   * ================================================================ */
+  function radarSVG(axes) {
+    var n = axes.length;
+    var W = 360, H = 320, cx = 180, cy = 152, R = 96, MAX = 5;
+    if (n < 3) return phBlock('축이 3개 이상이어야 그래프가 그려집니다', 'CONTENT.taste.axes');
+
+    function pt(i, r) {
+      var ang = (-90 + i * 360 / n) * Math.PI / 180;
+      return [cx + Math.cos(ang) * r, cy + Math.sin(ang) * r];
+    }
+    function poly(r) {
+      var p = [];
+      for (var i = 0; i < n; i++) { var q = pt(i, r); p.push(q[0].toFixed(1) + ',' + q[1].toFixed(1)); }
+      return p.join(' ');
+    }
+
+    var s = ['<svg class="radar" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="선호 장르 그래프">'];
+
+    for (var lv = MAX; lv >= 1; lv--) {
+      s.push('<polygon points="' + poly(R * lv / MAX) + '" fill="' + (lv === MAX ? '#f6f8fa' : 'none') +
+        '" stroke="#cdd2d9" stroke-width="1"/>');
+    }
+    for (var i = 0; i < n; i++) {
+      var e = pt(i, R);
+      s.push('<line x1="' + cx + '" y1="' + cy + '" x2="' + e[0].toFixed(1) + '" y2="' + e[1].toFixed(1) +
+        '" stroke="#cdd2d9" stroke-width="1"/>');
+    }
+
+    var vals = [];
+    for (var j = 0; j < n; j++) {
+      var v = Math.max(0, Math.min(MAX, Number(axes[j].value) || 0));
+      var q2 = pt(j, R * v / MAX);
+      vals.push(q2[0].toFixed(1) + ',' + q2[1].toFixed(1));
+    }
+    s.push('<polygon points="' + vals.join(' ') + '" fill="rgba(94,76,255,.18)" stroke="#5e4cff" stroke-width="2" stroke-linejoin="round"/>');
+    for (var k = 0; k < n; k++) {
+      var vv = Math.max(0, Math.min(MAX, Number(axes[k].value) || 0));
+      var qp = pt(k, R * vv / MAX);
+      s.push('<rect x="' + (qp[0] - 3).toFixed(1) + '" y="' + (qp[1] - 3).toFixed(1) +
+        '" width="6" height="6" rx="1" fill="#5e4cff"/>');
+    }
+
+    for (var m2 = 0; m2 < n; m2++) {
+      var lp = pt(m2, R + 24);
+      var anchor = Math.abs(lp[0] - cx) < 6 ? 'middle' : (lp[0] > cx ? 'start' : 'end');
+      var filled = has(axes[m2].label);
+      s.push('<text x="' + lp[0].toFixed(1) + '" y="' + (lp[1] + 4).toFixed(1) + '" text-anchor="' + anchor +
+        '" font-size="13" font-weight="500" fill="' + (filled ? '#36394a' : '#a4abb8') + '">' +
+        esc(filled ? axes[m2].label : '축 ' + (m2 + 1)) + '</text>');
+    }
+
+    s.push('</svg>');
+    return s.join('');
+  }
+
+  function renderTaste() {
+    var t = CONTENT.taste || {};
+    var axes = t.axes || [];
+    var counts = t.counts || {};
+    var h = ['<div class="band"><div class="wrap">'];
+    h.push(sectionHead('Taste', '선호 장르 · 플레이 게임', '축 라벨은 CONTENT.taste.axes 의 label 을 채우면 그래프에 반영됩니다.'));
+    h.push('<div class="taste__grid">');
+
+    /* 왼쪽 — 육각형 그래프 */
+    h.push('<div class="radar-wrap">');
+    h.push(radarSVG(axes));
+    if (hasList(axes)) {
+      h.push('<div class="radar-legend">' + axes.map(function (ax, i) {
+        return '<div class="radar-legend__row">' +
+          '<span class="radar-legend__no">' + (i + 1) + '</span>' +
+          '<span>' + (has(ax.label) ? esc(ax.label) : ph('축 ' + (i + 1) + ' 이름')) + '</span>' +
+          '<span class="radar-legend__v">' + (Number(ax.value) || 0) + ' / 5</span>' +
+          '</div>';
+      }).join('') + '</div>');
+    }
+    if (has(t.axisNote)) h.push('<p class="sec-desc">' + esc(t.axisNote) + '</p>');
+    h.push('</div>');
+
+    /* 오른쪽 — 게임 개수 + 목록 */
+    h.push('<div>');
+    h.push('<div class="count-grid">');
+    h.push('<div class="count count--hero">' +
+      '<div class="count__v">' + txt(counts.total && counts.total.value, '총 개수') + '</div>' +
+      '<div class="count__l">' + txt(counts.total && counts.total.label, '항목명 — 예: 플레이한 게임') + '</div>' +
+      '</div>');
+    (counts.items || []).forEach(function (c) {
+      h.push('<div class="count">' +
+        '<div class="count__v" style="font-size:var(--text-heading-sm)">' + txt(c.value, '수치') + '</div>' +
+        '<div class="count__l">' + txt(c.label, '항목명') + '</div>' +
+        '</div>');
+    });
+    h.push('</div>');
+
+    h.push('<div style="margin-top:var(--s24)">');
+    h.push(sectionHead('', '플레이한 게임'));
+    if (hasList(t.games)) {
+      h.push('<div class="gamelist">' + t.games.map(function (g) {
+        return '<div class="game"><div style="min-width:0">' +
+          '<div class="game__title">' + txt(g.title, '게임명') + '</div>' +
+          (has(g.note) ? '<div class="game__note">' + esc(g.note) + '</div>' : '') +
+          '</div>' +
+          (has(g.genre) ? '<span class="chip game__genre">' + esc(g.genre) + '</span>' : '') +
+          '</div>';
+      }).join('') + '</div>');
+    } else {
+      h.push(phBlock('플레이한 게임 목록 — 게임명 · 장르 · 메모', 'CONTENT.taste.games'));
+    }
+    if (has(t.gamesNote)) h.push('<p class="sec-desc">' + esc(t.gamesNote) + '</p>');
+    h.push('</div>');
+
+    h.push('</div>');
+    h.push('</div></div></div>');
+    return h.join('');
+  }
+
+  /* ================================================================
+   *  라우터
+   * ================================================================ */
+  var ROUTES = ['about', 'resume', 'portfolio', 'project', 'taste'];
+  var rendered = {};
+
+  function parseHash() {
+    var raw = (location.hash || '').replace(/^#\/?/, '');
+    var parts = raw.split('/');
+    var route = parts[0] || 'about';
+    if (ROUTES.indexOf(route) === -1) route = 'about';
+    return { route: route, param: parts[1] || '' };
+  }
+
+  function render(state) {
+    var key = state.route + '/' + state.param;
+    var host = document.getElementById('route-' + state.route);
+    if (!host) return;
+    if (rendered[state.route] !== key) {
+      if (state.route === 'about') host.innerHTML = renderAbout();
+      else if (state.route === 'resume') host.innerHTML = renderResume(state.param);
+      else if (state.route === 'portfolio') host.innerHTML = renderPortfolio();
+      else if (state.route === 'project') host.innerHTML = renderProject(state.param);
+      else if (state.route === 'taste') host.innerHTML = renderTaste();
+      rendered[state.route] = key;
+    }
+
+    var sections = document.querySelectorAll('.route');
+    for (var i = 0; i < sections.length; i++) {
+      var on = sections[i].getAttribute('data-route') === state.route;
+      sections[i].classList.toggle('is-active', on);
+      if (on) sections[i].removeAttribute('hidden'); else sections[i].setAttribute('hidden', '');
+    }
+
+    var navActive = state.route === 'project' ? 'portfolio' : state.route;
+    var links = document.querySelectorAll('.navlink');
+    for (var j = 0; j < links.length; j++) {
+      links[j].classList.toggle('is-active', links[j].getAttribute('data-route') === navActive);
+    }
+
+    document.title = (has(CONTENT.meta && CONTENT.meta.siteTitle) ? CONTENT.meta.siteTitle : 'Portfolio');
+  }
+
+  var lastKey = '';
+  function onRoute(scroll) {
+    var state = parseHash();
+    var key = state.route + '/' + state.param;
+    render(state);
+    if (scroll && key !== lastKey) window.scrollTo(0, 0);
+    lastKey = key;
+  }
+
+  /* 자기소개 아코디언 — 이벤트 위임 (iOS Safari 대응) */
+  document.addEventListener('click', function (e) {
+    var btn = e.target && e.target.closest ? e.target.closest('[data-qa]') : null;
+    if (!btn) return;
+    var box = btn.parentNode;
+    var open = box.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+
+  /* 부팅 */
+  function boot() {
+    var meta = CONTENT.meta || {};
+    if (has(meta.brandMark)) document.getElementById('brandMark').textContent = meta.brandMark;
+    if (has(meta.brandName)) document.getElementById('brandName').textContent = meta.brandName;
+    document.getElementById('footerLeft').innerHTML = txt(meta.footerLeft, '푸터 왼쪽');
+    document.getElementById('footerRight').innerHTML = txt(meta.footerRight, '푸터 오른쪽');
+
+    if (!location.hash) location.replace('#about');
+    onRoute(false);
+    window.addEventListener('hashchange', function () { onRoute(true); }, false);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+</body>
+</html>
