@@ -5,8 +5,11 @@
 - **파일**: `index.html` 단일 파일 + 해시 라우팅
   (`#about`, `#resume`, `#resume/intro`, `#portfolio`, `#post/<id>`, `#history`)
 - **폰트**: Pretendard (jsDelivr CDN, 동적 서브셋)
-- **디자인**: Lightdash 스타일 — 흰 캔버스 + 슬레이트 톤 + Volt Violet `#5e4cff` 단일 액센트,
-  우상단 코너에 밀착된 픽셀 모자이크, 픽셀 픽토그램(스파클 · 눈 · `</>` · 다이아몬드)
+- **디자인**: Lightdash 스타일을 따르되 배경은 크림 톤 — 기본 `#fffdfa`, 한 단계 진한 구역 `#f9f5ea`,
+  액센트는 Volt Violet `#5e4cff`. 모든 페이지 우상단에 픽셀 모자이크가 붙습니다.
+- **아이콘**: `assets/icons/*.png` (보라 + 주황 라인 아이콘 15종).
+  `CONTENT` 에서는 `gamepad` · `poker` · `video` · `domino` · `target` · `project` · `office` ·
+  `resume` · `school` · `chart` · `pdf` · `birth` · `email` · `phone` · `pin` 이름으로 지정합니다.
 - **연출**: About 에 처음 들어갈 때 코너 모자이크가 오른쪽 위 → 왼쪽 아래 순서로 나타납니다.
   연출은 페이지를 새로 열 때 한 번만 재생되고, 탭을 오가는 것으로는 다시 재생되지 않습니다.
 - **대응**: 모바일 우선 반응형, iOS Safari 대응 (safe-area, `-webkit-` 프리픽스, 터치 스크롤, `aspect-ratio` 폴백)
@@ -30,7 +33,7 @@ var CONTENT = { ... };
 
 | 영역 | CONTENT 경로 | 비고 |
 |---|---|---|
-| 대단원 설명문 | `descs` | 비우면 전부 `상세 설명 첨부` 로 표시 |
+| 대단원 설명문 | `descs` | 비워 두면 아무것도 표시하지 않습니다 (채운 것만 제목 아래에 표시) |
 | About · 헤드라인 | `about.logline` / `about.intro` | 도입 문단은 로그라인의 2/3 크기 |
 | About · Work style | `about.workStyle` | 3열, 큰 픽토그램 + 제목 / 하단 설명. `icon` 은 게임 아이콘(`gamepad` · `pawn` · `monitor` · `dice` · `trophy` · `heart`) 또는 `blocks` · `target` · `bars` · `bolt` · `flag` · `chat` · `box` |
 | About · 대표 프로젝트 | (자동) | 메인 · 기획서 · AI 작업물 게시물 카드가 오른쪽 → 왼쪽으로 흐름. 엷은 회색 구역, 좌우 페이드 |
@@ -45,7 +48,7 @@ var CONTENT = { ... };
 | Portfolio · 메인 | `portfolio.main` | **3열** |
 | Portfolio · 기획서 | `portfolio.docs` | **4열** |
 | Portfolio · AI 작업물 | `portfolio.ai` | **3열** |
-| History | `history` | 다각형 그래프 · 게임 총 개수 · 플랫폼 선호도 · 게임 목록 |
+| History | `history` | 다각형 그래프 · **출시 연식 도넛** · 게임 총 개수 · 플랫폼 선호도 · 게임 목록 |
 
 ### 인적사항
 
@@ -121,6 +124,11 @@ skills: [ { icons: [ 'assets/images/ps.png', 'assets/images/ai.png' ],
 ### History
 
 ```js
+freshness: [                                            // 도넛 그래프 (합이 100)
+  { label: '신규 게임', value: 66, note: '2025년 신규 출시 게임 플레이 비율' },
+  { label: '최신 게임', value: 25, note: '1~7년 내 출시작 플레이 비율' },
+  { label: '고전 게임', value: 9,  note: '8년 이상된 출시작 플레이 비율' }
+],
 axes: [ { label: '로그라이트 덱빌딩', value: 5 }, ... ]   // value 0~5, 항목을 늘리면 8각형까지 그대로
 total: { value: '128', label: '플레이한 게임' },
 platforms: [ { label: 'PC', value: '68', percent: 53 }, ... ],

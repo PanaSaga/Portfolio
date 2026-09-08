@@ -16,9 +16,9 @@
    Design tokens — Lightdash
    ============================================================ */
 :root{
-  --canvas:#ffffff;
-  --cloud:#f6f8fa;
-  --frost:#eceff3;
+  --canvas:#fffdfa;
+  --cloud:#f9f5ea;
+  --frost:#f2eee2;
   --ash:#cdd2d9;
   --mist:#c1c7d0;
   --fog:#a4abb8;
@@ -103,18 +103,19 @@ h1,h2,h3,h4,p{margin:0;}
 .band--cloud{background:var(--cloud);}
 .band--tight{padding-top:var(--s40);padding-bottom:var(--s40);}
 
-.sec-head{margin-bottom:var(--s24);}
+.sec-head{margin-bottom:var(--s24);display:flex;align-items:center;gap:var(--s16);}
+.sec-head__ico{width:56px;height:56px;flex:0 0 auto;object-fit:contain;}
+@media (max-width:559px){.sec-head__ico{width:44px;height:44px;}.sec-head{gap:var(--s12);}}
 .sec-eyebrow{
-  display:flex;align-items:center;gap:8px;
   font-size:var(--text-caption);font-weight:600;
   letter-spacing:.08em;text-transform:uppercase;
-  color:var(--violet);margin-bottom:var(--s8);
+  color:var(--violet);margin-bottom:4px;
 }
 .sec-title{
-  font-size:clamp(24px,5vw,var(--text-heading));
-  font-weight:600;letter-spacing:-.025em;line-height:1.15;color:var(--graphite);
+  font-size:clamp(20px,4vw,var(--text-heading-sm));
+  font-weight:600;letter-spacing:-.02em;line-height:1.15;color:var(--graphite);
 }
-.sec-desc{margin-top:var(--s8);color:var(--slate);font-size:var(--text-body-sm);}
+.sec-desc{margin-top:6px;color:var(--slate);font-size:var(--text-body-sm);}
 
 .grid{display:grid;gap:var(--s16);}
 .grid--1{grid-template-columns:minmax(0,1fr);}
@@ -142,7 +143,7 @@ h1,h2,h3,h4,p{margin:0;}
    ============================================================ */
 .nav{
   position:-webkit-sticky;position:sticky;top:0;z-index:50;
-  background:rgba(255,255,255,.88);
+  background:rgba(255,253,250,.88);
   -webkit-backdrop-filter:saturate(180%) blur(12px);
   backdrop-filter:saturate(180%) blur(12px);
   border-bottom:1px solid var(--ash);
@@ -165,7 +166,7 @@ h1,h2,h3,h4,p{margin:0;}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:11px 18px;border-radius:var(--r-btn);font-size:var(--text-body-sm);font-weight:500;letter-spacing:-.01em;transition:background-color .15s ease,border-color .15s ease,color .15s ease;}
 .btn--violet{background:var(--violet);color:#fff;}
 .btn--violet:hover{background:#4f3ff0;}
-.btn--ghost{background:#fff;border:1px solid var(--ash);color:var(--graphite);}
+.btn--ghost{background:var(--canvas);border:1px solid var(--ash);color:var(--graphite);}
 .btn--ghost:hover{border-color:var(--steel);}
 .btn--dark{background:var(--midnight);color:#fff;}
 .btn--dark:hover{background:var(--onyx);}
@@ -179,7 +180,7 @@ h1,h2,h3,h4,p{margin:0;}
 /* ============================================================
    Cards
    ============================================================ */
-.card{background:#fff;border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s16);}
+.card{background:var(--canvas);border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s16);}
 .card--pad{padding:var(--s20);}
 .card--soft{border-color:transparent;box-shadow:var(--sh-soft);}
 .card__title{font-size:var(--text-subheading);font-weight:600;letter-spacing:-.02em;line-height:1.3;}
@@ -199,12 +200,9 @@ a.card:active{transform:scale(.995);}
 .ph-img{display:grid;place-items:center;border:1px dashed var(--mist);border-radius:var(--r-card);background:var(--cloud);color:var(--fog);font-size:var(--text-caption);aspect-ratio:16/9;width:100%;}
 
 /* ============================================================
-   Pixel pictogram
+   아이콘 (assets/icons/*.png)
    ============================================================ */
-.pico{display:inline-block;vertical-align:-.14em;width:1.1em;height:1.1em;flex:0 0 auto;}
-.pico rect{fill:currentColor;}
-.pico rect.p2{opacity:.34;}
-.pico--lg{width:28px;height:28px;}
+.pico{display:inline-block;vertical-align:-.22em;width:1.3em;height:1.3em;flex:0 0 auto;object-fit:contain;}
 
 /* ============================================================
    Hero + 코너 픽셀 모자이크
@@ -242,6 +240,8 @@ a.card:active{transform:scale(.995);}
   .hero__anchor{position:absolute;top:0;left:0;right:0;height:0;z-index:0;}
   .hero__anchor .wrap{position:relative;height:0;}
   .mosaic{position:absolute;top:0;right:calc(20px + var(--sa-r));z-index:0;--tile:30px;}
+  /* About 이외의 페이지는 조밀한 코너 부분만 — 아래로 흘러내리는 꼬리는 생략 */
+  .route > .hero__anchor .mrow:nth-child(n+8){display:none;}
 }
 @media (max-width:899px){
   .hero__anchor .wrap{padding:0;}
@@ -259,9 +259,9 @@ a.card:active{transform:scale(.995);}
   .ws__item + .ws__item{padding-left:var(--s24);border-left:1px solid var(--frost);}
 }
 .ws__top{display:flex;align-items:center;gap:var(--s12);}
-.ws__icon{width:34px;height:34px;flex:0 0 auto;color:var(--violet);}
-.ws__title{font-size:var(--text-subheading);font-weight:600;letter-spacing:-.02em;line-height:1.25;color:var(--graphite);}
-.ws__desc{margin-top:var(--s12);color:var(--slate);font-size:var(--text-body-sm);line-height:1.7;}
+.ws__icon{width:44px;height:44px;flex:0 0 auto;object-fit:contain;}
+.ws__title{font-size:var(--text-heading-sm);font-weight:600;letter-spacing:-.02em;line-height:1.25;color:var(--graphite);}
+.ws__desc{margin-top:var(--s12);color:var(--slate);font-size:17px;line-height:1.7;}
 
 /* 대표 프로젝트 — 게시물 카드가 오른쪽에서 왼쪽으로 흐른다 */
 /* 페이드가 본문 열(1200px)의 좌우 끝에 맞춰 거의 다 빠지도록 */
@@ -279,15 +279,15 @@ a.card:active{transform:scale(.995);}
 /* 마스크를 지원하지 않는 브라우저용 그라데이션 */
 .marquee::before,.marquee::after{content:"";position:absolute;top:0;bottom:0;
   width:calc(var(--edge) + 130px);z-index:2;pointer-events:none;}
-.marquee::before{left:0;background:linear-gradient(90deg,var(--cloud) 0,var(--cloud) var(--edge),rgba(246,248,250,0) 100%);}
-.marquee::after{right:0;background:linear-gradient(270deg,var(--cloud) 0,var(--cloud) var(--edge),rgba(246,248,250,0) 100%);}
+.marquee::before{left:0;background:linear-gradient(90deg,var(--cloud) 0,var(--cloud) var(--edge),rgba(249,245,234,0) 100%);}
+.marquee::after{right:0;background:linear-gradient(270deg,var(--cloud) 0,var(--cloud) var(--edge),rgba(249,245,234,0) 100%);}
 @supports (mask-image:linear-gradient(#000,#000)) or (-webkit-mask-image:linear-gradient(#000,#000)){
   .marquee::before,.marquee::after{display:none;}
 }
 .marquee__track{display:flex;width:-webkit-max-content;width:max-content;animation:marq 60s linear infinite;}
 .marquee__track:hover{animation-play-state:paused;}
 .marquee__set{display:flex;align-items:stretch;flex:0 0 auto;}
-.mcard{flex:0 0 auto;width:250px;margin-right:var(--s16);background:#fff;border:1px solid var(--ash);
+.mcard{flex:0 0 auto;width:250px;margin-right:var(--s16);background:var(--canvas);border:1px solid var(--ash);
   border-radius:var(--r-card);padding:var(--s12);display:flex;flex-direction:column;
   transition:box-shadow .18s ease,border-color .18s ease;}
 .mcard:hover{border-color:transparent;box-shadow:var(--sh-card);}
@@ -309,7 +309,7 @@ a.card:active{transform:scale(.995);}
 @media (min-width:720px){.jump{grid-template-columns:repeat(3,minmax(0,1fr));}}
 .jump__btn{display:flex;align-items:center;justify-content:space-between;gap:var(--s12);
   min-height:64px;padding:16px 20px;border-radius:var(--r-btn);
-  background:#fff;border:1px solid var(--ash);box-shadow:rgba(39,40,53,.06) 0 2px 4px 0;
+  background:var(--canvas);border:1px solid var(--ash);box-shadow:rgba(39,40,53,.06) 0 2px 4px 0;
   transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease,transform .12s ease;}
 .jump__btn:hover{border-color:var(--violet);box-shadow:rgba(94,76,255,.16) 0 4px 14px 0;}
 .jump__btn:active{transform:translateY(1px);}
@@ -321,7 +321,7 @@ a.card:active{transform:scale(.995);}
 /* Stats */
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--ash);border:1px solid var(--ash);border-radius:var(--r-card);overflow:hidden;}
 @media (min-width:720px){.stats{grid-template-columns:repeat(4,minmax(0,1fr));}}
-.stat{background:#fff;padding:var(--s16);}
+.stat{background:var(--canvas);padding:var(--s16);}
 .stat__value{font-size:var(--text-heading-sm);font-weight:600;letter-spacing:-.02em;line-height:1.2;}
 .stat__label{margin-top:2px;color:var(--steel);font-size:var(--text-caption);}
 
@@ -331,19 +331,23 @@ a.card:active{transform:scale(.995);}
 .tabs{display:inline-flex;gap:4px;padding:4px;background:var(--cloud);border-radius:var(--r-pill);max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
 .tab{flex:0 0 auto;padding:9px 20px;border-radius:var(--r-pill);font-size:var(--text-body-sm);font-weight:500;color:var(--slate);white-space:nowrap;}
-.tab.is-active{background:#fff;color:var(--graphite);border:1px solid var(--ash);padding:8px 19px;box-shadow:rgba(39,40,53,.06) 0 2px 4px 0;}
+.tab.is-active{background:var(--canvas);color:var(--graphite);border:1px solid var(--ash);padding:8px 19px;box-shadow:rgba(39,40,53,.06) 0 2px 4px 0;}
 
 /* ============================================================
    Profile
    ============================================================ */
 .profile{display:grid;gap:var(--s20);}
-@media (min-width:720px){.profile{grid-template-columns:-webkit-max-content minmax(0,1fr);grid-template-columns:max-content minmax(0,1fr);gap:var(--s12);align-items:start;}}
+/* 사진 + 인적사항 묶음을 가운데에, 내용은 왼쪽 정렬 */
+@media (min-width:720px){
+  .profile{grid-template-columns:-webkit-max-content -webkit-max-content;
+    grid-template-columns:max-content max-content;gap:var(--s24);align-items:start;justify-content:center;}
+}
 /* 증명사진 비율(3:4) */
 .profile__photo{width:162px;height:216px;border-radius:var(--r-card);object-fit:cover;background:var(--frost);}
 .profile__photo-ph{width:162px;height:216px;border-radius:var(--r-card);border:1px dashed var(--mist);background:var(--cloud);display:grid;place-items:center;color:var(--fog);font-size:var(--text-caption);text-align:center;padding:8px;}
-.profile__name{font-size:clamp(26px,6vw,40px);font-weight:600;letter-spacing:-.03em;line-height:1.1;
+.profile__name{font-size:clamp(32px,7.5vw,52px);font-weight:600;letter-spacing:-.03em;line-height:1.1;
   display:flex;align-items:baseline;flex-wrap:wrap;gap:10px;}
-.profile__name-en{font-size:var(--text-body);font-weight:500;letter-spacing:-.01em;color:var(--steel);}
+.profile__name-en{font-size:clamp(17px,4vw,26px);font-weight:500;letter-spacing:-.01em;color:var(--steel);}
 .profile__logline{margin-top:var(--s12);color:var(--slate);font-size:clamp(15px,3.6vw,18px);line-height:1.6;}
 
 .pinfo{margin-top:var(--s20);display:grid;gap:10px;max-width:720px;}
@@ -355,7 +359,7 @@ a.card:active{transform:scale(.995);}
 @media (max-width:559px){.pinfo__sep{display:none;}.pinfo__row{gap:8px var(--s16);}}
 
 .deflist{margin-top:var(--s20);display:grid;gap:1px;background:var(--ash);border:1px solid var(--ash);border-radius:var(--r-card);overflow:hidden;max-width:720px;}
-.deflist__row{background:#fff;display:grid;grid-template-columns:64px minmax(0,1fr);gap:var(--s8);padding:13px var(--s16);align-items:baseline;}
+.deflist__row{background:var(--canvas);display:grid;grid-template-columns:64px minmax(0,1fr);gap:var(--s8);padding:13px var(--s16);align-items:baseline;}
 .deflist__k{color:var(--steel);font-size:var(--text-body-sm);font-weight:500;}
 .deflist__v{font-size:var(--text-body);color:var(--graphite);overflow-wrap:anywhere;}
 /* 이메일 + 연락처 한 행 */
@@ -369,6 +373,7 @@ a.card:active{transform:scale(.995);}
    경력 · 대외활동 — 세로로 줄을 따라 내려오는 타임라인
    ============================================================ */
 .sec-head--rule{border-bottom:1px solid var(--ash);padding-bottom:var(--s12);}
+.sec-head--tight{margin-bottom:var(--s16);}
 .tgroup + .tgroup{margin-top:var(--s32);}
 .tyear{font-size:var(--text-subheading);font-weight:600;letter-spacing:-.02em;color:var(--violet);
   line-height:1;margin-bottom:var(--s16);}
@@ -400,7 +405,7 @@ a.card:active{transform:scale(.995);}
    Timeline
    ============================================================ */
 .timeline{display:grid;gap:var(--s16);}
-.tl{background:#fff;border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s20);}
+.tl{background:var(--canvas);border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s20);}
 @media (min-width:900px){.tl{display:grid;grid-template-columns:200px minmax(0,1fr);gap:var(--s24);padding:var(--s24);}}
 .tl__aside{display:flex;flex-direction:column;gap:6px;}
 .tl__period{color:var(--steel);font-size:var(--text-caption);font-weight:500;}
@@ -415,7 +420,7 @@ a.card:active{transform:scale(.995);}
 .tl__footlabel{color:var(--steel);font-size:var(--text-caption);margin-bottom:6px;}
 
 /* Skills — 탭 하나가 통째로 하나의 판, 그 안에서 2열 */
-.skills{background:#fff;border:1px solid var(--ash);border-radius:var(--r-card);
+.skills{background:var(--canvas);border:1px solid var(--ash);border-radius:var(--r-card);
   padding:var(--s24);display:grid;gap:var(--s32) var(--s40);}
 @media (min-width:720px){.skills{grid-template-columns:repeat(2,minmax(0,1fr));}}
 .skill__icons{display:flex;flex-wrap:wrap;gap:8px;}
@@ -431,7 +436,7 @@ a.card:active{transform:scale(.995);}
    자기소개 — 한 페이지 나열 (이력서와 같은 카드 리듬)
    ============================================================ */
 .intro-list{display:grid;gap:var(--s16);}
-.intro-item{background:#fff;border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s24);}
+.intro-item{background:var(--canvas);border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s24);}
 @media (min-width:900px){.intro-item{padding:var(--s32);}}
 .intro-item__no{color:var(--violet);font-size:var(--text-caption);font-weight:600;letter-spacing:.08em;margin-bottom:var(--s8);}
 .intro-item__q{font-size:clamp(19px,4.4vw,26px);font-weight:600;letter-spacing:-.025em;line-height:1.35;color:var(--graphite);}
@@ -451,7 +456,7 @@ a.card:active{transform:scale(.995);}
 /* 납작한 프로젝트 카드 — 왼쪽 대표 이미지, 오른쪽 제목/설명 */
 .plist{display:grid;gap:var(--s12);}
 .pcard{display:grid;grid-template-columns:118px minmax(0,1fr);gap:var(--s16);align-items:center;
-  background:#fff;border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s12);
+  background:var(--canvas);border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s12);
   transition:box-shadow .18s ease,border-color .18s ease;}
 .pcard:hover{border-color:transparent;box-shadow:var(--sh-card);}
 .pcard--sample{border-style:dashed;border-color:var(--mist);}
@@ -464,7 +469,7 @@ a.card:active{transform:scale(.995);}
   color:var(--violet);background:var(--lilac);border-radius:4px;padding:2px 6px;}
 .plist.is-collapsed .pcard:nth-child(n+5){display:none;}
 .plist-more{margin-top:var(--s12);width:100%;display:flex;align-items:center;justify-content:center;gap:6px;
-  min-height:44px;border:1px solid var(--ash);border-radius:var(--r-btn);background:#fff;
+  min-height:44px;border:1px solid var(--ash);border-radius:var(--r-btn);background:var(--canvas);
   font-size:var(--text-body-sm);font-weight:500;color:var(--slate);transition:border-color .15s ease,color .15s ease;}
 .plist-more:hover{border-color:var(--violet);color:var(--violet);}
 .plist-more__c{transition:transform .2s ease;}
@@ -485,7 +490,7 @@ a.card:active{transform:scale(.995);}
 
 .meta2{display:grid;gap:1px;background:var(--ash);border:1px solid var(--ash);border-radius:var(--r-card);overflow:hidden;margin-top:var(--s24);}
 @media (min-width:560px){.meta2{grid-template-columns:repeat(2,minmax(0,1fr));}}
-.meta2__cell{background:#fff;padding:14px var(--s16);display:grid;grid-template-columns:76px minmax(0,1fr);align-items:baseline;gap:var(--s12);}
+.meta2__cell{background:var(--canvas);padding:14px var(--s16);display:grid;grid-template-columns:76px minmax(0,1fr);align-items:baseline;gap:var(--s12);}
 .meta2__k{color:var(--steel);font-size:var(--text-caption);font-weight:500;flex:0 0 auto;}
 .meta2__v{font-size:var(--text-body-sm);color:var(--graphite);overflow-wrap:anywhere;}
 
@@ -505,20 +510,36 @@ a.card:active{transform:scale(.995);}
    ============================================================ */
 .hist__top{display:grid;gap:var(--s24);}
 @media (min-width:900px){.hist__top{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s40);align-items:start;}}
-.radar-wrap{background:#fff;border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s20);}
+.radar-wrap{background:var(--canvas);border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s20);}
 .radar{width:100%;height:auto;display:block;max-width:480px;margin:0 auto;overflow:visible;}
 
-.count--hero{background:var(--onyx);border:1px solid transparent;border-radius:var(--r-card);padding:var(--s24);}
-.count--hero .count__v{font-size:clamp(36px,9vw,56px);font-weight:600;letter-spacing:-.03em;line-height:1;color:#fff;}
+.count--hero{background:var(--onyx);border:1px solid transparent;border-radius:var(--r-card);padding:var(--s20);margin-top:var(--s16);}
+.count--hero .count__v{font-size:clamp(26px,6vw,38px);font-weight:600;letter-spacing:-.03em;line-height:1;color:#fff;}
 .count--hero .count__l{margin-top:8px;color:var(--fog);font-size:var(--text-body-sm);}
 .count--hero .ph{color:var(--steel);border-color:#3a3b4a;}
 .plat{margin-top:var(--s16);display:grid;gap:1px;background:var(--ash);border:1px solid var(--ash);border-radius:var(--r-card);overflow:hidden;}
 @media (min-width:480px){.plat{grid-template-columns:repeat(3,minmax(0,1fr));}}
-.plat__cell{background:#fff;padding:var(--s16);}
+.plat__cell{background:var(--canvas);padding:var(--s16);}
 .plat__l{color:var(--steel);font-size:var(--text-caption);font-weight:500;}
 .plat__v{margin-top:4px;font-size:var(--text-heading-sm);font-weight:600;letter-spacing:-.02em;line-height:1.1;}
 .plat__bar{margin-top:8px;height:4px;border-radius:2px;background:var(--frost);overflow:hidden;}
 .plat__bar i{display:block;height:100%;background:var(--violet);}
+
+/* 출시 연식 도넛 그래프 */
+.donut{background:var(--canvas);border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s20);}
+.donut__legend{display:flex;flex-wrap:wrap;gap:8px var(--s16);margin-bottom:var(--s16);}
+.donut__lg{display:inline-flex;align-items:center;gap:7px;font-size:var(--text-body-sm);font-weight:600;color:var(--graphite);}
+.donut__sw{width:11px;height:11px;border-radius:2px;flex:0 0 auto;}
+.donut__body{display:flex;align-items:center;gap:var(--s20);flex-wrap:wrap;}
+.donut__svg{width:170px;height:170px;flex:0 0 auto;}
+.donut__call{position:relative;flex:1 1 190px;min-width:0;background:var(--frost);border-radius:var(--r-card);padding:var(--s16) var(--s20);}
+@media (min-width:520px){
+  .donut__call::before{content:"";position:absolute;left:-9px;top:38px;width:0;height:0;
+    border-top:10px solid transparent;border-bottom:10px solid transparent;border-right:10px solid var(--frost);}
+}
+.donut__pct{font-size:clamp(28px,7vw,40px);font-weight:600;letter-spacing:-.03em;line-height:1;color:var(--violet);}
+.donut__lab{margin-top:6px;font-size:var(--text-body);font-weight:600;color:var(--graphite);}
+.donut__note{margin-top:8px;font-size:var(--text-caption);color:var(--steel);line-height:1.5;}
 
 /* 태그 드롭다운 필터 — 수치 하단, 좁게 */
 .filter{margin-top:var(--s16);display:flex;flex-wrap:wrap;align-items:flex-end;gap:var(--s12);}
@@ -527,7 +548,7 @@ a.card:active{transform:scale(.995);}
 .fsel__box{position:relative;}
 .fsel select{
   -webkit-appearance:none;appearance:none;
-  width:100%;border:1px solid var(--ash);border-radius:var(--r-btn);background:#fff;
+  width:100%;border:1px solid var(--ash);border-radius:var(--r-btn);background:var(--canvas);
   padding:11px 34px 11px 12px;font-size:16px;letter-spacing:-.01em;color:var(--graphite);
   line-height:1.2;min-height:44px;
 }
@@ -542,7 +563,7 @@ a.card:active{transform:scale(.995);}
 @media (min-width:520px){.games{grid-template-columns:repeat(3,minmax(0,1fr));}}
 @media (min-width:760px){.games{grid-template-columns:repeat(4,minmax(0,1fr));}}
 @media (min-width:1000px){.games{grid-template-columns:repeat(6,minmax(0,1fr));}}
-.game{background:#fff;border:1px solid var(--ash);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;}
+.game{background:var(--canvas);border:1px solid var(--ash);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;}
 .game__img{aspect-ratio:4/3;width:100%;object-fit:cover;background:var(--frost);}
 .game__img-ph{aspect-ratio:4/3;width:100%;background:var(--frost);display:grid;place-items:center;color:var(--fog);font-size:11px;}
 .game__b{padding:9px 10px 10px;display:flex;flex-direction:column;gap:6px;flex:1;}
@@ -671,13 +692,13 @@ var CONTENT = {
     logline: '',          // 헤드라인(로그라인 1). 줄바꿈은 \n
     intro: '',            // 도입 문단(로그라인의 2/3 크기). 문단 구분은 빈 줄(\n\n)
 
-    /* Work style — 3열. icon 은 아래 이름 중 하나:
-       게임: gamepad · pawn · monitor · dice · trophy · heart
-       기타: blocks · target · bars · bolt · flag · chat · box               */
+    /* Work style — 3열. icon 은 assets/icons 안의 이름:
+       gamepad · poker · video · domino · target · project · office ·
+       resume · school · chart · pdf · birth · email · phone · pin          */
     workStyle: [
       { icon: 'gamepad', title: '', desc: '' },
-      { icon: 'pawn',    title: '', desc: '' },
-      { icon: 'monitor', title: '', desc: '' }
+      { icon: 'poker',   title: '', desc: '' },
+      { icon: 'video',   title: '', desc: '' }
     ],
 
     closing: ''
@@ -748,9 +769,9 @@ var CONTENT = {
 
     /* 메인 프로젝트 — 3열 */
     main: [
-      SAMPLE_POST('sample',   '샘플 게시물 1'),
-      SAMPLE_POST('sample-2', '샘플 게시물 2'),
-      SAMPLE_POST('sample-3', '샘플 게시물 3')
+      SAMPLE_POST('sample',   '샘플 게시물 1', 'project'),
+      SAMPLE_POST('sample-2', '샘플 게시물 2', 'project'),
+      SAMPLE_POST('sample-3', '샘플 게시물 3', 'project')
       // { id: '', title: '', tagline: '', kind: '', thumb: '', tags: [],
       //   meta: [], links: [], sections: [] }
     ],
@@ -785,6 +806,13 @@ var CONTENT = {
       { label: '', value: 3 },
       { label: '', value: 3 },
       { label: '', value: 3 }
+    ],
+
+    /* 출시 연식 비율 — 도넛 그래프 (합이 100 이 되도록) */
+    freshness: [
+      { label: '신규 게임', value: 66, note: '2025년 신규 출시 게임 플레이 비율' },
+      { label: '최신 게임', value: 25, note: '1~7년 내 출시작 플레이 비율' },
+      { label: '고전 게임', value: 9,  note: '8년 이상된 출시작 플레이 비율' }
     ],
 
     /* 게임 총 개수 | 플랫폼 선호도 */
@@ -864,286 +892,34 @@ var CONTENT = {
     return has(d) ? esc(d) : '상세 설명 첨부';
   }
 
-  /* ---------- 픽셀 픽토그램 (레퍼런스 아이콘) ---------- */
-  var PICTO = {
-    /* 스파클 — 히어로/대표 섹션 */
-    sparkle: [
-      '....#....',
-      '....#....',
-      '...#.#...',
-      '..#...#..',
-      '##.....##',
-      '..#...#..',
-      '...#.#...',
-      '....#....',
-      '....#....'
-    ],
-    /* 눈 — 보기/요약 */
-    eye: [
-      '...#####...',
-      '..#.....#..',
-      '.#...#...#.',
-      '#...###...#',
-      '.#...#...#.',
-      '..#.....#..',
-      '...#####...'
-    ],
-    /* </> — 제작/작업물 */
-    code: [
-      '...#.....#...',
-      '..#.......#..',
-      '.#....#....#.',
-      '#.....#.....#',
-      '#....#......#',
-      '.#...#.....#.',
-      '..#.......#..',
-      '...#.....#...'
-    ],
-    /* 다이아몬드 + — 연결/기록 */
-    node: [
-      '....#....',
-      '...#.#...',
-      '..#...#..',
-      '.#..#..#.',
-      '#..###..#',
-      '.#..#..#.',
-      '..#...#..',
-      '...#.#...',
-      '....#....'
-    ],
-    /* 작은 플러스 — 보조 */
-    spark: [
-      '.#.',
-      '#.#',
-      '.#.'
-    ],
-
-    /* ↓ 큰 크기에서도 형태가 또렷한 픽토그램 (#=진하게, +=옅게) */
-    blocks: [
-      '####.####',
-      '####.####',
-      '####.####',
-      '####.####',
-      '.........',
-      '++++.####',
-      '++++.####',
-      '++++.####',
-      '++++.####'
-    ],
-    target: [
-      '..#####..',
-      '.#.....#.',
-      '#.......#',
-      '#..###..#',
-      '#..###..#',
-      '#..###..#',
-      '#.......#',
-      '.#.....#.',
-      '..#####..'
-    ],
-    bars: [
-      '.........',
-      '......##.',
-      '......##.',
-      '...++.##.',
-      '...++.##.',
-      '++.++.##.',
-      '++.++.##.',
-      '++.++.##.',
-      '++.++.##.'
-    ],
-    bolt: [
-      '....###..',
-      '...###...',
-      '..###....',
-      '.######..',
-      '....+##..',
-      '...###...',
-      '..###....',
-      '.###.....',
-      '##.......'
-    ],
-    flag: [
-      '##.......',
-      '##+++++..',
-      '#######+.',
-      '#######+.',
-      '##+++++..',
-      '##.......',
-      '##.......',
-      '##.......',
-      '##.......'
-    ],
-    chat: [
-      '#########',
-      '#+++++++#',
-      '#+#####+#',
-      '#+++++++#',
-      '#+#####+#',
-      '#+++++++#',
-      '#########',
-      '..##.....',
-      '.##......'
-    ],
-    box: [
-      '...###...',
-      '..#####..',
-      '.#######.',
-      '#########',
-      '#+++++++#',
-      '#+++++++#',
-      '#+++++++#',
-      '#+++++++#',
-      '#########'
-    ],
-
-    /* ↓ 게임 관련 픽토그램 */
-    gamepad: [
-      '..#######..',
-      '.#+++++++#.',
-      '#++#+++#++#',
-      '#+###+#+#+#',
-      '#++#+++#++#',
-      '.#+++++++#.',
-      '..#######..'
-    ],
-    pawn: [
-      '...###...',
-      '..#####..',
-      '..#####..',
-      '...###...',
-      '..#####..',
-      '.#+++++#.',
-      '.#+++++#.',
-      '#########',
-      '#########'
-    ],
-    monitor: [
-      '###########',
-      '#+++++++++#',
-      '#+++++++++#',
-      '#+++++++++#',
-      '#+++++++++#',
-      '#+++++++++#',
-      '###########',
-      '....###....',
-      '..#######..'
-    ],
-    dice: [
-      '#########',
-      '#+++++++#',
-      '#+#+++#+#',
-      '#+++++++#',
-      '#+++#+++#',
-      '#+++++++#',
-      '#+#+++#+#',
-      '#+++++++#',
-      '#########'
-    ],
-    heart: [
-      '.##...##.',
-      '####+####',
-      '#########',
-      '#########',
-      '.#######.',
-      '..#####..',
-      '...###...',
-      '....#....',
-      '.........'
-    ],
-    /* ↓ 인적사항 아이콘 */
-    cake: [
-      '.....#.....',
-      '.....#.....',
-      '..#######..',
-      '..#+++++#..',
-      '.#########.',
-      '.#+++++++#.',
-      '###########',
-      '#+++++++++#',
-      '###########'
-    ],
-    school: [
-      '.....#.....',
-      '....###....',
-      '...#####...',
-      '..#######..',
-      '.#########.',
-      '.#+#+#+#+#.',
-      '.#+#+#+#+#.',
-      '.#########.',
-      '.#########.'
-    ],
-    mail: [
-      '###########',
-      '#+++++++++#',
-      '#+#+++++#+#',
-      '#++#+++#++#',
-      '#+++#+#+++#',
-      '#++++#++++#',
-      '#+++++++++#',
-      '###########'
-    ],
-    phone: [
-      '#######',
-      '#+++++#',
-      '#+++++#',
-      '#+++++#',
-      '#+++++#',
-      '#+++++#',
-      '#+++++#',
-      '#++#++#',
-      '#######'
-    ],
-    pin: [
-      '...###...',
-      '..#####..',
-      '.#######.',
-      '#########',
-      '###+++###',
-      '###+++###',
-      '#########',
-      '.#######.',
-      '..#####..',
-      '...###...',
-      '....#....'
-    ],
-    trophy: [
-      '.#######.',
-      '##+++++##',
-      '##+++++##',
-      '.#+++++#.',
-      '..#####..',
-      '...###...',
-      '...###...',
-      '..#####..',
-      '.#######.'
-    ]
+  /* ---------- 아이콘 (assets/icons/*.png) ---------- */
+  var ICON_DIR = 'assets/icons/';
+  var ICONS = {
+    birth:'birth', school:'school', email:'email', phone:'phone', pin:'pin',
+    office:'office', project:'project', target:'target', poker:'poker', resume:'resume',
+    gamepad:'gamepad', pdf:'pdf', video:'video', chart:'chart', domino:'domino'
   };
-  /* Work style 기본 아이콘 — 게임 관련 */
-  var BIG_ICONS = ['gamepad', 'pawn', 'monitor', 'dice', 'trophy', 'heart'];
+  /* Work style 기본 아이콘 */
+  var BIG_ICONS = ['gamepad', 'poker', 'video'];
+
   function pico(name, cls) {
-    var g = PICTO[name] || PICTO.sparkle;
-    var w = g[0].length, h = g.length, r = [];
-    for (var y = 0; y < h; y++) {
-      for (var x = 0; x < w; x++) {
-        var c = g[y].charAt(x);
-        if (c === '#' || c === '+') {
-          r.push('<rect x="' + x + '" y="' + y + '" width="1" height="1"' +
-            (c === '+' ? ' class="p2"' : '') + '/>');
-        }
-      }
-    }
-    return '<svg class="pico ' + (cls || '') + '" viewBox="0 0 ' + w + ' ' + h +
-      '" aria-hidden="true" focusable="false" shape-rendering="crispEdges">' + r.join('') + '</svg>';
+    var f = ICONS[name] || ICONS.project;
+    return '<img class="pico ' + (cls || '') + '" src="' + ICON_DIR + f + '.png" alt="" aria-hidden="true" loading="lazy">';
   }
 
+  /* 섹션 머리말 — 큰 아이콘 + 작은 제목. 설명은 CONTENT.descs 를 채운 경우에만 표시 */
+  function headBlock(icon, eyebrow, title, key, extraClass) {
+    var d = (CONTENT.descs || {})[key];
+    return '<div class="sec-head ' + (extraClass || '') + '">' +
+      '<img class="sec-head__ico" src="' + ICON_DIR + (ICONS[icon] || ICONS.project) + '.png" alt="" aria-hidden="true">' +
+      '<div>' +
+        (eyebrow ? '<div class="sec-eyebrow">' + esc(eyebrow) + '</div>' : '') +
+        '<h2 class="sec-title">' + esc(title) + '</h2>' +
+        (has(d) ? '<p class="sec-desc">' + esc(d) + '</p>' : '') +
+      '</div></div>';
+  }
   function sectionHead(icon, eyebrow, title, key) {
-    return '<div class="sec-head">' +
-      (eyebrow ? '<div class="sec-eyebrow">' + pico(icon) + '<span>' + esc(eyebrow) + '</span></div>' : '') +
-      '<h2 class="sec-title">' + esc(title) + '</h2>' +
-      (key ? '<p class="sec-desc">' + desc(key) + '</p>' : '') +
-      '</div>';
+    return headBlock(icon, eyebrow, title, key, '');
   }
 
   /* ---------- 코너 픽셀 모자이크 ----------
@@ -1186,6 +962,10 @@ var CONTENT = {
   function mosaicAnchor(animate) {
     return '<div class="hero__anchor"><div class="wrap">' + mosaic(animate) + '</div></div>';
   }
+  /* 라우트 최상단 우측에 코너 모자이크를 얹는다 */
+  function withMosaic(html) {
+    return mosaicAnchor(false) + '<div class="route-body">' + html + '</div>';
+  }
 
   /* ================================================================
    *  1. About
@@ -1203,9 +983,7 @@ var CONTENT = {
 
     /* Work style — 도입 문단과 같은 글 안에 있는 것처럼 바짝 붙인다 */
     h.push('<div class="wrap" style="padding-bottom:var(--s64)">');
-    h.push('<div class="sec-head" style="margin-bottom:var(--s16)">' +
-      '<h2 class="sec-title">Work style</h2>' +
-      '<p class="sec-desc">' + desc('workStyle') + '</p></div>');
+    h.push(headBlock('gamepad', '', 'Work style', 'workStyle', 'sec-head--tight'));
     if (hasList(a.workStyle)) {
       h.push('<div class="ws">' + a.workStyle.map(function (w, i) {
         return '<div class="ws__item">' +
@@ -1221,10 +999,7 @@ var CONTENT = {
 
     /* 대표 프로젝트 — 오른쪽에서 왼쪽으로 흐르는 가느다란 띠 */
     h.push('<div class="band band--cloud" style="padding-bottom:var(--s40)">' +
-      '<div class="wrap"><div class="sec-head" style="margin-bottom:var(--s16)">' +
-      '<div class="sec-eyebrow">' + pico('sparkle') + '<span>Featured</span></div>' +
-      '<h2 class="sec-title">대표 프로젝트</h2>' +
-      '<p class="sec-desc">' + desc('featured') + '</p></div></div>' +
+      '<div class="wrap">' + headBlock('project', 'Featured', '대표 프로젝트', 'featured', 'sec-head--tight') + '</div>' +
       marquee() + '</div>');
 
     /* 하단 바로가기 — 버튼 */
@@ -1288,9 +1063,9 @@ var CONTENT = {
           '<span class="profile__name-en">' + txt(p.nameEn, 'English name') + '</span></h1>' +
         '<p class="profile__logline">' + txt(p.logline2, '로그라인 2') + '</p>' +
         '<div class="pinfo">' +
-          '<div class="pinfo__row">' + line('cake', p.birth, '0000.00.00') +
+          '<div class="pinfo__row">' + line('birth', p.birth, '0000.00.00') +
             '<span class="pinfo__sep">|</span>' + line('school', p.education, '학력') + '</div>' +
-          '<div class="pinfo__row">' + line('mail', p.email, '이메일') +
+          '<div class="pinfo__row">' + line('email', p.email, '이메일') +
             line('phone', p.phone, '연락처') + '</div>' +
           '<div class="pinfo__row">' + line('pin', p.address, '주소') + '</div>' +
         '</div>' +
@@ -1357,10 +1132,7 @@ var CONTENT = {
   }
 
   function colHead(icon, eyebrow, title, key) {
-    return '<div class="sec-head sec-head--rule">' +
-      '<div class="sec-eyebrow">' + pico(icon) + '<span>' + esc(eyebrow) + '</span></div>' +
-      '<h2 class="sec-title">' + esc(title) + '</h2>' +
-      '<p class="sec-desc">' + desc(key) + '</p></div>';
+    return headBlock(icon, eyebrow, title, key, 'sec-head--rule');
   }
 
   function renderResume(sub) {
@@ -1374,7 +1146,7 @@ var CONTENT = {
     /* 경력 2/3 · 프로젝트 1/3 */
     h.push('<div class="band"><div class="wrap"><div class="split split--32">');
 
-    h.push('<div>' + colHead('node', '01 · Career', '경력', 'career') +
+    h.push('<div>' + colHead('office', '01 · Career', '경력', 'career') +
       (hasList(r.career)
         ? r.career.map(function (g) {
             return '<div class="tgroup">' +
@@ -1385,7 +1157,7 @@ var CONTENT = {
           }).join('')
         : phBlock('경력 항목', 'CONTENT.resume.career')) + '</div>');
 
-    h.push('<div>' + colHead('sparkle', '02 · Projects', '프로젝트', 'projects') +
+    h.push('<div>' + colHead('project', '02 · Projects', '프로젝트', 'projects') +
       projectList((CONTENT.portfolio || {}).main) + '</div>');
 
     h.push('</div></div></div>');
@@ -1393,14 +1165,14 @@ var CONTENT = {
     /* 대외활동 1/3 · 기술 2/3 */
     h.push('<div class="band band--cloud"><div class="wrap"><div class="split">');
 
-    h.push('<div>' + colHead('flag', '04 · Activity', '대외활동', 'activities') +
+    h.push('<div>' + colHead('poker', '04 · Activity', '대외활동', 'activities') +
       (hasList(r.activities)
         ? '<ol class="titems">' + r.activities.map(function (it) {
             return titem(it, 'title', '활동명');
           }).join('') + '</ol>'
         : phBlock('대외활동', 'CONTENT.resume.activities')) + '</div>');
 
-    h.push('<div>' + colHead('code', '03 · Skills', '기술', 'skills') +
+    h.push('<div>' + colHead('target', '03 · Skills', '기술', 'skills') +
       (hasList(r.skills)
         ? '<div class="skills">' + r.skills.map(function (sk) {
             var lv = Math.max(0, Math.min(5, Number(sk.level) || 0)), dots = '';
@@ -1426,7 +1198,7 @@ var CONTENT = {
   function renderIntro() {
     var list = CONTENT.intro || [];
     var h = ['<div class="band band--cloud"><div class="wrap">'];
-    h.push(sectionHead('chat', 'Introduction', '자기소개', 'intro'));
+    h.push(sectionHead('resume', 'Introduction', '자기소개', 'intro'));
     if (!list.length) {
       h.push(phBlock('자기소개 문항', 'CONTENT.intro'));
     } else {
@@ -1444,14 +1216,14 @@ var CONTENT = {
   /* ================================================================
    *  3. Portfolio — 게시물 목록(3열 / 4열) + 상세
    * ================================================================ */
-  var KIND_LABEL = { pdf: 'PDF', site: 'SITE', game: 'PLAY', image: 'IMAGE', doc: 'DOC' };
-  var KIND_ICON  = { pdf: 'node', site: 'eye', game: 'sparkle', image: 'spark', doc: 'node' };
+  var KIND_LABEL = { project: 'PROJECT', pdf: 'PDF', site: 'SITE', game: 'PLAY', image: 'IMAGE', doc: 'DOC' };
+  var KIND_ICON  = { project: 'project', pdf: 'pdf', site: 'video', game: 'gamepad', image: 'video', doc: 'resume' };
 
   function postCard(p) {
     var kind = has(p.kind) ? (KIND_LABEL[p.kind] || String(p.kind).toUpperCase()) : '';
     return '<a class="card' + (p.sample ? ' post--sample' : '') + '" href="#post/' + esc(p.id || '') + '">' +
       imgOr(p.thumb, p.title || '', 'post-thumb', 'post-thumb-ph', '대표 이미지') +
-      (kind ? '<span class="post-kind">' + pico(KIND_ICON[p.kind] || 'code') + esc(kind) + '</span>' : '') +
+      (kind ? '<span class="post-kind">' + pico(KIND_ICON[p.kind] || 'project') + esc(kind) + '</span>' : '') +
       '<h3 class="post__title">' + txt(p.title, '게시물 제목') + '</h3>' +
       '<p class="post__desc">' + txt(p.tagline, '한 줄 설명') + '</p>' +
       (hasList(p.tags) ? '<div style="margin-top:10px">' + chips(p.tags, 'chip--xs') + '</div>' : '') +
@@ -1467,17 +1239,17 @@ var CONTENT = {
     var h = [];
 
     h.push('<div class="band"><div class="wrap">');
-    h.push(sectionHead('sparkle', 'Portfolio', '메인 프로젝트', 'main'));
+    h.push(sectionHead('gamepad', 'Portfolio', '메인 프로젝트', 'main'));
     h.push(postGrid(p.main, 3, '메인 프로젝트 게시물', 'CONTENT.portfolio.main'));
     h.push('</div></div>');
 
     h.push('<div class="band band--cloud"><div class="wrap">');
-    h.push(sectionHead('node', 'Documents', '기획서', 'docs'));
+    h.push(sectionHead('pdf', 'Documents', '기획서', 'docs'));
     h.push(postGrid(p.docs, 4, '기획서 게시물', 'CONTENT.portfolio.docs'));
     h.push('</div></div>');
 
     h.push('<div class="band"><div class="wrap">');
-    h.push(sectionHead('code', 'AI Works', 'AI 활용 작업물', 'ai'));
+    h.push(sectionHead('video', 'AI Works', 'AI 활용 작업물', 'ai'));
     h.push(postGrid(p.ai, 3, 'AI 활용 작업물 게시물', 'CONTENT.portfolio.ai'));
     h.push('</div></div>');
     return h.join('');
@@ -1548,7 +1320,7 @@ var CONTENT = {
     if (hasList(m.sections)) {
       h.push(m.sections.map(function (sec) {
         var o = ['<section class="detail-sec">'];
-        o.push('<h2 class="detail-sec__h">' + pico('spark') + txt(sec.heading, '섹션 제목') + '</h2>');
+        o.push('<h2 class="detail-sec__h">' + pico('project') + txt(sec.heading, '섹션 제목') + '</h2>');
         o.push('<div class="detail-sec__body">' + body(sec.body, '섹션 본문') + '</div>');
         var bl = bullets(sec.bullets);
         if (bl) o.push('<div>' + bl + '</div>');
@@ -1588,7 +1360,7 @@ var CONTENT = {
 
     var s = ['<svg class="radar" viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="선호 장르 그래프">'];
     for (var lv = MAX; lv >= 1; lv--) {
-      s.push('<polygon points="' + poly(R * lv / MAX) + '" fill="' + (lv === MAX ? '#f6f8fa' : 'none') +
+      s.push('<polygon points="' + poly(R * lv / MAX) + '" fill="' + (lv === MAX ? '#f9f5ea' : 'none') +
         '" stroke="#cdd2d9" stroke-width="1"/>');
     }
     for (var i = 0; i < n; i++) {
@@ -1615,6 +1387,44 @@ var CONTENT = {
         esc(filled ? axes[m].label : '축 ' + (m + 1)) + '</text>');
     }
     return s.join('') + '</svg>';
+  }
+
+  /* 출시 연식 도넛 그래프 */
+  var DONUT_TONES = ['#5e4cff', '#b3a9ff', '#dfdbff'];
+  function donut(list) {
+    if (!hasList(list)) return phBlock('출시 연식 비율', 'CONTENT.history.freshness');
+
+    var total = 0, i;
+    for (i = 0; i < list.length; i++) total += Math.max(0, Number(list[i].value) || 0);
+    if (!total) total = 1;
+
+    var R = 60, C = 2 * Math.PI * R, offset = 0, segs = [];
+    for (i = 0; i < list.length; i++) {
+      var v = Math.max(0, Number(list[i].value) || 0);
+      var len = C * v / total;
+      segs.push('<circle cx="85" cy="85" r="' + R + '" fill="none" stroke="' +
+        DONUT_TONES[i % DONUT_TONES.length] + '" stroke-width="26" ' +
+        'stroke-dasharray="' + len.toFixed(2) + ' ' + (C - len).toFixed(2) + '" ' +
+        'stroke-dashoffset="' + (-offset).toFixed(2) + '"/>');
+      offset += len;
+    }
+
+    var top = list[0];
+    return '<div class="donut">' +
+      '<div class="donut__legend">' + list.map(function (it, k) {
+        return '<span class="donut__lg"><span class="donut__sw" style="background:' +
+          DONUT_TONES[k % DONUT_TONES.length] + '"></span>' + txt(it.label, '항목') + '</span>';
+      }).join('') + '</div>' +
+      '<div class="donut__body">' +
+        '<svg class="donut__svg" viewBox="0 0 170 170" role="img" aria-label="출시 연식 비율">' +
+          '<g transform="rotate(-90 85 85)">' + segs.join('') + '</g>' +
+        '</svg>' +
+        '<div class="donut__call">' +
+          '<div class="donut__pct">' + (Number(top.value) || 0) + '%</div>' +
+          '<div class="donut__lab">' + txt(top.label, '항목') + '</div>' +
+          '<div class="donut__note">' + txt(top.note, '설명') + '</div>' +
+        '</div>' +
+      '</div></div>';
   }
 
   /* 검색 대상 태그 — 플랫폼 · 장르만 */
@@ -1678,12 +1488,13 @@ var CONTENT = {
     var t = CONTENT.history || {};
     var groups = tagGroups();
     var h = ['<div class="band"><div class="wrap">'];
-    h.push(sectionHead('node', 'History', '선호 장르 · 플레이 기록', 'history'));
+    h.push(sectionHead('chart', 'History', '선호 장르 · 플레이 기록', 'history'));
 
     h.push('<div class="hist__top">');
     h.push('<div class="radar-wrap">' + radarSVG(t.axes || []) + '</div>');
 
     h.push('<div>');
+    h.push(donut(t.freshness));
     h.push('<div class="count--hero">' +
       '<div class="count__v">' + txt(t.total && t.total.value, '총 개수') + '</div>' +
       '<div class="count__l">' + txt(t.total && t.total.label, '게임 총 개수') + '</div></div>');
@@ -1721,7 +1532,7 @@ var CONTENT = {
 
     /* 게임 목록 — 제목 바로 아래에 게임이 뜬다 */
     h.push('<div class="band band--cloud"><div class="wrap">');
-    h.push(sectionHead('sparkle', 'Games', '플레이한 게임', 'games'));
+    h.push(sectionHead('domino', 'Games', '플레이한 게임', 'games'));
     h.push('<div id="gamesHost"></div>');
     h.push('</div></div>');
     return h.join('');
@@ -1770,9 +1581,9 @@ var CONTENT = {
     if (rendered[state.route] !== key) {
       if (state.route === 'about') { host.innerHTML = renderAbout(); armMosaic(); }
       else if (state.route === 'resume') { host.innerHTML = renderResume(state.param); bindProjectList(); }
-      else if (state.route === 'portfolio') host.innerHTML = renderPortfolio();
-      else if (state.route === 'post') host.innerHTML = renderPost(state.param);
-      else if (state.route === 'history') { host.innerHTML = renderHistory(); bindHistory(); }
+      else if (state.route === 'portfolio') host.innerHTML = withMosaic(renderPortfolio());
+      else if (state.route === 'post') host.innerHTML = withMosaic(renderPost(state.param));
+      else if (state.route === 'history') { host.innerHTML = withMosaic(renderHistory()); bindHistory(); }
       rendered[state.route] = key;
     }
 
