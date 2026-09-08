@@ -18,16 +18,16 @@
 :root{
   /* 배경1 카드·작은 글씨 면 / 배경2 기본 톤 / 배경3 진한 구역 / 배경4 글씨 얹는 보라 */
   --surface:#fefaf3;
-  --canvas:#fdf5e8;
-  --cloud:#fcf0dd;
-  --frost:#fcf0dd;
+  --canvas:#fdf7ed;
+  --cloud:#fdf5e8;
+  --frost:#fbf0dc;
   --accent-soft:#e2c2ff;
   --violet-deep:#3520cf;
   --ash:#e6dccb;
   --mist:#dbcfba;
-  --fog:#a4abb8;
-  --steel:#818898;
-  --slate:#666d80;
+  --fog:#8f95a4;
+  --steel:#6c7280;
+  --slate:#545a68;
   --graphite:#36394a;
   --midnight:#272835;
   --onyx:#1a1b25;
@@ -36,11 +36,11 @@
   --lilac:#e2c2ff;
 
   /* 모자이크 톤 (레퍼런스 히어로 그라데이션) */
-  --px1:#efedff;
-  --px2:#dfdbff;
-  --px3:#b3a9ff;
-  --px4:#5e4cff;
-  --px5:#3520cf;
+  --px1:#e6e2fa;
+  --px2:#c9c2f5;
+  --px3:#8a76ec;
+  --px4:#4a30dd;
+  --px5:#241a8f;
 
   --font-sans:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',Roboto,'Helvetica Neue',sans-serif;
   --font-mono:ui-monospace,SFMono-Regular,'SF Mono',Menlo,Monaco,Consolas,monospace;
@@ -149,7 +149,7 @@ h1,h2,h3,h4,p{margin:0;}
    ============================================================ */
 .nav{
   position:-webkit-sticky;position:sticky;top:0;z-index:50;
-  background:rgba(253,245,232,.90);
+  background:rgba(253,247,237,.92);
   -webkit-backdrop-filter:saturate(180%) blur(12px);
   backdrop-filter:saturate(180%) blur(12px);
   border-bottom:1px solid var(--ash);
@@ -213,14 +213,26 @@ a.card:active{transform:scale(.995);}
 /* ============================================================
    Hero + 코너 픽셀 모자이크
    ============================================================ */
-.hero{position:relative;padding:var(--s48) 0 var(--s24);overflow:hidden;}
-@media (min-width:900px){.hero{padding:var(--s80) 0 var(--s32);}}
+/* About 로그라인 · Resume 인적사항 — 같은 높이, 하단 흰색에서 위로 아이보리 */
+:root{--top-h:400px;}
+.topblock{
+  position:relative;overflow:hidden;
+  background:linear-gradient(to top,#ffffff 0%,var(--cloud) 100%);
+  display:flex;align-items:center;
+  padding:var(--s40) 0;
+}
+@media (min-width:900px){.topblock{min-height:var(--top-h);padding:var(--s48) 0;}}
+.topblock__bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0;}
+.topblock__bg::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(255,255,255,.92) 0%,rgba(253,245,232,.72) 100%);}
+.topblock > .wrap,.topblock .hero__inner{position:relative;z-index:2;width:100%;}
+
+.hero{position:relative;padding:0;}
 .hero__inner{position:relative;z-index:1;}
-.hero__logline{font-size:clamp(30px,8vw,64px);line-height:1.04;letter-spacing:-.03em;font-weight:600;color:var(--graphite);max-width:100%;}
-/* 데스크톱에서는 우상단 모자이크를 피할 만큼만 남기고 오른쪽으로 길게 */
-@media (min-width:900px){.hero__logline{max-width:calc(100% - 290px);}}
+.hero__logline{font-size:clamp(30px,8vw,64px);line-height:1.04;letter-spacing:-.03em;font-weight:600;
+  color:var(--onyx);max-width:100%;}
 /* 도입 문단 = 로그라인의 2/3 크기 */
-.hero__sub{margin-top:var(--s20);max-width:34ch;color:var(--slate);font-size:clamp(20px,5.33vw,42px);line-height:1.3;letter-spacing:-.025em;font-weight:500;}
+.hero__sub{margin-top:var(--s20);max-width:34ch;color:var(--violet-deep);font-size:clamp(20px,5.33vw,42px);line-height:1.3;letter-spacing:-.025em;font-weight:500;}
 .hero__sub p + p{margin-top:var(--s16);}
 .hero__cta{display:flex;flex-wrap:wrap;gap:var(--s8);margin-top:var(--s24);}
 
@@ -285,7 +297,7 @@ a.card:active{transform:scale(.995);}
 /* 마스크를 지원하지 않는 브라우저용 그라데이션 */
 .marquee::before,.marquee::after{content:"";position:absolute;top:0;bottom:0;
   width:calc(var(--edge) + 130px);z-index:2;pointer-events:none;}
-.marquee::before{left:0;background:linear-gradient(90deg,var(--cloud) 0,var(--cloud) var(--edge),rgba(252,240,221,0) 100%);}
+.marquee::before{left:0;background:linear-gradient(90deg,var(--cloud) 0,var(--cloud) var(--edge),rgba(253,245,232,0) 100%);}
 .marquee::after{right:0;background:linear-gradient(270deg,var(--cloud) 0,var(--cloud) var(--edge),rgba(252,247,236,0) 100%);}
 @supports (mask-image:linear-gradient(#000,#000)) or (-webkit-mask-image:linear-gradient(#000,#000)){
   .marquee::before,.marquee::after{display:none;}
@@ -343,21 +355,15 @@ a.card:active{transform:scale(.995);}
    Profile
    ============================================================ */
 .profile{display:grid;gap:var(--s20);}
-/* 사진 + 인적사항 묶음을 가운데에, 내용은 왼쪽 정렬 */
-@media (min-width:720px){
-  .profile{grid-template-columns:-webkit-max-content -webkit-max-content;
-    grid-template-columns:max-content max-content;gap:var(--s24);align-items:start;justify-content:center;}
-}
-/* 증명사진 비율(3:4) */
-.profile__photo{width:162px;height:216px;border-radius:var(--r-card);object-fit:cover;background:var(--frost);}
-.profile__photo-ph{width:162px;height:216px;border-radius:var(--r-card);background:var(--frost);display:grid;place-items:center;color:var(--fog);font-size:var(--text-caption);text-align:center;padding:8px;}
+/* 이름 · 로그라인 · 인적사항 모두 가운데 정렬 */
+.profile{display:block;text-align:center;}
 .profile__name{font-size:clamp(32px,7.5vw,52px);font-weight:600;letter-spacing:-.03em;line-height:1.1;
-  display:flex;align-items:baseline;flex-wrap:wrap;gap:10px;}
+  color:var(--onyx);display:flex;align-items:baseline;flex-wrap:wrap;gap:10px;justify-content:center;}
 .profile__name-en{font-size:clamp(17px,4vw,26px);font-weight:500;letter-spacing:-.01em;color:var(--violet-deep);}
-.profile__logline{margin-top:var(--s12);color:var(--slate);font-size:clamp(15px,3.6vw,18px);line-height:1.6;}
+.profile__logline{margin-top:var(--s12);color:var(--violet-deep);font-size:clamp(16px,3.8vw,20px);line-height:1.6;}
 
-.pinfo{margin-top:var(--s20);display:grid;gap:10px;max-width:720px;}
-.pinfo__row{display:flex;flex-wrap:wrap;align-items:center;gap:8px var(--s20);}
+.pinfo{margin-top:var(--s24);display:grid;gap:10px;max-width:720px;margin-left:auto;margin-right:auto;}
+.pinfo__row{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px var(--s20);}
 .pinfo__i{display:inline-flex;align-items:center;gap:8px;font-size:var(--text-body);
   color:var(--graphite);letter-spacing:-.01em;overflow-wrap:anywhere;}
 .pinfo__i .pico{width:18px;height:18px;color:var(--violet);}
@@ -450,7 +456,8 @@ a.card:active{transform:scale(.995);}
 @media (min-width:900px){
   .intro-cols{grid-template-columns:minmax(0,1fr) 216px;gap:var(--s48);align-items:start;}
 }
-.intro-toc{position:-webkit-sticky;position:sticky;top:calc(var(--nav-h) + 24px);align-self:start;}
+.intro-toc{position:-webkit-sticky;position:sticky;top:calc(var(--nav-h) + 24px);align-self:start;
+  max-height:calc(100vh - var(--nav-h) - 48px);overflow-y:auto;-webkit-overflow-scrolling:touch;}
 @media (max-width:899px){.intro-toc{position:static;order:-1;}}
 .intro-toc__l{color:var(--steel);font-size:var(--text-caption);font-weight:600;letter-spacing:.08em;margin-bottom:var(--s12);}
 .intro-toc__i{display:block;padding:9px 0 9px var(--s16);border-left:2px solid var(--ash);
@@ -460,9 +467,9 @@ a.card:active{transform:scale(.995);}
 .qsec{padding:var(--s40) 0;}
 .qsec:first-child{padding-top:var(--s32);}
 .qsec + .qsec{border-top:1px solid var(--ash);}
-.qsec__n{color:var(--violet-deep);font-size:var(--text-caption);font-weight:600;letter-spacing:.08em;margin-bottom:10px;}
-.qsec__q{font-size:clamp(20px,4.6vw,30px);font-weight:600;letter-spacing:-.025em;line-height:1.32;color:var(--graphite);}
-.qsec__a{margin-top:var(--s20);color:var(--slate);font-size:clamp(15px,3.6vw,17px);line-height:1.9;max-width:70ch;}
+.qsec__q{font-size:clamp(26px,5.6vw,42px);font-weight:600;letter-spacing:-.03em;line-height:1.2;color:var(--onyx);}
+.qsec__sub{margin-top:var(--s12);color:var(--violet);font-size:clamp(15px,3.6vw,18px);font-weight:500;line-height:1.5;}
+.qsec__a{margin-top:var(--s24);color:var(--slate);font-size:clamp(15px,3.6vw,17px);line-height:1.9;max-width:70ch;}
 .qsec__a p + p{margin-top:var(--s16);}
 
 /* ============================================================
@@ -735,7 +742,7 @@ var CONTENT = {
 
     /* 프로필 — 이메일·연락처는 한 행, 학력 한 행 */
     profile: {
-      photo: '',            // 증명사진(3:4) 이미지 경로
+      banner: '',           // 인적사항 구역 배경 배너 이미지 경로 (비우면 그라데이션만)
       name: '',
       nameEn: '',           // 이름 옆에 작게 들어가는 영어 이름
       logline2: '',
@@ -787,11 +794,12 @@ var CONTENT = {
   intro: {
     logline: '',
     desc: '',
+    /* q  = 큰 제목(진한 색) / sub = 하위 제목(보라) / a = 내용 */
     items: [
-      { label: '', q: '', a: '' },
-      { label: '', q: '', a: '' },
-      { label: '', q: '', a: '' },
-      { label: '', q: '', a: '' }
+      { label: '', q: '', sub: '', a: '' },
+      { label: '', q: '', sub: '', a: '' },
+      { label: '', q: '', sub: '', a: '' },
+      { label: '', q: '', sub: '', a: '' }
     ]
   },
 
@@ -1016,7 +1024,7 @@ var CONTENT = {
     var h = [];
 
     /* 히어로 — 버튼 없음 */
-    h.push('<div class="hero">' + mosaicAnchor(!mosaicPlayed) + '<div class="wrap hero__inner">');
+    h.push('<div class="topblock hero">' + mosaicAnchor(!mosaicPlayed) + '<div class="wrap hero__inner">');
     h.push('<h1 class="hero__logline">' + twoTone(a.logline, '로그라인 1 — 첫 페이지 헤드라인') + '</h1>');
     h.push('<div class="hero__sub">' + body(a.intro, '헤드라인 아래 도입 문단') + '</div>');
     h.push('</div></div>');
@@ -1096,12 +1104,12 @@ var CONTENT = {
     function line(icon, value, label) {
       return '<span class="pinfo__i">' + pico(icon) + '<span>' + txt(value, label) + '</span></span>';
     }
-    return '<div class="band band--tight"><div class="wrap"><div class="profile">' +
-      '<div>' + imgOr(p.photo, '프로필 사진', 'profile__photo', 'profile__photo-ph', '프로필 사진') + '</div>' +
-      '<div>' +
+    return '<div class="topblock">' +
+      (has(p.banner) ? '<div class="topblock__bg" style="background-image:url(' + esc(p.banner) + ')"></div>' : '') +
+      '<div class="wrap"><div class="profile">' +
         '<h1 class="profile__name"><span>' + txt(p.name, '이름') + '</span>' +
           '<span class="profile__name-en">' + txt(p.nameEn, 'English name') + '</span></h1>' +
-        '<p class="profile__logline">' + txt(p.logline2, '로그라인 2') + '</p>' +
+        '<p class="profile__logline">' + twoTone(p.logline2, '로그라인 2') + '</p>' +
         '<div class="pinfo">' +
           '<div class="pinfo__row">' + line('birth', p.birth, '0000.00.00') +
             '<span class="pinfo__sep">|</span>' + line('school', p.education, '학력') + '</div>' +
@@ -1109,7 +1117,6 @@ var CONTENT = {
             line('phone', p.phone, '연락처') + '</div>' +
           '<div class="pinfo__row">' + line('pin', p.address, '주소') + '</div>' +
         '</div>' +
-      '</div>' +
       '</div></div></div>';
   }
 
@@ -1254,9 +1261,9 @@ var CONTENT = {
     /* 본문 — 가로줄로만 나뉜다 */
     h.push('<div class="intro-main">' + list.map(function (item, i) {
       return '<section class="qsec" id="q' + (i + 1) + '">' +
-        '<div class="qsec__n">Q' + (i + 1) + '</div>' +
-        '<h2 class="qsec__q">' + twoTone(item.q, '제목') + '</h2>' +
-        '<div class="qsec__a">' + bodyPlain(item.a, '상세 설명') + '</div>' +
+        '<h2 class="qsec__q">' + twoTone(item.q, '큰 제목') + '</h2>' +
+        '<p class="qsec__sub">' + txt(item.sub, '하위 제목') + '</p>' +
+        '<div class="qsec__a">' + bodyPlain(item.a, '내용') + '</div>' +
         '</section>';
     }).join('') + '</div>');
 

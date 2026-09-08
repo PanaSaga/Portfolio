@@ -5,9 +5,11 @@
 - **파일**: `index.html` 단일 파일 + 해시 라우팅
   (`#about`, `#resume`, `#resume/intro`, `#portfolio`, `#post/<id>`, `#history`)
 - **폰트**: Pretendard (jsDelivr CDN, 동적 서브셋)
-- **디자인**: 배경1 `#fefaf3`(카드 · 작은 글씨 면) / 배경2 `#fdf5e8`(기본 톤) /
-  배경3 `#fcf0dd`(진한 구역) / 배경4 `#e2c2ff`(글씨가 얹히는 보라).
-  액센트 Volt Violet `#5e4cff`, 두 번째 줄 제목·강조는 `#3520cf`.
+- **디자인**: 배경1 `#fefaf3`(카드 · 작은 글씨 면) / 배경2 `#fdf7ed`(기본 톤) /
+  배경3 `#fdf5e8`(진한 구역) / 배경4 `#e2c2ff`(글씨가 얹히는 보라).
+  본문 회색은 `#545a68`, 액센트 Volt Violet `#5e4cff`, 두 번째 줄 제목·강조는 `#3520cf`.
+  About 로그라인과 Resume 인적사항은 같은 높이의 상단 블록이고, 하단 흰색에서
+  위로 아이보리가 올라오는 그라데이션이 깔립니다 (`resume.profile.banner` 로 배너 이미지 지정 가능).
   모든 페이지 우상단에 픽셀 모자이크가 붙습니다.
 - **아이콘**: `assets/icons/*.png` (보라 + 주황 라인 아이콘 15종).
   `CONTENT` 에서는 `gamepad` · `poker` · `video` · `domino` · `target` · `project` · `office` ·
@@ -46,7 +48,7 @@ var CONTENT = { ... };
 | Resume · 경력 | `resume.career` | **02 · 오른쪽 2/5**, 연도별 묶음 · 세로선을 따라 내려오는 타임라인 |
 | Resume · 대외활동 | `resume.activities` | **03 · 왼쪽 1/3**, 경력과 같은 세로 타임라인 |
 | Resume · 기술 | `resume.skills` | **04 · 오른쪽 2/3**, 탭 하나가 통째로 한 판이고 그 안에서 2열 |
-| 자기소개 (탭) | `intro` | 큰 로그라인 제목 + 설명, 문항은 가로줄로만 구분, 오른쪽에 현재 위치 목차. 탭을 바꿔도 프로필은 유지 |
+| 자기소개 (탭) | `intro` | 큰 로그라인 제목 + 설명. 문항마다 `q`(큰 제목·검정) → `sub`(하위 제목·보라) → `a`(내용) 순서이고 가로줄로만 구분. 오른쪽 목차가 스크롤을 따라옵니다 |
 | Portfolio · 메인 | `portfolio.main` | **3열** |
 | Portfolio · 기획서 | `portfolio.docs` | **4열** |
 | Portfolio · AI 작업물 | `portfolio.ai` | **3열** |
