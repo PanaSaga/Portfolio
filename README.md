@@ -5,8 +5,10 @@
 - **파일**: `index.html` 단일 파일 + 해시 라우팅
   (`#about`, `#resume`, `#resume/intro`, `#portfolio`, `#post/<id>`, `#history`)
 - **폰트**: Pretendard (jsDelivr CDN, 동적 서브셋)
-- **디자인**: Lightdash 스타일 — 배경 `#ffffff`, 한 단계 진한 구역 `#fcf7ec`, 그 사이 톤 `#fefaf3`,
-  액센트는 Volt Violet `#5e4cff`. 모든 페이지 우상단에 픽셀 모자이크가 붙습니다.
+- **디자인**: 배경1 `#fefaf3`(카드 · 작은 글씨 면) / 배경2 `#fdf5e8`(기본 톤) /
+  배경3 `#fcf0dd`(진한 구역) / 배경4 `#e2c2ff`(글씨가 얹히는 보라).
+  액센트 Volt Violet `#5e4cff`, 두 번째 줄 제목·강조는 `#3520cf`.
+  모든 페이지 우상단에 픽셀 모자이크가 붙습니다.
 - **아이콘**: `assets/icons/*.png` (보라 + 주황 라인 아이콘 15종).
   `CONTENT` 에서는 `gamepad` · `poker` · `video` · `domino` · `target` · `project` · `office` ·
   `resume` · `school` · `chart` · `pdf` · `birth` · `email` · `phone` · `pin` 이름으로 지정합니다.
@@ -40,11 +42,11 @@ var CONTENT = { ... };
 | 푸터 | `meta.footerName` / `meta.updated` | 오른쪽에 이름과 최종 수정 일자. **파일을 고칠 때마다 `updated` 를 함께 바꿔 주세요** |
 | Resume · 프로필 | `resume.profile` | 증명사진(3:4) · 이름 + `nameEn` · 로그라인 2 · 인적사항 3줄 |
 | 기술 아이콘 | `resume.skills[].icons` | 1:1 이미지 경로 **배열** (여러 개 가능) |
-| Resume · 경력 | `resume.career` | **왼쪽 3/5**, 연도별 묶음 · 세로선을 따라 내려오는 타임라인 |
-| Resume · 프로젝트 | `portfolio.main` | **오른쪽 2/5**, 납작한 카드(이미지 + 제목/설명). 4개까지 보이고 나머지는 '더 보기' 로 펼침 |
-| Resume · 대외활동 | `resume.activities` | **왼쪽 1/3**, 경력과 같은 세로 타임라인 |
-| Resume · 기술 | `resume.skills` | **오른쪽 2/3**, 탭 하나가 통째로 한 판이고 그 안에서 2열 |
-| 자기소개 (탭) | `intro` | 문항 4개를 한 페이지로 나열. 탭을 바꿔도 프로필·인적사항은 그대로 유지 |
+| Resume · 프로젝트 | `portfolio.main` | **01 · 왼쪽 3/5**, 납작한 카드(이미지 + 제목/설명). 4개까지 보이고 나머지는 '더 보기' 로 펼침 |
+| Resume · 경력 | `resume.career` | **02 · 오른쪽 2/5**, 연도별 묶음 · 세로선을 따라 내려오는 타임라인 |
+| Resume · 대외활동 | `resume.activities` | **03 · 왼쪽 1/3**, 경력과 같은 세로 타임라인 |
+| Resume · 기술 | `resume.skills` | **04 · 오른쪽 2/3**, 탭 하나가 통째로 한 판이고 그 안에서 2열 |
+| 자기소개 (탭) | `intro` | 큰 로그라인 제목 + 설명, 문항은 가로줄로만 구분, 오른쪽에 현재 위치 목차. 탭을 바꿔도 프로필은 유지 |
 | Portfolio · 메인 | `portfolio.main` | **3열** |
 | Portfolio · 기획서 | `portfolio.docs` | **4열** |
 | Portfolio · AI 작업물 | `portfolio.ai` | **3열** |
