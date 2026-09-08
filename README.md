@@ -31,11 +31,12 @@ var CONTENT = { ... };
 | 대단원 설명문 | `descs` | 비우면 전부 `상세 설명 첨부` 로 표시 |
 | About | `about` | 로그라인 1(헤드라인), 도입 문단, 핵심 지표, 요약 카드 |
 | Resume · 프로필 | `resume.profile` | 사진 · 이름 · 로그라인 2 · **이메일/연락처(한 행)** · 학력 |
-| Resume · 경력 | `resume.career` | 가장 큰 비중 |
-| Resume · 프로젝트 | `resume.projects` | `relatedCareer` 에 회사 `id` → 경력과 연관 표시 |
-| Resume · 기술 | `resume.skills` | 오른쪽 2/3, `level` 0~5 |
-| Resume · 대외활동 | `resume.activities` | 왼쪽 1/3 |
-| 자기소개 (탭) | `intro` | 문항 4개, 접지 않고 한 페이지로 나열 |
+| 기술 아이콘 | `resume.skills[].icon` | 1:1 이미지 경로 (예: `assets/images/photoshop.png`) |
+| Resume · 경력 | `resume.career` | **왼쪽 2/3** |
+| Resume · 프로젝트 | `resume.projects` | **오른쪽 1/3**, `relatedCareer` 에 회사 `id` → 경력과 연관 표시 |
+| Resume · 대외활동 | `resume.activities` | **왼쪽 1/3** |
+| Resume · 기술 | `resume.skills` | **오른쪽 2/3**, 1:1 아이콘 + 이름 + 하단 설명 |
+| 자기소개 (탭) | `intro` | 문항 4개를 한 페이지로 나열. 탭을 바꿔도 프로필·인적사항은 그대로 유지 |
 | Portfolio · 메인 | `portfolio.main` | **3열** |
 | Portfolio · 기획서 | `portfolio.docs` | **4열** |
 | Portfolio · AI 작업물 | `portfolio.ai` | **3열** |
@@ -60,16 +61,22 @@ portfolio: { main: [ { id: 'blocknyang-post', title: '블럭냥!' } ] }
   kind: 'pdf',          // pdf | site | game | image | doc  — 카드 좌상단 라벨/아이콘
   thumb: 'assets/images/thumb.jpg',
   tags: ['기획', '시스템'],
-  meta:  [ { label: '기간', value: '' }, { label: '역할', value: '' } ],
+  meta: [                              // 상세 페이지에서 2행 2열로 표시됩니다
+    { label: '기간', value: '' }, { label: '플랫폼', value: '' },
+    { label: '팀',   value: '' }, { label: '역할',   value: '' }
+  ],
   links: [ { label: 'PDF 열기', href: 'assets/docs/기획서.pdf', style: 'violet' } ],
   sections: [ { heading: '', body: '', bullets: [], images: [ { src: '', caption: '' } ] } ]
 }
 ```
 
+상세 페이지는 **제목과 한 줄 설명만 왼쪽 정렬**이고, 그 아래는 전부 중앙 정렬입니다.
+
 - 저장소 안 파일: `assets/docs/…`, `assets/images/…` / 외부는 전체 URL
 - 외부 링크와 PDF 는 새 탭에서 열립니다 (iOS Safari 인라인 PDF 뷰어 이슈 회피)
-- `CONTENT.portfolio.main` 의 `id: 'sample'` 은 **상세 페이지 레이아웃 확인용 샘플**입니다.
-  실제 게시물을 넣을 때 그 항목을 지우면 사라집니다.
+- 세 목록에 **상세 페이지 레이아웃 확인용 샘플**이 하나씩 들어 있습니다
+  (`main` → `sample`, `docs` → `sample-doc`, `ai` → `sample-ai`).
+  실제 게시물을 넣을 때 해당 항목을 지우면 사라집니다.
 
 ### History
 
@@ -81,10 +88,11 @@ games: [ { title: '', image: '', platform: '', genre: '', playtime: '', ending: 
 ```
 
 - 축 이름은 **다각형 위에만** 표시됩니다 (별도 범례 없음).
-- 게임은 하단에 **6열**(모바일 2~4열)로 나열되고, 카드마다 이미지 · 이름 · 태그 4종이 붙습니다.
-- 태그는 그대로 검색 대상입니다. 검색창에 `로그라이트`, `#PC 인디` 처럼 입력하면 되고
-  (`#` 는 붙여도 안 붙여도 동일), 여러 단어는 AND 로 걸립니다.
-  플랫폼 · 장르 · 엔딩 칩은 데이터에서 자동으로 만들어지며 눌러서 켜고 끌 수 있습니다.
+- 게임 커버는 **3:4**, 하단에 **6열**(모바일 2~4열)로 나열됩니다.
+- 카드에는 이미지 · 이름 · 태그(플랫폼 / 장르 / 플레이타임 / 엔딩)가 들어갑니다.
+- 필터는 **플랫폼 · 장르 드롭다운** 두 개입니다. 목록은 게임 데이터에서 자동으로 만들어집니다.
+- `playtime` 은 자유 입력이라 표시만 되고 필터에는 쓰이지 않습니다.
+  `ending` 은 `'엔딩'` 또는 `'진행 중'` 두 값만 씁니다.
 
 ---
 
