@@ -7,6 +7,8 @@
 - **폰트**: Pretendard (jsDelivr CDN, 동적 서브셋)
 - **디자인**: Lightdash 스타일 — 흰 캔버스 + 슬레이트 톤 + Volt Violet `#5e4cff` 단일 액센트,
   우상단 코너에 밀착된 픽셀 모자이크, 픽셀 픽토그램(스파클 · 눈 · `</>` · 다이아몬드)
+- **연출**: About 에 처음 들어갈 때 코너 모자이크가 오른쪽 위 → 왼쪽 아래 순서로 나타납니다.
+  연출은 페이지를 새로 열 때 한 번만 재생되고, 탭을 오가는 것으로는 다시 재생되지 않습니다.
 - **대응**: 모바일 우선 반응형, iOS Safari 대응 (safe-area, `-webkit-` 프리픽스, 터치 스크롤, `aspect-ratio` 폴백)
 
 ---
@@ -32,7 +34,8 @@ var CONTENT = { ... };
 | About · 헤드라인 | `about.logline` / `about.intro` | 도입 문단은 로그라인의 2/3 크기 |
 | About · Work style | `about.workStyle` | 3열, 큰 픽토그램 + 제목 / 하단 설명 |
 | About · 대표 프로젝트 | (자동) | 메인 · 기획서 · AI 작업물이 오른쪽 → 왼쪽으로 흐르는 띠 |
-| Resume · 프로필 | `resume.profile` | 사진 · 이름 · 로그라인 2 · **이메일/연락처(한 행)** · 학력 |
+| 푸터 | `meta.footerLeft` / `meta.footerRight` | 페이지 맨 아래 좌우 한 줄 (예: `© 2026 박지수` / `최종 업데이트 2026.09`) |
+| Resume · 프로필 | `resume.profile` | 증명사진(3:4) · 이름 + `nameEn`(영어 이름) · 로그라인 2 · **이메일/연락처(한 행)** · 학력 |
 | 기술 아이콘 | `resume.skills[].icons` | 1:1 이미지 경로 **배열** (여러 개 가능) |
 | Resume · 경력 | `resume.career` | 연도별 묶음, 테두리 없는 줄로 이어짐 |
 | Resume · 프로젝트 | `portfolio.main` | Portfolio 메인 프로젝트와 같은 게시물 (누르면 상세로) |
