@@ -32,15 +32,15 @@ var CONTENT = { ... };
 |---|---|---|
 | 대단원 설명문 | `descs` | 비우면 전부 `상세 설명 첨부` 로 표시 |
 | About · 헤드라인 | `about.logline` / `about.intro` | 도입 문단은 로그라인의 2/3 크기 |
-| About · Work style | `about.workStyle` | 3열, 큰 픽토그램 + 제목 / 하단 설명 |
-| About · 대표 프로젝트 | (자동) | 메인 · 기획서 · AI 작업물이 오른쪽 → 왼쪽으로 흐르는 띠 |
-| 푸터 | `meta.footerLeft` / `meta.footerRight` | 페이지 맨 아래 좌우 한 줄 (예: `© 2026 박지수` / `최종 업데이트 2026.09`) |
+| About · Work style | `about.workStyle` | 3열, 큰 픽토그램 + 제목 / 하단 설명. `icon` 은 게임 아이콘(`gamepad` · `pawn` · `monitor` · `dice` · `trophy` · `heart`) 또는 `blocks` · `target` · `bars` · `bolt` · `flag` · `chat` · `box` |
+| About · 대표 프로젝트 | (자동) | 메인 · 기획서 · AI 작업물 게시물 카드가 오른쪽 → 왼쪽으로 흐름. 엷은 회색 구역, 좌우 페이드 |
+| 푸터 | `meta.footerName` / `meta.updated` | 오른쪽에 이름과 최종 수정 일자. **파일을 고칠 때마다 `updated` 를 함께 바꿔 주세요** |
 | Resume · 프로필 | `resume.profile` | 증명사진(3:4) · 이름 + `nameEn`(영어 이름) · 로그라인 2 · **이메일/연락처(한 행)** · 학력 |
 | 기술 아이콘 | `resume.skills[].icons` | 1:1 이미지 경로 **배열** (여러 개 가능) |
-| Resume · 경력 | `resume.career` | 연도별 묶음, 테두리 없는 줄로 이어짐 |
-| Resume · 프로젝트 | `portfolio.main` | Portfolio 메인 프로젝트와 같은 게시물 (누르면 상세로) |
-| Resume · 기술 | `resume.skills` | 탭 하나가 통째로 한 판, 그 안에서 2열 |
-| Resume · 대외활동 | `resume.activities` | 경력과 같은 칸 구성 |
+| Resume · 경력 | `resume.career` | **왼쪽 2/3**, 연도별 묶음 · 세로선을 따라 내려오는 타임라인 |
+| Resume · 프로젝트 | `portfolio.main` | **오른쪽 1/3**, Portfolio 메인 프로젝트와 같은 게시물 (누르면 상세로) |
+| Resume · 대외활동 | `resume.activities` | **왼쪽 1/3**, 경력과 같은 세로 타임라인 |
+| Resume · 기술 | `resume.skills` | **오른쪽 2/3**, 탭 하나가 통째로 한 판이고 그 안에서 2열 |
 | 자기소개 (탭) | `intro` | 문항 4개를 한 페이지로 나열. 탭을 바꿔도 프로필·인적사항은 그대로 유지 |
 | Portfolio · 메인 | `portfolio.main` | **3열** |
 | Portfolio · 기획서 | `portfolio.docs` | **4열** |
@@ -112,7 +112,7 @@ games: [ { title: '', image: '', platform: '', genre: '', playtime: '', ending: 
 ```
 
 - 축 이름은 **다각형 위에만** 표시됩니다 (별도 범례 없음).
-- 게임 커버는 **3:4**, 하단에 **6열**(모바일 2~4열)로 나열됩니다.
+- 게임 커버는 **4:3**, 하단에 **6열**(모바일 2~4열)로 나열됩니다.
 - 카드에는 이미지 · 이름 · 태그(플랫폼 / 장르 / 플레이타임 / 엔딩)가 들어갑니다.
 - 필터는 **플랫폼 · 장르 드롭다운** 두 개이고 수치 카드 바로 아래에 있습니다.
   목록은 게임 데이터에서 자동으로 만들어집니다.

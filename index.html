@@ -117,6 +117,7 @@ h1,h2,h3,h4,p{margin:0;}
 .sec-desc{margin-top:var(--s8);color:var(--slate);font-size:var(--text-body-sm);}
 
 .grid{display:grid;gap:var(--s16);}
+.grid--1{grid-template-columns:minmax(0,1fr);}
 .grid--2{grid-template-columns:minmax(0,1fr);}
 .grid--3{grid-template-columns:minmax(0,1fr);}
 .grid--4{grid-template-columns:repeat(2,minmax(0,1fr));}
@@ -236,9 +237,6 @@ a.card:active{transform:scale(.995);}
 @media (prefers-reduced-motion:reduce){
   .mosaic--in .mt{opacity:1;animation:none;}
 }
-/* 프로필 구역에도 같은 코너 모자이크를 얹는다 */
-.profile-band{position:relative;overflow:hidden;}
-.profile-band .wrap{position:relative;z-index:1;}
 @media (min-width:900px){
   .hero__anchor{position:absolute;top:0;left:0;right:0;height:0;z-index:0;}
   .hero__anchor .wrap{position:relative;height:0;}
@@ -246,7 +244,7 @@ a.card:active{transform:scale(.995);}
 }
 @media (max-width:899px){
   .hero__anchor .wrap{padding:0;}
-  .profile-band .hero__anchor{display:none;}   /* 모바일 이력서에서는 공간을 아낀다 */
+  .route > .hero__anchor{display:none;}   /* 모바일 이력서에서는 공간을 아낀다 */
   .mosaic{--tile:clamp(15px,4.6vw,26px);margin:0 0 var(--s24) auto;width:-webkit-fit-content;width:fit-content;}
   .mrow:nth-child(n+8){display:none;}
 }
@@ -264,21 +262,36 @@ a.card:active{transform:scale(.995);}
 .ws__title{font-size:var(--text-subheading);font-weight:600;letter-spacing:-.02em;line-height:1.25;color:var(--graphite);}
 .ws__desc{margin-top:var(--s12);color:var(--slate);font-size:var(--text-body-sm);line-height:1.7;}
 
-/* 대표 프로젝트 — 오른쪽에서 왼쪽으로 흐르는 가느다란 띠 */
-.marquee{position:relative;overflow:hidden;border-top:1px solid var(--ash);border-bottom:1px solid var(--ash);background:#fff;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);
-  mask-image:linear-gradient(90deg,transparent 0,#000 6%,#000 94%,transparent 100%);}
-.marquee__track{display:flex;width:-webkit-max-content;width:max-content;animation:marq 44s linear infinite;}
+/* 대표 프로젝트 — 게시물 카드가 오른쪽에서 왼쪽으로 흐른다 */
+.marquee{position:relative;overflow:hidden;padding:var(--s8) 0 var(--s24);
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12%,#000 88%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 12%,#000 88%,transparent 100%);}
+/* 마스크를 지원하지 않는 브라우저용 흰색 그라데이션 */
+.marquee::before,.marquee::after{content:"";position:absolute;top:0;bottom:0;width:14%;z-index:2;pointer-events:none;}
+.marquee::before{left:0;background:linear-gradient(90deg,var(--cloud),rgba(246,248,250,0));}
+.marquee::after{right:0;background:linear-gradient(270deg,var(--cloud),rgba(246,248,250,0));}
+@supports (mask-image:linear-gradient(#000,#000)) or (-webkit-mask-image:linear-gradient(#000,#000)){
+  .marquee::before,.marquee::after{display:none;}
+}
+.marquee__track{display:flex;width:-webkit-max-content;width:max-content;animation:marq 60s linear infinite;}
 .marquee__track:hover{animation-play-state:paused;}
-.marquee__set{display:flex;align-items:center;flex:0 0 auto;}
-.mitem{display:inline-flex;align-items:center;gap:8px;padding:14px 22px;white-space:nowrap;
-  font-size:var(--text-body-sm);font-weight:500;color:var(--slate);transition:color .15s ease;}
-.mitem:hover{color:var(--violet);}
-.mitem__kind{font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--violet);
-  background:var(--lilac);border-radius:4px;padding:2px 6px;}
-.mitem__dot{width:5px;height:5px;border-radius:1px;background:var(--lavender);flex:0 0 auto;}
+.marquee__set{display:flex;align-items:stretch;flex:0 0 auto;}
+.mcard{flex:0 0 auto;width:250px;margin-right:var(--s16);background:#fff;border:1px solid var(--ash);
+  border-radius:var(--r-card);padding:var(--s12);display:flex;flex-direction:column;
+  transition:box-shadow .18s ease,border-color .18s ease;}
+.mcard:hover{border-color:transparent;box-shadow:var(--sh-card);}
+.mcard__thumb{aspect-ratio:16/10;width:100%;border-radius:8px;object-fit:cover;background:var(--frost);}
+.mcard__thumb-ph{aspect-ratio:16/10;width:100%;border-radius:8px;background:var(--frost);
+  display:grid;place-items:center;color:var(--fog);font-size:11px;}
+.mcard__kind{margin-top:10px;display:inline-flex;align-self:flex-start;font-size:10px;font-weight:700;
+  letter-spacing:.04em;color:var(--violet);background:var(--lilac);border-radius:4px;padding:2px 6px;}
+.mcard__t{margin-top:6px;font-size:var(--text-body-sm);font-weight:600;letter-spacing:-.02em;
+  line-height:1.35;color:var(--graphite);}
 @keyframes marq{from{transform:translate3d(0,0,0);}to{transform:translate3d(-50%,0,0);}}
 @media (prefers-reduced-motion:reduce){.marquee__track{animation:none;}}
+@supports not (aspect-ratio: 1 / 1){
+  .mcard__thumb,.mcard__thumb-ph{height:0;padding-bottom:62.5%;}
+}
 
 /* 하단 바로가기 — 버튼처럼 */
 .jump{display:grid;gap:var(--s12);}
@@ -289,13 +302,10 @@ a.card:active{transform:scale(.995);}
   transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease,transform .12s ease;}
 .jump__btn:hover{border-color:var(--violet);box-shadow:rgba(94,76,255,.16) 0 4px 14px 0;}
 .jump__btn:active{transform:translateY(1px);}
-.jump__btn--primary{background:var(--violet);border-color:var(--violet);color:#fff;}
-.jump__btn--primary:hover{background:#4f3ff0;border-color:#4f3ff0;}
 .jump__l{display:grid;gap:2px;min-width:0;}
 .jump__t{font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;}
 .jump__d{font-size:var(--text-caption);color:var(--steel);}
-.jump__btn--primary .jump__d{color:rgba(255,255,255,.72);}
-.jump__arrow{flex:0 0 auto;font-size:15px;opacity:.7;}
+.jump__arrow{flex:0 0 auto;font-size:17px;color:var(--violet);font-weight:600;}
 
 /* Stats */
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--ash);border:1px solid var(--ash);border-radius:var(--r-card);overflow:hidden;}
@@ -337,26 +347,26 @@ a.card:active{transform:scale(.995);}
 }
 
 /* ============================================================
-   경력 · 대외활동 — 테두리 없이 줄로 이어지는 연도별 나열
+   경력 · 대외활동 — 세로로 줄을 따라 내려오는 타임라인
    ============================================================ */
-.yrow{border-top:1px solid var(--ash);padding:var(--s24) 0;}
-.yrow:last-child{border-bottom:1px solid var(--ash);}
-@media (min-width:900px){
-  .yrow{display:grid;grid-template-columns:120px minmax(0,1fr);gap:var(--s32);padding:var(--s32) 0;}
-  .yrow--full{grid-template-columns:minmax(0,1fr);}
-}
-.yrow__year{font-size:var(--text-heading-sm);font-weight:600;letter-spacing:-.02em;color:var(--graphite);line-height:1;}
-.yrow__year .ph{font-size:14px;}
-@media (max-width:899px){.yrow__year{margin-bottom:var(--s16);}}
-.cells{display:grid;gap:var(--s24);}
-@media (min-width:640px){.cells{grid-template-columns:repeat(2,minmax(0,1fr));}}
-@media (min-width:1000px){.cells{grid-template-columns:repeat(3,minmax(0,1fr));}}
-.cell__img{width:64px;height:64px;border-radius:10px;object-fit:cover;background:var(--frost);}
-.cell__img-ph{width:64px;height:64px;border-radius:10px;border:1px dashed var(--mist);background:var(--cloud);display:grid;place-items:center;color:var(--fog);font-size:10px;text-align:center;}
-.cell__name{margin-top:var(--s12);font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;line-height:1.3;}
-.cell__date{margin-top:4px;color:var(--violet);font-size:var(--text-caption);font-weight:500;font-variant-numeric:tabular-nums;}
-.cell__desc{margin-top:var(--s8);color:var(--slate);font-size:var(--text-body-sm);line-height:1.65;}
-.cell__links{margin-top:var(--s12);}
+.sec-head--rule{border-bottom:1px solid var(--ash);padding-bottom:var(--s12);}
+.tgroup + .tgroup{margin-top:var(--s32);}
+.tyear{font-size:var(--text-subheading);font-weight:600;letter-spacing:-.02em;color:var(--violet);
+  line-height:1;margin-bottom:var(--s16);}
+.tyear .ph{font-size:13px;}
+.titem{position:relative;display:grid;grid-template-columns:56px minmax(0,1fr);gap:var(--s16);
+  padding-bottom:var(--s24);}
+.titem:last-child{padding-bottom:0;}
+/* 항목을 잇는 세로선 */
+.titem:not(:last-child)::before{content:"";position:absolute;left:27px;top:64px;bottom:4px;
+  width:1px;background:var(--ash);}
+.titem__img{width:56px;height:56px;border-radius:10px;object-fit:cover;background:var(--frost);position:relative;z-index:1;}
+.titem__img-ph{width:56px;height:56px;border-radius:10px;border:1px dashed var(--mist);background:var(--cloud);
+  display:grid;place-items:center;color:var(--fog);font-size:10px;text-align:center;position:relative;z-index:1;}
+.titem__name{font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;line-height:1.3;}
+.titem__date{margin-top:4px;color:var(--violet);font-size:var(--text-caption);font-weight:500;font-variant-numeric:tabular-nums;}
+.titem__desc{margin-top:var(--s8);color:var(--slate);font-size:var(--text-body-sm);line-height:1.65;}
+.titem__links{margin-top:var(--s12);}
 
 /* ============================================================
    Timeline
@@ -480,8 +490,8 @@ a.card:active{transform:scale(.995);}
 @media (min-width:760px){.games{grid-template-columns:repeat(4,minmax(0,1fr));}}
 @media (min-width:1000px){.games{grid-template-columns:repeat(6,minmax(0,1fr));}}
 .game{background:#fff;border:1px solid var(--ash);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;}
-.game__img{aspect-ratio:3/4;width:100%;object-fit:cover;background:var(--frost);}
-.game__img-ph{aspect-ratio:3/4;width:100%;background:var(--frost);display:grid;place-items:center;color:var(--fog);font-size:11px;}
+.game__img{aspect-ratio:4/3;width:100%;object-fit:cover;background:var(--frost);}
+.game__img-ph{aspect-ratio:4/3;width:100%;background:var(--frost);display:grid;place-items:center;color:var(--fog);font-size:11px;}
 .game__b{padding:9px 10px 10px;display:flex;flex-direction:column;gap:6px;flex:1;}
 .game__t{font-size:13px;font-weight:600;letter-spacing:-.02em;line-height:1.3;color:var(--graphite);}
 .game__tags{display:flex;flex-wrap:wrap;gap:4px;margin-top:auto;}
@@ -494,15 +504,17 @@ a.card:active{transform:scale(.995);}
    Footer / routes
    ============================================================ */
 .footer{border-top:1px solid var(--ash);padding:var(--s40) 0 calc(var(--s40) + var(--sa-b));background:var(--cloud);}
-.footer__row{display:flex;flex-wrap:wrap;gap:var(--s12);align-items:center;justify-content:space-between;}
+.footer__row{display:flex;flex-wrap:wrap;gap:6px var(--s12);align-items:center;justify-content:flex-end;}
 .footer__note{color:var(--steel);font-size:var(--text-caption);}
-.route{display:none;}
+.footer__name{color:var(--graphite);font-weight:600;}
+.route{display:none;position:relative;}
+.route-body{position:relative;z-index:1;}
 .route.is-active{display:block;}
 
 @supports not (aspect-ratio: 1 / 1){
   .post-thumb,.post-thumb-ph{height:0;padding-bottom:62.5%;}
   .ph-img{height:0;padding-bottom:56.25%;}
-  .game__img,.game__img-ph{height:0;padding-bottom:133.33%;}
+  .game__img,.game__img-ph{height:0;padding-bottom:75%;}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto;}
@@ -543,8 +555,8 @@ a.card:active{transform:scale(.995);}
 
 <footer class="footer">
   <div class="wrap footer__row">
-    <div class="footer__note" id="footerLeft"></div>
-    <div class="footer__note" id="footerRight"></div>
+    <div class="footer__note footer__name" id="footerName"></div>
+    <div class="footer__note" id="footerUpdated"></div>
   </div>
 </footer>
 
@@ -589,8 +601,10 @@ var CONTENT = {
     siteTitle: '',        // 브라우저 탭 제목
     brandMark: '',        // 좌측 상단 사각형 안 글자 1자
     brandName: '',        // 좌측 상단 이름
-    footerLeft: '',
-    footerRight: ''
+    /* 푸터 — 오른쪽에 이름과 최종 수정 일자를 나란히 표시합니다.
+       파일을 고칠 때마다 updated 날짜를 함께 바꿔 주세요. */
+    footerName: '박지수',
+    updated: '2026.09.08'
   },
 
   /* 각 대단원 제목 밑 설명. 비우면 '상세 설명 첨부' 로 표시됩니다. */
@@ -605,11 +619,12 @@ var CONTENT = {
     intro: '',            // 도입 문단(로그라인의 2/3 크기). 문단 구분은 빈 줄(\n\n)
 
     /* Work style — 3열. icon 은 아래 이름 중 하나:
-       blocks · target · bars · bolt · flag · chat · box                     */
+       게임: gamepad · pawn · monitor · dice · trophy · heart
+       기타: blocks · target · bars · bolt · flag · chat · box               */
     workStyle: [
-      { icon: 'blocks', title: '', desc: '' },
-      { icon: 'target', title: '', desc: '' },
-      { icon: 'bars',   title: '', desc: '' }
+      { icon: 'gamepad', title: '', desc: '' },
+      { icon: 'pawn',    title: '', desc: '' },
+      { icon: 'monitor', title: '', desc: '' }
     ],
 
     closing: ''
@@ -923,9 +938,76 @@ var CONTENT = {
       '#+++++++#',
       '#+++++++#',
       '#########'
+    ],
+
+    /* ↓ 게임 관련 픽토그램 */
+    gamepad: [
+      '..#######..',
+      '.#+++++++#.',
+      '#++#+++#++#',
+      '#+###+#+#+#',
+      '#++#+++#++#',
+      '.#+++++++#.',
+      '..#######..'
+    ],
+    pawn: [
+      '...###...',
+      '..#####..',
+      '..#####..',
+      '...###...',
+      '..#####..',
+      '.#+++++#.',
+      '.#+++++#.',
+      '#########',
+      '#########'
+    ],
+    monitor: [
+      '###########',
+      '#+++++++++#',
+      '#+++++++++#',
+      '#+++++++++#',
+      '#+++++++++#',
+      '#+++++++++#',
+      '###########',
+      '....###....',
+      '..#######..'
+    ],
+    dice: [
+      '#########',
+      '#+++++++#',
+      '#+#+++#+#',
+      '#+++++++#',
+      '#+++#+++#',
+      '#+++++++#',
+      '#+#+++#+#',
+      '#+++++++#',
+      '#########'
+    ],
+    heart: [
+      '.##...##.',
+      '####+####',
+      '#########',
+      '#########',
+      '.#######.',
+      '..#####..',
+      '...###...',
+      '....#....',
+      '.........'
+    ],
+    trophy: [
+      '.#######.',
+      '##+++++##',
+      '##+++++##',
+      '.#+++++#.',
+      '..#####..',
+      '...###...',
+      '...###...',
+      '..#####..',
+      '.#######.'
     ]
   };
-  var BIG_ICONS = ['blocks', 'target', 'bars', 'bolt', 'flag', 'chat', 'box'];
+  /* Work style 기본 아이콘 — 게임 관련 */
+  var BIG_ICONS = ['gamepad', 'pawn', 'monitor', 'dice', 'trophy', 'heart'];
   function pico(name, cls) {
     var g = PICTO[name] || PICTO.sparkle;
     var w = g[0].length, h = g.length, r = [];
@@ -1008,7 +1090,6 @@ var CONTENT = {
     /* Work style — 도입 문단과 같은 글 안에 있는 것처럼 바짝 붙인다 */
     h.push('<div class="wrap" style="padding-bottom:var(--s64)">');
     h.push('<div class="sec-head" style="margin-bottom:var(--s16)">' +
-      '<div class="sec-eyebrow">' + pico('bolt') + '<span>Hello World!</span></div>' +
       '<h2 class="sec-title">Work style</h2>' +
       '<p class="sec-desc">' + desc('workStyle') + '</p></div>');
     if (hasList(a.workStyle)) {
@@ -1025,20 +1106,20 @@ var CONTENT = {
     h.push('</div>');
 
     /* 대표 프로젝트 — 오른쪽에서 왼쪽으로 흐르는 가느다란 띠 */
-    h.push('<div class="wrap" style="padding-bottom:var(--s16)">' +
-      '<div class="sec-head" style="margin-bottom:var(--s16)">' +
+    h.push('<div class="band band--cloud" style="padding-bottom:var(--s40)">' +
+      '<div class="wrap"><div class="sec-head" style="margin-bottom:var(--s16)">' +
       '<div class="sec-eyebrow">' + pico('sparkle') + '<span>Featured</span></div>' +
       '<h2 class="sec-title">대표 프로젝트</h2>' +
-      '<p class="sec-desc">' + desc('featured') + '</p></div></div>');
-    h.push(marquee());
+      '<p class="sec-desc">' + desc('featured') + '</p></div></div>' +
+      marquee() + '</div>');
 
     /* 하단 바로가기 — 버튼 */
     h.push('<div class="band"><div class="wrap"><div class="jump">' + [
-      ['Resume', '경력 · 프로젝트 · 기술 · 자기소개', '#resume', true],
-      ['Portfolio', '메인 프로젝트 · 기획서 · AI 작업물', '#portfolio', false],
-      ['History', '선호 장르 그래프 · 플레이한 게임', '#history', false]
+      ['Resume', '경력 · 프로젝트 · 기술 · 자기소개', '#resume'],
+      ['Portfolio', '메인 프로젝트 · 기획서 · AI 작업물', '#portfolio'],
+      ['History', '선호 장르 그래프 · 플레이한 게임', '#history']
     ].map(function (x) {
-      return '<a class="jump__btn' + (x[3] ? ' jump__btn--primary' : '') + '" href="' + x[2] + '">' +
+      return '<a class="jump__btn" href="' + x[2] + '">' +
         '<span class="jump__l"><span class="jump__t">' + x[0] + '</span>' +
         '<span class="jump__d">' + x[1] + '</span></span>' +
         '<span class="jump__arrow" aria-hidden="true">→</span></a>';
@@ -1059,10 +1140,10 @@ var CONTENT = {
 
     var set = list.map(function (it) {
       var kind = has(it.kind) ? (KIND_LABEL[it.kind] || String(it.kind).toUpperCase()) : '';
-      return '<a class="mitem" href="#post/' + esc(it.id || '') + '">' +
-        (kind ? '<span class="mitem__kind">' + esc(kind) + '</span>' : '') +
-        '<span>' + txt(it.title, '게시물 제목') + '</span>' +
-        '<span class="mitem__dot" aria-hidden="true"></span></a>';
+      return '<a class="mcard" href="#post/' + esc(it.id || '') + '">' +
+        imgOr(it.thumb, it.title || '', 'mcard__thumb', 'mcard__thumb-ph', '대표 이미지') +
+        (kind ? '<span class="mcard__kind">' + esc(kind) + '</span>' : '') +
+        '<span class="mcard__t">' + txt(it.title, '게시물 제목') + '</span></a>';
     }).join('');
 
     return '<div class="marquee"><div class="marquee__track">' +
@@ -1083,8 +1164,7 @@ var CONTENT = {
 
   function profileBlock() {
     var p = (CONTENT.resume || {}).profile || {};
-    return '<div class="band band--tight profile-band">' + mosaicAnchor(false) +
-      '<div class="wrap"><div class="profile">' +
+    return '<div class="band band--tight"><div class="wrap"><div class="profile">' +
       '<div>' + imgOr(p.photo, '프로필 사진', 'profile__photo', 'profile__photo-ph', '프로필 사진') + '</div>' +
       '<div>' +
         '<h1 class="profile__name"><span>' + txt(p.name, '이름') + '</span>' +
@@ -1102,23 +1182,23 @@ var CONTENT = {
       '</div></div></div>';
   }
 
-  /* 경력 · 대외활동 공통 칸 — 1:1 이미지 / 이름 / 기간 / 설명 */
-  function cell(it, nameKey, nameLabel) {
+  /* 경력 · 대외활동 공통 항목 — 세로로 줄을 따라 내려온다 */
+  function titem(it, nameKey, nameLabel) {
     var range = (has(it.start) || has(it.end))
       ? esc(it.start || '') + ' ~ ' + esc(it.end || '')
       : ph('0000.00.00 ~ 0000.00.00');
     var posts = (it.posts || []).filter(has);
-    return '<article>' +
-      imgOr(it.image, it[nameKey] || '', 'cell__img', 'cell__img-ph', '이미지') +
-      '<h3 class="cell__name">' + txt(it[nameKey], nameLabel) + '</h3>' +
-      '<div class="cell__date">' + range + '</div>' +
-      '<div class="cell__desc">' + body(it.desc, '설명') + '</div>' +
+    return '<li class="titem">' +
+      '<div>' + imgOr(it.image, it[nameKey] || '', 'titem__img', 'titem__img-ph', '이미지') + '</div>' +
+      '<div><h3 class="titem__name">' + txt(it[nameKey], nameLabel) + '</h3>' +
+      '<div class="titem__date">' + range + '</div>' +
+      '<div class="titem__desc">' + body(it.desc, '설명') + '</div>' +
       (posts.length
-        ? '<div class="cell__links chips">' + posts.map(function (id) {
+        ? '<div class="titem__links chips">' + posts.map(function (id) {
             return '<a class="chip chip--violet" href="#post/' + esc(id) + '">' + esc(postTitle(id)) + '</a>';
           }).join('') + '</div>'
         : '') +
-      '</article>';
+      '</div></li>';
   }
   function postTitle(id) {
     var p = CONTENT.portfolio || {};
@@ -1126,65 +1206,68 @@ var CONTENT = {
     for (var i = 0; i < l.length; i++) if (l[i].id === id) return l[i].title || id;
     return id;
   }
+  function colHead(icon, eyebrow, title, key) {
+    return '<div class="sec-head sec-head--rule">' +
+      '<div class="sec-eyebrow">' + pico(icon) + '<span>' + esc(eyebrow) + '</span></div>' +
+      '<h2 class="sec-title">' + esc(title) + '</h2>' +
+      '<p class="sec-desc">' + desc(key) + '</p></div>';
+  }
 
   function renderResume(sub) {
-    /* 프로필·인적사항은 두 탭 모두에서 그대로 유지된다 */
-    var h = [resumeTabs(sub), profileBlock()];
-    if (sub === 'intro') { h.push(renderIntro()); return h.join(''); }
+    /* 프로필·인적사항은 두 탭 모두에서 그대로 유지된다.
+       코너 모자이크는 About 과 같은 위치(라우트 최상단 우측)에 붙는다. */
+    var h = [mosaicAnchor(false), '<div class="route-body">', resumeTabs(sub), profileBlock()];
+    if (sub === 'intro') { h.push(renderIntro(), '</div>'); return h.join(''); }
 
     var r = CONTENT.resume || {};
 
-    /* 01 경력 — 연도별, 테두리 없이 줄로 이어진다 */
-    h.push('<div class="band"><div class="wrap">');
-    h.push(sectionHead('node', '01 · Career', '경력', 'career'));
-    h.push(hasList(r.career)
-      ? r.career.map(function (g) {
-          return '<div class="yrow">' +
-            '<div class="yrow__year">' + txt(g.year, '연도') + '</div>' +
-            '<div class="cells">' + (g.items || []).map(function (it) {
-              return cell(it, 'org', '회사명');
-            }).join('') + '</div></div>';
-        }).join('')
-      : phBlock('경력 항목', 'CONTENT.resume.career'));
-    h.push('</div></div>');
+    /* 경력 2/3 · 프로젝트 1/3 */
+    h.push('<div class="band"><div class="wrap"><div class="split split--21">');
 
-    /* 02 프로젝트 — Portfolio 메인 프로젝트와 같은 게시물, 누르면 상세로 */
-    h.push('<div class="band band--cloud"><div class="wrap">');
-    h.push(sectionHead('sparkle', '02 · Projects', '프로젝트', 'projects'));
-    h.push(postGrid((CONTENT.portfolio || {}).main, 3,
-      '프로젝트 게시물', 'CONTENT.portfolio.main'));
-    h.push('</div></div>');
+    h.push('<div>' + colHead('node', '01 · Career', '경력', 'career') +
+      (hasList(r.career)
+        ? r.career.map(function (g) {
+            return '<div class="tgroup"><div class="tyear">' + txt(g.year, '연도') + '</div>' +
+              '<ol class="titems">' + (g.items || []).map(function (it) {
+                return titem(it, 'org', '회사명');
+              }).join('') + '</ol></div>';
+          }).join('')
+        : phBlock('경력 항목', 'CONTENT.resume.career')) + '</div>');
 
-    /* 03 기술 — 탭 하나가 통째로 한 판, 그 안에서 2열 */
-    h.push('<div class="band"><div class="wrap">');
-    h.push(sectionHead('code', '03 · Skills', '기술', 'skills'));
-    h.push(hasList(r.skills)
-      ? '<div class="skills">' + r.skills.map(function (sk) {
-          var lv = Math.max(0, Math.min(5, Number(sk.level) || 0)), dots = '';
-          for (var i = 0; i < 5; i++) dots += '<i class="' + (i < lv ? 'on' : '') + '"></i>';
-          var icons = (sk.icons && sk.icons.length ? sk.icons : ['']);
-          return '<article>' +
-            '<div class="skill__icons">' + icons.map(function (ic) {
-              return imgOr(ic, sk.name || '', 'skill__icon', 'skill__icon-ph', '아이콘');
-            }).join('') + '</div>' +
-            '<h3 class="skill__name">' + txt(sk.name, '기술명') + '</h3>' +
-            (lv ? '<div class="skill__dots" aria-label="숙련도 ' + lv + '/5">' + dots + '</div>' : '') +
-            '<div class="skill__note">' + txt(sk.note, '설명 1~2줄') + '</div>' +
-            '</article>';
-        }).join('') + '</div>'
-      : phBlock('기술 항목 — 아이콘 · 이름 · 설명', 'CONTENT.resume.skills'));
-    h.push('</div></div>');
+    h.push('<div>' + colHead('sparkle', '02 · Projects', '프로젝트', 'projects') +
+      postGrid((CONTENT.portfolio || {}).main, 1, '프로젝트 게시물', 'CONTENT.portfolio.main') + '</div>');
 
-    /* 04 대외활동 — 경력과 같은 칸, 테두리 없이 */
-    h.push('<div class="band band--cloud"><div class="wrap">');
-    h.push(sectionHead('flag', '04 · Activity', '대외활동', 'activities'));
-    h.push(hasList(r.activities)
-      ? '<div class="yrow yrow--full"><div class="cells">' + r.activities.map(function (it) {
-          return cell(it, 'title', '활동명');
-        }).join('') + '</div></div>'
-      : phBlock('대외활동', 'CONTENT.resume.activities'));
-    h.push('</div></div>');
+    h.push('</div></div></div>');
 
+    /* 대외활동 1/3 · 기술 2/3 */
+    h.push('<div class="band band--cloud"><div class="wrap"><div class="split">');
+
+    h.push('<div>' + colHead('flag', '04 · Activity', '대외활동', 'activities') +
+      (hasList(r.activities)
+        ? '<ol class="titems">' + r.activities.map(function (it) {
+            return titem(it, 'title', '활동명');
+          }).join('') + '</ol>'
+        : phBlock('대외활동', 'CONTENT.resume.activities')) + '</div>');
+
+    h.push('<div>' + colHead('code', '03 · Skills', '기술', 'skills') +
+      (hasList(r.skills)
+        ? '<div class="skills">' + r.skills.map(function (sk) {
+            var lv = Math.max(0, Math.min(5, Number(sk.level) || 0)), dots = '';
+            for (var i = 0; i < 5; i++) dots += '<i class="' + (i < lv ? 'on' : '') + '"></i>';
+            var icons = (sk.icons && sk.icons.length ? sk.icons : ['']);
+            return '<article>' +
+              '<div class="skill__icons">' + icons.map(function (ic) {
+                return imgOr(ic, sk.name || '', 'skill__icon', 'skill__icon-ph', '아이콘');
+              }).join('') + '</div>' +
+              '<h3 class="skill__name">' + txt(sk.name, '기술명') + '</h3>' +
+              (lv ? '<div class="skill__dots" aria-label="숙련도 ' + lv + '/5">' + dots + '</div>' : '') +
+              '<div class="skill__note">' + txt(sk.note, '설명 1~2줄') + '</div>' +
+              '</article>';
+          }).join('') + '</div>'
+        : phBlock('기술 항목 — 아이콘 · 이름 · 설명', 'CONTENT.resume.skills')) + '</div>');
+
+    h.push('</div></div></div>');
+    h.push('</div>');
     return h.join('');
   }
 
@@ -1578,8 +1661,9 @@ var CONTENT = {
     var meta = CONTENT.meta || {};
     if (has(meta.brandMark)) document.getElementById('brandMark').textContent = meta.brandMark;
     if (has(meta.brandName)) document.getElementById('brandName').textContent = meta.brandName;
-    document.getElementById('footerLeft').innerHTML = txt(meta.footerLeft, '푸터 왼쪽');
-    document.getElementById('footerRight').innerHTML = txt(meta.footerRight, '푸터 오른쪽');
+    document.getElementById('footerName').innerHTML = txt(meta.footerName, '이름');
+    document.getElementById('footerUpdated').innerHTML =
+      has(meta.updated) ? '최종 수정 ' + esc(meta.updated) : ph('최종 수정 일자');
 
     if (!location.hash) location.replace('#about');
     onRoute(false);
