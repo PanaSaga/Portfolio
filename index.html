@@ -97,15 +97,16 @@ input{font:inherit;color:inherit;}
 @media (pointer:fine){
   body,a,button,.navlink,.tab,select,summary,label,input,.ppage,.donut__seg{cursor:none;}
   .cursor{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;
-    width:24px;height:24px;margin:-23px 0 0 -7px;transform-origin:7px 23px;
+    width:22px;height:22px;margin:-2px 0 0 -2px;transform-origin:2px 1.6px;
     transition:transform .12s ease;}
   .cursor svg{width:100%;height:100%;display:block;overflow:visible;
-    filter:drop-shadow(0 2px 4px rgba(36,26,143,.3));}
-  .cursor svg path{stroke:transparent;stroke-width:0;paint-order:stroke;stroke-linejoin:round;
+    filter:drop-shadow(0 1px 3px rgba(36,26,143,.35));}
+  .cursor svg path{paint-order:stroke;stroke:#fdf7ed;stroke-width:1.5;
+    stroke-linejoin:round;stroke-linecap:round;
     transition:stroke .14s ease,stroke-width .14s ease;}
   .cursor.is-hover{transform:scale(1.12);}
   .cursor.is-hover svg{filter:drop-shadow(0 0 4px rgba(249,138,23,.55));}
-  .cursor.is-hover svg path{stroke:#f98a17;stroke-width:44;}
+  .cursor.is-hover svg path{stroke:#f98a17;stroke-width:2.4;}
   .cursor.is-down{transform:scale(.85);}
   .spark{position:fixed;z-index:9998;pointer-events:none;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;
     background:#ffcf1a;
@@ -2135,14 +2136,11 @@ var CONTENT = {
     dot.className = 'cursor';
     dot.style.opacity = '0';
     dot.innerHTML =
-      '<svg viewBox="0 0 512 512" aria-hidden="true">' +
-      '<defs><linearGradient id="curGrad" x1="0.55" y1="0" x2="0.4" y2="1">' +
+      '<svg viewBox="0 0 28 28" aria-hidden="true">' +
+      '<defs><linearGradient id="curGrad" x1="0.1" y1="0" x2="0.7" y2="1">' +
       '<stop offset="0" stop-color="#6d22e6"/><stop offset="0.55" stop-color="#9a1fe4"/>' +
       '<stop offset="1" stop-color="#c71ad4"/></linearGradient></defs>' +
-      '<path fill="url(#curGrad)" d="M70 30 C150 6 280 20 372 44 C430 58 476 120 478 196 ' +
-      'C480 240 456 272 414 292 C372 312 344 320 330 348 C312 384 270 430 214 468 ' +
-      'C198 479 182 490 168 491 C148 493 128 478 118 448 C92 380 60 268 40 170 ' +
-      'C30 120 30 60 70 30 Z"/></svg>';
+      '<path fill="url(#curGrad)" d="M2.5 2 L2.5 22 L7.7 17.6 L11 24.8 L13.9 23.5 L10.6 16.6 L17.6 16.6 Z"/></svg>';
     document.body.appendChild(dot);
     var x = 0, y = 0, shown = false;
     document.addEventListener('mousemove', function (e) {
