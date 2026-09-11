@@ -75,7 +75,6 @@
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;}
 body{
   margin:0;
-  cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M5 3 L5 21 L10 16 L13 23 L16 22 L13 15 L20 15 Z' fill='%235e4cff' stroke='%23fdf7ed' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E") 4 3, auto;
   background:var(--canvas);
   color:var(--graphite);
   font-family:var(--font-sans);
@@ -93,6 +92,28 @@ a{color:inherit;text-decoration:none;}
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;}
 a,button,.navlink,.tab,select,summary{cursor:pointer;}
 input{font:inherit;color:inherit;}
+
+/* ── 커스텀 커서: 보라 도트 · 호버 시 주황 테두리 · 클릭 시 노란 반짝이 ── */
+@media (pointer:fine){
+  body,a,button,.navlink,.tab,select,summary,label,input,.ppage,.donut__seg{cursor:none;}
+  .cursor{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;
+    width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;
+    background:var(--violet);box-shadow:0 0 0 2px rgba(247,245,242,.85),0 1px 4px rgba(36,26,143,.25);
+    transition:width .16s ease,height .16s ease,margin .16s ease,background .16s ease,box-shadow .16s ease;}
+  .cursor.is-hover{width:30px;height:30px;margin:-15px 0 0 -15px;
+    background:rgba(94,76,255,.12);border:2px solid #f98a17;box-shadow:0 1px 6px rgba(249,138,23,.28);}
+  .cursor.is-hover::after{content:"";position:absolute;left:50%;top:50%;width:6px;height:6px;
+    margin:-3px 0 0 -3px;border-radius:50%;background:var(--violet);}
+  .cursor.is-down{transform:scale(.82);}
+  .spark{position:fixed;z-index:9998;pointer-events:none;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;
+    background:#ffcf1a;
+    clip-path:polygon(50% 0,61% 39%,100% 50%,61% 61%,50% 100%,39% 61%,0 50%,39% 39%);
+    animation:sparkPop .5s ease-out forwards;}
+  @keyframes sparkPop{
+    0%{opacity:1;transform:translate(0,0) scale(1) rotate(0);}
+    100%{opacity:0;transform:translate(var(--dx,0),var(--dy,0)) scale(.25) rotate(90deg);}
+  }
+}
 ul,ol{margin:0;padding:0;list-style:none;}
 h1,h2,h3,h4,p{margin:0;}
 :focus-visible{outline:2px solid var(--violet);outline-offset:2px;border-radius:4px;}
@@ -133,6 +154,8 @@ h1,h2,h3,h4,p{margin:0;}
 @media (min-width:640px){
   .grid--2{grid-template-columns:repeat(2,minmax(0,1fr));}
   .grid--3{grid-template-columns:repeat(2,minmax(0,1fr));}
+  /* 기획서(grid--4)는 AI·메인이 2열일 때 3열 */
+  .grid--4{grid-template-columns:repeat(3,minmax(0,1fr));}
 }
 @media (min-width:900px){
   .grid--3{grid-template-columns:repeat(3,minmax(0,1fr));}
@@ -231,9 +254,11 @@ a.card:active{transform:scale(.995);}
 .hero{position:relative;padding:0;}
 .hero__inner{position:relative;z-index:1;}
 /* 히어로 한 문장 — 가운데 정렬, 둘째 줄은 JS 로 첫 줄 둘째 어절 아래까지 들여씀(Z자) */
-.hero__logline{font-size:clamp(30px,8vw,64px);line-height:1.12;letter-spacing:-.03em;font-weight:700;
+/* 폰트는 화면 폭에 따라 계속 줄어들도록 vw 항을 크게(약 1240px 이하부터 작아짐) */
+.hero__logline{font-size:clamp(26px,5.1vw,64px);line-height:1.12;letter-spacing:-.03em;font-weight:700;
   color:var(--graphite);width:fit-content;max-width:100%;margin-inline:auto;}
 .hero__logline .zl{display:block;}
+.hero__logline .zl:nth-child(even){color:var(--violet-deep);}
 .hero__sub{margin-top:var(--s16);text-align:center;}
 /* 히어로 안 연락처 — 문장 아래, 가운데 정렬, 픽토그램 포함 */
 .hero__contact{display:flex;flex-wrap:wrap;justify-content:center;gap:8px var(--s24);
@@ -351,15 +376,19 @@ a.card:active{transform:scale(.995);}
 .bcard__d{display:block;margin-top:5px;color:var(--slate);font-size:13px;line-height:1.55;}
 .bcard--c1 .bcard__t{font-size:var(--text-subheading);}
 @media (min-width:820px){
-  .bento{grid-template-columns:2fr 1fr 1fr;grid-auto-rows:1fr;}
+  /* 대(1) 왼쪽 2/3 · 세로 전체 / 중(2) 오른쪽 위 1/3폭 / 소(3·4) 그 아래 1/2씩 */
+  .bento{grid-template-columns:2fr 0.5fr 0.5fr;grid-template-rows:1.15fr 1fr;grid-auto-rows:1fr;}
   .bcard--c1{grid-column:1;grid-row:1 / 3;}
-  .bcard--c2{grid-column:2 / 4;grid-row:1;flex-direction:row;}
-  .bcard--c2 .bcard__thumb,.bcard--c2 .bcard__thumb-ph{width:66%;flex:0 0 66%;min-height:0;}
-  .bcard--c2 .bcard__b{flex:1 1 auto;align-self:center;}
+  .bcard--c1 .bcard__thumb,.bcard--c1 .bcard__thumb-ph{flex:0 0 66%;min-height:0;}
+  .bcard--c1 .bcard__b{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;}
+  .bcard--c2{grid-column:2 / 4;grid-row:1;}
   .bcard--c3{grid-column:2;grid-row:2;}
   .bcard--c4{grid-column:3;grid-row:2;}
 }
-@media (max-width:819px){.bento{grid-template-columns:repeat(2,minmax(0,1fr));}.bcard--c1{grid-column:1 / -1;}}
+@media (max-width:819px){
+  .bento{grid-template-columns:repeat(2,minmax(0,1fr));}
+  .bcard--c1,.bcard--c2{grid-column:1 / -1;}
+}
 /* 작은 카드(c3·c4): 이미지 크게, 하단은 태그+제목 한 줄만 */
 .bcard--sm .bcard__b{padding:10px var(--s12);display:flex;align-items:center;gap:8px;}
 .bcard--sm .bcard__kind{margin-bottom:0;flex:0 0 auto;}
@@ -539,7 +568,11 @@ mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;bo
 .post-thumb-ph{aspect-ratio:16/10;width:100%;border-radius:8px;margin-bottom:var(--s16);background:var(--frost);display:grid;place-items:center;color:var(--steel);font-size:var(--text-caption);}
 .post-kind{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:5px;background:var(--accent-soft);color:var(--violet-deep);font-size:11px;font-weight:700;letter-spacing:.03em;}
 .post--sample{border-color:var(--ash);}
-.post__title{font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;line-height:1.35;margin-top:var(--s8);}
+/* 태그 + 제목을 한 줄에 — 아래 한 줄 설명 공간 확보 */
+.post__head{display:flex;align-items:center;gap:8px;margin-top:var(--s12);min-width:0;}
+.post__head .post-kind{flex:0 0 auto;}
+.post__title{display:block;font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;line-height:1.35;
+  min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .post__desc{margin-top:6px;color:var(--slate);font-size:13px;line-height:1.55;}
 
 /* 납작한 프로젝트 카드 — 왼쪽 대표 이미지, 오른쪽 제목/설명 */
@@ -978,10 +1011,10 @@ var CONTENT = {
 
     /* 메인 프로젝트 — 3열 */
     main: [
-      SAMPLE_POST('sample',   '샘플 게시물 1', 'project', true),
-      SAMPLE_POST('sample-4', '샘플 게시물 4', 'project'),
-      SAMPLE_POST('sample-2', '샘플 게시물 2', 'project'),
-      SAMPLE_POST('sample-3', '샘플 게시물 3', 'project')
+      SAMPLE_POST('sample',   '샘플 게시물 1', 'project', true),  // 대 (bento 왼쪽 큰 카드)
+      SAMPLE_POST('sample-2', '샘플 게시물 2', 'project'),        // 중 (오른쪽 위)
+      SAMPLE_POST('sample-3', '샘플 게시물 3', 'project'),        // 소 (오른쪽 아래 왼)
+      SAMPLE_POST('sample-4', '샘플 게시물 4', 'project')         // 소 (오른쪽 아래 오)
       // { id: '', title: '', tagline: '', kind: '', thumb: '', tags: [],
       //   meta: [], sections: [],
       //   embed: 'https://...웹빌드/사이트',       // 있으면 상세에 재생 플레이어 표시
@@ -1030,7 +1063,7 @@ var CONTENT = {
     /* 총 개수 — 큰 제목 + 작은 내용 + 오른쪽 큰 숫자, 육각형 아래에 표시 */
     counts: [
       { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 등', value: '' },
-      { title: '오프라인 게임', desc: 'TRPG · 보드 등', value: '' }
+      { title: '오프라인 게임', desc: 'TRPG · 보드게임 등', value: '' }
     ],
 
     /* 플레이한 게임 — 100개 이상 들어가도 됩니다. 커버 이미지는 3:4 비율.
@@ -1510,8 +1543,10 @@ var CONTENT = {
     var kind = has(p.kind) ? (KIND_LABEL[p.kind] || String(p.kind).toUpperCase()) : '';
     return '<a class="card' + (p.sample ? ' post--sample' : '') + '" href="#post/' + esc(p.id || '') + '">' +
       imgOr(p.thumb, p.title || '', 'post-thumb', 'post-thumb-ph', '대표 이미지') +
-      (kind ? '<span class="post-kind">' + pico(KIND_ICON[p.kind] || 'project') + esc(kind) + '</span>' : '') +
-      '<h3 class="post__title">' + txt(p.title, '게시물 제목') + '</h3>' +
+      '<span class="post__head">' +
+        (kind ? '<span class="post-kind">' + pico(KIND_ICON[p.kind] || 'project') + esc(kind) + '</span>' : '') +
+        '<span class="post__title">' + txt(p.title, '게시물 제목') + '</span>' +
+      '</span>' +
       '<p class="post__desc">' + txt(p.tagline, '한 줄 설명') + '</p>' +
       (hasList(p.tags) ? '<div style="margin-top:10px">' + chips(p.tags, 'chip--xs') + '</div>' : '') +
       '</a>';
@@ -2079,6 +2114,51 @@ var CONTENT = {
     window.addEventListener('resize', function () {
       if (parseHash().route === 'about') staggerLogline();
     }, false);
+    customCursor();
+  }
+
+  /* 커스텀 커서 — 보라 도트, 클릭 가능 요소 호버 시 주황 테두리, 클릭 시 노란 반짝이 */
+  function customCursor() {
+    if (!window.matchMedia || !window.matchMedia('(pointer:fine)').matches) return;
+    var HOVER = 'a,button,select,summary,label,input,.navlink,.tab,.ppage,.donut__seg,[role=button]';
+    var dot = document.createElement('div');
+    dot.className = 'cursor';
+    dot.style.opacity = '0';
+    document.body.appendChild(dot);
+    var x = 0, y = 0, shown = false;
+    document.addEventListener('mousemove', function (e) {
+      x = e.clientX; y = e.clientY;
+      dot.style.transform = 'translate(' + x + 'px,' + y + 'px)';
+      if (!shown) { shown = true; dot.style.opacity = '1'; }
+    }, { passive: true });
+    document.addEventListener('mouseover', function (e) {
+      if (e.target.closest && e.target.closest(HOVER)) dot.classList.add('is-hover');
+    });
+    document.addEventListener('mouseout', function (e) {
+      var to = e.relatedTarget;
+      if (e.target.closest && e.target.closest(HOVER) &&
+          !(to && to.closest && to.closest(HOVER))) dot.classList.remove('is-hover');
+    });
+    document.addEventListener('mousedown', function (e) {
+      dot.classList.add('is-down');
+      sparkle(e.clientX, e.clientY);
+    });
+    document.addEventListener('mouseup', function () { dot.classList.remove('is-down'); });
+    function sparkle(px, py) {
+      var n = 7;
+      for (var i = 0; i < n; i++) {
+        var s = document.createElement('div');
+        s.className = 'spark';
+        var ang = (Math.PI * 2 * i) / n + Math.random() * 0.7;
+        var dist = 16 + Math.random() * 22;
+        s.style.setProperty('--dx', (Math.cos(ang) * dist).toFixed(1) + 'px');
+        s.style.setProperty('--dy', (Math.sin(ang) * dist).toFixed(1) + 'px');
+        s.style.left = px + 'px';
+        s.style.top = py + 'px';
+        document.body.appendChild(s);
+        (function (el) { setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 520); })(s);
+      }
+    }
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
