@@ -93,20 +93,22 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 a,button,.navlink,.tab,select,summary{cursor:pointer;}
 input{font:inherit;color:inherit;}
 
-/* ── 커스텀 커서: 보라 그라데이션 화살표 · 호버 시 주황 테두리 · 클릭 시 노란 반짝이 ── */
+/* ── 커스텀 커서: 3상태 ──
+   ① 기본     : 시스템 기본 커서 (커스텀 커서 숨김)
+   ② 손가락   : 링크·버튼 위에서만 커스텀 화살표가 주황색으로 빛남
+   ③ 클릭     : 노란 반짝이 이펙트                                         */
 @media (pointer:fine){
-  body,a,button,.navlink,.tab,select,summary,label,input,.ppage,.donut__seg{cursor:none;}
-  .cursor{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;
-    width:22px;height:22px;margin:-2px 0 0 -2px;transform-origin:2px 1.6px;
-    transition:transform .12s ease;}
-  .cursor svg{width:100%;height:100%;display:block;overflow:visible;
-    filter:drop-shadow(0 1px 3px rgba(36,26,143,.35));}
-  .cursor svg path{paint-order:stroke;stroke:#fdf7ed;stroke-width:1.5;
-    stroke-linejoin:round;stroke-linecap:round;
-    transition:stroke .14s ease,stroke-width .14s ease;}
-  .cursor.is-hover{transform:scale(1.12);}
-  .cursor.is-hover svg{filter:drop-shadow(0 0 4px rgba(249,138,23,.55));}
-  .cursor.is-hover svg path{stroke:#f98a17;stroke-width:2.4;}
+  /* '손가락(pointer)' 영역에서만 시스템 커서를 숨기고 커스텀 커서를 보여준다 */
+  a,button,.navlink,.tab,summary,.ppage,.donut__seg,select,[role=button]{cursor:none;}
+  .cursor{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;opacity:0;
+    width:24px;height:24px;margin:-2px 0 0 -2px;transform-origin:2px 1.6px;
+    transition:opacity .12s ease,transform .12s ease;}
+  .cursor svg{width:100%;height:100%;display:block;overflow:visible;}
+  .cursor svg path{paint-order:stroke;stroke:#f98a17;stroke-width:2;
+    stroke-linejoin:round;stroke-linecap:round;}
+  /* ② 손가락 위 — 주황색으로 빛남 */
+  .cursor.is-hover{opacity:1;transform:scale(1.1);
+    filter:drop-shadow(0 0 5px rgba(249,138,23,.9)) drop-shadow(0 0 2px rgba(249,138,23,.95));}
   .cursor.is-down{transform:scale(.85);}
   .spark{position:fixed;z-index:9998;pointer-events:none;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;
     background:#ffcf1a;
@@ -920,7 +922,7 @@ var CONTENT = {
     /* 푸터 — 오른쪽에 이름과 최종 수정 일자를 나란히 표시합니다.
        파일을 고칠 때마다 updated 날짜를 함께 바꿔 주세요. */
     footerName: '박지수',
-    updated: '2026.09.08'
+    updated: '2026.09.11'
   },
 
   /* 각 대단원 제목 밑 설명. 비우면 '상세 설명 첨부' 로 표시됩니다. */
@@ -953,14 +955,14 @@ var CONTENT = {
     /* 프로필 — 이메일·연락처는 한 행, 학력 한 행 */
     profile: {
       banner: '',           // 상단 구역 배경 배너 이미지 경로 (비우면 단색)
-      name: '',
-      nameEn: '',           // 이름 옆에 작게 들어가는 영어 이름
-      logline2: '',
-      desc: '',             // 이름·로그라인 아래 소개 문단
+      name: '박지수',
+      nameEn: 'Park Jisoo', // 이름 옆에 작게 들어가는 영어 이름
+      logline2: '돌고 돌아 더 단단히 자리 잡는 나사못처럼.',
+      desc: '기획자가 되기까지 많은 길을 돌아왔으나, 그럼에도 목표를 향해 똑바로 나아가 더 단단하게 자리잡게 됐습니다. 빙 돌아온 만큼 겪어온 다양한 경험을 통해, 기초부터 견고하게 설계하는 기획자가 되고 싶습니다.',
       /* 인적사항 — 아이콘과 함께 세 줄로 표시됩니다.
          1줄: 생년월일 | 학력   2줄: 이메일 · 연락처(1.5배)                  */
-      birth: '',                          // 0000.00.00
-      education: '',                      // OO대학교 OOO학과 (4년제 졸업)
+      birth: '',                          // 0000.00.00 (자료 없음)
+      education: '호서대학교 아산캠퍼스 시각디자인학과 (4년제 졸업)',
       email: 'jisoo752@naver.com',
       phone: '010 6747 6881'
     },
@@ -969,11 +971,16 @@ var CONTENT = {
        한 칸 = 1:1 이미지 / 회사명 / 시작 ~ 종료 / 설명                       */
     career: [
       {
-        year: '',                   // 예: '2025'
+        year: '',                   // 연도 머리말 없이 최신순으로 나열
         items: [
-          { image: '', org: '', start: '', end: '', desc: '', posts: [] },
-          { image: '', org: '', start: '', end: '', desc: '', posts: [] },
-          { image: '', org: '', start: '', end: '', desc: '', posts: [] }
+          { image: '', org: '디벨로켓 · AI 데이터 분석 기반 게임콘텐츠 제작자 양성', start: '2026.06', end: '2026.12',
+            desc: '게임 기획자 양성 부트캠프', posts: [] },
+          { image: '', org: '젠가 게임즈', start: '2026.03', end: '2026.05',
+            desc: '[외주] 게임 비주얼 컨셉 제작 및 그래픽 리소스 제작', posts: [] },
+          { image: '', org: '㈜ 액션핏', start: '2023.08', end: '2026.02',
+            desc: '[근무] 2023.08 ~ 2025.08 · [외주] 2025.09 ~ 2026.02\n아트 기획, 비주얼 컨셉, UI, 캐릭터, 광고 영상 제작 등 그래픽 관련 업무 전반 (대표작: 블럭냥!, 편의점 정리왕, 빠지냥 / 그 외 머지냥카페, 스크류 캣 등)', posts: [] },
+          { image: '', org: '브릿지 게임즈', start: '2021.06', end: '2022.02',
+            desc: '[근무] 캐릭터 · 배경 일러스트, SD 캐릭터 스파인', posts: [] }
         ]
       }
       // 연도를 추가하려면 위 블록을 통째로 복사하세요.
@@ -984,16 +991,21 @@ var CONTENT = {
        icons: 1:1 아이콘 경로 배열 (여러 개 가능)
        level: 0~5 (0 이면 숙련도 점을 표시하지 않습니다)                       */
     skills: [
-      { icons: [ '' ], name: '', level: 0, note: '' },
-      { icons: [ '' ], name: '', level: 0, note: '' },
-      { icons: [ '' ], name: '', level: 0, note: '' }
+      { icons: [ '' ], name: 'Adobe Photoshop', level: 5,
+        note: '일러스트 · 편집 · 보정 · 리소스 제작 편집, 액션 제작으로 대량 리소스 보정 및 내보내기 반자동화.' },
+      { icons: [ '' ], name: 'MS Office · Figma', level: 3,
+        note: '기본 기능 숙지, 문서 작성 및 템플릿화, 레이아웃 디자인, 그 외 필요한 기능을 직접 찾아 적용 가능.' },
+      { icons: [ '' ], name: 'Spine2D', level: 3,
+        note: '기본 기능 사용, 응용 및 제작 가능.' },
+      { icons: [ '' ], name: 'Adobe After Effects · Illustrator', level: 0,
+        note: '기본 기능 사용, 필요한 기능을 찾아 적용 가능.' }
     ],
 
     /* 대외활동 (중요도 4) — 경력과 같은 칸 구성 */
     activities: [
-      { image: '', title: '', start: '', end: '', desc: '' },
-      { image: '', title: '', start: '', end: '', desc: '' },
-      { image: '', title: '', start: '', end: '', desc: '' }
+      { image: '', title: '도쿄 게임쇼 인디 부스', start: '', end: '', desc: '블록냥!' },
+      { image: '', title: 'TRPG 시나리오 작성 · 장기 마스터링', start: '', end: '',
+        desc: '시나리오 작성 및 장기 마스터링 경험 다수' }
     ]
   },
 
@@ -2052,7 +2064,7 @@ var CONTENT = {
     var host = document.getElementById('route-' + state.route);
     if (!host) return;
     if (rendered[state.route] !== key) {
-      if (state.route === 'about') { host.innerHTML = renderAbout(); armMosaic(); staggerLogline(); }
+      if (state.route === 'about') { host.innerHTML = renderAbout(); armMosaic(); }
       else if (state.route === 'resume') { host.innerHTML = renderResume(state.param); bindProjectList(); bindIntro(); }
       else if (state.route === 'portfolio') host.innerHTML = withMosaic(renderPortfolio());
       else if (state.route === 'post') { host.innerHTML = withMosaic(renderPost(state.param)); bindPlanner(); }
@@ -2073,6 +2085,18 @@ var CONTENT = {
       links[j].classList.toggle('is-active', links[j].getAttribute('data-route') === navActive);
     }
     document.title = has(CONTENT.meta && CONTENT.meta.siteTitle) ? CONTENT.meta.siteTitle : 'Portfolio';
+
+    /* 히어로 Z자 정렬 — 컨테이너가 보인 뒤(위 is-active 토글 이후) 측정해야 한다.
+       레이아웃/웹폰트 로드 타이밍 때문에 첫 로드에서 안 걸리던 문제를 방지: rAF·폰트 로드 후 재계산 */
+    if (state.route === 'about') {
+      staggerLogline();
+      window.requestAnimationFrame(staggerLogline);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(function () {
+          if (parseHash().route === 'about') staggerLogline();
+        });
+      }
+    }
   }
 
   /* 연출이 끝나면 애니메이션 클래스를 떼어 두 번 다시 재생되지 않게 한다 */
@@ -2128,13 +2152,13 @@ var CONTENT = {
     customCursor();
   }
 
-  /* 커스텀 커서 — 보라 도트, 클릭 가능 요소 호버 시 주황 테두리, 클릭 시 노란 반짝이 */
+  /* 커스텀 커서 — 손가락(클릭 가능) 위에서만 주황 발광 화살표, 클릭 시 노란 반짝이.
+     그 외에는 시스템 기본 커서. */
   function customCursor() {
     if (!window.matchMedia || !window.matchMedia('(pointer:fine)').matches) return;
-    var HOVER = 'a,button,select,summary,label,input,.navlink,.tab,.ppage,.donut__seg,[role=button]';
+    var HOVER = 'a,button,select,summary,.navlink,.tab,.ppage,.donut__seg,[role=button]';
     var dot = document.createElement('div');
     dot.className = 'cursor';
-    dot.style.opacity = '0';
     dot.innerHTML =
       '<svg viewBox="0 0 28 28" aria-hidden="true">' +
       '<defs><linearGradient id="curGrad" x1="0.1" y1="0" x2="0.7" y2="1">' +
@@ -2142,11 +2166,10 @@ var CONTENT = {
       '<stop offset="1" stop-color="#c71ad4"/></linearGradient></defs>' +
       '<path fill="url(#curGrad)" d="M2.5 2 L2.5 22 L7.7 17.6 L11 24.8 L13.9 23.5 L10.6 16.6 L17.6 16.6 Z"/></svg>';
     document.body.appendChild(dot);
-    var x = 0, y = 0, shown = false;
+    var x = 0, y = 0;
     document.addEventListener('mousemove', function (e) {
       x = e.clientX; y = e.clientY;
       dot.style.left = x + 'px'; dot.style.top = y + 'px';
-      if (!shown) { shown = true; dot.style.opacity = '1'; }
     }, { passive: true });
     document.addEventListener('mouseover', function (e) {
       if (e.target.closest && e.target.closest(HOVER)) dot.classList.add('is-hover');
