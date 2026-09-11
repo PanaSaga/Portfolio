@@ -2136,12 +2136,13 @@ var CONTENT = {
     dot.style.opacity = '0';
     dot.innerHTML =
       '<svg viewBox="0 0 512 512" aria-hidden="true">' +
-      '<defs><linearGradient id="curGrad" x1="0.72" y1="0" x2="0.2" y2="1">' +
-      '<stop offset="0" stop-color="#6a2be6"/><stop offset="1" stop-color="#c81ad6"/>' +
-      '</linearGradient></defs>' +
-      '<path fill="url(#curGrad)" d="M78 66 C200 20 350 58 440 150 C474 186 480 214 458 242 ' +
-      'C414 300 356 300 316 334 C270 372 236 414 206 456 C194 472 182 484 170 486 ' +
-      'C150 490 132 478 122 452 C92 360 74 226 66 150 C62 108 62 78 78 66 Z"/></svg>';
+      '<defs><linearGradient id="curGrad" x1="0.55" y1="0" x2="0.4" y2="1">' +
+      '<stop offset="0" stop-color="#6d22e6"/><stop offset="0.55" stop-color="#9a1fe4"/>' +
+      '<stop offset="1" stop-color="#c71ad4"/></linearGradient></defs>' +
+      '<path fill="url(#curGrad)" d="M70 30 C150 6 280 20 372 44 C430 58 476 120 478 196 ' +
+      'C480 240 456 272 414 292 C372 312 344 320 330 348 C312 384 270 430 214 468 ' +
+      'C198 479 182 490 168 491 C148 493 128 478 118 448 C92 380 60 268 40 170 ' +
+      'C30 120 30 60 70 30 Z"/></svg>';
     document.body.appendChild(dot);
     var x = 0, y = 0, shown = false;
     document.addEventListener('mousemove', function (e) {
