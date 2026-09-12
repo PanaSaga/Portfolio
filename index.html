@@ -94,21 +94,23 @@ a,button,.navlink,.tab,select,summary{cursor:pointer;}
 input{font:inherit;color:inherit;}
 
 /* ── 커스텀 커서: 3상태 ──
-   ① 기본     : 시스템 기본 커서 (커스텀 커서 숨김)
-   ② 손가락   : 링크·버튼 위에서만 커스텀 화살표가 주황색으로 빛남
+   ① 기본     : 보라 그라데이션 커스텀 화살표 (주황 발광 없음)
+   ② 손가락   : 링크·버튼 위에서 커서가 주황색으로 빛남
    ③ 클릭     : 노란 반짝이 이펙트                                         */
 @media (pointer:fine){
-  /* '손가락(pointer)' 영역에서만 시스템 커서를 숨기고 커스텀 커서를 보여준다 */
-  a,button,.navlink,.tab,summary,.ppage,.donut__seg,select,[role=button]{cursor:none;}
+  body,a,button,.navlink,.tab,select,summary,label,input,.ppage,.donut__seg{cursor:none;}
   .cursor{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;opacity:0;
     width:24px;height:24px;margin:-2px 0 0 -2px;transform-origin:2px 1.6px;
-    transition:opacity .12s ease,transform .12s ease;}
-  .cursor svg{width:100%;height:100%;display:block;overflow:visible;}
-  .cursor svg path{paint-order:stroke;stroke:#f98a17;stroke-width:2;
-    stroke-linejoin:round;stroke-linecap:round;}
+    transition:transform .12s ease;}
+  .cursor svg{width:100%;height:100%;display:block;overflow:visible;
+    filter:drop-shadow(0 1px 3px rgba(36,26,143,.35));}
+  .cursor svg path{paint-order:stroke;stroke:#fdf7ed;stroke-width:1.5;
+    stroke-linejoin:round;stroke-linecap:round;
+    transition:stroke .14s ease,stroke-width .14s ease;}
   /* ② 손가락 위 — 주황색으로 빛남 */
-  .cursor.is-hover{opacity:1;transform:scale(1.1);
-    filter:drop-shadow(0 0 5px rgba(249,138,23,.9)) drop-shadow(0 0 2px rgba(249,138,23,.95));}
+  .cursor.is-hover{transform:scale(1.1);}
+  .cursor.is-hover svg{filter:drop-shadow(0 0 5px rgba(249,138,23,.9)) drop-shadow(0 0 2px rgba(249,138,23,.95));}
+  .cursor.is-hover svg path{stroke:#f98a17;stroke-width:2.4;}
   .cursor.is-down{transform:scale(.85);}
   .spark{position:fixed;z-index:9998;pointer-events:none;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;
     background:#ffcf1a;
@@ -383,9 +385,9 @@ a.card:active{transform:scale(.995);}
 .bcard--c1 .bcard__t{font-size:var(--text-subheading);}
 @media (min-width:820px){
   /* 대(1) 왼쪽 2/3 · 세로 전체 / 중(2) 오른쪽 위 1/3폭 / 소(3·4) 그 아래 1/2씩 */
-  .bento{grid-template-columns:2fr 0.5fr 0.5fr;grid-template-rows:1.15fr 1fr;grid-auto-rows:1fr;}
+  .bento{grid-template-columns:2fr 0.5fr 0.5fr;grid-template-rows:3fr 2fr;grid-auto-rows:1fr;}
   .bcard--c1{grid-column:1;grid-row:1 / 3;}
-  .bcard--c1 .bcard__thumb,.bcard--c1 .bcard__thumb-ph{flex:0 0 66%;min-height:0;}
+  .bcard--c1 .bcard__thumb,.bcard--c1 .bcard__thumb-ph{flex:0 0 76%;min-height:0;}
   .bcard--c1 .bcard__b{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;}
   .bcard--c2{grid-column:2 / 4;grid-row:1;}
   .bcard--c3{grid-column:2;grid-row:2;}
@@ -498,10 +500,11 @@ a.card:active{transform:scale(.995);}
   display:grid;place-items:center;color:var(--fog);font-size:11px;text-align:center;position:relative;z-index:1;}
 .titem__name{font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;line-height:1.3;}
 .titem__date{margin-top:4px;color:var(--violet);font-size:var(--text-caption);font-weight:500;font-variant-numeric:tabular-nums;}
+.titem__tag{color:var(--slate);font-weight:500;}
 .titem__desc{margin-top:var(--s8);color:var(--slate);font-size:var(--text-body-sm);line-height:1.65;}
 .titem__links{margin-top:var(--s12);}
 /* 경력만 글자를 2pt 씩 키운다 (대외활동은 그대로) */
-.titem--lg .titem__name{font-size:var(--text-subheading);}
+.titem--lg .titem__name{font-size:12px;}
 .titem--lg .titem__date{font-size:var(--text-body-sm);}
 .titem--lg .titem__desc{font-size:var(--text-body);}
 @media (max-width:479px){
@@ -535,7 +538,7 @@ a.card:active{transform:scale(.995);}
 .skill__icons{display:flex;flex-wrap:wrap;gap:8px;}
 .skill__icon{width:44px;height:44px;border-radius:10px;object-fit:contain;background:var(--cloud);padding:4px;flex:0 0 auto;}
 .skill__icon-ph{width:44px;height:44px;border-radius:10px;background:var(--frost);display:grid;place-items:center;color:var(--fog);font-size:10px;flex:0 0 auto;text-align:center;line-height:1.2;}
-.skill__name{margin-top:var(--s12);font-size:var(--text-heading-sm);font-weight:600;letter-spacing:-.02em;line-height:1.25;}
+.skill__name{margin-top:var(--s12);font-size:16px;font-weight:600;letter-spacing:-.02em;line-height:1.25;}
 .skill__dots{display:flex;gap:4px;margin-top:6px;}
 .skill__dots i{width:8px;height:8px;border-radius:2px;background:var(--frost);display:block;}
 .skill__dots i.on{background:var(--violet);}
@@ -974,13 +977,13 @@ var CONTENT = {
         year: '',                   // 연도 머리말 없이 최신순으로 나열
         items: [
           { image: '', org: '디벨로켓 · AI 데이터 분석 기반 게임콘텐츠 제작자 양성', start: '2026.06', end: '2026.12',
-            desc: '게임 기획자 양성 부트캠프', posts: [] },
+            tag: '6개월 · 교육', desc: '게임 기획자 양성 부트캠프', posts: [] },
           { image: '', org: '젠가 게임즈', start: '2026.03', end: '2026.05',
-            desc: '[외주] 게임 비주얼 컨셉 제작 및 그래픽 리소스 제작', posts: [] },
+            tag: '2개월 · 외주', desc: '게임 비주얼 컨셉 제작 및 그래픽 리소스 제작', posts: [] },
           { image: '', org: '㈜ 액션핏', start: '2023.08', end: '2026.02',
-            desc: '[근무] 2023.08 ~ 2025.08 · [외주] 2025.09 ~ 2026.02\n아트 기획, 비주얼 컨셉, UI, 캐릭터, 광고 영상 제작 등 그래픽 관련 업무 전반 (대표작: 블럭냥!, 편의점 정리왕, 빠지냥 / 그 외 머지냥카페, 스크류 캣 등)', posts: [] },
+            tag: '근무 2년 · 외주 5개월', desc: '아트 기획, 비주얼 컨셉, UI, 캐릭터, 광고 영상 제작 등 그래픽 관련 업무 전반 (대표작: 블럭냥!, 편의점 정리왕, 빠지냥 / 그 외 머지냥카페, 스크류 캣 등)', posts: [] },
           { image: '', org: '브릿지 게임즈', start: '2021.06', end: '2022.02',
-            desc: '[근무] 캐릭터 · 배경 일러스트, SD 캐릭터 스파인', posts: [] }
+            tag: '8개월 · 근무', desc: '캐릭터 · 배경 일러스트, SD 캐릭터 스파인', posts: [] }
         ]
       }
       // 연도를 추가하려면 위 블록을 통째로 복사하세요.
@@ -1364,7 +1367,8 @@ var CONTENT = {
     return '<li class="titem ' + (cls || '') + '">' +
       '<div>' + imgOr(it.image, it[nameKey] || '', 'titem__img', 'titem__img-ph', '이미지') + '</div>' +
       '<div><h3 class="titem__name">' + txt(it[nameKey], nameLabel) + '</h3>' +
-      '<div class="titem__date">' + range + '</div>' +
+      '<div class="titem__date">' + range +
+        (has(it.tag) ? ' <span class="titem__tag">(' + esc(it.tag) + ')</span>' : '') + '</div>' +
       '<div class="titem__desc">' + body(it.desc, '설명') + '</div>' +
       (posts.length
         ? '<div class="titem__links chips">' + posts.map(function (id) {
@@ -2156,7 +2160,7 @@ var CONTENT = {
      그 외에는 시스템 기본 커서. */
   function customCursor() {
     if (!window.matchMedia || !window.matchMedia('(pointer:fine)').matches) return;
-    var HOVER = 'a,button,select,summary,.navlink,.tab,.ppage,.donut__seg,[role=button]';
+    var HOVER = 'a,button,select,summary,label,input,.navlink,.tab,.ppage,.donut__seg,[role=button]';
     var dot = document.createElement('div');
     dot.className = 'cursor';
     dot.innerHTML =
@@ -2166,10 +2170,11 @@ var CONTENT = {
       '<stop offset="1" stop-color="#c71ad4"/></linearGradient></defs>' +
       '<path fill="url(#curGrad)" d="M2.5 2 L2.5 22 L7.7 17.6 L11 24.8 L13.9 23.5 L10.6 16.6 L17.6 16.6 Z"/></svg>';
     document.body.appendChild(dot);
-    var x = 0, y = 0;
+    var x = 0, y = 0, shown = false;
     document.addEventListener('mousemove', function (e) {
       x = e.clientX; y = e.clientY;
       dot.style.left = x + 'px'; dot.style.top = y + 'px';
+      if (!shown) { shown = true; dot.style.opacity = '1'; }
     }, { passive: true });
     document.addEventListener('mouseover', function (e) {
       if (e.target.closest && e.target.closest(HOVER)) dot.classList.add('is-hover');
