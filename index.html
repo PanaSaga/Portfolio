@@ -1071,21 +1071,24 @@ var CONTENT = {
   /* ── 4. History ──────────────────────────────────────────── */
   history: {
 
-    /* 선호 장르 그래프. 항목을 늘리면 8각형까지 그대로 그려집니다. */
+    /* 선호 장르 그래프(육각형) — 플레이한 게임의 장르 Top 6 (value 0~5, 최다=5 기준) */
     axes: [
-      { label: '', value: 3 },
-      { label: '', value: 3 },
-      { label: '', value: 3 },
-      { label: '', value: 3 },
-      { label: '', value: 3 },
-      { label: '', value: 3 }
+      { label: 'RPG',    value: 5.0 },
+      { label: '액션',    value: 3.6 },
+      { label: '어드벤처', value: 3.1 },
+      { label: '시뮬레이션', value: 2.8 },
+      { label: '퍼즐',    value: 2.7 },
+      { label: '캐주얼',   value: 2.6 }
     ],
 
-    /* 출시 연식 비율 — 도넛 그래프 (합이 100 이 되도록) */
-    freshness: [
-      { label: '신규 게임', value: 66, note: '2025년 신규 출시 게임 플레이 비율' },
-      { label: '최신 게임', value: 25, note: '1~7년 내 출시작 플레이 비율' },
-      { label: '고전 게임', value: 9,  note: '8년 이상된 출시작 플레이 비율' }
+    /* 플랫폼 분포 — 도넛 그래프 (value = %, 합 100). note 에 실제 게임 수 */
+    platforms: [
+      { label: '모바일',   value: 42, note: '모바일로 플레이한 게임 213개' },
+      { label: 'PC',       value: 39, note: 'PC 게임 200개' },
+      { label: '보드게임',  value: 8,  note: '보드게임 42개' },
+      { label: '콘솔',      value: 6,  note: '콘솔 게임 29개' },
+      { label: 'TRPG',     value: 3,  note: 'TRPG 16개' },
+      { label: '아케이드',  value: 2,  note: '아케이드 게임 10개' }
     ],
 
     /* 총 개수 — 큰 제목 + 작은 내용 + 오른쪽 큰 숫자, 육각형 아래에 표시 */
@@ -2314,10 +2317,10 @@ var CONTENT = {
     return s.join('') + '</svg>';
   }
 
-  /* 출시 연식 도넛 그래프 */
-  var DONUT_TONES = ['#5e4cff', '#b3a9ff', '#dfdbff'];
+  /* 플랫폼 분포 도넛 그래프 */
+  var DONUT_TONES = ['#5e4cff', '#c9c2f5', '#8a76ec', '#e2d9fb', '#4a30dd', '#b3a9ff'];
   function donut(list) {
-    if (!hasList(list)) return phBlock('출시 연식 비율', 'CONTENT.history.freshness');
+    if (!hasList(list)) return phBlock('플랫폼 분포', 'CONTENT.history.platforms');
 
     var total = 0, i;
     for (i = 0; i < list.length; i++) total += Math.max(0, Number(list[i].value) || 0);
@@ -2342,7 +2345,7 @@ var CONTENT = {
           DONUT_TONES[k % DONUT_TONES.length] + '"></span>' + txt(it.label, '항목') + '</span>';
       }).join('') + '</div>' +
       '<div class="donut__body">' +
-        '<svg class="donut__svg" viewBox="0 0 170 170" role="img" aria-label="출시 연식 비율">' +
+        '<svg class="donut__svg" viewBox="0 0 170 170" role="img" aria-label="플랫폼 분포 비율">' +
           '<g transform="rotate(-90 85 85)">' + segs.join('') + '</g>' +
         '</svg>' +
         '<div class="donut__call" id="donutCall">' +
@@ -2438,7 +2441,7 @@ var CONTENT = {
 
     /* 오른쪽 — 도넛 + 필터 */
     h.push('<div class="hist__right">');
-    h.push(donut(t.freshness));
+    h.push(donut(t.platforms));
 
     /* 태그 드롭다운 */
     h.push('<div class="filter">');
