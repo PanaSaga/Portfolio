@@ -2377,6 +2377,47 @@ var CONTENT = {
 
   var filterState = { platform: '', genre: '' };
 
+  /* 정렬 기준 — 기본은 플레이타임 많은 순, 플레이타임 없는 건 최신순으로 뒤에 */
+  var SORT_OPTIONS = [
+    { v: 'play', label: '플레이타임순' },
+    { v: 'new',  label: '최신순' },
+    { v: 'old',  label: '오래된순' }
+  ];
+  var sortState = 'play';
+
+  function gDate(g) {
+    var m = (g.date || '').match(/(\d{4})(?:-(\d{1,2}))?/);
+    return m ? parseInt(m[1], 10) * 100 + (m[2] ? parseInt(m[2], 10) : 0) : -1;
+  }
+  function gHours(g) {
+    var m = (g.play || '').match(/(\d+)\s*시간/);
+    return m ? parseInt(m[1], 10) : 0;
+  }
+  function cmpNewest(a, b) {                 /* 최신순 — 출시일 미상은 뒤로 */
+    var da = gDate(a), db = gDate(b);
+    if (da < 0 && db < 0) return 0;
+    if (da < 0) return 1;
+    if (db < 0) return -1;
+    return db - da;
+  }
+  function cmpOldest(a, b) {                 /* 오래된 순 — 미상은 뒤로 */
+    var da = gDate(a), db = gDate(b);
+    if (da < 0 && db < 0) return 0;
+    if (da < 0) return 1;
+    if (db < 0) return -1;
+    return da - db;
+  }
+  function cmpPlay(a, b) {                   /* 플레이타임 많은 순 → 없으면 최신순 */
+    var ha = gHours(a), hb = gHours(b);
+    if (ha !== hb) return hb - ha;
+    return cmpNewest(a, b);
+  }
+  function sortGames(list) {
+    var arr = list.slice();
+    arr.sort(sortState === 'new' ? cmpNewest : sortState === 'old' ? cmpOldest : cmpPlay);
+    return arr;
+  }
+
   function matches(g) {
     for (var i = 0; i < FILTER_KEYS.length; i++) {
       var f = FILTER_KEYS[i];
@@ -2413,7 +2454,7 @@ var CONTENT = {
       if (countEl) countEl.innerHTML = '<b>0</b>개';
       return;
     }
-    var shown = games.filter(matches);
+    var shown = sortGames(games.filter(matches));
     host.innerHTML = shown.length
       ? '<div class="games">' + shown.map(gameCard).join('') + '</div>'
       : '<div class="games-empty"><div class="ph-block">조건에 맞는 게임이 없습니다.</div></div>';
@@ -2441,8 +2482,17 @@ var CONTENT = {
     h.push('<div class="hist__right">');
     h.push(donut(t.platforms));
 
-    /* 태그 드롭다운 */
+    /* 정렬 + 태그 드롭다운 */
     h.push('<div class="filter">');
+    h.push('<label class="fsel"><span class="fsel__l">정렬</span>' +
+      '<span class="fsel__box"><select data-sort>' +
+        SORT_OPTIONS.map(function (o) {
+          return '<option value="' + o.v + '"' + (sortState === o.v ? ' selected' : '') + '>' + esc(o.label) + '</option>';
+        }).join('') +
+      '</select>' +
+      '<svg class="fsel__caret" width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">' +
+      '<path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>' +
+      '</svg></span></label>');
     FILTER_KEYS.forEach(function (f) {
       var list = groups[f.key] || [];
       h.push('<label class="fsel"><span class="fsel__l">' + esc(f.label) + '</span>' +
@@ -2511,12 +2561,16 @@ var CONTENT = {
         });
       })(sels[i]);
     }
+    var sortSel = document.querySelector('[data-sort]');
+    if (sortSel) sortSel.addEventListener('change', function () { sortState = sortSel.value; paintGames(); });
     var reset = document.getElementById('gameReset');
     if (reset) {
       reset.addEventListener('click', function () {
         FILTER_KEYS.forEach(function (f) { filterState[f.key] = ''; });
         var s2 = document.querySelectorAll('[data-filter]');
         for (var j = 0; j < s2.length; j++) s2[j].value = '';
+        sortState = 'play';
+        if (sortSel) sortSel.value = 'play';
         paintGames();
       });
     }
