@@ -112,7 +112,7 @@ input{font:inherit;color:inherit;}
   .cursor__burst{position:absolute;left:-18px;top:-18.4px;width:40px;height:40px;
     overflow:visible;opacity:0;transform:scale(.45);transform-origin:center;
     transition:opacity .16s ease,transform .18s cubic-bezier(.34,1.56,.64,1);}
-  .cursor__burst line{stroke:#f98a17;stroke-width:1.7;stroke-linecap:round;
+  .cursor__burst line{stroke:#f98a17;stroke-width:0.7;stroke-linecap:round;
     filter:drop-shadow(0 0 1.6px rgba(249,138,23,.75));}
   .cursor.is-hover .cursor__burst{opacity:1;transform:scale(1);
     animation:cursorBurst 1.15s ease-in-out infinite;}
@@ -2701,8 +2701,8 @@ var CONTENT = {
     var rays = '';
     for (var r = 0; r < 12; r++) {
       var a = r * Math.PI / 6, c = Math.cos(a), s = Math.sin(a);
-      rays += '<line x1="' + (c * 6.8).toFixed(2) + '" y1="' + (s * 6.8).toFixed(2) +
-              '" x2="' + (c * 11.6).toFixed(2) + '" y2="' + (s * 11.6).toFixed(2) + '"/>';
+      rays += '<line x1="' + (c * 5.44).toFixed(2) + '" y1="' + (s * 5.44).toFixed(2) +
+              '" x2="' + (c * 9.28).toFixed(2) + '" y2="' + (s * 9.28).toFixed(2) + '"/>';
     }
     dot.innerHTML =
       '<svg class="cursor__burst" viewBox="-20 -20 40 40" aria-hidden="true">' + rays + '</svg>' +
