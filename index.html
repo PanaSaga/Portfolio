@@ -94,23 +94,29 @@ a,button,.navlink,.tab,select,summary{cursor:pointer;}
 input{font:inherit;color:inherit;}
 
 /* ── 커스텀 커서: 3상태 ──
-   ① 기본     : 보라 그라데이션 커스텀 화살표 (주황 발광 없음)
-   ② 손가락   : 링크·버튼 위에서 커서가 주황색으로 빛남
+   ① 기본     : 보라 그라데이션 커스텀 화살표 (발광 없음)
+   ② 손가락   : 링크·버튼 위에서 커서 꼭지점에 주홍빛 원형 버스트가 방사
    ③ 클릭     : 노란 반짝이 이펙트                                         */
 @media (pointer:fine){
   body,a,button,.navlink,.tab,select,summary,label,input,.ppage,.donut__seg{cursor:none;}
   .cursor{position:fixed;left:0;top:0;z-index:9999;pointer-events:none;opacity:0;
     width:24px;height:24px;margin:-2px 0 0 -2px;transform-origin:2px 1.6px;
     transition:transform .12s ease;}
-  .cursor svg{width:100%;height:100%;display:block;overflow:visible;
+  .cursor .cursor__arrow{width:100%;height:100%;display:block;overflow:visible;
     filter:drop-shadow(0 1px 3px rgba(36,26,143,.35));}
-  .cursor svg path{paint-order:stroke;stroke:#fdf7ed;stroke-width:1.5;
+  .cursor .cursor__arrow path{paint-order:stroke;stroke:#fdf7ed;stroke-width:1.5;
     stroke-linejoin:round;stroke-linecap:round;
     transition:stroke .14s ease,stroke-width .14s ease;}
-  /* ② 손가락 위 — 주황색으로 빛남 */
-  .cursor.is-hover{transform:scale(1.1);}
-  .cursor.is-hover svg{filter:drop-shadow(0 0 5px rgba(249,138,23,.9)) drop-shadow(0 0 2px rgba(249,138,23,.95));}
-  .cursor.is-hover svg path{stroke:#f98a17;stroke-width:2.4;}
+  /* ② 손가락 위 — 커서 꼭지점에서 주홍빛이 원형으로 방사(발광 버스트) */
+  .cursor.is-hover{transform:scale(1.06);}
+  .cursor__burst{position:absolute;left:-18px;top:-18.4px;width:40px;height:40px;
+    overflow:visible;opacity:0;transform:scale(.45);transform-origin:center;
+    transition:opacity .16s ease,transform .18s cubic-bezier(.34,1.56,.64,1);}
+  .cursor__burst line{stroke:#f74d1e;stroke-width:1.7;stroke-linecap:round;
+    filter:drop-shadow(0 0 1.6px rgba(247,77,30,.75));}
+  .cursor.is-hover .cursor__burst{opacity:1;transform:scale(1);
+    animation:cursorBurst 1.15s ease-in-out infinite;}
+  @keyframes cursorBurst{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
   .cursor.is-down{transform:scale(.85);}
   .spark{position:fixed;z-index:9998;pointer-events:none;width:11px;height:11px;margin:-5.5px 0 0 -5.5px;
     background:#ffcf1a;
@@ -2684,15 +2690,23 @@ var CONTENT = {
     customCursor();
   }
 
-  /* 커스텀 커서 — 손가락(클릭 가능) 위에서만 주황 발광 화살표, 클릭 시 노란 반짝이.
+  /* 커스텀 커서 — 손가락(클릭 가능) 위에서 커서 꼭지점에 주홍빛 원형 버스트, 클릭 시 노란 반짝이.
      그 외에는 시스템 기본 커서. */
   function customCursor() {
     if (!window.matchMedia || !window.matchMedia('(pointer:fine)').matches) return;
     var HOVER = 'a,button,select,summary,label,input,.navlink,.tab,.ppage,.donut__seg,[role=button]';
     var dot = document.createElement('div');
     dot.className = 'cursor';
+    // 꼭지점에서 원형으로 뻗는 주홍빛 광선(12갈래) 버스트
+    var rays = '';
+    for (var r = 0; r < 12; r++) {
+      var a = r * Math.PI / 6, c = Math.cos(a), s = Math.sin(a);
+      rays += '<line x1="' + (c * 8.5).toFixed(2) + '" y1="' + (s * 8.5).toFixed(2) +
+              '" x2="' + (c * 14.5).toFixed(2) + '" y2="' + (s * 14.5).toFixed(2) + '"/>';
+    }
     dot.innerHTML =
-      '<svg viewBox="0 0 28 28" aria-hidden="true">' +
+      '<svg class="cursor__burst" viewBox="-20 -20 40 40" aria-hidden="true">' + rays + '</svg>' +
+      '<svg class="cursor__arrow" viewBox="0 0 28 28" aria-hidden="true">' +
       '<defs><linearGradient id="curGrad" x1="0.1" y1="0" x2="0.7" y2="1">' +
       '<stop offset="0" stop-color="#6d22e6"/><stop offset="0.55" stop-color="#9a1fe4"/>' +
       '<stop offset="1" stop-color="#c71ad4"/></linearGradient></defs>' +
