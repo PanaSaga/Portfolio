@@ -1080,26 +1080,27 @@ var CONTENT = {
     /* 선호 장르 그래프(육각형) — 플레이한 게임의 장르 Top 6 (value 0~5, 최다=5 기준) */
     axes: [
       { label: "RPG", value: 5.0 },
-      { label: "액션", value: 3.3 },
-      { label: "어드벤처", value: 3.1 },
+      { label: "액션", value: 3.5 },
+      { label: "어드벤처", value: 3.2 },
       { label: "전략", value: 2.8 },
-      { label: "캐주얼", value: 2.8 },
+      { label: "캐주얼", value: 2.7 },
       { label: "시뮬레이션", value: 2.6 }
     ],
 
     /* 플랫폼 분포 — 도넛 그래프 (value = %, 합 100). note 에 실제 게임 수 */
     platforms: [
-      { label: "모바일", value: 42, note: "모바일 게임 212개" },
-      { label: "PC", value: 39, note: "PC 게임 199개" },
+      { label: "모바일", value: 40, note: "모바일 게임 216개" },
+      { label: "PC", value: 38, note: "PC 게임 205개" },
       { label: "보드게임", value: 8, note: "보드게임 게임 42개" },
-      { label: "콘솔", value: 6, note: "콘솔 게임 29개" },
+      { label: "콘솔", value: 7, note: "콘솔 게임 39개" },
       { label: "TRPG", value: 3, note: "TRPG 게임 16개" },
-      { label: "아케이드", value: 2, note: "아케이드 게임 10개" }
+      { label: "아케이드", value: 2, note: "아케이드 게임 10개" },
+      { label: "VR", value: 2, note: "VR 게임 9개" }
     ],
 
     /* 총 개수 — 큰 제목 + 작은 내용 + 오른쪽 큰 숫자, 육각형 아래에 표시 */
     counts: [
-      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 등', value: '406' },
+      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '422' },
       { title: '오프라인 게임', desc: 'TRPG · 보드게임 등', value: '58' }
     ],
 
@@ -1108,6 +1109,26 @@ var CONTENT = {
        date  : 출시일(불명/미확인은 생략), 카드에 '플랫폼 | 출시일' 로 표시
        play  : 플레이타임(기록 없음·30시간 미만은 생략)                          */
     games: [
+      {"title":"어쌔신 크리드 3","image":"assets/images/games/g465.jpg","platforms":["PC","콘솔"],"date":"2012-10","genres":["액션","어드벤처","오픈월드"]},
+      {"title":"Brawlhalla","image":"assets/images/games/g466.jpg","platforms":["PC","콘솔","모바일"],"date":"2017-10","genres":["액션","파티게임"]},
+      {"title":"Astrea: Six-Sided Oracles","image":"assets/images/games/g467.jpg","platforms":["PC","콘솔"],"date":"2023-09","genres":["덱빌딩","로그라이크"]},
+      {"title":"Farming Simulator 22","image":"assets/images/games/g468.jpg","platforms":["PC","콘솔"],"date":"2021-11","genres":["시뮬레이션"]},
+      {"title":"Astro Duel 2","image":"assets/images/games/g469.jpg","platforms":["PC","콘솔"],"date":"2024-03","genres":["슈팅","파티게임"]},
+      {"title":"Gamedec - Definitive Edition","image":"assets/images/games/g470.jpg","platforms":["PC","콘솔"],"date":"2021-09","genres":["RPG"]},
+      {"title":"Eximius: Seize the Frontline","image":"assets/images/games/g471.jpg","platforms":["PC"],"date":"2021-03","genres":["슈팅","전략"]},
+      {"title":"Dishonored - Definitive Edition","image":"assets/images/games/g472.jpg","platforms":["PC","콘솔"],"date":"2015-08","genres":["액션","어드벤처"]},
+      {"title":"Sable","image":"assets/images/games/g473.jpg","platforms":["PC","콘솔"],"date":"2021-09","genres":["어드벤처","오픈월드"]},
+      {"title":"폴 가이즈","image":"assets/images/games/g474.jpg","platforms":["PC","콘솔","모바일"],"date":"2020-08","genres":["파티게임","플랫포머"]},
+      {"title":"CoA: 아틀란의 크리스탈","image":"assets/images/games/g475.jpg","platforms":["PC","모바일","콘솔"],"date":"2025-05","genres":["액션","RPG","MMORPG"],"play":"20시간"},
+      {"title":"비트 세이버","image":"assets/images/games/g476.jpg","platforms":["VR"],"date":"2019-05","genres":["리듬"]},
+      {"title":"The Room VR: A Dark Matter","image":"assets/images/games/g477.jpg","platforms":["VR"],"date":"2020-03","genres":["퍼즐","어드벤처"]},
+      {"title":"Swarm","image":"assets/images/games/g478.jpg","platforms":["VR"],"date":"2021-04","genres":["액션","슈팅"]},
+      {"title":"Until You Fall","image":"assets/images/games/g479.jpg","platforms":["VR"],"date":"2020-08","genres":["액션","로그라이크"]},
+      {"title":"Lost Recipes","image":"assets/images/games/g480.jpg","platforms":["VR"],"date":"2022-01","genres":["시뮬레이션","캐주얼"]},
+      {"title":"Mixture","image":"assets/images/games/g481.jpg","platforms":["VR"],"date":"2023-02","genres":["액션","어드벤처","플랫포머"]},
+      {"title":"MOTHERGUNSHIP: FORGE","image":"assets/images/games/g482.jpg","platforms":["VR"],"date":"2022-06","genres":["슈팅","로그라이크"]},
+      {"title":"Zenith: Nexus","image":"assets/images/games/g483.jpg","platforms":["VR"],"date":"2022-01","genres":["MMORPG"]},
+      {"title":"Moss: 2권","image":"assets/images/games/g484.jpg","platforms":["VR"],"date":"2022-03","genres":["어드벤처","퍼즐","액션"]},
       {"title":"뚜까펫: 서바이벌","image":"assets/images/games/add-ttukapet.jpg","platforms":["모바일"],"date":"2026-08","genres":["방치형","RPG","수집형"],"play":"40시간"},
       {"title":"치트 데스","image":"assets/images/games/g001.jpg","platforms":["PC"],"date":"2026-07","genres":["로그라이크", "호러", "전략"]},
       {"title":"Bills Must Be Paid","image":"assets/images/games/g002.jpg","platforms":["PC"],"date":"2026-07","genres":["방치형", "로그라이크", "경영"]},
@@ -2319,7 +2340,7 @@ var CONTENT = {
   }
 
   /* 플랫폼 분포 도넛 그래프 */
-  var DONUT_TONES = ['#5e4cff', '#c9c2f5', '#8a76ec', '#e2d9fb', '#4a30dd', '#b3a9ff'];
+  var DONUT_TONES = ['#5e4cff', '#c9c2f5', '#8a76ec', '#e2d9fb', '#4a30dd', '#b3a9ff', '#d9c2ff'];
   function donut(list) {
     if (!hasList(list)) return phBlock('플랫폼 분포', 'CONTENT.history.platforms');
 
