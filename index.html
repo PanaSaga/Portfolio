@@ -764,9 +764,10 @@ img.ppage__img{display:block;}
   .donut__call::before{content:"";position:absolute;left:-9px;top:38px;width:0;height:0;
     border-top:10px solid transparent;border-bottom:10px solid transparent;border-right:10px solid var(--frost);}
 }
-.donut__seg{cursor:pointer;transition:opacity .15s ease;}
+.donut__seg{cursor:pointer;transition:opacity .15s ease,stroke .15s ease;}
 .donut__svg:hover .donut__seg{opacity:.45;}
-.donut__svg .donut__seg:hover{opacity:1;}
+.donut__svg .donut__seg:hover{opacity:1;stroke:#f98a17;}
+.donut__seg.is-sel{stroke:#f98a17;}
 .donut__pct{font-size:clamp(28px,7vw,40px);font-weight:600;letter-spacing:-.03em;line-height:1;color:var(--violet);}
 .donut__lab{margin-top:6px;font-size:var(--text-body);font-weight:600;color:var(--graphite);}
 .donut__note{margin-top:8px;font-size:var(--text-caption);color:var(--steel);line-height:1.5;}
@@ -806,6 +807,7 @@ img.ppage__img{display:block;}
 .game__tag{padding:2px 6px;border-radius:4px;background:var(--cloud);color:var(--steel);font-size:10px;font-weight:500;line-height:1.5;white-space:nowrap;}
 .game__tag--p{background:var(--accent-soft);color:var(--violet-deep);}
 .game__tag--e{background:var(--frost);color:var(--graphite);}
+.game__tag--end{background:#f98a17;color:#fff;font-weight:700;}
 .games-empty{margin-top:var(--s20);}
 
 /* ============================================================
@@ -1084,16 +1086,16 @@ var CONTENT = {
       { label: "어드벤처", value: 3.2 },
       { label: "전략", value: 2.8 },
       { label: "캐주얼", value: 2.7 },
-      { label: "시뮬레이션", value: 2.6 }
+      { label: "시뮬레이션", value: 2.5 }
     ],
 
     /* 플랫폼 분포 — 도넛 그래프 (value = %, 합 100). note 에 실제 게임 수 */
     platforms: [
-      { label: "모바일", value: 36, note: "모바일(PC 제외) 181개" },
-      { label: "PC", value: 34, note: "PC(모바일 제외) 169개" },
+      { label: "모바일", value: 35, note: "모바일 181개" },
+      { label: "PC", value: 35, note: "PC 177개" },
       { label: "PC·모바일", value: 7, note: "PC·모바일 겸용 36개" },
       { label: "보드게임", value: 8, note: "보드게임 42개" },
-      { label: "콘솔", value: 8, note: "콘솔 게임 39개" },
+      { label: "콘솔", value: 8, note: "콘솔 게임 42개" },
       { label: "TRPG", value: 3, note: "TRPG 게임 16개" },
       { label: "아케이드", value: 2, note: "아케이드 게임 10개" },
       { label: "VR", value: 2, note: "VR 게임 9개" }
@@ -1101,7 +1103,7 @@ var CONTENT = {
 
     /* 총 개수 — 큰 제목 + 작은 내용 + 오른쪽 큰 숫자, 육각형 아래에 표시 */
     counts: [
-      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '423' },
+      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '431' },
       { title: '오프라인 게임', desc: 'TRPG · 보드게임 등', value: '58' }
     ],
 
@@ -1131,6 +1133,14 @@ var CONTENT = {
       {"title":"Zenith: Nexus","image":"assets/images/games/g483.jpg","platforms":["VR"],"date":"2022-01","genres":["MMORPG"]},
       {"title":"Moss: 2권","image":"assets/images/games/g484.jpg","platforms":["VR"],"date":"2022-03","genres":["어드벤처","퍼즐","액션"]},
       {"title":"Dragons: 라이즈 오브 버크","image":"assets/images/games/g485.jpg","platforms":["모바일"],"date":"2014-05","genres":["시뮬레이션","수집형"],"play":"10시간"},
+      {"title":"페르소나3 리로드","image":"assets/images/games/g486.jpg","platforms":["PC","콘솔"],"date":"2024-02","genres":["RPG","턴제"]},
+      {"title":"페르소나 5 더 로열","image":"assets/images/games/g487.jpg","platforms":["PC","콘솔"],"date":"2022-10","genres":["RPG","턴제"]},
+      {"title":"아웃 오브 핸즈","image":"assets/images/games/g488.jpg","platforms":["PC"],"date":"2025-04","genres":["카드","전략","호러"]},
+      {"title":"길잃은 고양이의 여정","image":"assets/images/games/g489.jpg","platforms":["PC"],"date":"2025-03","genres":["캐주얼","어드벤처"]},
+      {"title":"던그리드","image":"assets/images/games/g490.jpg","platforms":["PC"],"date":"2018-02","genres":["액션","로그라이크","플랫포머"]},
+      {"title":"스컬","image":"assets/images/games/g491.jpg","platforms":["PC","콘솔"],"date":"2021-01","genres":["액션","로그라이크","플랫포머"]},
+      {"title":"헬테이커","image":"assets/images/games/g492.jpg","platforms":["PC"],"date":"2020-05","genres":["퍼즐"]},
+      {"title":"Illusion Carnival: 일루전 카니발","image":"assets/images/games/g493.jpg","platforms":["PC"],"date":"2024-07","genres":["어드벤처","RPG","호러"]},
       {"title":"뚜까펫: 서바이벌","image":"assets/images/games/add-ttukapet.jpg","platforms":["모바일"],"date":"2026-08","genres":["방치형","RPG","수집형"],"play":"40시간"},
       {"title":"치트 데스","image":"assets/images/games/g001.jpg","platforms":["PC"],"date":"2026-07","genres":["로그라이크", "호러", "전략"]},
       {"title":"Bills Must Be Paid","image":"assets/images/games/g002.jpg","platforms":["PC"],"date":"2026-07","genres":["방치형", "로그라이크", "경영"]},
@@ -1152,14 +1162,14 @@ var CONTENT = {
       {"title":"My Card Is Better Than Your Card!","image":"assets/images/games/g019.jpg","platforms":["PC"],"date":"2025-10","genres":["카드", "캐주얼"],"play":"60시간"},
       {"title":"Shape of Dreams","image":"assets/images/games/g020.jpg","platforms":["PC"],"date":"2025-09","genres":["RPG", "로그라이크"],"play":"180시간"},
       {"title":"Cozy Island","image":"assets/images/games/g021.jpg","platforms":["PC"],"date":"2025-09","genres":["시뮬레이션", "캐주얼"]},
-      {"title":"Dice Gambit","image":"assets/images/games/g022.jpg","platforms":["PC"],"date":"2025-08","genres":["전략", "RPG", "턴제"],"play":"30시간"},
+      {"title":"Dice Gambit","image":"assets/images/games/g022.jpg","platforms":["PC"],"date":"2025-08","genres":["전략", "RPG", "턴제"],"play":"30시간","ending":true},
       {"title":"FANTASY LIFE i : 빙글빙글 용과 시간을 훔치는 소녀","image":"assets/images/games/g023.jpg","platforms":["PC"],"date":"2025-05","genres":["RPG", "시뮬레이션", "어드벤처"],"play":"95시간"},
       {"title":"SEDAP！일품! 아시안 쿠킹 어드벤처","image":"assets/images/games/g024.jpg","platforms":["PC"],"date":"2025-05","genres":["어드벤처", "시뮬레이션", "액션"]},
       {"title":"Drop Away: Color Puzzle","image":"assets/images/games/g025.jpg","platforms":["모바일"],"date":"2025-05","genres":["퍼즐"]},
       {"title":"클레르 옵스퀴르: 33 원정대","image":"assets/images/games/g026.jpg","platforms":["PC"],"date":"2025-04","genres":["RPG", "턴제", "어드벤처"],"play":"50시간"},
       {"title":"마비노기 모바일","image":"assets/images/games/g027.jpg","platforms":["모바일", "PC"],"date":"2025-03","genres":["RPG"]},
       {"title":"Bongo Cat","image":"assets/images/games/g028.jpg","platforms":["PC"],"date":"2025-03","genres":["방치형", "캐주얼"],"play":"430시간"},
-      {"title":"Monster Hunter Wilds","image":"assets/images/games/g029.jpg","platforms":["PC"],"date":"2025-02","genres":["액션", "RPG"],"play":"190시간"},
+      {"title":"Monster Hunter Wilds","image":"assets/images/games/g029.jpg","platforms":["PC"],"date":"2025-02","genres":["액션", "RPG"],"play":"190시간","ending":true},
       {"title":"데스크탑 아기 동물 목장","image":"assets/images/games/g030.jpg","platforms":["PC"],"date":"2025-02","genres":["방치형", "시뮬레이션", "캐주얼"],"play":"60시간"},
       {"title":"도시전설 해체센터","image":"assets/images/games/g031.jpg","platforms":["PC"],"date":"2025-02","genres":["어드벤처", "추리", "비주얼노벨"]},
       {"title":"Hello Kitty My Dream Store","image":"assets/images/games/g032.jpg","platforms":["모바일"],"date":"2025","genres":["퍼즐"]},
@@ -1180,7 +1190,7 @@ var CONTENT = {
       {"title":"명조: 워더링 웨이브","image":"assets/images/games/g047.jpg","platforms":["모바일", "PC", "콘솔"],"date":"2024-05","genres":["RPG", "오픈월드"]},
       {"title":"Balatro","image":"assets/images/games/g048.jpg","platforms":["PC"],"date":"2024-02","genres":["카드", "로그라이크"]},
       {"title":"역전재판 456 오도로키 셀렉션","image":"assets/images/games/g049.jpg","platforms":["PC"],"date":"2024-01","genres":["어드벤처", "추리", "비주얼노벨"]},
-      {"title":"미제사건은 끝내야 하니까","image":"assets/images/games/g050.jpg","platforms":["PC"],"date":"2024-01","genres":["어드벤처", "추리"]},
+      {"title":"미제사건은 끝내야 하니까","image":"assets/images/games/g050.jpg","platforms":["PC"],"date":"2024-01","genres":["어드벤처", "추리"],"ending":true},
       {"title":"BoardLand","image":"assets/images/games/g051.jpg","platforms":["PC"],"date":"2024-01","genres":["보드게임", "캐주얼"]},
       {"title":"Box Cat Jam: Block Match","image":"assets/images/games/g052.jpg","platforms":["모바일"],"date":"2024-01","genres":["캐주얼"]},
       {"title":"스크류캣: 고양이를 스크류! 잼잼!","image":"assets/images/games/g053.jpg","platforms":["모바일"],"date":"2024","genres":["퍼즐"]},
@@ -1189,11 +1199,11 @@ var CONTENT = {
       {"title":"Buckshot Roulette","image":"assets/images/games/g056.jpg","platforms":["PC"],"date":"2023-12","genres":["캐주얼", "호러", "전략"]},
       {"title":"For The King II","image":"assets/images/games/g057.jpg","platforms":["PC"],"date":"2023-11","genres":["RPG", "전략", "로그라이크"]},
       {"title":"Ikonei Island: An Earthlock Adventure","image":"assets/images/games/g058.jpg","platforms":["PC"],"date":"2023-11","genres":["시뮬레이션", "어드벤처", "RPG"],"play":"10시간"},
-      {"title":"산나비","image":"assets/images/games/g059.jpg","platforms":["PC"],"date":"2023-11","genres":["액션", "플랫포머", "어드벤처"]},
+      {"title":"산나비","image":"assets/images/games/g059.jpg","platforms":["PC"],"date":"2023-11","genres":["액션", "플랫포머", "어드벤처"],"ending":true},
       {"title":"리버스: 1999","image":"assets/images/games/g060.jpg","platforms":["모바일", "PC"],"date":"2023-10","genres":["RPG", "전략"],"play":"200시간"},
       {"title":"Fae Farm","image":"assets/images/games/g061.jpg","platforms":["PC"],"date":"2023-09","genres":["시뮬레이션", "RPG", "어드벤처"],"play":"70시간"},
       {"title":"Stacklands","image":"assets/images/games/g062.jpg","platforms":["PC"],"date":"2023-09","genres":["시뮬레이션", "덱빌딩", "전략"],"play":"15시간"},
-      {"title":"발더스 게이트 3","image":"assets/images/games/g063.jpg","platforms":["PC"],"date":"2023-08","genres":["RPG", "어드벤처", "전략"],"play":"430시간"},
+      {"title":"발더스 게이트 3","image":"assets/images/games/g063.jpg","platforms":["PC"],"date":"2023-08","genres":["RPG", "어드벤처", "전략"],"play":"430시간","ending":true},
       {"title":"Palia","image":"assets/images/games/g064.jpg","platforms":["PC"],"date":"2023-08","genres":["MMORPG", "시뮬레이션", "어드벤처"]},
       {"title":"포켓몬 슬립","image":"assets/images/games/g065.jpg","platforms":["모바일"],"date":"2023-07","genres":["시뮬레이션"],"play":"120시간"},
       {"title":"해리포터: 깨어난 마법","image":"assets/images/games/g066.jpg","platforms":["모바일"],"date":"2023-06","genres":["RPG", "카드", "전략"]},
@@ -1204,7 +1214,7 @@ var CONTENT = {
       {"title":"호그와트 레거시","image":"assets/images/games/g071.jpg","platforms":["콘솔"],"date":"2023-02","genres":["RPG", "액션", "오픈월드"]},
       {"title":"다키스트 던전 II","image":"assets/images/games/g072.jpg","platforms":["PC"],"date":"2023-01","genres":["로그라이크", "RPG", "전략"]},
       {"title":"Goods Sort","image":"assets/images/games/g073.jpg","platforms":["모바일"],"date":"2022-12","genres":["캐주얼"]},
-      {"title":"포켓몬스터 스칼렛·바이올렛","image":"assets/images/games/g074.jpg","platforms":["콘솔"],"date":"2022-11","genres":["RPG", "오픈월드"],"play":"160시간"},
+      {"title":"포켓몬스터 스칼렛·바이올렛","image":"assets/images/games/g074.jpg","platforms":["콘솔"],"date":"2022-11","genres":["RPG", "오픈월드"],"play":"160시간","ending":true},
       {"title":"The Case of the Golden Idol","image":"assets/images/games/g075.jpg","platforms":["PC"],"date":"2022-10","genres":["퍼즐", "추리"],"play":"10시간"},
       {"title":"레전드 오브 슬라임: 방치형 RPG","image":"assets/images/games/g076.jpg","platforms":["모바일"],"date":"2022-08","genres":["어드벤처"]},
       {"title":"상자아이","image":"assets/images/games/g077.jpg","platforms":["보드게임"],"date":"2022-06","genres":["협동", "서바이벌", "추리"]},
@@ -1212,7 +1222,7 @@ var CONTENT = {
       {"title":"Core Keeper","image":"assets/images/games/g079.jpg","platforms":["PC"],"date":"2022-03","genres":["액션", "어드벤처", "샌드박스"],"play":"110시간"},
       {"title":"타이니 티나의 원더랜드","image":"assets/images/games/g080.jpg","platforms":["PC"],"date":"2022-03","genres":["액션", "RPG", "슈팅"],"play":"10시간"},
       {"title":"건그레이브 G.O.R.E","image":"assets/images/games/g081.jpg","platforms":["PC"],"date":"2022-02","genres":["액션", "슈팅"]},
-      {"title":"포켓몬스터 레전드 아르세우스","image":"assets/images/games/g082.jpg","platforms":["콘솔"],"date":"2022-01","genres":["RPG", "오픈월드"],"play":"50시간"},
+      {"title":"포켓몬스터 레전드 아르세우스","image":"assets/images/games/g082.jpg","platforms":["콘솔"],"date":"2022-01","genres":["RPG", "오픈월드"],"play":"50시간","ending":true},
       {"title":"유희왕 마스터 듀얼","image":"assets/images/games/g083.jpg","platforms":["PC"],"date":"2022-01","genres":["카드", "전략"]},
       {"title":"레인보우 식스 익스트랙션","image":"assets/images/games/g084.jpg","platforms":["콘솔"],"date":"2022-01","genres":["슈팅", "협동", "전략"],"play":"85시간"},
       {"title":"커피러시","image":"assets/images/games/g085.jpg","platforms":["보드게임"],"date":"2022","genres":["전략"]},
@@ -1220,13 +1230,13 @@ var CONTENT = {
       {"title":"엔들리스 윈터","image":"assets/images/games/g087.jpg","platforms":["보드게임"],"date":"2022","genres":["전략", "덱빌딩"]},
       {"title":"Inscryption","image":"assets/images/games/g088.jpg","platforms":["PC"],"date":"2021-10","genres":["로그라이크", "덱빌딩", "호러"],"play":"15시간"},
       {"title":"월드 플리퍼","image":"assets/images/games/g089.jpg","platforms":["모바일"],"date":"2021-09","genres":["RPG", "액션", "퍼즐"]},
-      {"title":"몬스터헌터 스토리즈2 파멸의 날개","image":"assets/images/games/g090.jpg","platforms":["PC"],"date":"2021-07","genres":["RPG", "턴제"],"play":"140시간"},
+      {"title":"몬스터헌터 스토리즈2 파멸의 날개","image":"assets/images/games/g090.jpg","platforms":["PC"],"date":"2021-07","genres":["RPG", "턴제"],"play":"140시간","ending":true},
       {"title":"포켓몬 유나이트","image":"assets/images/games/g091.jpg","platforms":["모바일"],"date":"2021-07","genres":["전략", "액션"]},
       {"title":"Tribes of Midgard","image":"assets/images/games/g092.jpg","platforms":["PC"],"date":"2021-07","genres":["액션", "서바이벌", "로그라이크"],"play":"30시간"},
       {"title":"Sun Haven","image":"assets/images/games/g093.jpg","platforms":["PC"],"date":"2021-06","genres":["시뮬레이션", "RPG", "어드벤처"],"play":"150시간"},
       {"title":"Demeo","image":"assets/images/games/g094.jpg","platforms":["PC"],"date":"2021-05","genres":["전략", "RPG", "보드게임"],"play":"15시간"},
       {"title":"니어 레플리칸트 ver.1.22474487139...","image":"assets/images/games/g095.jpg","platforms":["PC"],"date":"2021-04","genres":["RPG", "액션"],"play":"15시간"},
-      {"title":"몬스터헌터 라이즈","image":"assets/images/games/g096.jpg","platforms":["PC"],"date":"2021-03","genres":["액션", "RPG"],"play":"130시간"},
+      {"title":"몬스터헌터 라이즈","image":"assets/images/games/g096.jpg","platforms":["PC"],"date":"2021-03","genres":["액션", "RPG"],"play":"130시간","ending":true},
       {"title":"Loop Hero","image":"assets/images/games/g097.jpg","platforms":["PC"],"date":"2021-03","genres":["로그라이크", "전략", "덱빌딩"]},
       {"title":"나노 레전드","image":"assets/images/games/g098.jpg","platforms":["모바일"],"date":"2021-03","genres":["RPG", "방치형"]},
       {"title":"로얄매치","image":"assets/images/games/g099.jpg","platforms":["모바일"],"date":"2021-02","genres":["퍼즐", "캐주얼"],"play":"10시간"},
@@ -1241,7 +1251,7 @@ var CONTENT = {
       {"title":"Hades","image":"assets/images/games/g108.jpg","platforms":["PC"],"date":"2020-09","genres":["로그라이크", "액션"]},
       {"title":"Unrailed!","image":"assets/images/games/g109.jpg","platforms":["PC"],"date":"2020-09","genres":["액션", "협동", "캐주얼"]},
       {"title":"구룡투","image":"assets/images/games/g110.jpg","platforms":["보드게임"],"date":"2020-09","genres":["추리", "전략"]},
-      {"title":"베리드 스타즈","image":"assets/images/games/g111.jpg","platforms":["PC"],"date":"2020-07","genres":["어드벤처", "추리", "비주얼노벨"],"play":"35시간"},
+      {"title":"베리드 스타즈","image":"assets/images/games/g111.jpg","platforms":["PC"],"date":"2020-07","genres":["어드벤처", "추리", "비주얼노벨"],"play":"35시간","ending":true},
       {"title":"가디언 테일즈","image":"assets/images/games/g112.jpg","platforms":["모바일", "PC", "콘솔"],"date":"2020-07","genres":["RPG", "액션", "어드벤처"]},
       {"title":"포켓몬 카페 리믹스","image":"assets/images/games/g113.jpg","platforms":["모바일"],"date":"2020-06","genres":["퍼즐"]},
       {"title":"로드 오브 히어로즈","image":"assets/images/games/g114.jpg","platforms":["모바일"],"date":"2020-03","genres":["RPG", "전략"]},
@@ -1255,12 +1265,12 @@ var CONTENT = {
       {"title":"미스틱 코드","image":"assets/images/games/g122.jpg","platforms":["모바일"],"date":"2019-04","genres":["비주얼노벨", "어드벤처"]},
       {"title":"소녀☆가극 레뷰 스타라이트 -Re LIVE-","image":"assets/images/games/g123.jpg","platforms":["모바일"],"date":"2019-04","genres":["리듬", "RPG"]},
       {"title":"Dragons: Titan Uprising","image":"assets/images/games/g124.jpg","platforms":["모바일"],"date":"2019-03","genres":["RPG", "전략", "퍼즐"],"play":"120시간"},
-      {"title":"역전재판 123 나루호도 셀렉션","image":"assets/images/games/g125.jpg","platforms":["PC"],"date":"2019-02","genres":["어드벤처", "추리", "비주얼노벨"]},
+      {"title":"역전재판 123 나루호도 셀렉션","image":"assets/images/games/g125.jpg","platforms":["PC"],"date":"2019-02","genres":["어드벤처", "추리", "비주얼노벨"],"ending":true},
       {"title":"미스터리 하우스","image":"assets/images/games/g126.jpg","platforms":["보드게임"],"date":"2019","genres":["협동", "추리"]},
       {"title":"이프","image":"assets/images/games/g127.jpg","platforms":["보드게임"],"date":"2019","genres":["추리", "RPG"]},
       {"title":"엔데버: 대항해시대","image":"assets/images/games/g128.jpg","platforms":["보드게임"],"date":"2019","genres":["전략", "경영"]},
       {"title":"Kingdom Two Crowns","image":"assets/images/games/g129.jpg","platforms":["PC"],"date":"2018-12","genres":["타워디펜스", "경영", "액션"]},
-      {"title":"ALTER EGO","image":"assets/images/games/g130.jpg","platforms":["모바일"],"date":"2018-12","genres":["시뮬레이션"]},
+      {"title":"ALTER EGO","image":"assets/images/games/g130.jpg","platforms":["모바일"],"date":"2018-12","genres":["시뮬레이션"],"ending":true},
       {"title":"츠키의 모험","image":"assets/images/games/g131.jpg","platforms":["모바일"],"date":"2018-11","genres":["시뮬레이션", "캐주얼"]},
       {"title":"궨트: 더 위쳐 카드 게임","image":"assets/images/games/g132.jpg","platforms":["PC"],"date":"2018-10","genres":["카드", "전략"]},
       {"title":"Full Metal Furies","image":"assets/images/games/g133.jpg","platforms":["PC"],"date":"2018-09","genres":["액션", "RPG", "협동"]},
@@ -1277,7 +1287,7 @@ var CONTENT = {
       {"title":"프로스트펑크","image":"assets/images/games/g145.jpg","platforms":["콘솔"],"date":"2018-04","genres":["시뮬레이션", "전략"]},
       {"title":"그림노츠","image":"assets/images/games/g146.jpg","platforms":["모바일"],"date":"2018-03","genres":["RPG", "수집형"]},
       {"title":"체인 스트라이크","image":"assets/images/games/g147.jpg","platforms":["모바일"],"date":"2018-03","genres":["RPG", "전략"]},
-      {"title":"몬스터헌터: 월드","image":"assets/images/games/g148.jpg","platforms":["PC"],"date":"2018-01","genres":["액션", "RPG"],"play":"390시간"},
+      {"title":"몬스터헌터: 월드","image":"assets/images/games/g148.jpg","platforms":["PC"],"date":"2018-01","genres":["액션", "RPG"],"play":"390시간","ending":true},
       {"title":"전자오락수호대 with NAVER WEBTOON","image":"assets/images/games/g149.jpg","platforms":["모바일"],"date":"2018-01","genres":["RPG", "수집형", "캐주얼"]},
       {"title":"동물의 정원: 동물과 함께 힐링 라이프!","image":"assets/images/games/g150.jpg","platforms":["모바일"],"date":"2018","genres":["시뮬레이션", "캐주얼"]},
       {"title":"디텍티브: 모던 크라임","image":"assets/images/games/g151.jpg","platforms":["보드게임"],"date":"2018","genres":["협동", "추리"]},
@@ -1299,7 +1309,7 @@ var CONTENT = {
       {"title":"유희왕 듀얼링크스","image":"assets/images/games/g167.jpg","platforms":["모바일", "PC"],"date":"2017-04","genres":["카드", "전략"]},
       {"title":"마이리틀셰프","image":"assets/images/games/g168.jpg","platforms":["모바일"],"date":"2017-04","genres":["시뮬레이션", "경영"]},
       {"title":"젤다의 전설 야생의 숨결","image":"assets/images/games/g169.jpg","platforms":["콘솔"],"date":"2017-03","genres":["액션", "어드벤처", "오픈월드"],"play":"90시간"},
-      {"title":"NieR:Automata","image":"assets/images/games/g170.jpg","platforms":["PC"],"date":"2017-03","genres":["액션", "RPG"],"play":"60시간"},
+      {"title":"NieR:Automata","image":"assets/images/games/g170.jpg","platforms":["PC"],"date":"2017-03","genres":["액션", "RPG"],"play":"60시간","ending":true},
       {"title":"DISSIDIA FINAL FANTASY OO","image":"assets/images/games/g171.jpg","platforms":["모바일"],"date":"2017-02","genres":["액션", "RPG"]},
       {"title":"우리는 여기에 있었다","image":"assets/images/games/g172.jpg","platforms":["PC"],"date":"2017-02","genres":["퍼즐", "협동", "어드벤처"]},
       {"title":"Hollow Knight","image":"assets/images/games/g173.jpg","platforms":["PC"],"date":"2017-02","genres":["액션", "플랫포머"]},
@@ -1310,7 +1320,7 @@ var CONTENT = {
       {"title":"디스 워 오브 마인","image":"assets/images/games/g178.jpg","platforms":["보드게임"],"date":"2017","genres":["협동", "서바이벌", "어드벤처"]},
       {"title":"코드네임 듀엣","image":"assets/images/games/g179.jpg","platforms":["보드게임"],"date":"2017","genres":["파티게임", "퍼즐", "협동"]},
       {"title":"숲 속의 여우","image":"assets/images/games/g180.jpg","platforms":["보드게임"],"date":"2017","genres":["카드"]},
-      {"title":"포켓몬스터 썬·문","image":"assets/images/games/g181.jpg","platforms":["콘솔"],"date":"2016-11","genres":["RPG", "턴제"]},
+      {"title":"포켓몬스터 썬·문","image":"assets/images/games/g181.jpg","platforms":["콘솔"],"date":"2016-11","genres":["RPG", "턴제"],"ending":true},
       {"title":"시드마이어의 문명 6","image":"assets/images/games/g182.jpg","platforms":["PC"],"date":"2016-10","genres":["전략"],"play":"15시간"},
       {"title":"디오에스(D.O.S)","image":"assets/images/games/g183.jpg","platforms":["모바일"],"date":"2016-09","genres":["캐주얼", "카드", "전략"]},
       {"title":"표류소녀","image":"assets/images/games/g184.jpg","platforms":["모바일"],"date":"2016-09","genres":["액션", "어드벤처"]},
@@ -1339,8 +1349,8 @@ var CONTENT = {
       {"title":"블랙서바이벌","image":"assets/images/games/g207.jpg","platforms":["모바일", "PC"],"date":"2015-11","genres":["전략", "액션"]},
       {"title":"FINAL FANTASY BRAVE EXVIUS","image":"assets/images/games/g208.jpg","platforms":["모바일"],"date":"2015-10","genres":["RPG", "카드", "전략"]},
       {"title":"Armello","image":"assets/images/games/g209.jpg","platforms":["PC"],"date":"2015-09","genres":["보드게임", "전략", "RPG"]},
-      {"title":"Undertale","image":"assets/images/games/g210.jpg","platforms":["PC"],"date":"2015-09","genres":["RPG", "어드벤처"]},
-      {"title":"살육의 천사","image":"assets/images/games/g211.jpg","platforms":["PC"],"date":"2015-08","genres":["호러", "어드벤처", "RPG"]},
+      {"title":"Undertale","image":"assets/images/games/g210.jpg","platforms":["PC"],"date":"2015-09","genres":["RPG", "어드벤처"],"ending":true},
+      {"title":"살육의 천사","image":"assets/images/games/g211.jpg","platforms":["PC"],"date":"2015-08","genres":["호러", "어드벤처", "RPG"],"ending":true},
       {"title":"페이트/그랜드오더","image":"assets/images/games/g212.jpg","platforms":["모바일"],"date":"2015-07","genres":["RPG", "카드", "전략"]},
       {"title":"그랜드체이스M","image":"assets/images/games/g213.jpg","platforms":["모바일"],"date":"2015-07","genres":["액션", "RPG"]},
       {"title":"메이플스토리2","image":"assets/images/games/g214.jpg","platforms":["PC"],"date":"2015-07","genres":["MMORPG"]},
@@ -1365,7 +1375,7 @@ var CONTENT = {
       {"title":"검은사막","image":"assets/images/games/g233.jpg","platforms":["PC"],"date":"2014-12","genres":["MMORPG", "오픈월드"]},
       {"title":"클로저스","image":"assets/images/games/g234.jpg","platforms":["PC"],"date":"2014-12","genres":["RPG"]},
       {"title":"Hatoful Boyfriend: Holiday Star","image":"assets/images/games/g235.jpg","platforms":["PC"],"date":"2014-12","genres":["비주얼노벨", "어드벤처"]},
-      {"title":"포켓몬스터 오메가루비·알파사파이어","image":"assets/images/games/g236.jpg","platforms":["콘솔"],"date":"2014-11","genres":["RPG", "턴제"]},
+      {"title":"포켓몬스터 오메가루비·알파사파이어","image":"assets/images/games/g236.jpg","platforms":["콘솔"],"date":"2014-11","genres":["RPG", "턴제"],"ending":true},
       {"title":"길건너 친구들","image":"assets/images/games/g237.jpg","platforms":["모바일"],"date":"2014-11","genres":["액션", "캐주얼"]},
       {"title":"크루세이더 퀘스트","image":"assets/images/games/g238.jpg","platforms":["모바일"],"date":"2014-11","genres":["RPG", "퍼즐", "액션"]},
       {"title":"드리프트 걸즈","image":"assets/images/games/g239.jpg","platforms":["모바일"],"date":"2014-11","genres":["레이싱"]},
@@ -1389,7 +1399,7 @@ var CONTENT = {
       {"title":"우주영웅전","image":"assets/images/games/g257.jpg","platforms":["모바일"],"date":"2013-12","genres":["방치형", "RPG"]},
       {"title":"살아남아라! 개복치!","image":"assets/images/games/g258.jpg","platforms":["모바일"],"date":"2013-12","genres":["시뮬레이션", "캐주얼"]},
       {"title":"DEEMO","image":"assets/images/games/g259.jpg","platforms":["모바일", "PC", "콘솔"],"date":"2013-11","genres":["리듬", "캐주얼", "어드벤처"]},
-      {"title":"포켓몬스터 X·Y","image":"assets/images/games/g260.jpg","platforms":["콘솔"],"date":"2013-10","genres":["RPG", "턴제"]},
+      {"title":"포켓몬스터 X·Y","image":"assets/images/games/g260.jpg","platforms":["콘솔"],"date":"2013-10","genres":["RPG", "턴제"],"ending":true},
       {"title":"Duet","image":"assets/images/games/g261.jpg","platforms":["모바일", "PC"],"date":"2013-10","genres":["액션", "캐주얼"]},
       {"title":"Godus","image":"assets/images/games/g262.jpg","platforms":["모바일", "PC"],"date":"2013-09","genres":["시뮬레이션", "전략"]},
       {"title":"시드 스토리","image":"assets/images/games/g263.jpg","platforms":["모바일"],"date":"2013-09","genres":["RPG"]},
@@ -1407,17 +1417,17 @@ var CONTENT = {
       {"title":"꿈의 마을 (Township)","image":"assets/images/games/g275.jpg","platforms":["모바일"],"date":"2013","genres":["캐주얼"],"play":"25시간"},
       {"title":"Guns'n'Glory Zombies","image":"assets/images/games/g276.jpg","platforms":["모바일"],"date":"2013","genres":["전략", "액션"]},
       {"title":"이매진","image":"assets/images/games/g277.jpg","platforms":["보드게임"],"date":"2013","genres":["파티게임"]},
-      {"title":"Mad Father","image":"assets/images/games/g278.jpg","platforms":["PC"],"date":"2012-12","genres":["호러", "어드벤처"]},
-      {"title":"마녀의 집","image":"assets/images/games/g279.jpg","platforms":["PC"],"date":"2012-10","genres":["호러", "어드벤처", "퍼즐"]},
+      {"title":"Mad Father","image":"assets/images/games/g278.jpg","platforms":["PC"],"date":"2012-12","genres":["호러", "어드벤처"],"ending":true},
+      {"title":"마녀의 집","image":"assets/images/games/g279.jpg","platforms":["PC"],"date":"2012-10","genres":["호러", "어드벤처", "퍼즐"],"ending":true},
       {"title":"애니팡","image":"assets/images/games/g280.jpg","platforms":["모바일"],"date":"2012-07","genres":["퍼즐", "캐주얼"]},
-      {"title":"포켓몬스터 블랙·화이트2","image":"assets/images/games/g281.jpg","platforms":["콘솔"],"date":"2012-06","genres":["RPG", "턴제"]},
+      {"title":"포켓몬스터 블랙·화이트2","image":"assets/images/games/g281.jpg","platforms":["콘솔"],"date":"2012-06","genres":["RPG", "턴제"],"ending":true},
       {"title":"몽키배틀","image":"assets/images/games/g282.jpg","platforms":["모바일"],"date":"2012-06","genres":["캐주얼", "액션"]},
       {"title":"모두의 마블","image":"assets/images/games/g283.jpg","platforms":["PC"],"date":"2012-05","genres":["보드게임", "캐주얼"]},
-      {"title":"Long Live The Queen","image":"assets/images/games/g284.jpg","platforms":["PC"],"date":"2012-05","genres":["시뮬레이션", "비주얼노벨"]},
+      {"title":"Long Live The Queen","image":"assets/images/games/g284.jpg","platforms":["PC"],"date":"2012-05","genres":["시뮬레이션", "비주얼노벨"],"ending":true},
       {"title":"캔디 크러쉬 사가","image":"assets/images/games/g285.jpg","platforms":["모바일"],"date":"2012-04","genres":["퍼즐", "캐주얼"]},
       {"title":"PARANOID(파라노이악)","image":"assets/images/games/g286.jpg","platforms":["PC"],"date":"2012-03","genres":["호러", "어드벤처"]},
       {"title":"퍼즐앤드래곤","image":"assets/images/games/g287.jpg","platforms":["모바일"],"date":"2012-02","genres":["퍼즐", "RPG"]},
-      {"title":"Ib","image":"assets/images/games/g288.jpg","platforms":["PC"],"date":"2012-02","genres":["호러", "어드벤처"]},
+      {"title":"Ib","image":"assets/images/games/g288.jpg","platforms":["PC"],"date":"2012-02","genres":["호러", "어드벤처"],"ending":true},
       {"title":"Cytus","image":"assets/images/games/g289.jpg","platforms":["모바일"],"date":"2012-01","genres":["리듬"]},
       {"title":"트랜스포머: 휴먼 동맹","image":"assets/images/games/g290.jpg","platforms":["아케이드"],"date":"2012","genres":["슈팅"]},
       {"title":"확산성 밀리언아서","image":"assets/images/games/g291.jpg","platforms":["모바일"],"date":"2012","genres":["카드", "RPG"]},
@@ -1426,17 +1436,17 @@ var CONTENT = {
       {"title":"Criminal Case","image":"assets/images/games/g294.jpg","platforms":["모바일", "PC"],"date":"2012","genres":["퍼즐", "어드벤처"]},
       {"title":"심즈 프리플레이","image":"assets/images/games/g295.jpg","platforms":["모바일"],"date":"2011-12","genres":["시뮬레이션", "캐주얼"]},
       {"title":"사이퍼즈","image":"assets/images/games/g296.jpg","platforms":["PC"],"date":"2011-11","genres":["액션"]},
-      {"title":"투 더 문","image":"assets/images/games/g297.jpg","platforms":["PC"],"date":"2011-11","genres":["어드벤처", "캐주얼"]},
+      {"title":"투 더 문","image":"assets/images/games/g297.jpg","platforms":["PC"],"date":"2011-11","genres":["어드벤처", "캐주얼"],"ending":true},
       {"title":"2012 프로야구","image":"assets/images/games/g298.jpg","platforms":["모바일"],"date":"2011-10","genres":["스포츠"]},
       {"title":"Hatoful Boyfriend","image":"assets/images/games/g299.jpg","platforms":["PC"],"date":"2011-08","genres":["비주얼노벨", "어드벤처"]},
-      {"title":"미사오","image":"assets/images/games/g300.jpg","platforms":["PC"],"date":"2011-05","genres":["호러", "어드벤처"]},
-      {"title":"테라리아","image":"assets/images/games/g301.jpg","platforms":["PC"],"date":"2011-05","genres":["액션", "어드벤처", "샌드박스"],"play":"110시간"},
+      {"title":"미사오","image":"assets/images/games/g300.jpg","platforms":["PC"],"date":"2011-05","genres":["호러", "어드벤처"],"ending":true},
+      {"title":"테라리아","image":"assets/images/games/g301.jpg","platforms":["PC"],"date":"2011-05","genres":["액션", "어드벤처", "샌드박스"],"play":"110시간","ending":true},
       {"title":"마도서대전 TRPG 마기카로기아","image":"assets/images/games/g302.jpg","platforms":["TRPG"],"date":"2011-05","genres":["판타지", "액션"]},
       {"title":"포탈 2","image":"assets/images/games/g303.jpg","platforms":["PC"],"date":"2011-04","genres":["퍼즐", "액션", "협동"]},
       {"title":"광기의 저택","image":"assets/images/games/g305.jpg","platforms":["보드게임"],"date":"2011","genres":["협동", "추리", "보드게임"]},
       {"title":"Fallout: New Vegas","image":"assets/images/games/g306.jpg","platforms":["PC"],"date":"2010-10","genres":["RPG", "액션", "오픈월드"]},
       {"title":"Cut the Rope","image":"assets/images/games/g307.jpg","platforms":["모바일"],"date":"2010-10","genres":["퍼즐"]},
-      {"title":"포켓몬스터 블랙·화이트","image":"assets/images/games/g308.jpg","platforms":["콘솔"],"date":"2010-09","genres":["RPG", "턴제"]},
+      {"title":"포켓몬스터 블랙·화이트","image":"assets/images/games/g308.jpg","platforms":["콘솔"],"date":"2010-09","genres":["RPG", "턴제"],"ending":true},
       {"title":"파이널판타지14","image":"assets/images/games/g309.jpg","platforms":["PC"],"date":"2010-09","genres":["MMORPG"]},
       {"title":"Slice It!","image":"assets/images/games/g310.jpg","platforms":["모바일"],"date":"2010-08","genres":["퍼즐"]},
       {"title":"마비노기 영웅전","image":"assets/images/games/g311.jpg","platforms":["PC"],"date":"2010-01","genres":["RPG"]},
@@ -1453,7 +1463,7 @@ var CONTENT = {
       {"title":"딕싯","image":"assets/images/games/g322.jpg","platforms":["보드게임"],"date":"2008","genres":["파티게임", "카드"]},
       {"title":"엘소드","image":"assets/images/games/g323.jpg","platforms":["PC"],"date":"2007-12","genres":["RPG"]},
       {"title":"S4리그","image":"assets/images/games/g324.jpg","platforms":["PC"],"date":"2007-12","genres":["슈팅"]},
-      {"title":"포켓몬 불가사의 던전: 시간의 탐험대","image":"assets/images/games/g325.jpg","platforms":["콘솔"],"date":"2007-09","genres":["RPG", "로그라이크"]},
+      {"title":"포켓몬 불가사의 던전: 시간의 탐험대","image":"assets/images/games/g325.jpg","platforms":["콘솔"],"date":"2007-09","genres":["RPG", "로그라이크"],"ending":true},
       {"title":"이노티아 연대기: 루오네의 방랑자","image":"assets/images/games/g326.jpg","platforms":["모바일"],"date":"2007-06","genres":["RPG"]},
       {"title":"갱스터","image":"assets/images/games/g327.jpg","platforms":["보드게임"],"date":"2007","genres":["전략", "보드게임"]},
       {"title":"라테일","image":"assets/images/games/g328.jpg","platforms":["PC"],"date":"2006-07","genres":["MMORPG"]},
@@ -1465,7 +1475,7 @@ var CONTENT = {
       {"title":"요구르팅","image":"assets/images/games/g334.jpg","platforms":["PC"],"date":"2005-05","genres":["캐주얼"]},
       {"title":"카트라이더","image":"assets/images/games/g335.jpg","platforms":["PC"],"date":"2004-08","genres":["레이싱", "캐주얼"]},
       {"title":"마비노기","image":"assets/images/games/g336.jpg","platforms":["PC"],"date":"2004-06","genres":["MMORPG"]},
-      {"title":"유메니키","image":"assets/images/games/g337.jpg","platforms":["PC"],"date":"2004-06","genres":["호러", "어드벤처"]},
+      {"title":"유메니키","image":"assets/images/games/g337.jpg","platforms":["PC"],"date":"2004-06","genres":["호러", "어드벤처"],"ending":true},
       {"title":"티켓 투 라이드","image":"assets/images/games/g339.jpg","platforms":["보드게임"],"date":"2004","genres":["전략", "캐주얼"]},
       {"title":"사보타지","image":"assets/images/games/g340.jpg","platforms":["보드게임"],"date":"2004","genres":["카드", "파티게임"]},
       {"title":"아오오니","image":"assets/images/games/g341.jpg","platforms":["PC"],"date":"2004","genres":["호러", "어드벤처"]},
@@ -1476,7 +1486,7 @@ var CONTENT = {
       {"title":"메이플스토리","image":"assets/images/games/g346.jpg","platforms":["PC"],"date":"2003-04","genres":["MMORPG"]},
       {"title":"믹스마스터","image":"assets/images/games/g347.jpg","platforms":["PC"],"date":"2003-04","genres":["리듬"]},
       {"title":"우봉고","image":"assets/images/games/g348.jpg","platforms":["보드게임"],"date":"2003","genres":["퍼즐", "파티게임"]},
-      {"title":"포켓몬스터 루비","image":"assets/images/games/g349.jpg","platforms":["콘솔"],"date":"2002-11","genres":["RPG", "턴제"]},
+      {"title":"포켓몬스터 루비·사파이어","image":"assets/images/games/g349.jpg","platforms":["콘솔"],"date":"2002-11","genres":["RPG", "턴제"],"ending":true},
       {"title":"메탈슬러그 4","image":"assets/images/games/g350.jpg","platforms":["아케이드"],"date":"2002","genres":["액션", "슈팅"]},
       {"title":"롤러코스터 타이쿤2","image":"assets/images/games/g351.jpg","platforms":["PC"],"date":"2002","genres":["시뮬레이션", "경영"]},
       {"title":"뱅","image":"assets/images/games/g352.jpg","platforms":["보드게임"],"date":"2002","genres":["카드", "파티게임"]},
@@ -1486,7 +1496,7 @@ var CONTENT = {
       {"title":"메탈슬러그 3","image":"assets/images/games/g356.jpg","platforms":["아케이드"],"date":"2000","genres":["액션", "슈팅"]},
       {"title":"스톤에이지","image":"assets/images/games/g357.jpg","platforms":["PC"],"date":"2000","genres":["MMORPG"]},
       {"title":"시타델","image":"assets/images/games/g358.jpg","platforms":["보드게임"],"date":"2000","genres":["카드", "전략"]},
-      {"title":"포켓몬스터 금·은","image":"assets/images/games/g359.jpg","platforms":["콘솔"],"date":"1999-11","genres":["RPG", "턴제"]},
+      {"title":"포켓몬스터 금·은","image":"assets/images/games/g359.jpg","platforms":["콘솔"],"date":"1999-11","genres":["RPG", "턴제"],"ending":true},
       {"title":"Q플레이","image":"assets/images/games/g360.jpg","platforms":["PC"],"date":"1999-10","genres":["캐주얼"]},
       {"title":"포트리스2","image":"assets/images/games/g361.jpg","platforms":["PC"],"date":"1999-10","genres":["전략", "캐주얼"]},
       {"title":"웜즈 아마게돈","image":"assets/images/games/g363.jpg","platforms":["PC"],"date":"1999","genres":["전략", "턴제"]},
@@ -2405,9 +2415,9 @@ var CONTENT = {
 
   /* 정렬 기준 — 기본은 플레이타임 많은 순, 플레이타임 없는 건 최신순으로 뒤에 */
   var SORT_OPTIONS = [
-    { v: 'play', label: '플레이타임순' },
-    { v: 'new',  label: '최신순' },
-    { v: 'old',  label: '오래된순' }
+    { v: 'play',   label: '플레이타임순' },
+    { v: 'ending', label: '엔딩순' },
+    { v: 'new',    label: '최신순' }
   ];
   var sortState = 'play';
 
@@ -2426,21 +2436,23 @@ var CONTENT = {
     if (db < 0) return -1;
     return db - da;
   }
-  function cmpOldest(a, b) {                 /* 오래된 순 — 미상은 뒤로 */
-    var da = gDate(a), db = gDate(b);
-    if (da < 0 && db < 0) return 0;
-    if (da < 0) return 1;
-    if (db < 0) return -1;
-    return da - db;
+  /* 플레이타임순 그룹: 0=플레이타임 있음, 1=플레이타임 없는 엔딩, 2=나머지 */
+  function playGrp(g) { return gHours(g) > 0 ? 0 : (g.ending ? 1 : 2); }
+  function cmpPlay(a, b) {                   /* 플레이타임 많은 순 → 없는 엔딩 → 나머지(최신순) */
+    var ga = playGrp(a), gb = playGrp(b);
+    if (ga !== gb) return ga - gb;
+    if (ga === 0) { var ha = gHours(a), hb = gHours(b); if (ha !== hb) return hb - ha; }
+    return cmpNewest(a, b);
   }
-  function cmpPlay(a, b) {                   /* 플레이타임 많은 순 → 없으면 최신순 */
-    var ha = gHours(a), hb = gHours(b);
-    if (ha !== hb) return hb - ha;
+  function cmpEnding(a, b) {                 /* 엔딩순 — 엔딩 본 게임 먼저(플레이타임 많은 순), 나머지는 최신순 */
+    var ea = a.ending ? 0 : 1, eb = b.ending ? 0 : 1;
+    if (ea !== eb) return ea - eb;
+    if (ea === 0) { var ha = gHours(a), hb = gHours(b); if (ha !== hb) return hb - ha; }
     return cmpNewest(a, b);
   }
   function sortGames(list) {
     var arr = list.slice();
-    arr.sort(sortState === 'new' ? cmpNewest : sortState === 'old' ? cmpOldest : cmpPlay);
+    arr.sort(sortState === 'new' ? cmpNewest : sortState === 'ending' ? cmpEnding : cmpPlay);
     return arr;
   }
 
@@ -2466,7 +2478,10 @@ var CONTENT = {
         (genres.length ? '<div class="game__row">' +
           genres.map(function (v) { return '<span class="game__tag">' + esc(v) + '</span>'; }).join('') +
         '</div>' : '') +
-        (has(g.play) ? '<div class="game__row"><span class="game__tag game__tag--e">' + esc(g.play) + '</span></div>' : '') +
+        (has(g.play) || g.ending ? '<div class="game__row">' +
+          (has(g.play) ? '<span class="game__tag game__tag--e">' + esc(g.play) + '</span>' : '') +
+          (g.ending ? '<span class="game__tag game__tag--end">엔딩</span>' : '') +
+        '</div>' : '') +
       '</div></div></article>';
   }
 
@@ -2559,21 +2574,24 @@ var CONTENT = {
     var slotPct = call.querySelector('[data-slot=pct]');
     var slotLab = call.querySelector('[data-slot=lab]');
     var slotNote = call.querySelector('[data-slot=note]');
+    var segEls = document.querySelectorAll('.donut__seg');
     function show(i) {
       var d = list[i]; if (!d) return;
       slotPct.textContent = (Number(d.value) || 0) + '%';
       slotLab.textContent = has(d.label) ? d.label : '항목 ' + (i + 1);
       slotNote.textContent = has(d.note) ? d.note : '';
+      /* 마지막으로 마우스가 닿은 세그먼트를 고정 표시 */
+      for (var k = 0; k < segEls.length; k++) {
+        segEls[k].classList.toggle('is-sel', Number(segEls[k].getAttribute('data-seg')) === i);
+      }
     }
-    var segs = document.querySelectorAll('.donut__seg');
-    for (var i = 0; i < segs.length; i++) {
+    for (var i = 0; i < segEls.length; i++) {
       (function (idx) {
-        segs[idx].addEventListener('mouseenter', function () { show(idx); });
-        segs[idx].addEventListener('focus', function () { show(idx); });
-      })(Number(segs[i].getAttribute('data-seg')));
+        segEls[idx].addEventListener('mouseenter', function () { show(idx); });
+        segEls[idx].addEventListener('focus', function () { show(idx); });
+      })(Number(segEls[i].getAttribute('data-seg')));
     }
-    var svg = document.querySelector('.donut__svg');
-    if (svg) svg.addEventListener('mouseleave', function () { show(0); });
+    /* mouseleave 시 초기화하지 않고 마지막 상태를 유지한다 */
   }
 
   function bindHistory() {
