@@ -757,6 +757,7 @@ img.ppage__img{display:block;}
 .donut__legend{display:flex;flex-wrap:wrap;gap:8px var(--s16);margin-bottom:var(--s16);}
 .donut__lg{display:inline-flex;align-items:center;gap:7px;font-size:var(--text-body-sm);font-weight:600;color:var(--graphite);}
 .donut__sw{width:11px;height:11px;border-radius:2px;flex:0 0 auto;}
+.donut__br{flex-basis:100%;height:0;}
 .donut__body{display:flex;align-items:center;gap:var(--s20);flex-wrap:wrap;}
 .donut__svg{width:170px;height:170px;flex:0 0 auto;}
 .donut__call{position:relative;flex:1 1 190px;min-width:0;background:var(--frost);border-radius:var(--r-card);padding:var(--s16) var(--s20);}
@@ -1092,11 +1093,11 @@ var CONTENT = {
 
     /* 플랫폼 분포 — 도넛 그래프 (value = %, 합 100). note 에 실제 게임 수 */
     platforms: [
-      { label: "모바일", value: 35, note: "모바일 181개" },
       { label: "PC", value: 35, note: "PC 180개" },
+      { label: "모바일", value: 35, note: "모바일 181개" },
       { label: "PC·모바일", value: 7, note: "PC·모바일 겸용 36개" },
-      { label: "보드게임", value: 8, note: "보드게임 42개" },
       { label: "콘솔", value: 8, note: "콘솔 게임 42개" },
+      { label: "보드게임", value: 8, note: "보드게임 42개" },
       { label: "TRPG", value: 3, note: "TRPG 게임 16개" },
       { label: "아케이드", value: 2, note: "아케이드 게임 10개" },
       { label: "VR", value: 2, note: "VR 게임 9개" }
@@ -2354,7 +2355,8 @@ var CONTENT = {
   }
 
   /* 플랫폼 분포 도넛 그래프 */
-  var DONUT_TONES = ['#5e4cff', '#c9c2f5', '#8a76ec', '#e2d9fb', '#4a30dd', '#b3a9ff', '#d9c2ff', '#9d8df2'];
+  /* 진한 보라 → 옅은 보라 그라데이션 (앞쪽일수록 진함) */
+  var DONUT_TONES = ['#3a1f9c', '#533baa', '#6c57b8', '#8574c5', '#9d90d3', '#b6ace0', '#cfc7ee', '#e8e2fb'];
   function donut(list) {
     if (!hasList(list)) return phBlock('플랫폼 분포', 'CONTENT.history.platforms');
 
@@ -2378,7 +2380,8 @@ var CONTENT = {
     return '<div class="donut">' +
       '<div class="donut__legend">' + list.map(function (it, k) {
         return '<span class="donut__lg"><span class="donut__sw" style="background:' +
-          DONUT_TONES[k % DONUT_TONES.length] + '"></span>' + txt(it.label, '항목') + '</span>';
+          DONUT_TONES[k % DONUT_TONES.length] + '"></span>' + txt(it.label, '항목') + '</span>' +
+          (k === 3 ? '<span class="donut__br"></span>' : '');   /* 4번째 뒤 줄바꿈 */
       }).join('') + '</div>' +
       '<div class="donut__body">' +
         '<svg class="donut__svg" viewBox="0 0 170 170" role="img" aria-label="플랫폼 분포 비율">' +
