@@ -741,7 +741,14 @@ img.ppage__img{display:block;}
   padding:var(--s20);display:flex;flex-direction:column;height:100%;}
 .radar-wrap-inner{flex:1;display:flex;align-items:center;justify-content:center;min-height:0;}
 .radar{width:100%;height:auto;display:block;max-width:460px;margin:0 auto;overflow:visible;}
-.gcounts{margin-top:var(--s20);padding-top:var(--s20);border-top:1px solid var(--frost);display:grid;gap:var(--s16);}
+.gstats{margin-top:var(--s20);padding-top:var(--s20);border-top:1px solid var(--frost);display:grid;gap:var(--s16);}
+@media (min-width:480px){.gstats{grid-template-columns:minmax(0,4fr) minmax(0,5fr);gap:0;}}
+.gtotal{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;}
+.gtotal__t{font-size:clamp(20px,3.6vw,26px);font-weight:600;letter-spacing:-.02em;line-height:1.2;color:var(--graphite);}
+.gtotal__v{font-size:clamp(52px,10vw,76px);font-weight:800;letter-spacing:-.04em;line-height:.95;
+  color:var(--violet-deep);font-variant-numeric:tabular-nums;}
+.gcounts{display:grid;gap:var(--s16);align-content:center;padding-top:var(--s16);border-top:1px solid var(--frost);}
+@media (min-width:480px){.gcounts{padding:0 0 0 var(--s20);border-top:0;border-left:1px solid var(--frost);}}
 .gcount{display:flex;align-items:center;justify-content:space-between;gap:var(--s16);}
 .gcount__l{display:inline-grid;}
 .gcount__t{font-size:var(--text-subheading);font-weight:700;letter-spacing:-.02em;line-height:1.2;color:var(--graphite);}
@@ -1086,14 +1093,14 @@ var CONTENT = {
       { label: "RPG", value: 5.0 },
       { label: "액션", value: 3.5 },
       { label: "어드벤처", value: 3.2 },
-      { label: "전략", value: 2.8 },
-      { label: "캐주얼", value: 2.7 },
-      { label: "시뮬레이션", value: 2.5 }
+      { label: "전략", value: 2.7 },
+      { label: "캐주얼", value: 2.6 },
+      { label: "시뮬레이션", value: 2.6 }
     ],
 
     /* 플랫폼 분포 — 도넛 그래프 (value = %, 합 100). note 에 실제 게임 수 */
     platforms: [
-      { label: "PC", value: 35, note: "PC 180개" },
+      { label: "PC", value: 35, note: "PC 179개" },
       { label: "모바일", value: 35, note: "모바일 181개" },
       { label: "PC·모바일", value: 7, note: "PC·모바일 겸용 36개" },
       { label: "콘솔", value: 8, note: "콘솔 게임 42개" },
@@ -1103,9 +1110,10 @@ var CONTENT = {
       { label: "VR", value: 2, note: "VR 게임 9개" }
     ],
 
-    /* 총 개수 — 큰 제목 + 작은 내용 + 오른쪽 큰 숫자, 육각형 아래에 표시 */
+    /* 총 개수 — 왼쪽 총합(큰 숫자) + 오른쪽 온라인/오프라인(제목 · 설명 · 숫자), 육각형 아래에 표시 */
+    total: { title: '총합', value: '491' },
     counts: [
-      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '434' },
+      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '433' },
       { title: '오프라인 게임', desc: 'TRPG · 보드게임 등', value: '58' }
     ],
 
@@ -1155,7 +1163,7 @@ var CONTENT = {
       {"title":"Slay the Spire 2","image":"assets/images/games/g007.jpg","platforms":["PC"],"date":"2026-03","genres":["로그라이크", "덱빌딩", "전략"],"play":"60시간","star":true},
       {"title":"Pokémon Pokopia","image":"assets/images/games/g008.jpg","platforms":["콘솔"],"date":"2026-03","genres":["시뮬레이션", "캐주얼", "수집형"],"play":"45시간","star":true},
       {"title":"Cartapli: Fold Quest","image":"assets/images/games/g010.jpg","platforms":["PC"],"date":"2026-02","genres":["카드", "로그라이크"]},
-      {"title":"신기한 베이킹과 집꾸미기","image":"assets/images/games/g011.jpg","platforms":["PC"],"date":"2026-01","genres":["시뮬레이션", "방치형"],"play":"70시간"},
+      {"title":"신기한 베이킹과 집꾸미기","image":"assets/images/games/g011.jpg","platforms":["PC"],"date":"2026-01","genres":["시뮬레이션", "방치형"],"play":"75시간"},
       {"title":"명일방주: 엔드필드","image":"assets/images/games/g012.jpg","platforms":["모바일", "PC", "콘솔"],"date":"2026-01","genres":["RPG","수집형"],"play":"50시간"},
       {"title":"드래곤 둥지(Hatch Dragons)","image":"assets/images/games/g013.jpg","platforms":["모바일"],"date":"2026-01","genres":["시뮬레이션","수집형"],"play":"40시간"},
       {"title":"두근두근타운","image":"assets/images/games/g014.jpg","platforms":["PC", "모바일"],"date":"2026","genres":["시뮬레이션", "샌드박스"],"play":"470시간","star":true},
@@ -1185,7 +1193,7 @@ var CONTENT = {
       {"title":"역전검사 1&2 미츠루기 셀렉션","image":"assets/images/games/g038.jpg","platforms":["PC"],"date":"2024-09","genres":["어드벤처", "추리", "비주얼노벨"],"play":"20시간","star":true},
       {"title":"Boing Boing Animals","image":"assets/images/games/g039.jpg","platforms":["모바일"],"date":"2024-09","genres":["캐주얼"],"play":"20시간"},
       {"title":"Morimens","image":"assets/images/games/g040.jpg","platforms":["PC", "모바일"],"date":"2024-08","genres":["덱빌딩", "수집형", "RPG"],"play":"50시간"},
-      {"title":"인격해체","image":"assets/images/games/g041.jpg","platforms":["PC"],"date":"2024-08","genres":["호러", "어드벤처", "추리"],"play":"90시간","star":true},
+      {"title":"인격해체","image":"assets/images/games/g041.jpg","platforms":["PC"],"date":"2024-08","genres":["호러", "어드벤처", "추리"],"play":"100시간","star":true},
       {"title":"Poca mate","image":"assets/images/games/g042.jpg","platforms":["모바일"],"date":"2024-08","genres":["캐주얼"]},
       {"title":"데몬 헌터 키우기","image":"assets/images/games/g043.jpg","platforms":["모바일"],"date":"2024-07","genres":["방치형", "RPG"]},
       {"title":"Merge SuperMarket","image":"assets/images/games/g044.jpg","platforms":["모바일"],"date":"2024-07","genres":["캐주얼"]},
@@ -1273,7 +1281,7 @@ var CONTENT = {
       {"title":"미스터리 하우스","image":"assets/images/games/g126.jpg","platforms":["보드게임"],"date":"2019","genres":["협동", "추리"]},
       {"title":"이프","image":"assets/images/games/g127.jpg","platforms":["보드게임"],"date":"2019","genres":["추리", "RPG"]},
       {"title":"엔데버: 대항해시대","image":"assets/images/games/g128.jpg","platforms":["보드게임"],"date":"2019","genres":["전략", "경영"]},
-      {"title":"Kingdom Two Crowns","image":"assets/images/games/g129.jpg","platforms":["PC"],"date":"2018-12","genres":["타워디펜스", "경영", "액션"]},
+      {"title":"Kingdom Two Crowns","image":"assets/images/games/g129.jpg","platforms":["PC"],"date":"2018-12","genres":["타워디펜스", "경영", "액션"],"play":"15시간"},
       {"title":"ALTER EGO","image":"assets/images/games/g130.jpg","platforms":["모바일"],"date":"2018-12","genres":["시뮬레이션"],"ending":true},
       {"title":"츠키의 모험","image":"assets/images/games/g131.jpg","platforms":["모바일"],"date":"2018-11","genres":["시뮬레이션", "캐주얼"]},
       {"title":"궨트: 더 위쳐 카드 게임","image":"assets/images/games/g132.jpg","platforms":["PC"],"date":"2018-10","genres":["카드", "전략", "수집형"]},
@@ -2534,12 +2542,15 @@ var CONTENT = {
     /* 왼쪽 — 육각형 + 총 개수 한 카드 */
     h.push('<div class="histcard">' +
       '<div class="radar-wrap-inner">' + radarSVG(t.axes || []) + '</div>' +
+      '<div class="gstats">' +
+      (t.total ? '<div class="gtotal"><span class="gtotal__t">' + txt(t.total.title, '총합') + '</span>' +
+        '<span class="gtotal__v">' + txt(t.total.value, '0') + '</span></div>' : '') +
       '<div class="gcounts">' + (t.counts || []).map(function (c) {
         return '<div class="gcount"><div class="gcount__l">' +
           '<span class="gcount__t">' + txt(c.title, '큰 제목') + '</span>' +
           '<span class="gcount__d">' + txt(c.desc, '작은 내용') + '</span></div>' +
           '<span class="gcount__v">' + txt(c.value, '0') + '</span></div>';
-      }).join('') + '</div></div>');
+      }).join('') + '</div></div></div>');
 
     /* 오른쪽 — 도넛 + 필터 */
     h.push('<div class="hist__right">');

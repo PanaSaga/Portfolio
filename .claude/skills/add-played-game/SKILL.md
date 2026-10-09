@@ -3,8 +3,8 @@ name: add-played-game
 description: >-
   Add a game to this portfolio's History "플레이한 게임" list. Use whenever the user
   says they played a game or asks to add/register a game to the played-games list
-  (e.g. "○○ 게임 플레이한 게임에 추가해줘", "○○ 30시간 했어 추가해"). Asks how long they
-  played (unless already told), looks up the game's platform·genre·release date,
+  (e.g. "○○ 게임 플레이한 게임에 추가해줘", "○○ 30시간 했어 추가해"). Uses playtime/ending
+  only if the user stated them (never asks), looks up the game's platform·genre·release date,
   downloads and 4:3-crops a thumbnail, appends the entry in the exact project
   schema in index.html (CONTENT.history.games), then rebuilds and commits.
 ---
@@ -14,9 +14,11 @@ description: >-
 이 스킬은 `index.html` 의 `CONTENT.history.games` 배열에 게임 한 개를 규격대로 추가한다.
 목록은 화면에서 자동 정렬되므로 **배열에서의 위치는 상관없다**(그래도 최신 항목은 위쪽에 넣어두면 깔끔하다).
 
-## 1. 플레이타임 확인
-- 사용자가 이미 "N시간 했어" 처럼 말했으면 **질문하지 않는다.**
-- 안 말했으면 **"몇 시간 플레이했나요?"** 한 번만 묻는다. ("기록 없음"/모름도 허용)
+## 1. 플레이타임 · 엔딩 (묻지 않는다)
+- 사용자가 "N시간 했어" 처럼 **말한 경우에만** `play` 를 넣는다. 말하지 않았으면 **질문하지 말고 생략**한다.
+- 엔딩(클리어) 여부도 사용자가 **말한 경우에만** `ending: true` 를 넣고, 아니면 생략한다.
+- 사용자가 직접 찾아 넣으라고 한 것: **썸네일 · 플랫폼 · 장르(1~3종) · 출시일**.
+- 추가 전에 `grep -n '"title":"<게임명>"' index.html` 로 **이미 목록에 있는지** 먼저 확인한다(중복 추가 금지).
 
 ## 2. 게임 정보 검색 (플랫폼 · 장르 · 출시일)
 `WebSearch`(필요하면 `WebFetch`)로 게임을 찾아 다음을 파악한다. 과하게 조사하지 말고 간단히.
@@ -77,6 +79,10 @@ FPS·TPS→`슈팅` / 카드게임→`카드` / 라이프시뮬·목장시뮬→
 4. 미리보기 아티팩트를 쓰던 세션이라면 같은 URL 로 republish + standalone 파일 전달.
 
 ## 참고
-- 좌측 **선호 장르 레이더 / 플랫폼 도넛 / 온라인·오프라인 총개수** 는 전체 집계 스냅샷이라
-  한 게임 추가로 자동 갱신되지 않는다. 사용자가 원하면 전체 데이터로 다시 계산해 갱신한다(선택).
+- 좌측 **선호 장르 레이더 / 플랫폼 도넛 / 총합·온라인·오프라인 개수** 는 전체 집계 스냅샷이라
+  한 게임 추가로 자동 갱신되지 않는다. 게임을 추가·삭제했으면 아래 기준으로 다시 계산해 갱신한다.
+  - `axes` : 장르 태그 개수 Top 6 (동률이면 해당 장르 플레이타임 합이 큰 쪽), value = 개수 ÷ 최다 × 5 (소수 1자리)
+  - `total.value` : 전체 게임 수 / `counts` : 오프라인 = 플랫폼에 `보드게임`·`TRPG` 포함, 온라인 = 나머지
+  - `platforms` : PC(모바일 제외) · 모바일(PC 제외) · PC·모바일 · 콘솔 · 보드게임 · TRPG · 아케이드 · VR 의
+    포함 개수, value = 개수 ÷ 8개 합 × 100 반올림(합 100)
 - 커버 4:3 규격·플레이타임 규칙·정규 장르/플랫폼은 반드시 위 규칙을 그대로 따른다.
