@@ -2364,8 +2364,9 @@ var CONTENT = {
   }
 
   /* 플랫폼 분포 도넛 그래프 */
-  /* 진한 보라 → 옅은 보라 그라데이션 (앞쪽일수록 진함) */
-  var DONUT_TONES = ['#3a1f9c', '#533baa', '#6c57b8', '#8574c5', '#9d90d3', '#b6ace0', '#cfc7ee', '#e8e2fb'];
+  /* 진한 보라 → 옅은 보라 (앞쪽일수록 진함). 우상단 픽셀 모자이크 5색(--px5~--px1)에
+     메인 보라 #4a30dd 의 채도를 그대로 두고 명도만 바꾼 중간색 3개를 끼워 8단계로 만든다. */
+  var DONUT_TONES = ['#241a8f', '#361fbc', '#4a30dd', '#6a54e3', '#8a76ec', '#aa9eef', '#c9c2f5', '#e6e2fa'];
   function donut(list) {
     if (!hasList(list)) return phBlock('플랫폼 분포', 'CONTENT.history.platforms');
 
