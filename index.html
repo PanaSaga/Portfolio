@@ -773,8 +773,8 @@ img.ppage__img{display:block;}
     border-top:10px solid transparent;border-bottom:10px solid transparent;border-right:10px solid var(--frost);}
 }
 .donut__seg{cursor:pointer;transition:opacity .15s ease,stroke .15s ease;}
-.donut__svg:hover .donut__seg{opacity:.45;}
-.donut__svg .donut__seg:hover{opacity:1;stroke:#f98a17;}
+.donut__svg.is-hover .donut__seg{opacity:.45;}   /* 링(세그먼트) 위에 있을 때만 — svg 네모 영역은 무시 */
+.donut__svg.is-hover .donut__seg:hover{opacity:1;stroke:#f98a17;}
 .donut__seg.is-sel{stroke:#f98a17;}
 .donut__pct{font-size:clamp(28px,7vw,40px);font-weight:600;letter-spacing:-.03em;line-height:1;color:var(--violet);}
 .donut__lab{margin-top:6px;font-size:var(--text-body);font-weight:600;color:var(--graphite);}
@@ -2365,8 +2365,9 @@ var CONTENT = {
 
   /* 플랫폼 분포 도넛 그래프 */
   /* 진한 보라 → 옅은 보라 (앞쪽일수록 진함). 우상단 픽셀 모자이크 5색(--px5~--px1)에
-     메인 보라 #4a30dd 의 채도를 그대로 두고 명도만 바꾼 중간색 3개를 끼워 8단계로 만든다. */
-  var DONUT_TONES = ['#241a8f', '#361fbc', '#4a30dd', '#6a54e3', '#8a76ec', '#aa9eef', '#c9c2f5', '#e6e2fa'];
+     메인 보라 #4a30dd 의 채도를 그대로 두고 명도만 바꾼 중간색 3개를 끼워 8단계로 만든다.
+     (1·2번째 PC·모바일은 서로 색을 맞바꿈) */
+  var DONUT_TONES = ['#361fbc', '#241a8f', '#4a30dd', '#6a54e3', '#8a76ec', '#aa9eef', '#c9c2f5', '#e6e2fa'];
   function donut(list) {
     if (!hasList(list)) return phBlock('플랫폼 분포', 'CONTENT.history.platforms');
 
@@ -2609,6 +2610,7 @@ var CONTENT = {
     var slotLab = call.querySelector('[data-slot=lab]');
     var slotNote = call.querySelector('[data-slot=note]');
     var segEls = document.querySelectorAll('.donut__seg');
+    var svg = document.querySelector('.donut__svg');
     function show(i) {
       var d = list[i]; if (!d) return;
       slotPct.textContent = (Number(d.value) || 0) + '%';
@@ -2621,7 +2623,8 @@ var CONTENT = {
     }
     for (var i = 0; i < segEls.length; i++) {
       (function (idx) {
-        segEls[idx].addEventListener('mouseenter', function () { show(idx); });
+        segEls[idx].addEventListener('mouseenter', function () { show(idx); svg.classList.add('is-hover'); });
+        segEls[idx].addEventListener('mouseleave', function () { svg.classList.remove('is-hover'); });
         segEls[idx].addEventListener('focus', function () { show(idx); });
       })(Number(segEls[i].getAttribute('data-seg')));
     }
