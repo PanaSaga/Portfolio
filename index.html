@@ -491,6 +491,11 @@ a.card:active{transform:scale(.995);}
 @media (max-width:559px){.sec-head--rule .sec-head__ico{width:30px;height:30px;}}
 .sec-head--tight{margin-bottom:var(--s16);}
 .band--ws{padding-top:var(--s48);}
+/* 데스크톱: 히어로 아래쪽 48px 를 Work style 띠가 덮어 올라온다.
+   히어로 안의 글자·모자이크 위치와 Resume 상단 높이는 그대로 두고, 제목 칸 아래 여백과 사이 간격만 줄인다 */
+@media (min-width:900px){
+  .band--ws{position:relative;z-index:1;background:var(--canvas);margin-top:-48px;padding-top:0;}
+}
 .tgroup + .tgroup{margin-top:var(--s32);}
 .tyear{font-size:var(--text-subheading);font-weight:600;letter-spacing:-.02em;color:var(--violet);
   line-height:1;margin-bottom:var(--s16);}
