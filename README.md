@@ -41,6 +41,7 @@ var CONTENT = { ... };
 |---|---|---|
 | 대단원 설명문 | `descs` | 비워 두면 아무것도 표시하지 않습니다 (채운 것만 제목 아래에 표시) |
 | About · 헤드라인 | `about.logline` / `about.intro` | 도입 문단은 로그라인의 2/3 크기 |
+| About · 상단 배경 | `about.banner` | 제목 ~ I Walk & My Work style 덩어리 전체에 깔리는 배경 이미지 한 장 (비우면 단색) |
 | About · Work style | `about.workStyle` | 3열, 큰 픽토그램 + 제목 / 하단 설명. `icon` 은 게임 아이콘(`gamepad` · `pawn` · `monitor` · `dice` · `trophy` · `heart`) 또는 `blocks` · `target` · `bars` · `bolt` · `flag` · `chat` · `box` |
 | About · 대표 프로젝트 | (자동) | 메인 · 기획서 · 아트 작업물 게시물 카드가 오른쪽 → 왼쪽으로 흐름. 엷은 회색 구역, 좌우 페이드 |
 | 푸터 | `meta.footerName` / `meta.updated` | 오른쪽에 이름과 최종 수정 일자. **파일을 고칠 때마다 `updated` 를 함께 바꿔 주세요** |

@@ -319,7 +319,7 @@ a.card:active{transform:scale(.995);}
 .ws{display:grid;border-top:1px solid var(--ash);}
 @media (min-width:820px){.ws{grid-template-columns:repeat(2,minmax(0,1fr));}}
 .ws__col{display:grid;gap:var(--s12);padding:var(--s16) 0;}
-@media (min-width:820px){.ws__col + .ws__col{padding-left:var(--s32);border-left:1px solid var(--frost);}}
+@media (min-width:820px){.ws__col + .ws__col{padding-left:var(--s32);border-left:1px solid var(--ash);}}
 @media (max-width:819px){.ws__col + .ws__col{border-top:1px solid var(--frost);}}
 .ws__row{display:flex;align-items:center;gap:var(--s12);}
 .ws__thumb{width:52px;height:52px;flex:0 0 auto;border-radius:10px;object-fit:cover;background:var(--frost);display:block;}
@@ -499,16 +499,18 @@ a.card:active{transform:scale(.995);}
 .sec-head--rule .sec-head__ico{width:36px;height:36px;}
 @media (max-width:559px){.sec-head--rule .sec-head__ico{width:30px;height:30px;}}
 .sec-head--tight{margin-bottom:var(--s16);}
-.band--ws{padding-top:var(--s48);}
-/* 데스크톱: 히어로 아래쪽 48px 를 Work style 띠가 덮어 올라온다.
-   히어로 안의 글자·모자이크 위치와 Resume 상단 높이는 그대로 두고, 제목 칸 아래 여백과 사이 간격만 줄인다 */
-@media (min-width:900px){
-  .band--ws{position:relative;z-index:1;background:var(--canvas);margin-top:-48px;padding-top:calc(var(--s16) + 3px);}
-}
-/* 데스크톱: 제목·연락처를 10px 위로 (히어로 높이·모자이크는 그대로. 모바일은 위 여백이 없어 제외) */
-@media (min-width:900px){.topblock.hero .hero__inner{transform:translateY(-10px);}}
-/* Work style ↔ 대표 프로젝트 간격 0.75배 (64+64 → 48+48) */
-.band--ws{padding-bottom:var(--s48);}
+/* About 상단 — 제목 · 연락처 · Work style 을 한 덩어리로 오밀조밀하게.
+   덩어리 전체에 배경 이미지 한 장(about.banner)을 깔 수 있다 */
+.topblock.hero{display:block;min-height:0;padding:var(--s24) 0 var(--s32);}
+@media (min-width:900px){.topblock.hero{min-height:0;padding:76px 0 var(--s32);}}
+/* 제목 ↔ Work style 사이 가로줄, Work style 은 오른쪽 끝으로 */
+.hero__rule{margin-top:var(--s32);border-top:1px solid var(--ash);}
+.hero__ws{max-width:560px;margin:var(--s16) 0 0 auto;text-align:left;}
+.hero__ws .sec-head--tight{margin-bottom:0;}
+.hero__ws .ws{border-top:0;}                 /* 제목 아래 선 없이 바로 본문 */
+.hero__ws .ws__col{padding-top:var(--s4);}
+/* 데스크톱: 모자이크가 가로줄 아래 Work style 글자와 겹치지 않도록 아래쪽 4줄은 숨김 (이전에도 Work style 띠에 가려지던 부분) */
+@media (min-width:900px){.topblock.hero .mrow:nth-child(n+11){visibility:hidden;}}
 .band--feat{padding-top:var(--s48);}
 .tgroup + .tgroup{margin-top:var(--s32);}
 .tyear{font-size:var(--text-subheading);font-weight:600;letter-spacing:-.02em;color:var(--violet);
@@ -1003,6 +1005,7 @@ var CONTENT = {
        제목에 마우스를 올리면 [[…]] 가 6pt 커지며 #f31d5d 로 바뀐다 */
     logline: '**의도를 디자인**하는 [[기획자]]\n__신작 발사대__ [[박지수]] 입니다.',   // **보라** · __주황__ · [[강조·Resume 링크]]
     intro: '',            // (선택) 히어로 보조 문단. 비우면 표시 안 함
+    banner: '',           // (선택) 제목 ~ Work style 덩어리 전체에 깔리는 배경 이미지 한 장
 
     /* 대표 프로젝트(벤토 4칸)에 띄울 게시물 id — 메인·기획서·아트 어디서든 고를 수 있음.
        비우면 메인 프로젝트 앞 4개를 그대로 사용 */
@@ -1820,7 +1823,9 @@ var CONTENT = {
     var h = [];
 
     /* 히어로 — 버튼 없음 */
-    h.push('<div class="topblock hero">' + mosaicAnchor(!mosaicPlayed) + '<div class="wrap hero__inner">');
+    h.push('<div class="topblock hero">' +
+      (has(a.banner) ? '<div class="topblock__bg" style="background-image:url(' + esc(a.banner) + ')"></div>' : '') +
+      mosaicAnchor(!mosaicPlayed) + '<div class="wrap hero__inner">');
     h.push('<h1 class="hero__logline">' +
       (has(a.logline)
         ? a.logline.split('\n').map(function (ln) {
@@ -1835,10 +1840,10 @@ var CONTENT = {
     h.push('<div class="hero__contact">' +
       '<span>' + pico('email') + txt(pf0.email, '이메일') + '</span>' +
       '<span>' + pico('phone') + txt(pf0.phone, '전화번호') + '</span></div>');
-    h.push('</div></div>');
 
-    /* Work style — 도입 문단과 같은 글 안에 있는 것처럼 바짝 붙인다 */
-    h.push('<div class="band band--ws"><div class="wrap">');
+    /* Work style — 제목·연락처 아래 가로줄로 나누고, 같은 덩어리 안에서 오른쪽 끝에 좁게 */
+    h.push('<div class="hero__rule" aria-hidden="true"></div>');
+    h.push('<div class="hero__ws">');
     h.push(headBlock('gamepad', '', 'I Walk & My Work style', 'workStyle', 'sec-head--tight'));
     if (hasList(a.workStyle)) {
       var half = Math.ceil(a.workStyle.length / 2);
@@ -1856,10 +1861,11 @@ var CONTENT = {
     } else {
       h.push(phBlock('Work style 항목', 'CONTENT.about.workStyle'));
     }
-    h.push('</div></div>');
+    h.push('</div>');          // .hero__ws
+    h.push('</div></div>');    // .hero__inner · .topblock
 
-    /* 대표 프로젝트 — 큰1·중1·작2 벤토 */
-    h.push('<div class="band band--cloud band--feat"><div class="wrap">' +
+    /* 대표 프로젝트 — 큰1·중1·작2 벤토 (위 덩어리와 구분되도록 기본 배경) */
+    h.push('<div class="band band--feat"><div class="wrap">' +
       headBlock('project', 'Featured', '대표 프로젝트', 'featured', 'sec-head--tight') +
       bento(featuredList()) + '</div></div>');
 
