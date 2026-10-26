@@ -167,7 +167,7 @@ h1,h2,h3,h4,p{margin:0;}
 @media (min-width:640px){
   .grid--2{grid-template-columns:repeat(2,minmax(0,1fr));}
   .grid--3{grid-template-columns:repeat(2,minmax(0,1fr));}
-  /* 기획서(grid--4)는 AI·메인이 2열일 때 3열 */
+  /* 기획서(grid--4)는 아트·메인이 2열일 때 3열 */
   .grid--4{grid-template-columns:repeat(3,minmax(0,1fr));}
 }
 @media (min-width:900px){
@@ -1075,13 +1075,13 @@ var CONTENT = {
       //   meta: [], links: [ { label: 'PDF 열기', href: 'assets/docs/파일.pdf' } ], sections: [] }
     ],
 
-    /* AI 활용 작업물 — 3열 */
+    /* 아트 작업물 — 3열 (데이터 키는 기존 그대로 ai) */
     ai: [
-      SAMPLE_POST('sample-ai',   '샘플 AI 작업물 1', 'game'),
-      SAMPLE_POST('sample-ai-2', '샘플 AI 작업물 2', 'game'),
-      SAMPLE_POST('sample-ai-3', '샘플 AI 작업물 3', 'game')
-      // { id: '', title: '', tagline: '', kind: 'game', thumb: '', tags: [],
-      //   meta: [], links: [ { label: '웹빌드 실행', href: 'https://...' } ], sections: [] }
+      SAMPLE_POST('sample-ai',   '샘플 아트 작업물 1', 'image'),
+      SAMPLE_POST('sample-ai-2', '샘플 아트 작업물 2', 'image'),
+      SAMPLE_POST('sample-ai-3', '샘플 아트 작업물 3', 'image')
+      // { id: '', title: '', tagline: '', kind: 'image', thumb: '', tags: [],
+      //   meta: [], links: [ { label: '원본 보기', href: 'https://...' } ], sections: [] }
     ]
   },
 
@@ -1802,7 +1802,7 @@ var CONTENT = {
     /* 하단 바로가기 — 버튼 */
     h.push('<div class="band"><div class="wrap"><div class="jump">' + [
       ['Resume', '경력 · 프로젝트 · 기술 · 자기소개', '#resume'],
-      ['Portfolio', '메인 프로젝트 · 기획서 · AI 작업물', '#portfolio'],
+      ['Portfolio', '메인 프로젝트 · 기획서 · 아트 작업물', '#portfolio'],
       ['History', '선호 장르 그래프 · 플레이한 게임', '#history']
     ].map(function (x) {
       return '<a class="jump__btn" href="' + x[2] + '">' +
@@ -2119,8 +2119,8 @@ var CONTENT = {
     h.push('</div></div>');
 
     h.push('<div class="band"><div class="wrap">');
-    h.push(sectionHead('video', 'AI Works', 'AI 활용 작업물', 'ai'));
-    h.push(postGrid(p.ai, 3, 'AI 활용 작업물 게시물', 'CONTENT.portfolio.ai'));
+    h.push(sectionHead('video', 'Art Works', '아트 작업물', 'ai'));
+    h.push(postGrid(p.ai, 3, '아트 작업물 게시물', 'CONTENT.portfolio.ai'));
     h.push('</div></div>');
     return h.join('');
   }

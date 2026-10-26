@@ -42,7 +42,7 @@ var CONTENT = { ... };
 | 대단원 설명문 | `descs` | 비워 두면 아무것도 표시하지 않습니다 (채운 것만 제목 아래에 표시) |
 | About · 헤드라인 | `about.logline` / `about.intro` | 도입 문단은 로그라인의 2/3 크기 |
 | About · Work style | `about.workStyle` | 3열, 큰 픽토그램 + 제목 / 하단 설명. `icon` 은 게임 아이콘(`gamepad` · `pawn` · `monitor` · `dice` · `trophy` · `heart`) 또는 `blocks` · `target` · `bars` · `bolt` · `flag` · `chat` · `box` |
-| About · 대표 프로젝트 | (자동) | 메인 · 기획서 · AI 작업물 게시물 카드가 오른쪽 → 왼쪽으로 흐름. 엷은 회색 구역, 좌우 페이드 |
+| About · 대표 프로젝트 | (자동) | 메인 · 기획서 · 아트 작업물 게시물 카드가 오른쪽 → 왼쪽으로 흐름. 엷은 회색 구역, 좌우 페이드 |
 | 푸터 | `meta.footerName` / `meta.updated` | 오른쪽에 이름과 최종 수정 일자. **파일을 고칠 때마다 `updated` 를 함께 바꿔 주세요** |
 | Resume · 프로필 | `resume.profile` | 증명사진(3:4) · 이름 + `nameEn` · 로그라인 2 · 인적사항 3줄 |
 | 기술 아이콘 | `resume.skills[].icons` | 1:1 이미지 경로 **배열** (여러 개 가능) |
@@ -53,7 +53,7 @@ var CONTENT = { ... };
 | 자기소개 (탭) | `intro` | 큰 로그라인 제목 + 설명. 문항마다 `q`(큰 제목·검정) → `sub`(하위 제목·보라) → `a`(내용) 순서이고 가로줄로만 구분. 오른쪽 목차가 스크롤을 따라옵니다 |
 | Portfolio · 메인 | `portfolio.main` | **3열** |
 | Portfolio · 기획서 | `portfolio.docs` | **4열** |
-| Portfolio · AI 작업물 | `portfolio.ai` | **3열** |
+| Portfolio · 아트 작업물 | `portfolio.ai` | **3열** |
 | History | `history` | 다각형 그래프 · **출시 연식 도넛** · 게임 총 개수 · 플랫폼 선호도 · 게임 목록 |
 
 ### 인적사항
@@ -99,7 +99,7 @@ skills: [ { icons: [ 'assets/images/ps.png', 'assets/images/ai.png' ],
             name: 'Adobe', level: 5, note: '설명 1~2줄' } ]
 ```
 
-### 게시물 (메인 · 기획서 · AI 작업물)
+### 게시물 (메인 · 기획서 · 아트 작업물)
 
 세 목록 모두 형태가 같고, 카드를 누르면 `#post/<id>` 상세 페이지로 들어갑니다.
 
@@ -138,7 +138,7 @@ skills: [ { icons: [ 'assets/images/ps.png', 'assets/images/ai.png' ],
 - 저장소 안 파일: `assets/docs/…`, `assets/images/…` / 외부는 전체 URL
 - 외부 링크와 PDF 는 새 탭에서 열립니다 (iOS Safari 인라인 PDF 뷰어 이슈 회피)
 - 세 목록에 **상세 페이지 레이아웃 확인용 샘플**이 하나씩 들어 있습니다
-  (`main` → `sample`, `docs` → `sample-doc`, `ai` → `sample-ai`).
+  (`main` → `sample`, `docs` → `sample-doc`, `ai`(아트 작업물) → `sample-ai`).
   실제 게시물을 넣을 때 해당 항목을 지우면 사라집니다.
 
 ### History
