@@ -272,8 +272,10 @@ a.card:active{transform:scale(.995);}
   color:var(--graphite);width:fit-content;max-width:100%;margin-inline:auto;}
 .hero__logline .zl{display:block;}
 .hero__logline .ll-v{color:#4a30dd;}
-.hero__logline .ll-o{color:#f88e20;text-decoration:none;}
-.hero__logline .ll-o:hover{text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:6px;}
+.hero__logline .ll-o{color:#f88e20;}
+/* [[기획자]] · [[박지수]] — 제목에 마우스를 올리면 6pt 커지고(옆 글자는 밀려남) #f31d5d */
+.hero__logline .ll-k{color:inherit;text-decoration:none;font-size:1em;transition:font-size .25s ease,color .25s ease;}
+.hero__logline:hover .ll-k{font-size:calc(1em + 6pt);color:#f31d5d;}
 .hero__sub{margin-top:var(--s16);text-align:center;}
 /* 히어로 안 연락처 — 문장 아래, 가운데 정렬, 픽토그램 포함 */
 .hero__contact{display:flex;flex-wrap:wrap;justify-content:center;gap:8px var(--s24);
@@ -991,8 +993,10 @@ var CONTENT = {
   /* ── 1. About ────────────────────────────────────────────── */
   about: {
     /* 히어로 한 문장 — 줄바꿈(\n)한 둘째 줄은 첫 줄 둘째 어절 아래에서 시작(Z자 배열), 전체 가운데 정렬.
-       **…** 은 보라(#4a30dd), __…__ 는 주황(#f88e20) 으로 칠해지고 누르면 Resume 으로 이동 */
-    logline: '**의도를 디자인**하는 기획자,\n__신작 발사대__ 박지수 입니다.',   // **보라(#4a30dd)** · __주황(#f88e20)__
+       **…** 은 보라(#4a30dd), __…__ 는 주황(#f88e20).
+       [[…]] 은 누르면 Resume 으로 이동하고, 두 줄에 하나씩 있으면 같은 열에 맞춰 세운다.
+       제목에 마우스를 올리면 [[…]] 가 6pt 커지며 #f31d5d 로 바뀐다 */
+    logline: '**의도를 디자인**하는 [[기획자]]\n__신작 발사대__ [[박지수]] 입니다.',   // **보라** · __주황__ · [[강조·Resume 링크]]
     intro: '',            // (선택) 히어로 보조 문단. 비우면 표시 안 함
 
     /* 대표 프로젝트(벤토 4칸)에 띄울 게시물 id — 메인·기획서·아트 어디서든 고를 수 있음.
@@ -1043,7 +1047,7 @@ var CONTENT = {
             tag: '2개월 · 외주', desc: '게임 비주얼 컨셉 제작 및 그래픽 리소스 제작', posts: [] },
           { image: 'assets/images/games/g004.jpg', org: '㈜ 액션핏', start: '2023.08', end: '2026.02',
             tag: '근무 2년 · 외주 5개월', desc: '아트 기획, 비주얼 컨셉, UI, 캐릭터, 광고 영상 제작 등 그래픽 관련 업무 전반 (대표작: 블럭냥!, 편의점 정리왕, 빠지냥 / 그 외 머지냥카페, 스크류 캣 등)', posts: [] },
-          { image: '', org: '브릿지 게임즈', start: '2021.06', end: '2022.02',
+          { image: 'assets/images/career/bridge-games.jpg', org: '브릿지 게임즈', start: '2021.06', end: '2022.02',
             tag: '8개월 · 근무', desc: '캐릭터 · 배경 일러스트, SD 캐릭터 스파인', posts: [] }
         ]
       }
@@ -1816,7 +1820,8 @@ var CONTENT = {
         ? a.logline.split('\n').map(function (ln) {
             return '<span class="zl">' + esc(ln)
               .replace(/\*\*([^*]+)\*\*/g, '<span class="ll-v">$1</span>')
-              .replace(/__([^_]+)__/g, '<a class="ll-o" href="#resume">$1</a>') + '</span>';
+              .replace(/__([^_]+)__/g, '<span class="ll-o">$1</span>')
+              .replace(/\[\[([^\]]+)\]\]/g, '<a class="ll-k" href="#resume">$1</a>') + '</span>';
           }).join('')
         : '<span class="zl">' + ph('로그라인 1 — 첫 페이지 헤드라인') + '</span>') + '</h1>');
     if (has(a.intro)) h.push('<div class="hero__sub">' + body(a.intro, '') + '</div>');
@@ -2807,6 +2812,15 @@ var CONTENT = {
     var first = lines[0].textContent || '';
     var sp = first.indexOf(' ');
     lines[1].style.paddingLeft = '';
+    lines[0].style.paddingLeft = '';
+    /* [[…]] 가 두 줄에 하나씩 있으면 그 단어끼리 같은 열에 맞춘다 */
+    var k0 = lines[0].querySelector('.ll-k'), k1 = lines[1].querySelector('.ll-k');
+    if (k0 && k1) {
+      var d = k0.getBoundingClientRect().left - k1.getBoundingClientRect().left;
+      if (d >= 0) lines[1].style.paddingLeft = d + 'px';
+      else lines[0].style.paddingLeft = (-d) + 'px';
+      return;
+    }
     if (sp <= 0) return;
     var meas = document.createElement('span');
     meas.style.cssText = 'visibility:hidden;position:absolute;white-space:pre;font:inherit;';
