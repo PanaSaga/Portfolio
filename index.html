@@ -2029,11 +2029,11 @@ var CONTENT = {
     return h.join('');
   }
 
-  /* 문항 제목 — 'A|B' 로 쓰면 A 는 크게, B 는 작게·남색으로 나눠 표시 */
+  /* 문항 제목 — 'A|B' 로 쓰면 A 는 크게, 줄을 바꿔 B 는 작게·남색으로 표시 */
   function qTitle(q) {
     if (!has(q) || String(q).indexOf('|') < 0) return txt(q, '제목');
     var i = String(q).indexOf('|');
-    return '<span class="qsec__q-a">' + esc(q.slice(0, i)) + '</span> ' +
+    return '<span class="qsec__q-a">' + esc(q.slice(0, i)) + '</span><br>' +
       '<span class="qsec__q-b">' + esc(q.slice(i + 1)) + '</span>';
   }
 
