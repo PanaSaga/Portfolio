@@ -327,7 +327,7 @@ a.card:active{transform:scale(.995);}
 .ws__name{font-size:17px;font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--graphite);}
 .ws__sub{margin-top:2px;font-size:17px;font-weight:700;letter-spacing:-.01em;line-height:1.3;color:#f98a17;}
 .ws__k{color:#f31d5d;}
-.ws__n{color:#241a8f;}
+.ws__n{color:#4a30dd;}
 
 /* 대표 프로젝트 — 게시물 카드가 오른쪽에서 왼쪽으로 흐른다 */
 /* 페이드가 본문 열(1200px)의 좌우 끝에 맞춰 거의 다 빠지도록 */
@@ -1010,14 +1010,14 @@ var CONTENT = {
 
     /* I Walk & My Work style — 2열 × 3행. 앞 3개는 왼쪽, 뒤 3개는 오른쪽 열.
        thumb = 1:1 썸네일(비우면 자리표시) / title = 이름 / sub = 주황 굵은 한 줄
-       (sub 안에서 [[…]] 은 #f31d5d, **…** 은 남색 #241a8f) */
+       (sub 안에서 [[…]] 은 빨강 #f31d5d, **…** 은 보라 #4a30dd) */
     workStyle: [
       { thumb: 'assets/images/games/g389.jpg', title: '블럭냥!',              sub: '[[100만+]] 다운로드' },
       { thumb: 'assets/images/games/g391.jpg', title: '편의점 정리왕',        sub: '[[100만+]] 다운로드' },
       { thumb: 'assets/images/games/g004.jpg', title: '빠지냥! Drop the Cat', sub: '[[100만+]] 다운로드' },
-      { thumb: '', title: 'Check Matter',     sub: '**프로젝트 PD**, 컨셉 기획' },
-      { thumb: '', title: 'High Num',         sub: '**프로젝트 PD**, 컨셉 기획' },
-      { thumb: '', title: 'More Must Mush!',  sub: '**프로젝트 PD**, 컨셉 기획' }
+      { thumb: '', title: 'Check Matter',     sub: '**PD** [[컨셉 기획]]' },
+      { thumb: '', title: 'High Num',         sub: '**PD** [[컨셉 기획]]' },
+      { thumb: '', title: 'More Must Mush!',  sub: '**PD** [[컨셉 기획]]' }
     ],
 
     closing: ''
@@ -1914,10 +1914,20 @@ var CONTENT = {
   /* ================================================================
    *  2. Resume
    * ================================================================ */
+  /* 자기소개 알림 점 — 한 번 열어 보면 사라진다(이 브라우저에 기억) */
+  var introSeen = false;
+  try { introSeen = localStorage.getItem('introSeen') === '1'; } catch (e) {}
+  function markIntroSeen() {
+    introSeen = true;
+    try { localStorage.setItem('introSeen', '1'); } catch (e) {}
+  }
+
   function resumeTabs(sub) {
+    if (sub === 'intro') markIntroSeen();
     return '<div class="wrap" style="padding-top:var(--s48);padding-bottom:var(--s16)"><div class="tabs" role="tablist">' +
       '<a class="tab' + (sub !== 'intro' ? ' is-active' : '') + '" href="#resume">이력서</a>' +
-      '<a class="tab' + (sub === 'intro' ? ' is-active' : '') + '" href="#resume/intro"><span class="tab__dot" aria-hidden="true"></span>자기소개</a>' +
+      '<a class="tab' + (sub === 'intro' ? ' is-active' : '') + '" href="#resume/intro">' +
+        (introSeen ? '' : '<span class="tab__dot" aria-hidden="true"></span>') + '자기소개</a>' +
       '</div></div>';
   }
 
