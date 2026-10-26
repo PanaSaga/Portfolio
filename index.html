@@ -705,9 +705,12 @@ img.ppage__img{display:block;}
 .detail__thumb-ph{flex:0 0 auto;align-self:stretch;width:clamp(180px,24vw,260px);
   border-radius:var(--r-card);background:var(--frost);display:grid;place-items:center;
   color:var(--slate);font-size:var(--text-body-sm);text-align:center;}
+/* 정보 목록이 없는 게시물(아트 작업물)도 대표 이미지 높이를 다른 게시물과 같게 유지 */
+.detail__head--bare .detail__thumb,.detail__head--bare .detail__thumb-ph{min-height:247px;}
 @media (max-width:559px){
   .detail__thumb,.detail__thumb-ph{width:96px;}
   .detail__head{gap:var(--s16);}
+  .detail__head--bare .detail__thumb,.detail__head--bare .detail__thumb-ph{min-height:221px;}
 }
 .detail__title{font-size:clamp(28px,7vw,48px);font-weight:700;letter-spacing:-.03em;line-height:1.05;color:var(--graphite);}
 .detail__tagline{margin-top:var(--s12);color:var(--violet-deep);font-weight:500;font-size:clamp(15px,3.8vw,18px);line-height:1.6;max-width:60ch;}
@@ -725,12 +728,12 @@ img.ppage__img{display:block;}
 .detail-sec__body{color:var(--slate);font-size:var(--text-body-sm);line-height:1.8;}
 .detail-sec__body p + p{margin-top:var(--s12);}
 /* 아트 작업물 이미지 갤러리 */
-/* 1열 — 이미지를 본문 폭 가득, 위에서 아래로 길게 나열 */
+/* 1열 — 이미지를 본문 폭 가득, 위에서 아래로 나열. 비율은 1920×1080(16:9) 고정 */
 .gallery{margin-top:var(--s32);display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s24);}
 .gallery__it{margin:0;}
-.gallery__it img{display:block;width:100%;height:auto;border-radius:var(--r-card);border:1px solid var(--ash);background:var(--frost);}
+.gallery__it img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--r-card);border:1px solid var(--ash);background:var(--frost);}
 .gallery__it figcaption{margin-top:6px;color:var(--steel);font-size:var(--text-caption);}
-.gallery__ph{display:grid;place-items:center;aspect-ratio:4/5;width:100%;border-radius:var(--r-card);background:var(--frost);color:var(--steel);font-size:var(--text-caption);}
+.gallery__ph{display:grid;place-items:center;aspect-ratio:16/9;width:100%;border-radius:var(--r-card);background:var(--frost);color:var(--steel);font-size:var(--text-caption);}
 .figure{margin-top:var(--s16);}
 .figure img{width:100%;border-radius:var(--r-card);border:1px solid var(--ash);}
 .figure figcaption{margin-top:6px;color:var(--steel);font-size:var(--text-caption);}
@@ -2248,7 +2251,7 @@ var CONTENT = {
     }
 
     /* 제목 옆 대표 이미지 + 정보 목록 */
-    h.push('<header class="detail__head">');
+    h.push('<header class="detail__head' + (hasList(m.meta) ? '' : ' detail__head--bare') + '">');
     h.push(imgOr(m.thumb, m.title || '', 'detail__thumb', 'detail__thumb-ph', '대표 이미지'));
     h.push('<div><h1 class="detail__title">' + twoTone(m.title, '게시물 제목') + '</h1>' +
       '<p class="detail__tagline">' + txt(m.tagline, '한 줄 설명') + '</p>' +
@@ -2320,7 +2323,7 @@ var CONTENT = {
       PLANS = [];
     }
 
-    /* 이미지 여러 장 (아트 작업물) — 1열로 크게, 원본 비율 그대로, 누르면 새 탭에서 크게 */
+    /* 이미지 여러 장 (아트 작업물) — 1열로 크게, 16:9(1920×1080) 비율, 누르면 새 탭에서 원본 */
     if (hasList(m.images)) {
       var gal = m.images.map(function (im) {
         im = typeof im === 'string' ? { src: im } : (im || {});
