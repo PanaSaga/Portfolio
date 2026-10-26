@@ -724,6 +724,13 @@ img.ppage__img{display:block;}
 .detail-sec__h .pico{color:var(--violet);}
 .detail-sec__body{color:var(--slate);font-size:var(--text-body-sm);line-height:1.8;}
 .detail-sec__body p + p{margin-top:var(--s12);}
+/* 아트 작업물 이미지 갤러리 */
+.gallery{margin-top:var(--s32);display:grid;gap:var(--s16);}
+@media (min-width:760px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;}}
+.gallery__it{margin:0;}
+.gallery__it img{display:block;width:100%;height:auto;border-radius:var(--r-card);border:1px solid var(--ash);background:var(--frost);}
+.gallery__it figcaption{margin-top:6px;color:var(--steel);font-size:var(--text-caption);}
+.gallery__ph{display:grid;place-items:center;aspect-ratio:4/3;width:100%;border-radius:var(--r-card);background:var(--frost);color:var(--steel);font-size:var(--text-caption);}
 .figure{margin-top:var(--s16);}
 .figure img{width:100%;border-radius:var(--r-card);border:1px solid var(--ash);}
 .figure figcaption{margin-top:6px;color:var(--steel);font-size:var(--text-caption);}
@@ -935,6 +942,14 @@ function SAMPLE_POST(id, title, kind, withPdf) {
   }
   return post;
 }
+/* 아트 작업물 샘플 — 정보 목록·프로젝트 경험 없이 한 줄 설명 + 이미지 여러 장 */
+function SAMPLE_ART(id, title) {
+  return {
+    id: id, sample: true, title: title, tagline: '', kind: 'image',
+    thumb: '', tags: [],
+    images: [ { src: '' }, { src: '' }, { src: '' }, { src: '' } ]   // 이미지 여러 장 — 개수 제한 없음
+  };
+}
 
 var CONTENT = {
 
@@ -1077,11 +1092,11 @@ var CONTENT = {
 
     /* 아트 작업물 — 3열 (데이터 키는 기존 그대로 ai) */
     ai: [
-      SAMPLE_POST('sample-ai',   '샘플 아트 작업물 1', 'image'),
-      SAMPLE_POST('sample-ai-2', '샘플 아트 작업물 2', 'image'),
-      SAMPLE_POST('sample-ai-3', '샘플 아트 작업물 3', 'image')
-      // { id: '', title: '', tagline: '', kind: 'image', thumb: '', tags: [],
-      //   meta: [], links: [ { label: '원본 보기', href: 'https://...' } ], sections: [] }
+      SAMPLE_ART('sample-ai',   '샘플 아트 작업물 1'),
+      SAMPLE_ART('sample-ai-2', '샘플 아트 작업물 2'),
+      SAMPLE_ART('sample-ai-3', '샘플 아트 작업물 3')
+      // { id: '', title: '', tagline: '한 줄 설명', kind: 'image', thumb: '대표(카드) 이미지', tags: [],
+      //   images: [ { src: 'assets/images/art/a1.jpg', caption: '' }, { src: '...' } ] }   // caption 은 선택
     ]
   },
 
@@ -2292,6 +2307,18 @@ var CONTENT = {
       PLANS = planList;
     } else {
       PLANS = [];
+    }
+
+    /* 이미지 여러 장 (아트 작업물) — 원본 비율 그대로, 누르면 새 탭에서 크게 */
+    if (hasList(m.images)) {
+      var gal = m.images.map(function (im) {
+        im = typeof im === 'string' ? { src: im } : (im || {});
+        if (!has(im.src)) return SHOW_PLACEHOLDER ? '<figure class="gallery__it"><div class="gallery__ph">이미지</div></figure>' : '';
+        return '<figure class="gallery__it"><a ' + linkAttrs(im.src) + '>' +
+          '<img src="' + esc(im.src) + '" alt="' + esc(im.caption || m.title || '') + '" loading="lazy"></a>' +
+          (has(im.caption) ? '<figcaption>' + esc(im.caption) + '</figcaption>' : '') + '</figure>';
+      }).join('');
+      if (gal) h.push('<section class="gallery">' + gal + '</section>');
     }
 
     /* 프로젝트에서 경험한 일들 — 제목 + (부제목·본문) 여러 개 */
