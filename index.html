@@ -725,12 +725,12 @@ img.ppage__img{display:block;}
 .detail-sec__body{color:var(--slate);font-size:var(--text-body-sm);line-height:1.8;}
 .detail-sec__body p + p{margin-top:var(--s12);}
 /* 아트 작업물 이미지 갤러리 */
-.gallery{margin-top:var(--s32);display:grid;gap:var(--s16);}
-@media (min-width:760px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start;}}
+/* 1열 — 이미지를 본문 폭 가득, 위에서 아래로 길게 나열 */
+.gallery{margin-top:var(--s32);display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s24);}
 .gallery__it{margin:0;}
 .gallery__it img{display:block;width:100%;height:auto;border-radius:var(--r-card);border:1px solid var(--ash);background:var(--frost);}
 .gallery__it figcaption{margin-top:6px;color:var(--steel);font-size:var(--text-caption);}
-.gallery__ph{display:grid;place-items:center;aspect-ratio:4/3;width:100%;border-radius:var(--r-card);background:var(--frost);color:var(--steel);font-size:var(--text-caption);}
+.gallery__ph{display:grid;place-items:center;aspect-ratio:4/5;width:100%;border-radius:var(--r-card);background:var(--frost);color:var(--steel);font-size:var(--text-caption);}
 .figure{margin-top:var(--s16);}
 .figure img{width:100%;border-radius:var(--r-card);border:1px solid var(--ash);}
 .figure figcaption{margin-top:6px;color:var(--steel);font-size:var(--text-caption);}
@@ -2320,7 +2320,7 @@ var CONTENT = {
       PLANS = [];
     }
 
-    /* 이미지 여러 장 (아트 작업물) — 원본 비율 그대로, 누르면 새 탭에서 크게 */
+    /* 이미지 여러 장 (아트 작업물) — 1열로 크게, 원본 비율 그대로, 누르면 새 탭에서 크게 */
     if (hasList(m.images)) {
       var gal = m.images.map(function (im) {
         im = typeof im === 'string' ? { src: im } : (im || {});
