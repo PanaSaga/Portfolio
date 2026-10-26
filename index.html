@@ -311,17 +311,17 @@ a.card:active{transform:scale(.995);}
 @media (max-width:559px){.mosaic{--tile:11px;opacity:.9;}}
 
 /* Work style — 3열, 헤어라인만으로 구분 */
+/* I Walk & My Work style — 2열 × 3행 (썸네일 + 이름 / 주황 한 줄) */
 .ws{display:grid;border-top:1px solid var(--ash);}
-@media (min-width:820px){.ws{grid-template-columns:repeat(3,minmax(0,1fr));}}
-.ws__item{padding:var(--s24) 0 var(--s32);border-bottom:1px solid var(--frost);}
-@media (min-width:820px){
-  .ws__item{padding:var(--s24) var(--s24) var(--s32) 0;border-bottom:0;}
-  .ws__item + .ws__item{padding-left:var(--s24);border-left:1px solid var(--frost);}
-}
-.ws__top{display:flex;align-items:center;gap:var(--s12);}
-.ws__icon{width:44px;height:44px;flex:0 0 auto;object-fit:contain;}
-.ws__title{font-size:var(--text-heading-sm);font-weight:600;letter-spacing:-.02em;line-height:1.25;color:var(--graphite);}
-.ws__desc{margin-top:var(--s12);color:var(--slate);font-size:17px;line-height:1.7;}
+@media (min-width:820px){.ws{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.ws__col{display:grid;gap:var(--s12);padding:var(--s16) 0;}
+@media (min-width:820px){.ws__col + .ws__col{padding-left:var(--s32);border-left:1px solid var(--frost);}}
+@media (max-width:819px){.ws__col + .ws__col{border-top:1px solid var(--frost);}}
+.ws__row{display:flex;align-items:center;gap:var(--s12);}
+.ws__thumb{width:52px;height:52px;flex:0 0 auto;border-radius:10px;object-fit:cover;background:var(--frost);display:block;}
+.ws__txt{min-width:0;}
+.ws__name{font-size:17px;font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--graphite);}
+.ws__sub{margin-top:2px;font-size:17px;font-weight:700;letter-spacing:-.01em;line-height:1.3;color:#f98a17;}
 
 /* 대표 프로젝트 — 게시물 카드가 오른쪽에서 왼쪽으로 흐른다 */
 /* 페이드가 본문 열(1200px)의 좌우 끝에 맞춰 거의 다 빠지도록 */
@@ -494,8 +494,13 @@ a.card:active{transform:scale(.995);}
 /* 데스크톱: 히어로 아래쪽 48px 를 Work style 띠가 덮어 올라온다.
    히어로 안의 글자·모자이크 위치와 Resume 상단 높이는 그대로 두고, 제목 칸 아래 여백과 사이 간격만 줄인다 */
 @media (min-width:900px){
-  .band--ws{position:relative;z-index:1;background:var(--canvas);margin-top:-48px;padding-top:0;}
+  .band--ws{position:relative;z-index:1;background:var(--canvas);margin-top:-48px;padding-top:var(--s16);}
 }
+/* 데스크톱: 제목·연락처를 10px 위로 (히어로 높이·모자이크는 그대로. 모바일은 위 여백이 없어 제외) */
+@media (min-width:900px){.topblock.hero .hero__inner{transform:translateY(-10px);}}
+/* Work style ↔ 대표 프로젝트 간격 0.75배 (64+64 → 48+48) */
+.band--ws{padding-bottom:var(--s48);}
+.band--feat{padding-top:var(--s48);}
 .tgroup + .tgroup{margin-top:var(--s32);}
 .tyear{font-size:var(--text-subheading);font-weight:600;letter-spacing:-.02em;color:var(--violet);
   line-height:1;margin-bottom:var(--s16);}
@@ -984,20 +989,22 @@ var CONTENT = {
   /* ── 1. About ────────────────────────────────────────────── */
   about: {
     /* 히어로 한 문장 — 줄바꿈(\n)한 둘째 줄은 첫 줄 둘째 어절 아래에서 시작(Z자 배열), 전체 가운데 정렬 */
-    logline: '의도를 디자인하여\n보여질 결과까지 꼼꼼하게',
+    logline: '의도를 디자인하는\n신작 발사대',
     intro: '',            // (선택) 히어로 보조 문단. 비우면 표시 안 함
 
     /* 대표 프로젝트(벤토 4칸)에 띄울 게시물 id — 메인·기획서·아트 어디서든 고를 수 있음.
        비우면 메인 프로젝트 앞 4개를 그대로 사용 */
     featured: [ 'sample', 'sample-2', 'sample-3', 'sample-art' ],
 
-    /* Work style — 3열. icon 은 assets/icons 안의 이름:
-       gamepad · poker · video · domino · target · project · office ·
-       resume · school · chart · pdf · birth · email · phone · pin          */
+    /* I Walk & My Work style — 2열 × 3행. 앞 3개는 왼쪽, 뒤 3개는 오른쪽 열.
+       thumb = 1:1 썸네일(비우면 자리표시) / title = 이름 / sub = 주황 굵은 한 줄 */
     workStyle: [
-      { icon: 'gamepad', title: '', desc: '' },
-      { icon: 'poker',   title: '', desc: '' },
-      { icon: 'video',   title: '', desc: '' }
+      { thumb: 'assets/images/games/g389.jpg', title: '블럭냥!',              sub: '100만+ 다운로드' },
+      { thumb: 'assets/images/games/g391.jpg', title: '편의점 정리왕',        sub: '100만+ 다운로드' },
+      { thumb: 'assets/images/games/g004.jpg', title: '빠지냥! Drop the Cat', sub: '100만+ 다운로드' },
+      { thumb: '', title: 'Check Matter',     sub: '프로젝트 PD, 컨셉 기획' },
+      { thumb: '', title: 'High Num',         sub: '프로젝트 PD, 컨셉 기획' },
+      { thumb: '', title: 'More Must Mush!',  sub: '프로젝트 PD, 컨셉 기획' }
     ],
 
     closing: ''
@@ -1726,7 +1733,6 @@ var CONTENT = {
     gamepad:'gamepad', pdf:'pdf', video:'video', chart:'chart', domino:'domino'
   };
   /* Work style 기본 아이콘 */
-  var BIG_ICONS = ['gamepad', 'poker', 'video'];
 
   function pico(name, cls) {
     var f = ICONS[name] || ICONS.project;
@@ -1815,22 +1821,25 @@ var CONTENT = {
 
     /* Work style — 도입 문단과 같은 글 안에 있는 것처럼 바짝 붙인다 */
     h.push('<div class="band band--ws"><div class="wrap">');
-    h.push(headBlock('gamepad', '', 'Work style', 'workStyle', 'sec-head--tight'));
+    h.push(headBlock('gamepad', '', 'I Walk & My Work style', 'workStyle', 'sec-head--tight'));
     if (hasList(a.workStyle)) {
-      h.push('<div class="ws">' + a.workStyle.map(function (w, i) {
-        return '<div class="ws__item">' +
-          '<div class="ws__top">' + pico(w.icon || BIG_ICONS[i % BIG_ICONS.length], 'ws__icon') +
-          '<h3 class="ws__title">' + txt(w.title, '제목') + '</h3></div>' +
-          '<div class="ws__desc">' + body(w.desc, '설명') + '</div>' +
-          '</div>';
-      }).join('') + '</div>');
+      var half = Math.ceil(a.workStyle.length / 2);
+      var wsRow = function (w) {
+        return '<div class="ws__row">' +
+          imgOr(w.thumb, w.title || '', 'ws__thumb', 'ws__thumb ws__thumb--ph', '') +
+          '<div class="ws__txt"><div class="ws__name">' + txt(w.title, '제목') + '</div>' +
+          '<div class="ws__sub">' + txt(w.sub, '한 줄') + '</div></div></div>';
+      };
+      h.push('<div class="ws">' +
+        '<div class="ws__col">' + a.workStyle.slice(0, half).map(wsRow).join('') + '</div>' +
+        '<div class="ws__col">' + a.workStyle.slice(half).map(wsRow).join('') + '</div></div>');
     } else {
       h.push(phBlock('Work style 항목', 'CONTENT.about.workStyle'));
     }
     h.push('</div></div>');
 
     /* 대표 프로젝트 — 큰1·중1·작2 벤토 */
-    h.push('<div class="band band--cloud"><div class="wrap">' +
+    h.push('<div class="band band--cloud band--feat"><div class="wrap">' +
       headBlock('project', 'Featured', '대표 프로젝트', 'featured', 'sec-head--tight') +
       bento(featuredList()) + '</div></div>');
 
