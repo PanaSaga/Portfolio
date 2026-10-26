@@ -271,7 +271,8 @@ a.card:active{transform:scale(.995);}
 .hero__logline{font-size:clamp(26px,5.1vw,64px);line-height:1.12;letter-spacing:-.03em;font-weight:700;
   color:var(--graphite);width:fit-content;max-width:100%;margin-inline:auto;}
 .hero__logline .zl{display:block;}
-.hero__logline .zl:nth-child(even){color:var(--violet-deep);}
+.hero__logline .ll-v{color:#4a30dd;}
+.hero__logline .ll-o{color:#f88e20;}
 .hero__sub{margin-top:var(--s16);text-align:center;}
 /* 히어로 안 연락처 — 문장 아래, 가운데 정렬, 픽토그램 포함 */
 .hero__contact{display:flex;flex-wrap:wrap;justify-content:center;gap:8px var(--s24);
@@ -494,7 +495,7 @@ a.card:active{transform:scale(.995);}
 /* 데스크톱: 히어로 아래쪽 48px 를 Work style 띠가 덮어 올라온다.
    히어로 안의 글자·모자이크 위치와 Resume 상단 높이는 그대로 두고, 제목 칸 아래 여백과 사이 간격만 줄인다 */
 @media (min-width:900px){
-  .band--ws{position:relative;z-index:1;background:var(--canvas);margin-top:-48px;padding-top:var(--s16);}
+  .band--ws{position:relative;z-index:1;background:var(--canvas);margin-top:-48px;padding-top:calc(var(--s16) + 3px);}
 }
 /* 데스크톱: 제목·연락처를 10px 위로 (히어로 높이·모자이크는 그대로. 모바일은 위 여백이 없어 제외) */
 @media (min-width:900px){.topblock.hero .hero__inner{transform:translateY(-10px);}}
@@ -988,8 +989,9 @@ var CONTENT = {
 
   /* ── 1. About ────────────────────────────────────────────── */
   about: {
-    /* 히어로 한 문장 — 줄바꿈(\n)한 둘째 줄은 첫 줄 둘째 어절 아래에서 시작(Z자 배열), 전체 가운데 정렬 */
-    logline: '의도를 디자인하는\n신작 발사대',
+    /* 히어로 한 문장 — 줄바꿈(\n)한 둘째 줄은 첫 줄 둘째 어절 아래에서 시작(Z자 배열), 전체 가운데 정렬.
+       **…** 은 보라(#4a30dd), __…__ 는 주황(#f88e20) 으로 칠해진다 */
+    logline: '**의도를 디자인**하는 기획자,\n__신작 발사대__ 박지수 입니다.',   // **보라(#4a30dd)** · __주황(#f88e20)__
     intro: '',            // (선택) 히어로 보조 문단. 비우면 표시 안 함
 
     /* 대표 프로젝트(벤토 4칸)에 띄울 게시물 id — 메인·기획서·아트 어디서든 고를 수 있음.
@@ -1810,7 +1812,11 @@ var CONTENT = {
     h.push('<div class="topblock hero">' + mosaicAnchor(!mosaicPlayed) + '<div class="wrap hero__inner">');
     h.push('<h1 class="hero__logline">' +
       (has(a.logline)
-        ? a.logline.split('\n').map(function (ln) { return '<span class="zl">' + esc(ln) + '</span>'; }).join('')
+        ? a.logline.split('\n').map(function (ln) {
+            return '<span class="zl">' + esc(ln)
+              .replace(/\*\*([^*]+)\*\*/g, '<span class="ll-v">$1</span>')
+              .replace(/__([^_]+)__/g, '<span class="ll-o">$1</span>') + '</span>';
+          }).join('')
         : '<span class="zl">' + ph('로그라인 1 — 첫 페이지 헤드라인') + '</span>') + '</h1>');
     if (has(a.intro)) h.push('<div class="hero__sub">' + body(a.intro, '') + '</div>');
     var pf0 = (CONTENT.resume || {}).profile || {};
