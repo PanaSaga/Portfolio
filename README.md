@@ -142,7 +142,7 @@ skills: [ { icons: [ 'assets/images/ps.png', 'assets/images/ai.png' ],
 - 저장소 안 파일: `assets/docs/…`, `assets/images/…` / 외부는 전체 URL
 - 외부 링크와 PDF 는 새 탭에서 열립니다 (iOS Safari 인라인 PDF 뷰어 이슈 회피)
 - 세 목록에 **상세 페이지 레이아웃 확인용 샘플**이 하나씩 들어 있습니다
-  (`main` → `sample`, `docs` → `sample-doc`, `ai`(아트 작업물) → `sample-ai`).
+  (`main` → `sample`, `docs` → `sample-doc`, `ai`(아트 작업물) → `sample-art`).
   실제 게시물을 넣을 때 해당 항목을 지우면 사라집니다.
 
 ### History
