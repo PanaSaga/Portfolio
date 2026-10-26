@@ -976,6 +976,10 @@ var CONTENT = {
     logline: '의도를 디자인하여\n보여질 결과까지 꼼꼼하게',
     intro: '',            // (선택) 히어로 보조 문단. 비우면 표시 안 함
 
+    /* 대표 프로젝트(벤토 4칸)에 띄울 게시물 id — 메인·기획서·아트 어디서든 고를 수 있음.
+       비우면 메인 프로젝트 앞 4개를 그대로 사용 */
+    featured: [ 'sample', 'sample-2', 'sample-3', 'sample-ai' ],
+
     /* Work style — 3열. icon 은 assets/icons 안의 이름:
        gamepad · poker · video · domino · target · project · office ·
        resume · school · chart · pdf · birth · email · phone · pin          */
@@ -1812,7 +1816,7 @@ var CONTENT = {
     /* 대표 프로젝트 — 큰1·중1·작2 벤토 */
     h.push('<div class="band band--cloud"><div class="wrap">' +
       headBlock('project', 'Featured', '대표 프로젝트', 'featured', 'sec-head--tight') +
-      bento((CONTENT.portfolio || {}).main) + '</div></div>');
+      bento(featuredList()) + '</div></div>');
 
     /* 하단 바로가기 — 버튼 */
     h.push('<div class="band"><div class="wrap"><div class="jump">' + [
@@ -1831,6 +1835,13 @@ var CONTENT = {
     }
     h.push('</div></div>');
     return h.join('');
+  }
+
+  /* about.featured 에 적은 id 순서대로 게시물을 모은다 (없으면 메인 프로젝트) */
+  function featuredList() {
+    var ids = (CONTENT.about || {}).featured;
+    if (!hasList(ids)) return (CONTENT.portfolio || {}).main;
+    return ids.map(findPost).filter(Boolean);
   }
 
   /* 대표 프로젝트 — 큰1·중1·작2 벤토 (첫 4개) */
