@@ -451,8 +451,11 @@ a.card:active{transform:scale(.995);}
    ============================================================ */
 .tabs{display:inline-flex;gap:4px;padding:4px;background:var(--cloud);border-radius:var(--r-pill);max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .tabs::-webkit-scrollbar{display:none;}
-.tab{flex:0 0 auto;padding:9px 20px;border-radius:var(--r-pill);font-size:var(--text-body-sm);font-weight:500;color:var(--slate);white-space:nowrap;}
-.tab.is-active{background:var(--surface);color:var(--graphite);border:1px solid var(--ash);padding:8px 19px;box-shadow:rgba(39,40,53,.06) 0 2px 4px 0;}
+.tab{position:relative;flex:0 0 auto;padding:9px 20px;border-radius:var(--r-pill);font-size:calc(var(--text-body-sm) + 2pt);font-weight:700;color:#241a8f;white-space:nowrap;}
+.tab.is-active{background:var(--surface);color:#f88e20;border:1px solid var(--ash);padding:8px 19px;box-shadow:rgba(39,40,53,.06) 0 2px 4px 0;}
+/* 앱 푸시 알림처럼 글자 왼쪽 위에 붙는 작은 빨간 점 */
+.tab__dot{position:absolute;top:7px;left:12px;width:8px;height:8px;border-radius:50%;background:#f31d5d;pointer-events:none;}
+.tab.is-active .tab__dot{top:6px;left:11px;}   /* 활성 탭은 테두리 1px 만큼 보정 */
 
 /* ============================================================
    Profile
@@ -1914,7 +1917,7 @@ var CONTENT = {
   function resumeTabs(sub) {
     return '<div class="wrap" style="padding-top:var(--s48);padding-bottom:var(--s16)"><div class="tabs" role="tablist">' +
       '<a class="tab' + (sub !== 'intro' ? ' is-active' : '') + '" href="#resume">이력서</a>' +
-      '<a class="tab' + (sub === 'intro' ? ' is-active' : '') + '" href="#resume/intro">자기소개</a>' +
+      '<a class="tab' + (sub === 'intro' ? ' is-active' : '') + '" href="#resume/intro"><span class="tab__dot" aria-hidden="true"></span>자기소개</a>' +
       '</div></div>';
   }
 
