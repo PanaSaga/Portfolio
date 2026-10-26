@@ -326,6 +326,8 @@ a.card:active{transform:scale(.995);}
 .ws__txt{min-width:0;}
 .ws__name{font-size:17px;font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--graphite);}
 .ws__sub{margin-top:2px;font-size:17px;font-weight:700;letter-spacing:-.01em;line-height:1.3;color:#f98a17;}
+.ws__k{color:#f31d5d;}
+.ws__n{color:#241a8f;}
 
 /* 대표 프로젝트 — 게시물 카드가 오른쪽에서 왼쪽으로 흐른다 */
 /* 페이드가 본문 열(1200px)의 좌우 끝에 맞춰 거의 다 빠지도록 */
@@ -1004,14 +1006,15 @@ var CONTENT = {
     featured: [ 'sample', 'sample-2', 'sample-3', 'sample-art' ],
 
     /* I Walk & My Work style — 2열 × 3행. 앞 3개는 왼쪽, 뒤 3개는 오른쪽 열.
-       thumb = 1:1 썸네일(비우면 자리표시) / title = 이름 / sub = 주황 굵은 한 줄 */
+       thumb = 1:1 썸네일(비우면 자리표시) / title = 이름 / sub = 주황 굵은 한 줄
+       (sub 안에서 [[…]] 은 #f31d5d, **…** 은 남색 #241a8f) */
     workStyle: [
-      { thumb: 'assets/images/games/g389.jpg', title: '블럭냥!',              sub: '100만+ 다운로드' },
-      { thumb: 'assets/images/games/g391.jpg', title: '편의점 정리왕',        sub: '100만+ 다운로드' },
-      { thumb: 'assets/images/games/g004.jpg', title: '빠지냥! Drop the Cat', sub: '100만+ 다운로드' },
-      { thumb: '', title: 'Check Matter',     sub: '프로젝트 PD, 컨셉 기획' },
-      { thumb: '', title: 'High Num',         sub: '프로젝트 PD, 컨셉 기획' },
-      { thumb: '', title: 'More Must Mush!',  sub: '프로젝트 PD, 컨셉 기획' }
+      { thumb: 'assets/images/games/g389.jpg', title: '블럭냥!',              sub: '[[100만+]] 다운로드' },
+      { thumb: 'assets/images/games/g391.jpg', title: '편의점 정리왕',        sub: '[[100만+]] 다운로드' },
+      { thumb: 'assets/images/games/g004.jpg', title: '빠지냥! Drop the Cat', sub: '[[100만+]] 다운로드' },
+      { thumb: '', title: 'Check Matter',     sub: '**프로젝트 PD**, 컨셉 기획' },
+      { thumb: '', title: 'High Num',         sub: '**프로젝트 PD**, 컨셉 기획' },
+      { thumb: '', title: 'More Must Mush!',  sub: '**프로젝트 PD**, 컨셉 기획' }
     ],
 
     closing: ''
@@ -1840,7 +1843,9 @@ var CONTENT = {
         return '<div class="ws__row">' +
           imgOr(w.thumb, w.title || '', 'ws__thumb', 'ws__thumb ws__thumb--ph', '') +
           '<div class="ws__txt"><div class="ws__name">' + txt(w.title, '제목') + '</div>' +
-          '<div class="ws__sub">' + txt(w.sub, '한 줄') + '</div></div></div>';
+          '<div class="ws__sub">' + (has(w.sub) ? esc(w.sub)
+            .replace(/\[\[([^\]]+)\]\]/g, '<span class="ws__k">$1</span>')
+            .replace(/\*\*([^*]+)\*\*/g, '<span class="ws__n">$1</span>') : ph('한 줄')) + '</div></div></div>';
       };
       h.push('<div class="ws">' +
         '<div class="ws__col">' + a.workStyle.slice(0, half).map(wsRow).join('') + '</div>' +
