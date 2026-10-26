@@ -459,7 +459,7 @@ a.card:active{transform:scale(.995);}
   color:var(--graphite);display:flex;align-items:baseline;flex-wrap:wrap;gap:10px;}
 .profile__name-en{font-size:clamp(17px,4vw,26px);font-weight:500;letter-spacing:-.01em;color:#f98a17;}
 .profile__logline{margin-top:var(--s32);color:var(--violet-deep);font-weight:500;font-size:clamp(16px,3.8vw,20px);line-height:1.6;}
-.profile__desc{margin-top:var(--s8);color:var(--slate);font-size:var(--text-body);line-height:1.8;max-width:60ch;}
+.profile__desc{margin-top:var(--s8);color:var(--slate);font-size:var(--text-body);line-height:1.8;max-width:100%;white-space:pre-line;word-break:keep-all;}
 
 .pinfo{display:grid;gap:12px;}
 @media (min-width:820px){.pinfo{margin-top:6px;}}
@@ -982,7 +982,7 @@ var CONTENT = {
       name: '박지수',
       nameEn: 'Park Jisoo', // 이름 옆에 작게 들어가는 영어 이름
       logline2: '돌고 돌아 더 단단히 자리 잡는 나사못처럼.',
-      desc: '기획자가 되기까지 많은 길을 돌아왔으나, 그럼에도 목표를 향해 똑바로 나아가 더 단단하게 자리잡게 됐습니다. 빙 돌아온 만큼 겪어온 다양한 경험을 통해, 기초부터 견고하게 설계하는 기획자가 되고 싶습니다.',
+      desc: '기획자가 되기까지 많은 길을 돌아왔으나, 그럼에도 목표를 향해 똑바로 나아가 더 단단하게 자리잡게 됐습니다.\n빙 돌아온 만큼 겪어온 다양한 경험을 통해, 기초부터 견고하게 설계하는 기획자가 되고 싶습니다.',
       /* 인적사항 — 아이콘과 함께 세 줄로 표시됩니다.
          1줄: 생년월일 | 학력   2줄: 이메일 · 연락처(1.5배)                  */
       birth: '',                          // 0000.00.00 (자료 없음)
