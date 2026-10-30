@@ -1153,22 +1153,22 @@ var CONTENT = {
   /* ── 4. History ──────────────────────────────────────────── */
   history: {
 
-    /* 선호 장르 겹그래프(10각형) — 축: RPG·액션·어드벤처·전략·수집형·추리·협동·턴제 + 샌드박스·비주얼노벨.
-       별 모양이 되도록 큰 축과 작은 축을 번갈아 배치.
-       base  = 플레이한 게임 수(보라, 아래) — 축 중 최댓값 = 5
-       value = ★ 게임 수(주황, 위) — 축 중 최댓값 = 4.2 (주황 별이 보라 안에 어느 정도 들어가 보이도록)
+    /* 선호 장르 겹그래프(10각형, 별 모양) — 축: RPG·액션·어드벤처·전략·수집형·추리·협동·턴제 + 샌드박스·비주얼노벨.
+       큰 축과 작은 축을 번갈아 배치. 편차가 너무 크지 않도록 제곱근 눈금.
+       base  = 1.8 + 3.2 × √(플레이한 게임 수 ÷ 축 최댓값)        (보라, 아래, 1.8~5)
+       value = 1.2 + 3.3 × √(★ 게임 수 ÷ 축 최댓값), 단 base 의 92% 를 넘지 않음 (주황, 위 — 항상 보라 안쪽)
        n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 490개 기준) */
     axes: [
-      { label: "RPG", value: 4.2, base: 5.0, n: 25, total: 142 },
-      { label: "샌드박스", value: 0.7, base: 0.2, n: 4, total: 5 },
-      { label: "액션", value: 3.9, base: 4.0, n: 23, total: 115 },
-      { label: "비주얼노벨", value: 0.7, base: 0.5, n: 4, total: 14 },
-      { label: "어드벤처", value: 3.2, base: 3.2, n: 19, total: 92 },
-      { label: "턴제", value: 1.3, base: 0.6, n: 8, total: 18 },
-      { label: "전략", value: 2.2, base: 2.7, n: 13, total: 77 },
-      { label: "협동", value: 1.7, base: 0.8, n: 10, total: 24 },
-      { label: "수집형", value: 2.2, base: 2.6, n: 13, total: 74 },
-      { label: "추리", value: 1.8, base: 0.8, n: 11, total: 23 }
+      { label: "RPG", value: 4.50, base: 5.00, n: 25, total: 142 },
+      { label: "샌드박스", value: 2.21, base: 2.40, n: 4, total: 5 },
+      { label: "액션", value: 4.31, base: 4.68, n: 23, total: 115 },
+      { label: "비주얼노벨", value: 2.52, base: 2.80, n: 4, total: 14 },
+      { label: "어드벤처", value: 4.03, base: 4.38, n: 19, total: 92 },
+      { label: "턴제", value: 2.70, base: 2.94, n: 8, total: 18 },
+      { label: "전략", value: 3.58, base: 4.16, n: 13, total: 77 },
+      { label: "협동", value: 2.87, base: 3.12, n: 10, total: 24 },
+      { label: "수집형", value: 3.58, base: 4.11, n: 13, total: 74 },
+      { label: "추리", value: 2.84, base: 3.09, n: 11, total: 23 }
     ],
 
     /* 플랫폼 분포 — 도넛 그래프 (value = %, 합 100). note 에 실제 게임 수 */
