@@ -1154,21 +1154,20 @@ var CONTENT = {
   history: {
 
     /* 선호 장르 겹그래프(10각형, 별 모양) — 축: RPG·액션·어드벤처·전략·수집형·추리·협동·턴제 + 샌드박스·비주얼노벨.
-       큰 축과 작은 축을 번갈아 배치. 편차가 너무 크지 않도록 제곱근 눈금.
-       base  = 1.8 + 3.2 × √(플레이한 게임 수 ÷ 축 최댓값)        (보라, 아래, 1.8~5)
-       value = 1.2 + 3.3 × √(★ 게임 수 ÷ 축 최댓값), 단 base 의 92% 를 넘지 않음 (주황, 위 — 항상 보라 안쪽)
+       큰 축과 작은 축을 번갈아 배치. 두 다각형 모두 같은 눈금: 길이 = 5 × √(게임 수 ÷ 축 중 플레이한 게임 최댓값).
+       base = 플레이한 게임(보라, 아래) / value = ★ 게임(주황, 위). ★ 게임은 플레이한 게임의 일부라 주황은 항상 보라 안.
        n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 490개 기준) */
     axes: [
-      { label: "RPG", value: 4.50, base: 5.00, n: 25, total: 142 },
-      { label: "샌드박스", value: 2.21, base: 2.40, n: 4, total: 5 },
-      { label: "액션", value: 4.31, base: 4.68, n: 23, total: 115 },
-      { label: "비주얼노벨", value: 2.52, base: 2.80, n: 4, total: 14 },
-      { label: "어드벤처", value: 4.03, base: 4.38, n: 19, total: 92 },
-      { label: "턴제", value: 2.70, base: 2.94, n: 8, total: 18 },
-      { label: "전략", value: 3.58, base: 4.16, n: 13, total: 77 },
-      { label: "협동", value: 2.87, base: 3.12, n: 10, total: 24 },
-      { label: "수집형", value: 3.58, base: 4.11, n: 13, total: 74 },
-      { label: "추리", value: 2.84, base: 3.09, n: 11, total: 23 }
+      { label: "RPG", value: 2.10, base: 5.00, n: 25, total: 142 },
+      { label: "샌드박스", value: 0.84, base: 0.94, n: 4, total: 5 },
+      { label: "액션", value: 2.01, base: 4.50, n: 23, total: 115 },
+      { label: "비주얼노벨", value: 0.84, base: 1.57, n: 4, total: 14 },
+      { label: "어드벤처", value: 1.83, base: 4.02, n: 19, total: 92 },
+      { label: "턴제", value: 1.19, base: 1.78, n: 8, total: 18 },
+      { label: "전략", value: 1.51, base: 3.68, n: 13, total: 77 },
+      { label: "협동", value: 1.33, base: 2.06, n: 10, total: 24 },
+      { label: "수집형", value: 1.51, base: 3.61, n: 13, total: 74 },
+      { label: "추리", value: 1.39, base: 2.01, n: 11, total: 23 }
     ],
 
     /* 플랫폼 분포 — 도넛 그래프 (value = %, 합 100). note 에 실제 게임 수 */
