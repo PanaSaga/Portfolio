@@ -508,21 +508,16 @@ a.card:active{transform:scale(.995);}
    덩어리 전체에 배경 이미지 한 장(about.banner)을 깔 수 있다 */
 .topblock.hero{display:block;min-height:0;padding:var(--s24) 0 var(--s8);}           /* 하단 여백 1/2 (32+16 → 8+16) */
 @media (min-width:900px){.topblock.hero{min-height:0;padding:76px 0 var(--s8);}}
-/* About 배너 — 선명한 이미지 한 장 + 좌우로 남는 곳은 같은 이미지를 흐리게 깔아 채움.
-   데스크톱: 원본 2000×756 을 1800×680 으로, 왼쪽 안경알(투명, 원본 중심 430,326 → 387,293)이
-   화면 가운데에서 왼쪽 350px · 위에서 293px 지점(연락처 왼쪽 빈 곳)에 오도록 고정 배치.
-   안경알 안은 흐림이 비치지 않게 배경색을 깔고, 글자가 읽히도록 옅은 베이지 막을 한 겹 덮는다 */
-.hero__bgblur{position:absolute;inset:-40px;z-index:0;background-size:cover;background-position:center;filter:blur(28px);opacity:.9;pointer-events:none;}
-.hero__bgimg{position:absolute;z-index:0;pointer-events:none;background-color:var(--cloud);background-size:100% 100%;background-repeat:no-repeat;
-  left:calc(50% - 737px);top:0;width:1800px;height:680px;
-  /* 양 끝 80px 은 흐린 배경으로 자연스럽게 녹아들게 */
-  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 80px,#000 calc(100% - 80px),transparent 100%);
-          mask-image:linear-gradient(90deg,transparent 0,#000 80px,#000 calc(100% - 80px),transparent 100%);}
-.topblock.hero::after{content:"";position:absolute;inset:0;z-index:0;background:rgba(239,235,230,.42);pointer-events:none;}
+/* About 배너 — 이미지 한 장. 이미지 밖 좌우는 아래 구역과 같은 베이지(--canvas)로 잘라 낸다.
+   데스크톱: 원본 2000×756 을 1764×680(가로 98%)으로, 기준 위치에서 10px 왼쪽.
+   왼쪽 안경알(투명)이 연락처 왼쪽 빈 곳에 온다. 안경알 안은 배경색, 글자가 읽히도록 베이지 막 75% */
+.topblock.hero{background:var(--canvas);}
+.hero__bgimg{position:absolute;z-index:0;pointer-events:none;background-color:var(--canvas);background-size:100% 100%;background-repeat:no-repeat;
+  left:calc(50% - 747px);top:0;width:1764px;height:680px;}
+.topblock.hero::after{content:"";position:absolute;inset:0;z-index:0;background:rgba(243,240,236,.75);pointer-events:none;}
 .topblock.hero .hero__anchor{z-index:1;}   /* 모자이크는 막 위로 — 색 그대로 */
 @media (max-width:899px){
   .hero__bgimg{left:50%;top:0;width:auto;height:100%;aspect-ratio:2000/756;transform:translateX(-36%);}
-  .topblock.hero::after{background:rgba(239,235,230,.6);}
 }
 /* 제목 ↔ Work style 사이 가로줄, Work style 은 오른쪽 끝으로 */
 .hero__rule{margin-top:var(--s32);border-top:1px solid var(--ash);}
@@ -1884,8 +1879,7 @@ var CONTENT = {
 
     /* 히어로 — 버튼 없음 */
     h.push('<div class="topblock hero">' +
-      (has(a.banner) ? '<div class="hero__bgblur" aria-hidden="true" style="background-image:url(' + esc(a.banner) + ')"></div>' +
-        '<div class="hero__bgimg" aria-hidden="true" style="background-image:url(' + esc(a.banner) + ')"></div>' : '') +
+      (has(a.banner) ? '<div class="hero__bgimg" aria-hidden="true" style="background-image:url(' + esc(a.banner) + ')"></div>' : '') +
       mosaicAnchor(!mosaicPlayed) + '<div class="wrap hero__inner">');
     h.push('<h1 class="hero__logline">' +
       (has(a.logline)
