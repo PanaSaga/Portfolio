@@ -506,16 +506,19 @@ a.card:active{transform:scale(.995);}
 .sec-head--tight{margin-bottom:var(--s16);}
 /* About 상단 — 제목 · 연락처 · Work style 을 한 덩어리로 오밀조밀하게.
    덩어리 전체에 배경 이미지 한 장(about.banner)을 깔 수 있다 */
-.topblock.hero{display:block;min-height:0;padding:var(--s24) 0 var(--s32);}
-@media (min-width:900px){.topblock.hero{min-height:0;padding:76px 0 var(--s32);}}
+.topblock.hero{display:block;min-height:0;padding:var(--s24) 0 var(--s8);}           /* 하단 여백 1/2 (32+16 → 8+16) */
+@media (min-width:900px){.topblock.hero{min-height:0;padding:76px 0 var(--s8);}}
 /* 제목 ↔ Work style 사이 가로줄, Work style 은 오른쪽 끝으로 */
 .hero__rule{margin-top:var(--s32);border-top:1px solid var(--ash);}
 .hero__ws{max-width:720px;margin:var(--s16) 0 0 auto;text-align:left;}
 .hero__ws .sec-head--tight{margin-bottom:0;}
 /* 제목(두 줄)과 소개 2줄 — 소개는 제목 오른쪽에 붙는다 (좁은 화면은 제목 아래) */
-.ws-head{display:flex;flex-direction:column;gap:var(--s8);margin-bottom:var(--s8);}
+.ws-head{display:flex;flex-direction:column;gap:var(--s8);margin-bottom:var(--s20);}  /* 아래 프로젝트와 간격 2배 (8+4 → 20+4) */
 .ws-head .sec-title{line-height:1.15;}
-.ws-intro{margin:0;color:var(--slate);font-size:16px;font-weight:500;line-height:1.6;}
+.ws-intro{margin:0;color:var(--slate);font-size:16px;font-weight:500;line-height:1.6;container-type:inline-size;}
+/* 두 줄이 한 줄씩 다 들어갈 폭일 때만 줄을 나누고, 좁아서 접히면 엔터 없이 이어서 흐른다 */
+.ws-intro__l{display:inline;}
+@container (min-width:420px){.ws-intro__l{display:block;}}
 @media (min-width:760px){
   /* 소개 2줄은 제목 오른쪽에 나란히 */
   .ws-head{flex-direction:row;align-items:center;gap:var(--s24);}
@@ -1888,7 +1891,7 @@ var CONTENT = {
     h.push('<div class="ws-head">' +
       headBlock('gamepad', '', 'I Walk & My Work style', 'workStyle', 'sec-head--tight')
         .replace('I Walk &amp; My Work style', 'I Walk &amp;<br>My Work style') +
-      (has(a.workStyleIntro) ? '<p class="ws-intro">' + esc(a.workStyleIntro).replace(/\n/g, '<br>') + '</p>' : '') +
+      (has(a.workStyleIntro) ? '<p class="ws-intro">' + a.workStyleIntro.split('\n').map(function (l) { return '<span class="ws-intro__l">' + esc(l) + '</span>'; }).join(' ') + '</p>' : '') +
       '</div>');
     if (hasList(a.workStyle)) {
       var half = Math.ceil(a.workStyle.length / 2);
