@@ -268,14 +268,20 @@ a.card:active{transform:scale(.995);}
 .hero__inner{position:relative;z-index:1;}
 /* 히어로 한 문장 — 가운데 정렬, 둘째 줄은 JS 로 첫 줄 둘째 어절 아래까지 들여씀(Z자) */
 /* 폰트는 화면 폭에 따라 계속 줄어들도록 vw 항을 크게(약 1240px 이하부터 작아짐) */
-.hero__logline{font-size:clamp(26px,5.1vw,64px);line-height:1.12;letter-spacing:-.03em;font-weight:700;
+.hero__logline{--ll-fs:clamp(26px,5.1vw,64px);font-size:var(--ll-fs);transition:font-size .25s ease;line-height:1.12;letter-spacing:-.03em;font-weight:700;
   color:var(--graphite);width:fit-content;max-width:100%;margin-inline:auto;}
 .hero__logline .zl{display:block;}
 .hero__logline .ll-v{color:#4a30dd;}
 .hero__logline .ll-o{color:#f88e20;}
 /* [[기획자]] · [[박지수]] — 제목에 마우스를 올리면 6pt 커지고(옆 글자는 밀려남) #f31d5d */
 .hero__logline .ll-k{color:inherit;text-decoration:none;font-size:1em;transition:font-size .25s ease,color .25s ease;}
-.hero__logline:hover .ll-k{font-size:calc(1em + 6pt);color:#f31d5d;}
+.hero__logline:hover .ll-k,.hero__logline:active .ll-k{font-size:calc(var(--ll-fs) + 6pt);color:#f31d5d;}
+/* 모바일: 기획자·박지수가 커지는 만큼 나머지 글자를 줄여 줄이 바뀌지 않게 (줄이는 비율은 JS 가 --ll-shrink 로 계산) */
+@media (max-width:899px){
+  .hero__logline:hover,.hero__logline:active{font-size:calc(var(--ll-fs) * var(--ll-shrink,.9));}
+}
+/* 아주 좁은 폰(≈420px 이하)에서는 평소에도 둘째 줄이 넘치지 않게 제목 크기를 화면 폭에 맞춤 */
+@media (max-width:420px){.hero__logline{--ll-fs:min(26px,6.65vw);}}
 .hero__sub{margin-top:var(--s16);text-align:center;}
 /* 히어로 안 연락처 — 문장 아래, 가운데 정렬, 픽토그램 포함 */
 .hero__contact{display:flex;flex-wrap:wrap;justify-content:center;gap:8px var(--s24);
@@ -518,8 +524,11 @@ a.card:active{transform:scale(.995);}
   left:calc(50% - 747px);top:0;width:1764px;height:680px;}
 .topblock.hero::after{content:"";position:absolute;inset:0;z-index:0;background:rgba(243,240,236,.75);pointer-events:none;}
 .topblock.hero .hero__anchor{z-index:1;}   /* 모자이크는 막 위로 — 색 그대로 */
+/* 모바일: 배너는 제목·연락처 부분(가로줄 위)에만 — 높이는 JS 가 --bn-h 로 넣는다 */
 @media (max-width:899px){
-  .hero__bgimg{left:50%;top:0;width:auto;height:100%;aspect-ratio:2000/756;transform:translateX(-36%);}
+  .hero__bgclip{bottom:auto;height:var(--bn-h,100%);}
+  .hero__bgimg{left:0;top:0;width:100%;height:100%;background-size:cover;background-position:22% center;}
+  .topblock.hero::after{bottom:auto;height:var(--bn-h,100%);}
 }
 /* 제목 ↔ Work style 사이 가로줄, Work style 은 오른쪽 끝으로 */
 .hero__rule{margin-top:var(--s32);margin-left:auto;max-width:720px;border-top:1px solid var(--ash);}   /* I Walk 블록 시작점부터 */
@@ -2909,6 +2918,13 @@ var CONTENT = {
     setTimeout(function () { el.classList.remove('mosaic--in'); }, 1900);
   }
 
+  /* 모바일 배너 높이 = 히어로 위쪽 ~ 제목/Work style 가로줄 */
+  function sizeBanner() {
+    var hero = document.querySelector('.topblock.hero'), rule = hero && hero.querySelector('.hero__rule');
+    if (!hero || !rule) return;
+    hero.style.setProperty('--bn-h', Math.round(rule.getBoundingClientRect().top - hero.getBoundingClientRect().top) + 'px');
+  }
+
   /* 히어로 둘째 줄을 첫 줄의 둘째 어절 아래에서 시작하도록 들여쓴다(Z자 배열) */
   function staggerLogline() {
     var ll = document.querySelector('.hero__logline');
@@ -2923,8 +2939,20 @@ var CONTENT = {
     var k0 = lines[0].querySelector('.ll-k'), k1 = lines[1].querySelector('.ll-k');
     if (k0 && k1) {
       var d = k0.getBoundingClientRect().left - k1.getBoundingClientRect().left;
-      if (d >= 0) lines[1].style.paddingLeft = d + 'px';
-      else lines[0].style.paddingLeft = (-d) + 'px';
+      /* em 단위로 넣어야 모바일에서 글자가 줄어도 정렬이 유지된다 */
+      var fs = parseFloat(getComputedStyle(ll).fontSize) || 1;
+      if (d >= 0) lines[1].style.paddingLeft = (d / fs) + 'em';
+      else lines[0].style.paddingLeft = (-d / fs) + 'em';
+      /* 모바일: 강조 단어가 6pt(8px) 커질 때 줄 폭이 그대로이도록 나머지 글자 축소 비율 */
+      var shrink = 1, grow = (fs + 8) / fs;
+      for (var li = 0; li < lines.length; li++) {
+        var W = lines[li].getBoundingClientRect().width, K = 0;
+        var ks = lines[li].querySelectorAll('.ll-k');
+        for (var ki = 0; ki < ks.length; ki++) K += ks[ki].getBoundingClientRect().width;
+        if (W > K) shrink = Math.min(shrink, (W - K * grow) / (W - K));
+      }
+      ll.style.setProperty('--ll-shrink', Math.max(.7, shrink).toFixed(3));
+      sizeBanner();
       return;
     }
     if (sp <= 0) return;
