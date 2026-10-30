@@ -24,15 +24,15 @@
   --accent-soft:#e2c2ff;
   --violet-deep:#4a30dd;
   --ash:#e6dccb;
-  --mist:#dbcfba;
+  --mist:#e6dccb;              /* 테두리 → --ash 와 통일 */
   --fog:#444d60;
   --steel:#444d60;
   --slate:#444d60;
   --graphite:#36394a;
   --midnight:#272835;
   --onyx:#1a1b25;
-  --violet:#5e4cff;
-  --lavender:#c8ccf3;
+  --violet:#4a30dd;            /* 보조 보라 → 메인 보라와 통일 */
+  --lavender:#c9c2f5;          /* 연보라 → 모자이크 px2 와 통일 */
   --lilac:#e2c2ff;
 
   /* 모자이크 톤 (레퍼런스 히어로 그라데이션) */
@@ -83,7 +83,7 @@ body{
   letter-spacing:-.01em;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
-  -webkit-tap-highlight-color:rgba(94,76,255,.12);
+  -webkit-tap-highlight-color:rgba(74,48,221,.12);
   word-break:keep-all;
   overflow-wrap:break-word;
 }
@@ -112,8 +112,8 @@ input{font:inherit;color:inherit;}
   .cursor__burst{position:absolute;left:-18px;top:-18.4px;width:40px;height:40px;
     overflow:visible;opacity:0;transform:scale(.45);transform-origin:center;
     transition:opacity .16s ease,transform .18s cubic-bezier(.34,1.56,.64,1);}
-  .cursor__burst line{stroke:#f98a17;stroke-width:0.7;stroke-linecap:round;
-    filter:drop-shadow(0 0 1.6px rgba(249,138,23,.75));}
+  .cursor__burst line{stroke:#f88e20;stroke-width:0.7;stroke-linecap:round;
+    filter:drop-shadow(0 0 1.6px rgba(248,142,32,.75));}
   .cursor.is-hover .cursor__burst{opacity:1;transform:scale(1);
     animation:cursorBurst 1.15s ease-in-out infinite;}
   @keyframes cursorBurst{0%,100%{transform:scale(1);}50%{transform:scale(1.12);}}
@@ -330,7 +330,7 @@ a.card:active{transform:scale(.995);}
 .ws__thumb{width:52px;height:52px;flex:0 0 auto;border-radius:10px;object-fit:cover;background:var(--frost);display:block;}
 .ws__txt{min-width:0;}
 .ws__name{font-size:17px;font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--graphite);}
-.ws__sub{margin-top:2px;font-size:17px;font-weight:700;letter-spacing:-.01em;line-height:1.3;color:#f98a17;}
+.ws__sub{margin-top:2px;font-size:17px;font-weight:700;letter-spacing:-.01em;line-height:1.3;color:#f88e20;}
 .ws__k{color:#f31d5d;}
 .ws__n{color:#4a30dd;}
 
@@ -437,7 +437,7 @@ a.card:active{transform:scale(.995);}
   min-height:64px;padding:16px 20px;border-radius:var(--r-btn);
   background:var(--surface);border:1px solid var(--ash);box-shadow:rgba(39,40,53,.06) 0 2px 4px 0;
   transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease,transform .12s ease;}
-.jump__btn:hover{border-color:var(--violet);box-shadow:rgba(94,76,255,.16) 0 4px 14px 0;}
+.jump__btn:hover{border-color:var(--violet);box-shadow:rgba(74,48,221,.16) 0 4px 14px 0;}
 .jump__btn:active{transform:translateY(1px);}
 .jump__l{display:grid;gap:2px;min-width:0;}
 .jump__t{font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;}
@@ -471,7 +471,7 @@ a.card:active{transform:scale(.995);}
   gap:var(--s24) var(--s48);text-align:left;}
 .profile__name{font-size:clamp(32px,7.5vw,52px);font-weight:700;letter-spacing:-.03em;line-height:1.1;
   color:var(--graphite);display:flex;align-items:baseline;flex-wrap:wrap;gap:10px;}
-.profile__name-en{font-size:clamp(17px,4vw,26px);font-weight:500;letter-spacing:-.01em;color:#f98a17;}
+.profile__name-en{font-size:clamp(17px,4vw,26px);font-weight:500;letter-spacing:-.01em;color:#f88e20;}
 .profile__logline{margin-top:var(--s32);color:var(--violet-deep);font-weight:500;font-size:clamp(16px,3.8vw,20px);line-height:1.6;}
 .profile__desc{margin-top:var(--s8);color:var(--slate);font-size:var(--text-body);line-height:1.8;max-width:100%;white-space:pre-line;word-break:keep-all;}
 
@@ -858,7 +858,7 @@ img.ppage__img{display:block;}
   padding:11px 34px 11px 12px;font-size:16px;letter-spacing:-.01em;color:var(--graphite);
   line-height:1.2;min-height:44px;
 }
-.fsel select:focus{outline:2px solid rgba(94,76,255,.35);outline-offset:0;border-color:var(--violet);}
+.fsel select:focus{outline:2px solid rgba(74,48,221,.35);outline-offset:0;border-color:var(--violet);}
 .fsel__caret{position:absolute;right:12px;top:50%;margin-top:-3px;pointer-events:none;color:var(--fog);}
 .filter__foot{display:flex;align-items:center;gap:var(--s12);flex:0 0 auto;padding-bottom:2px;}
 .filter__count{color:var(--slate);font-size:var(--text-caption);font-weight:500;white-space:nowrap;}
@@ -883,7 +883,7 @@ img.ppage__img{display:block;}
 .game__tag--p{background:var(--accent-soft);color:var(--violet-deep);}
 .game__tag--e{background:var(--frost);color:var(--graphite);}
 .game__tag--end{background:var(--frost);color:var(--graphite);}
-.game__star{color:#f98a17;margin-right:3px;}
+.game__star{color:#f88e20;margin-right:3px;}
 .games-empty{margin-top:var(--s20);}
 
 /* ============================================================
@@ -1124,7 +1124,7 @@ var CONTENT = {
 
   /* ── 자기소개 ─────────────────────────────────────────────
      상단에 큰 로그라인 제목과 설명, 아래에 문항이 가로줄로만 나뉩니다.
-     제목에 \n 을 넣어 두 줄로 쓰면 둘째 줄이 #3520cf 로 나옵니다.
+     제목에 \n 을 넣어 두 줄로 쓰면 둘째 줄이 #4a30dd 로 나옵니다.
      label 은 오른쪽 목차에 뜨는 짧은 이름입니다.                        */
   intro: {
     logline: '',
@@ -1772,7 +1772,7 @@ var CONTENT = {
     return 'href="' + esc(href) + '"' +
       (isExternal(href) || /\.pdf($|\?)/i.test(href) ? ' target="_blank" rel="noopener noreferrer"' : '');
   }
-  /* 제목이 두 줄이면 둘째 줄부터 #3520cf */
+  /* 제목이 두 줄이면 둘째 줄부터 #4a30dd */
   function twoTone(text, label) {
     if (!has(text)) return ph(label);
     return String(text).split('\n').map(function (line, i) {
