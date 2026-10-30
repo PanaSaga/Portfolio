@@ -322,7 +322,10 @@ a.card:active{transform:scale(.995);}
 @media (min-width:820px){.ws__col + .ws__col{padding-left:var(--s32);border-left:1px solid var(--ash);}}
 @media (max-width:819px){.ws__col + .ws__col{border-top:1px solid var(--frost);}}
 .ws__row{display:flex;align-items:flex-start;gap:var(--s12);}
-.ws__desc{margin-top:2px;font-size:14px;font-weight:500;line-height:1.4;color:var(--slate);}
+.ws__role{color:#4a30dd;font-weight:700;}
+.ws__line{display:flex;align-items:flex-start;gap:var(--s12);margin-top:2px;}
+.ws__line .ws__sub{margin-top:0;flex:0 0 auto;}
+.ws__desc{font-size:14px;font-weight:500;line-height:1.4;color:var(--slate);padding-top:1px;}
 .ws__thumb{width:52px;height:52px;flex:0 0 auto;border-radius:10px;object-fit:cover;background:var(--frost);display:block;}
 .ws__txt{min-width:0;}
 .ws__name{font-size:17px;font-weight:500;letter-spacing:-.01em;line-height:1.3;color:var(--graphite);}
@@ -506,9 +509,20 @@ a.card:active{transform:scale(.995);}
 @media (min-width:900px){.topblock.hero{min-height:0;padding:76px 0 var(--s32);}}
 /* 제목 ↔ Work style 사이 가로줄, Work style 은 오른쪽 끝으로 */
 .hero__rule{margin-top:var(--s32);border-top:1px solid var(--ash);}
-.hero__ws{max-width:640px;margin:var(--s16) 0 0 auto;text-align:left;}
+.hero__ws{max-width:720px;margin:var(--s16) 0 0 auto;text-align:left;}
 .hero__ws .sec-head--tight{margin-bottom:0;}
-.ws-intro{margin:var(--s8) 0 var(--s4);color:var(--slate);font-size:16px;font-weight:500;line-height:1.6;}
+/* 제목(두 줄)과 소개 2줄 — 소개는 제목 왼쪽에 붙는다 (좁은 화면은 제목 아래) */
+.ws-head{display:flex;flex-direction:column;gap:var(--s8);margin-bottom:var(--s8);}
+.ws-head .sec-title{line-height:1.15;}
+.ws-intro{margin:0;color:var(--slate);font-size:16px;font-weight:500;line-height:1.6;}
+@media (min-width:1100px){
+  .hero__ws{position:relative;}
+  .ws-head .ws-intro{position:absolute;top:0;right:calc(100% + var(--s24));width:max-content;max-width:min(440px,calc(100vw - 840px));text-align:right;}
+}
+@media (min-width:900px){
+  .hero__ws .ws{grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);}   /* 설명이 붙는 오른쪽 열을 넓게 */
+  .hero__ws .ws__desc{white-space:nowrap;}
+}
 .hero__ws .ws{border-top:0;}                 /* 제목 아래 선 없이 바로 본문 */
 .hero__ws .ws__col{padding-top:var(--s4);}
 /* 데스크톱: 모자이크가 가로줄 아래 Work style 글자와 겹치지 않도록 아래쪽 4줄은 숨김 (이전에도 Work style 띠에 가려지던 부분) */
@@ -1029,11 +1043,11 @@ var CONTENT = {
        (sub 안에서 [[…]] 은 빨강 #f31d5d, **…** 은 보라 #4a30dd) */
     /* I Walk & My Work style 소개 문단 (제목 바로 아래) */
     workStyleIntro: '독창성과 익숙함을 결합해 도출하는 빠른 결정과 아이디어로,\n아트부터 기획 프로젝트까지 늘 시작을 여는 역할을 맡았습니다.',
-    /* desc = 이름 아래 회색 설명 줄(여러 줄 가능) */
+    /* role = 이름 뒤에 붙는 보라 역할 / sub = 아래 색 한 줄 / desc = sub 오른쪽에 붙는 회색 설명(여러 줄) */
     workStyle: [
-      { thumb: 'assets/images/about/blocknyang.jpg', title: '블럭냥!',              desc: ['아트 기획 전담'], sub: '[[100만+]] 다운로드' },
-      { thumb: 'assets/images/games/g391.jpg', title: '편의점 정리왕',        desc: ['아트 기획 전담'], sub: '[[100만+]] 다운로드' },
-      { thumb: 'assets/images/games/g004.jpg', title: '빠지냥! Drop the Cat', desc: ['아트 기획 전담'], sub: '[[100만+]] 다운로드' },
+      { thumb: 'assets/images/about/blocknyang.jpg', title: '블럭냥!',       role: '아트 기획 전담', sub: '[[100만+]] 다운로드' },
+      { thumb: 'assets/images/games/g391.jpg', title: '편의점 정리왕', role: '아트 기획 전담', sub: '[[100만+]] 다운로드' },
+      { thumb: 'assets/images/games/g004.jpg', title: '빠지냥!',       role: '아트 기획 전담', sub: '[[100만+]] 다운로드' },
       { thumb: '', title: 'Check Matter',     desc: ['체스 + 실시간 턴제', '캐주얼 아케이드 퍼즐'],       sub: '**PD** [[컨셉 기획]]' },
       { thumb: '', title: 'High Num',         desc: ['빠른 템포와 직관적인 진행', '합/곱연산 + 로그라이트'], sub: '**PD** [[컨셉 기획]]' },
       { thumb: '', title: 'More Must Mush!',  desc: ['벽돌깨기 + 반자동 시스템', '캐주얼 인크리멘탈'],   sub: '**PD** [[컨셉 기획]]' }
@@ -1868,18 +1882,23 @@ var CONTENT = {
     /* Work style — 제목·연락처 아래 가로줄로 나누고, 같은 덩어리 안에서 오른쪽 끝에 좁게 */
     h.push('<div class="hero__rule" aria-hidden="true"></div>');
     h.push('<div class="hero__ws">');
-    h.push(headBlock('gamepad', '', 'I Walk & My Work style', 'workStyle', 'sec-head--tight'));
-    if (has(a.workStyleIntro)) h.push('<p class="ws-intro">' + esc(a.workStyleIntro).replace(/\n/g, '<br>') + '</p>');
+    h.push('<div class="ws-head">' +
+      headBlock('gamepad', '', 'I Walk & My Work style', 'workStyle', 'sec-head--tight')
+        .replace('I Walk &amp; My Work style', 'I Walk &amp;<br>My Work style') +
+      (has(a.workStyleIntro) ? '<p class="ws-intro">' + esc(a.workStyleIntro).replace(/\n/g, '<br>') + '</p>' : '') +
+      '</div>');
     if (hasList(a.workStyle)) {
       var half = Math.ceil(a.workStyle.length / 2);
       var wsRow = function (w) {
         return '<div class="ws__row">' +
           imgOr(w.thumb, w.title || '', 'ws__thumb', 'ws__thumb ws__thumb--ph', '') +
-          '<div class="ws__txt"><div class="ws__name">' + txt(w.title, '제목') + '</div>' +
-          (w.desc || []).map(function (d) { return '<div class="ws__desc">' + esc(d) + '</div>'; }).join('') +
-          '<div class="ws__sub">' + (has(w.sub) ? esc(w.sub)
+          '<div class="ws__txt"><div class="ws__name">' + txt(w.title, '제목') +
+            (has(w.role) ? ' <span class="ws__role">' + esc(w.role) + '</span>' : '') + '</div>' +
+          '<div class="ws__line"><div class="ws__sub">' + (has(w.sub) ? esc(w.sub)
             .replace(/\[\[([^\]]+)\]\]/g, '<span class="ws__k">$1</span>')
-            .replace(/\*\*([^*]+)\*\*/g, '<span class="ws__n">$1</span>') : ph('한 줄')) + '</div></div></div>';
+            .replace(/\*\*([^*]+)\*\*/g, '<span class="ws__n">$1</span>') : ph('한 줄')) + '</div>' +
+          (hasList(w.desc) ? '<div class="ws__desc">' + w.desc.map(esc).join('<br>') + '</div>' : '') +
+          '</div></div></div>';
       };
       h.push('<div class="ws">' +
         '<div class="ws__col">' + a.workStyle.slice(0, half).map(wsRow).join('') + '</div>' +
