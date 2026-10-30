@@ -1156,13 +1156,13 @@ var CONTENT = {
     /* 선호 장르 겹그래프(10각형, 별 모양) — 축: RPG·액션·어드벤처·전략·수집형·추리·협동·턴제 + 샌드박스·비주얼노벨.
        큰 축과 작은 축을 번갈아 배치. 두 다각형 모두 같은 눈금: 길이 = 5 × √(게임 수 ÷ 축 중 플레이한 게임 최댓값).
        base = 플레이한 게임(보라, 아래) / value = ★ 게임(주황, 위). ★ 게임은 플레이한 게임의 일부라 주황은 항상 보라 안.
-       n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 490개 기준) */
+       n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 492개 기준) */
     axes: [
       { label: "RPG", value: 2.10, base: 5.00, n: 25, total: 142 },
-      { label: "샌드박스", value: 0.84, base: 0.94, n: 4, total: 5 },
+      { label: "샌드박스", value: 0.84, base: 1.11, n: 4, total: 7 },
       { label: "액션", value: 2.01, base: 4.50, n: 23, total: 115 },
       { label: "비주얼노벨", value: 0.84, base: 1.57, n: 4, total: 14 },
-      { label: "어드벤처", value: 1.83, base: 4.02, n: 19, total: 92 },
+      { label: "어드벤처", value: 1.83, base: 4.05, n: 19, total: 93 },
       { label: "턴제", value: 1.19, base: 1.78, n: 8, total: 18 },
       { label: "전략", value: 1.51, base: 3.68, n: 13, total: 77 },
       { label: "협동", value: 1.33, base: 2.06, n: 10, total: 24 },
@@ -1174,8 +1174,8 @@ var CONTENT = {
     platforms: [
       { label: "PC", value: 35, note: "PC 178개" },
       { label: "모바일", value: 35, note: "모바일 181개" },
-      { label: "PC·모바일", value: 7, note: "PC·모바일 겸용 36개" },
-      { label: "콘솔", value: 8, note: "콘솔 게임 42개" },
+      { label: "PC·모바일", value: 7, note: "PC·모바일 겸용 38개" },
+      { label: "콘솔", value: 8, note: "콘솔 게임 44개" },
       { label: "보드게임", value: 8, note: "보드게임 42개" },
       { label: "TRPG", value: 3, note: "TRPG 게임 16개" },
       { label: "아케이드", value: 2, note: "아케이드 게임 10개" },
@@ -1183,9 +1183,9 @@ var CONTENT = {
     ],
 
     /* 총 개수 — 왼쪽 총합(큰 숫자) + 오른쪽 온라인/오프라인(제목 · 설명 · 숫자), 육각형 아래에 표시 */
-    total: { title: '총합', value: '490', star: '79' },   // star = ★ 게임 수(주황) / value = 전체(보라)
+    total: { title: '총합', value: '492', star: '79' },   // star = ★ 게임 수(주황) / value = 전체(보라)
     counts: [
-      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '432' },
+      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '434' },
       { title: '오프라인 게임', desc: 'TRPG · 보드게임 등', value: '58' }
     ],
 
@@ -1519,6 +1519,7 @@ var CONTENT = {
       {"title":"타이니팜","image":"assets/images/games/g293.jpg","platforms":["모바일"],"date":"2012","genres":["시뮬레이션", "방치형"]},
       {"title":"Criminal Case","image":"assets/images/games/g294.jpg","platforms":["모바일", "PC"],"date":"2012","genres":["퍼즐", "어드벤처"]},
       {"title":"심즈 프리플레이","image":"assets/images/games/g295.jpg","platforms":["모바일"],"date":"2011-12","genres":["시뮬레이션", "캐주얼"]},
+      {"title":"마인크래프트","image":"assets/images/games/add-minecraft.jpg","platforms":["PC","모바일","콘솔"],"date":"2011-11","genres":["샌드박스","서바이벌","어드벤처"]},
       {"title":"사이퍼즈","image":"assets/images/games/g296.jpg","platforms":["PC"],"date":"2011-11","genres":["액션","전략"],"star":true},
       {"title":"투 더 문","image":"assets/images/games/g297.jpg","platforms":["PC"],"date":"2011-11","genres":["어드벤처", "캐주얼"],"ending":true,"star":true},
       {"title":"2012 프로야구","image":"assets/images/games/g298.jpg","platforms":["모바일"],"date":"2011-10","genres":["스포츠"]},
@@ -1550,6 +1551,7 @@ var CONTENT = {
       {"title":"포켓몬 불가사의 던전: 시간의 탐험대","image":"assets/images/games/g325.jpg","platforms":["콘솔"],"date":"2007-09","genres":["RPG", "로그라이크"],"ending":true,"star":true},
       {"title":"이노티아 연대기: 루오네의 방랑자","image":"assets/images/games/g326.jpg","platforms":["모바일"],"date":"2007-06","genres":["RPG","판타지","액션"]},
       {"title":"갱스터","image":"assets/images/games/g327.jpg","platforms":["보드게임"],"date":"2007","genres":["전략", "보드게임"],"star":true},
+      {"title":"로블록스","image":"assets/images/games/add-roblox.jpg","platforms":["PC","모바일","콘솔"],"date":"2006-09","genres":["샌드박스","캐주얼"]},
       {"title":"라테일","image":"assets/images/games/g328.jpg","platforms":["PC"],"date":"2006-07","genres":["MMORPG","액션","캐주얼"]},
       {"title":"고스트X","image":"assets/images/games/g330.jpg","platforms":["PC"],"date":"2008-07","genres":["MMORPG","액션","판타지"],"star":true},
       {"title":"귀혼","image":"assets/images/games/g331.jpg","platforms":["PC"],"date":"2005-11","genres":["MMORPG","액션","판타지"],"star":true},
