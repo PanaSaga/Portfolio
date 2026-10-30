@@ -508,6 +508,22 @@ a.card:active{transform:scale(.995);}
    덩어리 전체에 배경 이미지 한 장(about.banner)을 깔 수 있다 */
 .topblock.hero{display:block;min-height:0;padding:var(--s24) 0 var(--s8);}           /* 하단 여백 1/2 (32+16 → 8+16) */
 @media (min-width:900px){.topblock.hero{min-height:0;padding:76px 0 var(--s8);}}
+/* About 배너 — 선명한 이미지 한 장 + 좌우로 남는 곳은 같은 이미지를 흐리게 깔아 채움.
+   데스크톱: 원본 2000×756 을 1800×680 으로, 왼쪽 안경알(투명, 원본 중심 430,326 → 387,293)이
+   화면 가운데에서 왼쪽 350px · 위에서 293px 지점(연락처 왼쪽 빈 곳)에 오도록 고정 배치.
+   안경알 안은 흐림이 비치지 않게 배경색을 깔고, 글자가 읽히도록 옅은 베이지 막을 한 겹 덮는다 */
+.hero__bgblur{position:absolute;inset:-40px;z-index:0;background-size:cover;background-position:center;filter:blur(28px);opacity:.9;pointer-events:none;}
+.hero__bgimg{position:absolute;z-index:0;pointer-events:none;background-color:var(--cloud);background-size:100% 100%;background-repeat:no-repeat;
+  left:calc(50% - 737px);top:0;width:1800px;height:680px;
+  /* 양 끝 80px 은 흐린 배경으로 자연스럽게 녹아들게 */
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 80px,#000 calc(100% - 80px),transparent 100%);
+          mask-image:linear-gradient(90deg,transparent 0,#000 80px,#000 calc(100% - 80px),transparent 100%);}
+.topblock.hero::after{content:"";position:absolute;inset:0;z-index:0;background:rgba(239,235,230,.42);pointer-events:none;}
+.topblock.hero .hero__anchor{z-index:1;}   /* 모자이크는 막 위로 — 색 그대로 */
+@media (max-width:899px){
+  .hero__bgimg{left:50%;top:0;width:auto;height:100%;aspect-ratio:2000/756;transform:translateX(-36%);}
+  .topblock.hero::after{background:rgba(239,235,230,.6);}
+}
 /* 제목 ↔ Work style 사이 가로줄, Work style 은 오른쪽 끝으로 */
 .hero__rule{margin-top:var(--s32);border-top:1px solid var(--ash);}
 .hero__ws{max-width:720px;margin:var(--s16) 0 0 auto;text-align:left;}
@@ -1038,7 +1054,7 @@ var CONTENT = {
        제목에 마우스를 올리면 [[…]] 가 6pt 커지며 #f31d5d 로 바뀐다 */
     logline: '**의도를 디자인**하는 [[기획자]]\n__신작 발사대__ [[박지수]] 입니다.',   // **보라** · __주황__ · [[강조·Resume 링크]]
     intro: '',            // (선택) 히어로 보조 문단. 비우면 표시 안 함
-    banner: '',           // (선택) 제목 ~ Work style 덩어리 전체에 깔리는 배경 이미지 한 장
+    banner: 'assets/images/about/banner.webp',   // 제목 ~ Work style 덩어리 배경. 왼쪽 안경알(투명)이 연락처 왼쪽 빈 곳에 오도록 배치
 
     /* 대표 프로젝트(벤토 4칸)에 띄울 게시물 id — 메인·기획서·아트 어디서든 고를 수 있음.
        비우면 메인 프로젝트 앞 4개를 그대로 사용 */
@@ -1868,7 +1884,8 @@ var CONTENT = {
 
     /* 히어로 — 버튼 없음 */
     h.push('<div class="topblock hero">' +
-      (has(a.banner) ? '<div class="topblock__bg" style="background-image:url(' + esc(a.banner) + ')"></div>' : '') +
+      (has(a.banner) ? '<div class="hero__bgblur" aria-hidden="true" style="background-image:url(' + esc(a.banner) + ')"></div>' +
+        '<div class="hero__bgimg" aria-hidden="true" style="background-image:url(' + esc(a.banner) + ')"></div>' : '') +
       mosaicAnchor(!mosaicPlayed) + '<div class="wrap hero__inner">');
     h.push('<h1 class="hero__logline">' +
       (has(a.logline)
