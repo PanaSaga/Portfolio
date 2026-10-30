@@ -779,13 +779,21 @@ img.ppage__img{display:block;}
 .radar-legend span{display:inline-flex;align-items:center;gap:6px;}
 .radar-legend i{width:11px;height:11px;border-radius:2px;opacity:.85;}
 .gstats{margin-top:var(--s20);padding-top:var(--s20);border-top:1px solid var(--frost);display:grid;gap:var(--s16);}
-@media (min-width:480px){.gstats{grid-template-columns:minmax(0,4fr) minmax(0,5fr);gap:0;}}
+/* 총합(★/전체)이 넓어진 만큼 왼쪽 칸을 내용 폭에 맞추고, 온라인·오프라인은 오른쪽으로 */
+/* 카드 폭이 충분할 때만 좌우 배치(카드 기준 컨테이너 쿼리), 좁으면 위아래로 */
+.histcard{container-type:inline-size;}
+@container (min-width:500px){.gstats{grid-template-columns:auto minmax(0,1fr);gap:0;}
+  .gtotal{padding-right:var(--s24);}}
 .gtotal{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;}
 .gtotal__t{font-size:clamp(20px,3.6vw,26px);font-weight:600;letter-spacing:-.02em;line-height:1.2;color:var(--graphite);}
 .gtotal__v{font-size:clamp(52px,10vw,76px);font-weight:800;letter-spacing:-.04em;line-height:.95;
   color:#f31d5d;font-variant-numeric:tabular-nums;}
+.gtotal__v{white-space:nowrap;}
+.gtotal__s{color:#f88e20;}                                  /* ★ 게임 수 — 크기 그대로 */
+.gtotal__sep{color:#cdd2d9;font-weight:500;margin:0 .06em;font-size:calc(1em - 6pt);}
+.gtotal__a{color:#4a30dd;font-size:calc(1em - 6pt);}         /* 전체 수 — 6pt 작게 */
 .gcounts{display:grid;gap:var(--s16);align-content:center;padding-top:var(--s16);border-top:1px solid var(--frost);}
-@media (min-width:480px){.gcounts{padding:0 0 0 var(--s20);border-top:0;border-left:1px solid var(--frost);}}
+@container (min-width:500px){.gcounts{padding:0 0 0 var(--s20);border-top:0;border-left:1px solid var(--frost);}}
 .gcount{display:flex;align-items:center;justify-content:space-between;gap:var(--s16);}
 .gcount__l{display:inline-grid;}
 .gcount__t{font-size:var(--text-subheading);font-weight:700;letter-spacing:-.02em;line-height:1.2;color:var(--graphite);}
@@ -1145,21 +1153,22 @@ var CONTENT = {
   /* ── 4. History ──────────────────────────────────────────── */
   history: {
 
-    /* 선호 장르 겹그래프(10각형) — ★ 게임 장르 상위 8개 + 플레이 수에 비해 ★ 비율이 높은 장르 2개(샌드박스·비주얼노벨).
-       (판타지·MMORPG 는 축에서 제외)
-       value = ★ 게임 중 그 장르 비율(주황, 위) / base = 플레이한 전체 게임 중 비율(보라, 아래)
-       두 비율 중 최댓값 = 5 로 맞춘 0~5 값. n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 490개 기준) */
+    /* 선호 장르 겹그래프(10각형) — 축: RPG·액션·어드벤처·전략·수집형·추리·협동·턴제 + 샌드박스·비주얼노벨.
+       별 모양이 되도록 큰 축과 작은 축을 번갈아 배치.
+       base  = 플레이한 게임 수(보라, 아래) — 축 중 최댓값 = 5
+       value = ★ 게임 수(주황, 위) — 축 중 최댓값 = 4.2 (주황 별이 보라 안에 어느 정도 들어가 보이도록)
+       n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 490개 기준) */
     axes: [
-      { label: "RPG", value: 5.0, base: 4.6, n: 25, total: 142 },
-      { label: "액션", value: 4.6, base: 3.7, n: 23, total: 115 },
-      { label: "어드벤처", value: 3.8, base: 3.0, n: 19, total: 92 },
-      { label: "전략", value: 2.6, base: 2.5, n: 13, total: 77 },
-      { label: "수집형", value: 2.6, base: 2.4, n: 13, total: 74 },
-      { label: "추리", value: 2.2, base: 0.7, n: 11, total: 23 },
-      { label: "협동", value: 2.0, base: 0.8, n: 10, total: 24 },
-      { label: "턴제", value: 1.6, base: 0.6, n: 8, total: 18 },
-      { label: "비주얼노벨", value: 0.8, base: 0.5, n: 4, total: 14 },
-      { label: "샌드박스", value: 0.8, base: 0.2, n: 4, total: 5 }
+      { label: "RPG", value: 4.2, base: 5.0, n: 25, total: 142 },
+      { label: "샌드박스", value: 0.7, base: 0.2, n: 4, total: 5 },
+      { label: "액션", value: 3.9, base: 4.0, n: 23, total: 115 },
+      { label: "비주얼노벨", value: 0.7, base: 0.5, n: 4, total: 14 },
+      { label: "어드벤처", value: 3.2, base: 3.2, n: 19, total: 92 },
+      { label: "턴제", value: 1.3, base: 0.6, n: 8, total: 18 },
+      { label: "전략", value: 2.2, base: 2.7, n: 13, total: 77 },
+      { label: "협동", value: 1.7, base: 0.8, n: 10, total: 24 },
+      { label: "수집형", value: 2.2, base: 2.6, n: 13, total: 74 },
+      { label: "추리", value: 1.8, base: 0.8, n: 11, total: 23 }
     ],
 
     /* 플랫폼 분포 — 도넛 그래프 (value = %, 합 100). note 에 실제 게임 수 */
@@ -1175,7 +1184,7 @@ var CONTENT = {
     ],
 
     /* 총 개수 — 왼쪽 총합(큰 숫자) + 오른쪽 온라인/오프라인(제목 · 설명 · 숫자), 육각형 아래에 표시 */
-    total: { title: '총합', value: '490' },
+    total: { title: '총합', value: '490', star: '79' },   // star = ★ 게임 수(주황) / value = 전체(보라)
     counts: [
       { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '432' },
       { title: '오프라인 게임', desc: 'TRPG · 보드게임 등', value: '58' }
@@ -2676,7 +2685,9 @@ var CONTENT = {
           '<span><i style="background:#4a30dd"></i>플레이한 게임</span></div>' : '') +
       '<div class="gstats">' +
       (t.total ? '<div class="gtotal"><span class="gtotal__t">' + txt(t.total.title, '총합') + '</span>' +
-        '<span class="gtotal__v">' + txt(t.total.value, '0') + '</span></div>' : '') +
+        '<span class="gtotal__v">' + (has(t.total.star)
+          ? '<span class="gtotal__s">' + esc(t.total.star) + '</span><span class="gtotal__sep">/</span><span class="gtotal__a">' + esc(t.total.value) + '</span>'
+          : txt(t.total.value, '0')) + '</span></div>' : '') +
       '<div class="gcounts">' + (t.counts || []).map(function (c) {
         return '<div class="gcount"><div class="gcount__l">' +
           '<span class="gcount__t">' + txt(c.title, '큰 제목') + '</span>' +
