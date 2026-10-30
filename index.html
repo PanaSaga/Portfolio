@@ -308,7 +308,7 @@ a.card:active{transform:scale(.995);}
 /* 화면 크기와 상관없이 항상 라우트 우상단에 고정 (글자와 겹쳐도 됨) */
 .hero__anchor{position:absolute;top:0;left:0;right:0;height:0;z-index:0;}
 .hero__anchor .wrap{position:relative;height:0;padding:0;}
-.mosaic{position:absolute;top:0;right:calc(20px + var(--sa-r));z-index:0;--tile:30px;}
+.mosaic{position:absolute;top:0;right:var(--sa-r);z-index:0;--tile:30px;}   /* 페이지 틀(최대 1200px) 오른쪽 끝에 딱 붙임 — 모든 페이지 공통 */
 /* About 이외의 페이지는 조밀한 코너 부분만 */
 .route > .hero__anchor .mrow:nth-child(n+8){display:none;}
 @media (max-width:899px){.mosaic{--tile:clamp(13px,3.4vw,22px);}}
@@ -512,6 +512,8 @@ a.card:active{transform:scale(.995);}
    데스크톱: 원본 2000×756 을 1764×680(가로 98%)으로, 기준 위치에서 10px 왼쪽.
    왼쪽 안경알(투명)이 연락처 왼쪽 빈 곳에 온다. 안경알 안은 배경색, 글자가 읽히도록 베이지 막 75% */
 .topblock.hero{background:var(--canvas);}
+/* 이미지는 페이지 틀(최대 1200px, 가운데)까지만 보이게 잘라 좌우 대칭 — 오른쪽 끝 = 픽셀 모자이크 오른쪽 끝 */
+.hero__bgclip{position:absolute;top:0;bottom:0;left:0;right:0;margin:0 auto;max-width:var(--page-max);overflow:hidden;z-index:0;pointer-events:none;}
 .hero__bgimg{position:absolute;z-index:0;pointer-events:none;background-color:var(--canvas);background-size:100% 100%;background-repeat:no-repeat;
   left:calc(50% - 747px);top:0;width:1764px;height:680px;}
 .topblock.hero::after{content:"";position:absolute;inset:0;z-index:0;background:rgba(243,240,236,.75);pointer-events:none;}
@@ -1879,7 +1881,7 @@ var CONTENT = {
 
     /* 히어로 — 버튼 없음 */
     h.push('<div class="topblock hero">' +
-      (has(a.banner) ? '<div class="hero__bgimg" aria-hidden="true" style="background-image:url(' + esc(a.banner) + ')"></div>' : '') +
+      (has(a.banner) ? '<div class="hero__bgclip" aria-hidden="true"><div class="hero__bgimg" style="background-image:url(' + esc(a.banner) + ')"></div></div>' : '') +
       mosaicAnchor(!mosaicPlayed) + '<div class="wrap hero__inner">');
     h.push('<h1 class="hero__logline">' +
       (has(a.logline)
