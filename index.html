@@ -516,13 +516,13 @@ a.card:active{transform:scale(.995);}
 @media (min-width:900px){.topblock.hero{min-height:0;padding:76px 0 var(--s8);}}
 /* About 배너 — 이미지 한 장. 이미지 밖 좌우는 아래 구역과 같은 베이지(--canvas)로 잘라 낸다.
    데스크톱: 원본 2000×756 을 1764×680(가로 98%)으로, 기준 위치에서 10px 왼쪽.
-   왼쪽 안경알(투명)이 연락처 왼쪽 빈 곳에 온다. 안경알 안은 배경색, 글자가 읽히도록 베이지 막 75% */
+   왼쪽 안경알(투명)이 연락처 왼쪽 빈 곳에 온다. 안경알 안은 배경색, 글자가 읽히도록 베이지 막 90% */
 .topblock.hero{background:var(--canvas);}
 /* 이미지는 페이지 틀(최대 1200px, 가운데)까지만 보이게 잘라 좌우 대칭 — 오른쪽 끝 = 픽셀 모자이크 오른쪽 끝 */
 .hero__bgclip{position:absolute;top:0;bottom:0;left:0;right:0;margin:0 auto;max-width:var(--page-max);overflow:hidden;z-index:0;pointer-events:none;}
 .hero__bgimg{position:absolute;z-index:0;pointer-events:none;background-color:var(--canvas);background-size:100% 100%;background-repeat:no-repeat;
   left:calc(50% - 747px);top:0;width:1764px;height:680px;}
-.topblock.hero::after{content:"";position:absolute;inset:0;z-index:0;background:rgba(243,240,236,.75);pointer-events:none;}
+.topblock.hero::after{content:"";position:absolute;inset:0;z-index:0;background:rgba(243,240,236,.9);pointer-events:none;}
 .topblock.hero .hero__anchor{z-index:1;}   /* 모자이크는 막 위로 — 색 그대로 */
 /* 모바일: 배너는 제목·연락처 부분(가로줄 위)에만 — 높이는 JS 가 --bn-h 로 넣는다 */
 @media (max-width:899px){
@@ -1203,12 +1203,12 @@ var CONTENT = {
     /* 선호 장르 겹그래프(10각형, 별 모양) — 축: RPG·액션·어드벤처·전략·수집형·추리·협동·턴제 + 샌드박스·비주얼노벨.
        큰 축과 작은 축을 번갈아 배치. 두 다각형 모두 같은 눈금: 길이 = 5 × √(게임 수 ÷ 축 중 플레이한 게임 최댓값).
        base = 플레이한 게임(보라, 아래) / value = ★ 게임(주황, 위). ★ 게임은 플레이한 게임의 일부라 주황은 항상 보라 안.
-       n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 492개 기준) */
+       n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 493개 기준) */
     axes: [
       { label: "RPG", value: 2.10, base: 5.00, n: 25, total: 142 },
       { label: "샌드박스", value: 1.03, base: 1.63, n: 6, total: 15 },
       { label: "액션", value: 1.97, base: 4.48, n: 22, total: 114 },
-      { label: "비주얼노벨", value: 0.84, base: 1.57, n: 4, total: 14 },
+      { label: "비주얼노벨", value: 0.84, base: 1.63, n: 4, total: 15 },
       { label: "어드벤처", value: 1.83, base: 4.05, n: 19, total: 93 },
       { label: "턴제", value: 1.19, base: 1.78, n: 8, total: 18 },
       { label: "전략", value: 1.51, base: 3.68, n: 13, total: 77 },
@@ -1219,7 +1219,7 @@ var CONTENT = {
 
     /* 플랫폼 분포 — 도넛 그래프 (value = %, 합 100). note 에 실제 게임 수 */
     platforms: [
-      { label: "PC", value: 35, note: "PC 178개" },
+      { label: "PC", value: 35, note: "PC 179개" },
       { label: "모바일", value: 35, note: "모바일 181개" },
       { label: "PC·모바일", value: 7, note: "PC·모바일 겸용 38개" },
       { label: "콘솔", value: 8, note: "콘솔 게임 44개" },
@@ -1230,9 +1230,9 @@ var CONTENT = {
     ],
 
     /* 총 개수 — 왼쪽 총합(큰 숫자) + 오른쪽 온라인/오프라인(제목 · 설명 · 숫자), 육각형 아래에 표시 */
-    total: { title: '총합', value: '492', star: '79' },   // star = ★ 게임 수(주황) / value = 전체(보라)
+    total: { title: '총합', value: '493', star: '79' },   // star = ★ 게임 수(주황) / value = 전체(보라)
     counts: [
-      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '434' },
+      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '435' },
       { title: '오프라인 게임', desc: 'TRPG · 보드게임 등', value: '58' }
     ],
 
@@ -1272,6 +1272,7 @@ var CONTENT = {
       {"title":"Illusion Carnival: 일루전 카니발","image":"assets/images/games/g493.jpg","platforms":["PC"],"date":"2024-07","genres":["어드벤처","RPG","호러"]},
       {"title":"루니아전기Z","image":"assets/images/games/g497.jpg","platforms":["PC"],"date":"2006","genres":["액션","RPG","MMORPG"],"star":true},
       {"title":"뚜까펫: 서바이벌","image":"assets/images/games/add-ttukapet.jpg","platforms":["모바일"],"date":"2026-08","genres":["방치형","RPG","수집형"],"play":"40시간","star":true},
+      {"title":"릴리스의 존재불명","image":"assets/images/games/add-lilith.jpg","platforms":["PC"],"date":"2026-07","genres":["방치형","시뮬레이션","비주얼노벨"],"play":"10시간"},
       {"title":"치트 데스","image":"assets/images/games/g001.jpg","platforms":["PC"],"date":"2026-07","genres":["로그라이크", "호러", "전략"]},
       {"title":"Bills Must Be Paid","image":"assets/images/games/g002.jpg","platforms":["PC"],"date":"2026-07","genres":["방치형", "로그라이크", "경영"]},
       {"title":"NAMAKORIUM","image":"assets/images/games/g003.jpg","platforms":["PC"],"date":"2026-05","genres":["전략", "액션"]},
@@ -1290,7 +1291,7 @@ var CONTENT = {
       {"title":"Monsters are Coming!","image":"assets/images/games/g016.jpg","platforms":["PC"],"date":"2025-11","genres":["타워디펜스", "로그라이크"]},
       {"title":"포켓몬스터 레전드 Z-A","image":"assets/images/games/g017.jpg","platforms":["콘솔"],"date":"2025-10","genres":["RPG", "오픈월드", "수집형"],"play":"80시간"},
       {"title":"디지몬 스토리 타임 스트레인저","image":"assets/images/games/g018.jpg","platforms":["PC"],"date":"2025-10","genres":["RPG", "턴제", "수집형"]},
-      {"title":"My Card Is Better Than Your Card!","image":"assets/images/games/g019.jpg","platforms":["PC"],"date":"2025-10","genres":["카드", "캐주얼"],"play":"60시간","star":true},
+      {"title":"My Card Is Better Than Your Card!","image":"assets/images/games/g019.jpg","platforms":["PC"],"date":"2025-10","genres":["카드", "캐주얼"],"play":"65시간","star":true},
       {"title":"Shape of Dreams","image":"assets/images/games/g020.jpg","platforms":["PC"],"date":"2025-09","genres":["RPG", "로그라이크"],"play":"180시간","star":true},
       {"title":"Cozy Island","image":"assets/images/games/g021.jpg","platforms":["PC"],"date":"2025-09","genres":["시뮬레이션", "캐주얼"]},
       {"title":"Dice Gambit","image":"assets/images/games/g022.jpg","platforms":["PC"],"date":"2025-08","genres":["전략", "RPG", "턴제"],"play":"30시간","ending":true,"star":true},
@@ -1301,12 +1302,12 @@ var CONTENT = {
       {"title":"마비노기 모바일","image":"assets/images/games/g027.jpg","platforms":["모바일", "PC"],"date":"2025-03","genres":["RPG","MMORPG","판타지"]},
       {"title":"Bongo Cat","image":"assets/images/games/g028.jpg","platforms":["PC"],"date":"2025-03","genres":["방치형", "캐주얼"],"play":"430시간"},
       {"title":"Monster Hunter Wilds","image":"assets/images/games/g029.jpg","platforms":["PC"],"date":"2025-02","genres":["액션", "RPG"],"play":"190시간","ending":true,"star":true},
-      {"title":"데스크탑 아기 동물 목장","image":"assets/images/games/g030.jpg","platforms":["PC"],"date":"2025-02","genres":["방치형", "시뮬레이션", "캐주얼"],"play":"60시간"},
+      {"title":"데스크탑 아기 동물 목장","image":"assets/images/games/g030.jpg","platforms":["PC"],"date":"2025-02","genres":["방치형", "시뮬레이션", "캐주얼"],"play":"40시간"},
       {"title":"도시전설 해체센터","image":"assets/images/games/g031.jpg","platforms":["PC"],"date":"2025-02","genres":["어드벤처", "추리", "비주얼노벨"]},
       {"title":"Hello Kitty My Dream Store","image":"assets/images/games/g032.jpg","platforms":["모바일"],"date":"2025","genres":["퍼즐","경영","캐주얼"]},
       {"title":"Hello Town","image":"assets/images/games/g033.jpg","platforms":["모바일"],"date":"2024-12","genres":["퍼즐","캐주얼"],"play":"25시간"},
       {"title":"루마섬","image":"assets/images/games/g034.jpg","platforms":["PC"],"date":"2024-11","genres":["시뮬레이션", "어드벤처", "RPG"],"play":"55시간"},
-      {"title":"더 라이즈 오브 더 골든 아이돌","image":"assets/images/games/g035.jpg","platforms":["PC"],"date":"2024-11","genres":["퍼즐", "추리"],"star":true},
+      {"title":"더 라이즈 오브 더 골든 아이돌","image":"assets/images/games/g035.jpg","platforms":["PC"],"date":"2024-11","genres":["퍼즐", "추리"],"play":"10시간","ending":true,"star":true},
       {"title":"포켓몬 카드 게임 포켓","image":"assets/images/games/g036.jpg","platforms":["모바일"],"date":"2024-10","genres":["카드","수집형"]},
       {"title":"메타포: 리판타지오","image":"assets/images/games/g037.jpg","platforms":["PC"],"date":"2024-10","genres":["RPG", "전략"],"play":"100시간","star":true},
       {"title":"역전검사 1&2 미츠루기 셀렉션","image":"assets/images/games/g038.jpg","platforms":["PC"],"date":"2024-09","genres":["어드벤처", "추리", "비주얼노벨"],"play":"20시간","star":true},
@@ -1350,7 +1351,7 @@ var CONTENT = {
       {"title":"레전드 오브 슬라임: 방치형 RPG","image":"assets/images/games/g076.jpg","platforms":["모바일"],"date":"2022-08","genres":["어드벤처","방치형","RPG"]},
       {"title":"상자아이","image":"assets/images/games/g077.jpg","platforms":["보드게임"],"date":"2022-06","genres":["협동", "서바이벌", "추리"]},
       {"title":"마이 타임 앳 샌드락","image":"assets/images/games/g078.jpg","platforms":["PC"],"date":"2022-05","genres":["시뮬레이션", "RPG", "어드벤처"],"play":"35시간"},
-      {"title":"Core Keeper","image":"assets/images/games/g079.jpg","platforms":["PC"],"date":"2022-03","genres":["액션", "어드벤처", "샌드박스"],"play":"180시간","ending":true,"star":true},
+      {"title":"Core Keeper","image":"assets/images/games/g079.jpg","platforms":["PC"],"date":"2022-03","genres":["액션", "어드벤처", "샌드박스"],"play":"170시간","ending":true,"star":true},
       {"title":"타이니 티나의 원더랜드","image":"assets/images/games/g080.jpg","platforms":["PC"],"date":"2022-03","genres":["액션", "RPG", "슈팅"],"play":"10시간"},
       {"title":"건그레이브 G.O.R.E","image":"assets/images/games/g081.jpg","platforms":["PC"],"date":"2022-02","genres":["액션", "슈팅"]},
       {"title":"포켓몬스터 레전드 아르세우스","image":"assets/images/games/g082.jpg","platforms":["콘솔"],"date":"2022-01","genres":["RPG", "오픈월드", "수집형"],"play":"50시간","ending":true},
@@ -1400,7 +1401,7 @@ var CONTENT = {
       {"title":"미스터리 하우스","image":"assets/images/games/g126.jpg","platforms":["보드게임"],"date":"2019","genres":["협동", "추리"]},
       {"title":"이프","image":"assets/images/games/g127.jpg","platforms":["보드게임"],"date":"2019","genres":["추리", "RPG"]},
       {"title":"엔데버: 대항해시대","image":"assets/images/games/g128.jpg","platforms":["보드게임"],"date":"2019","genres":["전략", "경영"]},
-      {"title":"Kingdom Two Crowns","image":"assets/images/games/g129.jpg","platforms":["PC"],"date":"2018-12","genres":["타워디펜스", "경영", "액션"],"play":"15시간"},
+      {"title":"Kingdom Two Crowns","image":"assets/images/games/g129.jpg","platforms":["PC"],"date":"2018-12","genres":["타워디펜스", "경영", "액션"],"play":"20시간"},
       {"title":"ALTER EGO","image":"assets/images/games/g130.jpg","platforms":["모바일"],"date":"2018-12","genres":["시뮬레이션","비주얼노벨","방치형"],"ending":true},
       {"title":"츠키의 모험","image":"assets/images/games/g131.jpg","platforms":["모바일"],"date":"2018-11","genres":["시뮬레이션", "캐주얼"]},
       {"title":"궨트: 더 위쳐 카드 게임","image":"assets/images/games/g132.jpg","platforms":["PC"],"date":"2018-10","genres":["카드", "전략", "수집형"]},
