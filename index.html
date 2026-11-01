@@ -1203,25 +1203,25 @@ var CONTENT = {
     /* 선호 장르 겹그래프(10각형, 별 모양) — 축: RPG·액션·어드벤처·전략·수집형·추리·협동·턴제 + 샌드박스·비주얼노벨.
        큰 축과 작은 축을 번갈아 배치. 두 다각형 모두 같은 눈금: 길이 = 5 × √(게임 수 ÷ 축 중 플레이한 게임 최댓값).
        base = 플레이한 게임(보라, 아래) / value = ★ 게임(주황, 위). ★ 게임은 플레이한 게임의 일부라 주황은 항상 보라 안.
-       n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 493개 기준) */
+       n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 495개 기준) */
     axes: [
-      { label: "RPG", value: 2.10, base: 5.00, n: 25, total: 142 },
-      { label: "샌드박스", value: 1.03, base: 1.63, n: 6, total: 15 },
-      { label: "액션", value: 1.97, base: 4.48, n: 22, total: 114 },
-      { label: "비주얼노벨", value: 0.84, base: 1.63, n: 4, total: 15 },
-      { label: "어드벤처", value: 1.83, base: 4.05, n: 19, total: 93 },
-      { label: "턴제", value: 1.19, base: 1.78, n: 8, total: 18 },
-      { label: "전략", value: 1.51, base: 3.68, n: 13, total: 77 },
-      { label: "협동", value: 1.33, base: 2.06, n: 10, total: 24 },
-      { label: "수집형", value: 1.51, base: 3.61, n: 13, total: 74 },
-      { label: "추리", value: 1.39, base: 2.01, n: 11, total: 23 }
+      { label: "RPG", value: 2.08, base: 5.00, n: 25, total: 144 },
+      { label: "샌드박스", value: 1.02, base: 1.61, n: 6, total: 15 },
+      { label: "액션", value: 1.95, base: 4.47, n: 22, total: 115 },
+      { label: "비주얼노벨", value: 0.83, base: 1.61, n: 4, total: 15 },
+      { label: "어드벤처", value: 1.82, base: 4.02, n: 19, total: 93 },
+      { label: "턴제", value: 1.18, base: 1.77, n: 8, total: 18 },
+      { label: "전략", value: 1.50, base: 3.68, n: 13, total: 78 },
+      { label: "협동", value: 1.32, base: 2.04, n: 10, total: 24 },
+      { label: "수집형", value: 1.50, base: 3.63, n: 13, total: 76 },
+      { label: "추리", value: 1.38, base: 2.00, n: 11, total: 23 }
     ],
 
     /* 플랫폼 분포 — 도넛 그래프 (value = %, 합 100). note 에 실제 게임 수 */
     platforms: [
       { label: "PC", value: 35, note: "PC 179개" },
-      { label: "모바일", value: 35, note: "모바일 181개" },
-      { label: "PC·모바일", value: 7, note: "PC·모바일 겸용 38개" },
+      { label: "모바일", value: 35, note: "모바일 182개" },
+      { label: "PC·모바일", value: 7, note: "PC·모바일 겸용 39개" },
       { label: "콘솔", value: 8, note: "콘솔 게임 44개" },
       { label: "보드게임", value: 8, note: "보드게임 42개" },
       { label: "TRPG", value: 3, note: "TRPG 게임 16개" },
@@ -1230,9 +1230,9 @@ var CONTENT = {
     ],
 
     /* 총 개수 — 왼쪽 총합(큰 숫자) + 오른쪽 온라인/오프라인(제목 · 설명 · 숫자), 육각형 아래에 표시 */
-    total: { title: '총합', value: '493', star: '79' },   // star = ★ 게임 수(주황) / value = 전체(보라)
+    total: { title: '총합', value: '495', star: '79' },   // star = ★ 게임 수(주황) / value = 전체(보라)
     counts: [
-      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '435' },
+      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '437' },
       { title: '오프라인 게임', desc: 'TRPG · 보드게임 등', value: '58' }
     ],
 
@@ -1263,6 +1263,7 @@ var CONTENT = {
       {"title":"Moss: 2권","image":"assets/images/games/g484.jpg","platforms":["VR"],"date":"2022-03","genres":["어드벤처","퍼즐","액션"]},
       {"title":"Dragons: 라이즈 오브 버크","image":"assets/images/games/g485.jpg","platforms":["모바일"],"date":"2014-05","genres":["시뮬레이션","수집형"],"play":"10시간"},
       {"title":"페르소나3 리로드","image":"assets/images/games/g486.jpg","platforms":["PC","콘솔"],"date":"2024-02","genres":["RPG","턴제"]},
+      {"title":"무기미도","image":"assets/images/games/add-path-to-nowhere.jpg","platforms":["모바일"],"date":"2022-10","genres":["전략","수집형","RPG"]},
       {"title":"페르소나 5 더 로열","image":"assets/images/games/g487.jpg","platforms":["PC","콘솔"],"date":"2022-10","genres":["RPG","턴제"]},
       {"title":"아웃 오브 핸즈","image":"assets/images/games/g488.jpg","platforms":["PC"],"date":"2025-04","genres":["카드","전략","호러"],"star":true},
       {"title":"길잃은 고양이의 영혼의 여정","image":"assets/images/games/g489.jpg","platforms":["PC"],"date":"2025-03","genres":["캐주얼","어드벤처"]},
@@ -1362,6 +1363,7 @@ var CONTENT = {
       {"title":"엔들리스 윈터","image":"assets/images/games/g087.jpg","platforms":["보드게임"],"date":"2022","genres":["전략", "덱빌딩"]},
       {"title":"Inscryption","image":"assets/images/games/g088.jpg","platforms":["PC"],"date":"2021-10","genres":["로그라이크", "덱빌딩", "호러"],"play":"15시간","ending":true,"star":true},
       {"title":"월드 플리퍼","image":"assets/images/games/g089.jpg","platforms":["모바일"],"date":"2021-09","genres":["RPG", "액션", "수집형"],"star":true},
+      {"title":"퍼니싱: 그레이 레이븐","image":"assets/images/games/add-punishing.jpg","platforms":["모바일","PC"],"date":"2021-07","genres":["액션","RPG","수집형"]},
       {"title":"몬스터헌터 스토리즈2 파멸의 날개","image":"assets/images/games/g090.jpg","platforms":["PC"],"date":"2021-07","genres":["RPG", "턴제", "수집형"],"play":"140시간","ending":true,"star":true},
       {"title":"포켓몬 유나이트","image":"assets/images/games/g091.jpg","platforms":["모바일"],"date":"2021-07","genres":["전략", "액션"]},
       {"title":"Tribes of Midgard","image":"assets/images/games/g092.jpg","platforms":["PC"],"date":"2021-07","genres":["액션", "서바이벌", "로그라이크"],"play":"30시간"},
