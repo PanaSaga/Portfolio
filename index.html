@@ -517,18 +517,18 @@ a.card:active{transform:scale(.995);}
 /* About 배너 — 이미지 한 장. 이미지 밖 좌우는 아래 구역과 같은 베이지(--canvas)로 잘라 낸다.
    데스크톱: 원본 2000×756 을 1764×680(가로 98%)으로, 기준 위치에서 10px 왼쪽.
    왼쪽 안경알(투명)이 연락처 왼쪽 빈 곳에 온다. 안경알 안은 배경색, 글자가 읽히도록 베이지 막 90% */
-.topblock.hero{background:var(--canvas);}
+.topblock.hero--banner{background:var(--canvas);}
 /* 이미지는 페이지 틀(최대 1200px, 가운데)까지만 보이게 잘라 좌우 대칭 — 오른쪽 끝 = 픽셀 모자이크 오른쪽 끝 */
 .hero__bgclip{position:absolute;top:0;bottom:0;left:0;right:0;margin:0 auto;max-width:var(--page-max);overflow:hidden;z-index:0;pointer-events:none;}
 .hero__bgimg{position:absolute;z-index:0;pointer-events:none;background-color:var(--canvas);background-size:100% 100%;background-repeat:no-repeat;
   left:calc(50% - 747px);top:0;width:1764px;height:680px;}
-.topblock.hero::after{content:"";position:absolute;inset:0;z-index:0;background:rgba(243,240,236,.9);pointer-events:none;}
+.topblock.hero--banner::after{content:"";position:absolute;inset:0;z-index:0;background:rgba(243,240,236,.9);pointer-events:none;}
 .topblock.hero .hero__anchor{z-index:1;}   /* 모자이크는 막 위로 — 색 그대로 */
 /* 모바일: 배너는 제목·연락처 부분(가로줄 위)에만 — 높이는 JS 가 --bn-h 로 넣는다 */
 @media (max-width:899px){
   .hero__bgclip{bottom:auto;height:var(--bn-h,100%);}
   .hero__bgimg{left:0;top:0;width:100%;height:100%;background-size:cover;background-position:22% center;}
-  .topblock.hero::after{bottom:auto;height:var(--bn-h,100%);}
+  .topblock.hero--banner::after{bottom:auto;height:var(--bn-h,100%);}
 }
 /* 제목 ↔ Work style 사이 가로줄, Work style 은 오른쪽 끝으로 */
 .hero__rule{margin-top:var(--s32);margin-left:auto;max-width:720px;border-top:1px solid var(--ash);}   /* I Walk 블록 시작점부터 */
@@ -1060,7 +1060,7 @@ var CONTENT = {
        제목에 마우스를 올리면 [[…]] 가 6pt 커지며 #f31d5d 로 바뀐다 */
     logline: '**의도를 디자인**하는 [[기획자]]\n__신작 발사대__ [[박지수]] 입니다.',   // **보라** · __주황__ · [[강조·Resume 링크]]
     intro: '',            // (선택) 히어로 보조 문단. 비우면 표시 안 함
-    banner: 'assets/images/about/banner-v2.webp',   // 제목 ~ Work style 덩어리 배경. 왼쪽 안경알(투명)이 연락처 왼쪽 빈 곳에 오도록 배치
+    banner: '',   // 제목 ~ Work style 덩어리 배경. 왼쪽 안경알(투명)이 연락처 왼쪽 빈 곳에 오도록 배치
 
     /* 대표 프로젝트(벤토 4칸)에 띄울 게시물 id — 메인·기획서·아트 어디서든 고를 수 있음.
        비우면 메인 프로젝트 앞 4개를 그대로 사용 */
@@ -1203,7 +1203,7 @@ var CONTENT = {
     /* 선호 장르 겹그래프(10각형, 별 모양) — 축: RPG·액션·어드벤처·전략·수집형·추리·협동·턴제 + 샌드박스·비주얼노벨.
        큰 축과 작은 축을 번갈아 배치. 두 다각형 모두 같은 눈금: 길이 = 5 × √(게임 수 ÷ 축 중 플레이한 게임 최댓값).
        base = 플레이한 게임(보라, 아래) / value = ★ 게임(주황, 위). ★ 게임은 플레이한 게임의 일부라 주황은 항상 보라 안.
-       n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 495개 기준) */
+       n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 496개 기준) */
     axes: [
       { label: "RPG", value: 2.08, base: 5.00, n: 25, total: 144 },
       { label: "샌드박스", value: 1.02, base: 1.61, n: 6, total: 15 },
@@ -1219,7 +1219,7 @@ var CONTENT = {
 
     /* 플랫폼 분포 — 도넛 그래프 (value = %, 합 100). note 에 실제 게임 수 */
     platforms: [
-      { label: "PC", value: 35, note: "PC 179개" },
+      { label: "PC", value: 35, note: "PC 180개" },
       { label: "모바일", value: 35, note: "모바일 182개" },
       { label: "PC·모바일", value: 7, note: "PC·모바일 겸용 39개" },
       { label: "콘솔", value: 8, note: "콘솔 게임 44개" },
@@ -1230,9 +1230,9 @@ var CONTENT = {
     ],
 
     /* 총 개수 — 왼쪽 총합(큰 숫자) + 오른쪽 온라인/오프라인(제목 · 설명 · 숫자), 육각형 아래에 표시 */
-    total: { title: '총합', value: '495', star: '79' },   // star = ★ 게임 수(주황) / value = 전체(보라)
+    total: { title: '총합', value: '496', star: '79' },   // star = ★ 게임 수(주황) / value = 전체(보라)
     counts: [
-      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '437' },
+      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '438' },
       { title: '오프라인 게임', desc: 'TRPG · 보드게임 등', value: '58' }
     ],
 
@@ -1272,6 +1272,7 @@ var CONTENT = {
       {"title":"헬테이커","image":"assets/images/games/g492.jpg","platforms":["PC"],"date":"2020-05","genres":["퍼즐","비주얼노벨"]},
       {"title":"Illusion Carnival: 일루전 카니발","image":"assets/images/games/g493.jpg","platforms":["PC"],"date":"2024-07","genres":["어드벤처","RPG","호러"]},
       {"title":"루니아전기Z","image":"assets/images/games/g497.jpg","platforms":["PC"],"date":"2006","genres":["액션","RPG","MMORPG"],"star":true},
+      {"title":"하이롤러 페니","image":"assets/images/games/add-high-roller-penny.jpg","platforms":["PC"],"genres":["로그라이크","캐주얼"]},
       {"title":"뚜까펫: 서바이벌","image":"assets/images/games/add-ttukapet.jpg","platforms":["모바일"],"date":"2026-08","genres":["방치형","RPG","수집형"],"play":"40시간","star":true},
       {"title":"릴리스의 존재불명","image":"assets/images/games/add-lilith.jpg","platforms":["PC"],"date":"2026-07","genres":["방치형","시뮬레이션","비주얼노벨"],"play":"10시간"},
       {"title":"치트 데스","image":"assets/images/games/g001.jpg","platforms":["PC"],"date":"2026-07","genres":["로그라이크", "호러", "전략"]},
@@ -1892,7 +1893,7 @@ var CONTENT = {
     var h = [];
 
     /* 히어로 — 버튼 없음 */
-    h.push('<div class="topblock hero">' +
+    h.push('<div class="topblock hero' + (has(a.banner) ? ' hero--banner' : '') + '">' +
       (has(a.banner) ? '<div class="hero__bgclip" aria-hidden="true"><div class="hero__bgimg" style="background-image:url(' + esc(a.banner) + ')"></div></div>' : '') +
       mosaicAnchor(!mosaicPlayed) + '<div class="wrap hero__inner">');
     h.push('<h1 class="hero__logline">' +
