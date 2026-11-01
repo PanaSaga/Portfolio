@@ -1203,7 +1203,7 @@ var CONTENT = {
     /* 선호 장르 겹그래프(10각형, 별 모양) — 축: RPG·액션·어드벤처·전략·수집형·추리·협동·턴제 + 샌드박스·비주얼노벨.
        큰 축과 작은 축을 번갈아 배치. 두 다각형 모두 같은 눈금: 길이 = 5 × √(게임 수 ÷ 축 중 플레이한 게임 최댓값).
        base = 플레이한 게임(보라, 아래) / value = ★ 게임(주황, 위). ★ 게임은 플레이한 게임의 일부라 주황은 항상 보라 안.
-       n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 496개 기준) */
+       n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 497개 기준) */
     axes: [
       { label: "RPG", value: 2.08, base: 5.00, n: 25, total: 144 },
       { label: "샌드박스", value: 1.02, base: 1.61, n: 6, total: 15 },
@@ -1214,13 +1214,13 @@ var CONTENT = {
       { label: "전략", value: 1.50, base: 3.68, n: 13, total: 78 },
       { label: "협동", value: 1.32, base: 2.04, n: 10, total: 24 },
       { label: "수집형", value: 1.50, base: 3.63, n: 13, total: 76 },
-      { label: "추리", value: 1.38, base: 2.00, n: 11, total: 23 }
+      { label: "추리", value: 1.38, base: 2.04, n: 11, total: 24 }
     ],
 
     /* 플랫폼 분포 — 도넛 그래프 (value = %, 합 100). note 에 실제 게임 수 */
     platforms: [
       { label: "PC", value: 35, note: "PC 180개" },
-      { label: "모바일", value: 35, note: "모바일 182개" },
+      { label: "모바일", value: 35, note: "모바일 183개" },
       { label: "PC·모바일", value: 7, note: "PC·모바일 겸용 39개" },
       { label: "콘솔", value: 8, note: "콘솔 게임 44개" },
       { label: "보드게임", value: 8, note: "보드게임 42개" },
@@ -1230,9 +1230,9 @@ var CONTENT = {
     ],
 
     /* 총 개수 — 왼쪽 총합(큰 숫자) + 오른쪽 온라인/오프라인(제목 · 설명 · 숫자), 육각형 아래에 표시 */
-    total: { title: '총합', value: '496', star: '79' },   // star = ★ 게임 수(주황) / value = 전체(보라)
+    total: { title: '총합', value: '497', star: '79' },   // star = ★ 게임 수(주황) / value = 전체(보라)
     counts: [
-      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '438' },
+      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '439' },
       { title: '오프라인 게임', desc: 'TRPG · 보드게임 등', value: '58' }
     ],
 
@@ -1273,6 +1273,7 @@ var CONTENT = {
       {"title":"Illusion Carnival: 일루전 카니발","image":"assets/images/games/g493.jpg","platforms":["PC"],"date":"2024-07","genres":["어드벤처","RPG","호러"]},
       {"title":"루니아전기Z","image":"assets/images/games/g497.jpg","platforms":["PC"],"date":"2006","genres":["액션","RPG","MMORPG"],"star":true},
       {"title":"하이롤러 페니","image":"assets/images/games/add-high-roller-penny.jpg","platforms":["PC"],"genres":["로그라이크","캐주얼"]},
+      {"title":"멸망의 진상을 밝혀라! 전력재판:육도윤회","image":"assets/images/games/add-jeonryeok-jaepan.jpg","platforms":["모바일"],"genres":["추리","경영"]},
       {"title":"뚜까펫: 서바이벌","image":"assets/images/games/add-ttukapet.jpg","platforms":["모바일"],"date":"2026-08","genres":["방치형","RPG","수집형"],"play":"40시간","star":true},
       {"title":"릴리스의 존재불명","image":"assets/images/games/add-lilith.jpg","platforms":["PC"],"date":"2026-07","genres":["방치형","시뮬레이션","비주얼노벨"],"play":"10시간"},
       {"title":"치트 데스","image":"assets/images/games/g001.jpg","platforms":["PC"],"date":"2026-07","genres":["로그라이크", "호러", "전략"]},
