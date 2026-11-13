@@ -514,21 +514,18 @@ a.card:active{transform:scale(.995);}
    덩어리 전체에 배경 이미지 한 장(about.banner)을 깔 수 있다 */
 .topblock.hero{display:block;min-height:0;padding:var(--s24) 0 var(--s8);}           /* 하단 여백 1/2 (32+16 → 8+16) */
 @media (min-width:900px){.topblock.hero{min-height:0;padding:76px 0 var(--s8);}}
-/* About 배너 — 이미지 한 장. 이미지 밖 좌우는 아래 구역과 같은 베이지(--canvas)로 잘라 낸다.
-   데스크톱: 원본 2000×756 을 1764×680(가로 98%)으로, 기준 위치에서 10px 왼쪽.
-   왼쪽 안경알(투명)이 연락처 왼쪽 빈 곳에 온다. 안경알 안은 배경색, 글자가 읽히도록 베이지 막 90% */
+/* About 배너 — 배경 이미지(about.banner) + 인물 컷(about.bannerPerson, 투명 PNG/WebP).
+   배경은 페이지 틀(최대 1200px, 가운데) 폭으로 잘라 꽉 채움(cover) — 오른쪽 끝 = 픽셀 모자이크 끝.
+   인물은 아래가 배너 끝에 딱 닿고, 머리 오른쪽이 제목 첫 글자에 겹칠 듯 말 듯(JS 가 위치·크기 계산) */
 .topblock.hero--banner{background:var(--canvas);}
-/* 이미지는 페이지 틀(최대 1200px, 가운데)까지만 보이게 잘라 좌우 대칭 — 오른쪽 끝 = 픽셀 모자이크 오른쪽 끝 */
 .hero__bgclip{position:absolute;top:0;bottom:0;left:0;right:0;margin:0 auto;max-width:var(--page-max);overflow:hidden;z-index:0;pointer-events:none;}
-.hero__bgimg{position:absolute;z-index:0;pointer-events:none;background-color:var(--canvas);background-size:100% 100%;background-repeat:no-repeat;
-  left:calc(50% - 747px);top:0;width:1764px;height:680px;}
-.topblock.hero--banner::after{content:"";position:absolute;inset:0;z-index:0;background:rgba(243,240,236,.9);pointer-events:none;}
-.topblock.hero .hero__anchor{z-index:1;}   /* 모자이크는 막 위로 — 색 그대로 */
-/* 모바일: 배너는 제목·연락처 부분(가로줄 위)에만 — 높이는 JS 가 --bn-h 로 넣는다 */
+.hero__bgimg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-repeat:no-repeat;}
+.hero__person{position:absolute;bottom:0;z-index:0;display:block;height:var(--ps-h,72%);width:auto;left:var(--ps-l,0);}
+.topblock.hero .hero__anchor{z-index:1;}   /* 모자이크는 배경 위 */
+/* 모바일: 배너는 제목·연락처 부분(가로줄 위)에만, 인물은 글자와 겹쳐 가독성이 떨어져 숨김 */
 @media (max-width:899px){
   .hero__bgclip{bottom:auto;height:var(--bn-h,100%);}
-  .hero__bgimg{left:0;top:0;width:100%;height:100%;background-size:cover;background-position:22% center;}
-  .topblock.hero--banner::after{bottom:auto;height:var(--bn-h,100%);}
+  .hero__person{display:none;}
 }
 /* 제목 ↔ Work style 사이 가로줄, Work style 은 오른쪽 끝으로 */
 .hero__rule{margin-top:var(--s32);margin-left:auto;max-width:720px;border-top:1px solid var(--ash);}   /* I Walk 블록 시작점부터 */
@@ -1060,7 +1057,8 @@ var CONTENT = {
        제목에 마우스를 올리면 [[…]] 가 6pt 커지며 #f31d5d 로 바뀐다 */
     logline: '**의도를 디자인**하는 [[기획자]]\n__신작 발사대__ [[박지수]] 입니다.',   // **보라** · __주황__ · [[강조·Resume 링크]]
     intro: '',            // (선택) 히어로 보조 문단. 비우면 표시 안 함
-    banner: '',   // 제목 ~ Work style 덩어리 배경. 왼쪽 안경알(투명)이 연락처 왼쪽 빈 곳에 오도록 배치
+    banner: 'assets/images/about/banner-bg.webp',     // 제목 ~ Work style 덩어리 배경 (권장 2:1, 예 2400×1212)
+    bannerPerson: 'assets/images/about/person.webp',  // 배경 위 인물(투명 배경). 아래가 배너 끝에 닿고 제목 왼쪽에 겹칠 듯 말 듯
 
     /* 대표 프로젝트(벤토 4칸)에 띄울 게시물 id — 메인·기획서·아트 어디서든 고를 수 있음.
        비우면 메인 프로젝트 앞 4개를 그대로 사용 */
@@ -1895,7 +1893,8 @@ var CONTENT = {
 
     /* 히어로 — 버튼 없음 */
     h.push('<div class="topblock hero' + (has(a.banner) ? ' hero--banner' : '') + '">' +
-      (has(a.banner) ? '<div class="hero__bgclip" aria-hidden="true"><div class="hero__bgimg" style="background-image:url(' + esc(a.banner) + ')"></div></div>' : '') +
+      (has(a.banner) ? '<div class="hero__bgclip" aria-hidden="true"><div class="hero__bgimg" style="background-image:url(' + esc(a.banner) + ')"></div>' +
+        (has(a.bannerPerson) ? '<img class="hero__person" src="' + esc(a.bannerPerson) + '" alt="">' : '') + '</div>' : '') +
       mosaicAnchor(!mosaicPlayed) + '<div class="wrap hero__inner">');
     h.push('<h1 class="hero__logline">' +
       (has(a.logline)
@@ -2927,7 +2926,18 @@ var CONTENT = {
   function sizeBanner() {
     var hero = document.querySelector('.topblock.hero'), rule = hero && hero.querySelector('.hero__rule');
     if (!hero || !rule) return;
-    hero.style.setProperty('--bn-h', Math.round(rule.getBoundingClientRect().top - hero.getBoundingClientRect().top) + 'px');
+    var hr = hero.getBoundingClientRect();
+    hero.style.setProperty('--bn-h', Math.round(rule.getBoundingClientRect().top - hr.top) + 'px');
+    /* 인물: 키 = 배너 높이의 74%, 아래는 배너 끝. 머리 오른쪽 끝(인물 폭의 77.7%)이
+       제목 첫 글자보다 12px 안쪽 — 겹칠 듯 말 듯 (인물 원본 773×833) */
+    var ps = hero.querySelector('.hero__person'), clip = hero.querySelector('.hero__bgclip'),
+        ll = hero.querySelector('.hero__logline');
+    if (ps && clip && ll) {
+      var H = hr.height * 0.74, W = H * 773 / 833;
+      var left = (ll.getBoundingClientRect().left - clip.getBoundingClientRect().left) + 12 - W * 0.777;
+      hero.style.setProperty('--ps-h', Math.round(H) + 'px');
+      hero.style.setProperty('--ps-l', Math.round(left) + 'px');
+    }
   }
 
   /* 히어로 둘째 줄을 첫 줄의 둘째 어절 아래에서 시작하도록 들여쓴다(Z자 배열) */
