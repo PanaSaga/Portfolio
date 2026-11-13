@@ -2929,12 +2929,12 @@ var CONTENT = {
     var hr = hero.getBoundingClientRect();
     hero.style.setProperty('--bn-h', Math.round(rule.getBoundingClientRect().top - hr.top) + 'px');
     /* 인물: 키 = 배너 높이의 78%, 아래는 배너 끝. 머리 오른쪽 끝(인물 폭의 77.7%)이
-       제목 첫 글자보다 170px 안쪽까지 들어와 제목과 겹친다 (인물 원본 773×833) */
+       제목 첫 글자보다 156px 안쪽까지 들어와 제목과 겹친다 (인물 원본 773×833) */
     var ps = hero.querySelector('.hero__person'), clip = hero.querySelector('.hero__bgclip'),
         ll = hero.querySelector('.hero__logline');
     if (ps && clip && ll) {
       var H = hr.height * 0.78, W = H * 773 / 833;
-      var left = (ll.getBoundingClientRect().left - clip.getBoundingClientRect().left) + 170 - W * 0.777;
+      var left = (ll.getBoundingClientRect().left - clip.getBoundingClientRect().left) + 156 - W * 0.777;
       hero.style.setProperty('--ps-h', Math.round(H) + 'px');
       hero.style.setProperty('--ps-l', Math.round(left) + 'px');
     }
