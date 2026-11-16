@@ -421,31 +421,33 @@ a.card:active{transform:scale(.995);}
 .bcard__media{position:relative;flex:1 1 auto;display:flex;flex-direction:column;min-height:110px;overflow:hidden;}
 .bcard__media .bcard__thumb{flex:1 1 auto;min-height:0;}
 .bcard__brief{position:absolute;inset:0 auto 0 0;margin:0;width:min(46%,340px);padding:var(--s20) var(--s24);display:flex;flex-direction:column;justify-content:center;gap:var(--s12);
-  background:linear-gradient(90deg,rgba(255,255,255,.95) 0,rgba(255,255,255,.88) 62%,rgba(255,255,255,0) 100%);color:var(--graphite);}
+  background:linear-gradient(90deg,rgba(255,255,255,.9) 0,rgba(255,255,255,.9) 62%,rgba(255,255,255,0) 100%);color:var(--graphite);}
 .bcard__team{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2;}
 .bcard__team-k{color:#4a30dd;}
 .bcard__team-v{color:#f88e20;}
-/* 플레이 영상 — 이미지 전체를 덮고(정보 칸 그라데이션은 위에 유지) 마우스를 올리거나(is-hover) 20초 뒤(is-auto) 나타남 */
-.bcard__play{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity .45s ease;pointer-events:none;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0,transparent calc(var(--bw,0px) - 30px),#000 calc(var(--bw,0px) + 50px));mask-image:linear-gradient(90deg,transparent 0,transparent calc(var(--bw,0px) - 30px),#000 calc(var(--bw,0px) + 50px));}   /* 정보 칸 뒤로는 영상이 비치지 않게(그라데이션이 어두워지지 않도록) */
+/* 슬라이드 0(썸네일) → 1 → 2 → 3(플레이 GIF) → 0 … 썸네일 위에 겹친 트랙이 옆으로 넘어감 */
+.bcard__play{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
 .bcard__slides{display:flex;height:100%;width:calc(var(--n) * 100%);transform:translateX(calc(var(--i,0) * -100% / var(--n)));transition:transform .6s cubic-bezier(.6,0,.2,1);}
-.bcard__slides > video{flex:0 0 calc(100% / var(--n));width:calc(100% / var(--n));height:100%;object-fit:cover;display:block;}
-.bcard__media.is-hover .bcard__play,.bcard__media.is-auto .bcard__play{opacity:1;}
-.bcard__media--brief > .bcard__thumb{transition:opacity .45s ease;}
-.bcard__media--brief.is-hover > .bcard__thumb,.bcard__media--brief.is-auto > .bcard__thumb{opacity:0;}   /* 재생 중엔 정보 칸 뒤를 흰 바탕으로 */
-.bcard__media--brief.is-hover,.bcard__media--brief.is-auto{background:#fff;}
+.bslide{position:relative;flex:0 0 calc(100% / var(--n));height:100%;overflow:hidden;background:#fff;}
+.bslide--0{background:var(--bimg) left center / auto 100% no-repeat;}
+.bslide--0 > img{position:absolute;top:0;bottom:0;left:var(--bw);width:auto;height:100%;max-width:none;transform:translateX(calc(-25% - 60px));}
+.bslide > video{position:absolute;left:0;bottom:0;width:100%;height:auto;display:block;   /* 가로 폭에 맞춤(그 이상 확대 안 함) · 아래 기준(발사대가 잘리지 않게) */
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,transparent calc(var(--bw,0px) - 30px),#000 calc(var(--bw,0px) + 50px));mask-image:linear-gradient(90deg,transparent 0,transparent calc(var(--bw,0px) - 30px),#000 calc(var(--bw,0px) + 50px));}   /* 정보 칸 뒤로는 영상이 비치지 않게 */
+/* 다음 슬라이드까지 남은 시간 게이지 — 썸네일과 제목 사이 */
+.bcard__gauge{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(108,76,245,.15);z-index:2;pointer-events:none;}
+.bcard__gauge > i{display:block;height:100%;background:var(--violet,#6c4cf5);transform-origin:left;transform:scaleX(0);}
 /* 정보 칸 오른쪽으로 이미지를 밀어 로고가 그라데이션에 가리지 않게(이미지 왼쪽 25% = 하늘 부분만 정보 칸 뒤로) */
 .bcard__media--brief{--bw:min(40%,300px);}
 .bcard__media--brief > .bcard__thumb{position:absolute;top:0;bottom:0;left:var(--bw);width:auto;height:100%;max-width:none;transform:translateX(calc(-25% - 60px));}   /* 60px 왼쪽으로 */
 .bcard__media--brief > .bcard__brief{width:calc(var(--bw) + 24px);}
 .bcard__media--brief{background:var(--bimg) left center / auto 100% no-repeat;}   /* 이미지 왼쪽 빈틈은 같은 그림의 왼쪽 하늘로 */
-@media (min-width:900px) and (max-width:1199px){.bcard__media--brief > .bcard__thumb{transform:translateX(-33%);}}   /* 카드가 좁을 땐 로고가 잘리지 않게 덜 밀기 */
+@media (min-width:900px) and (max-width:1199px){.bcard__media--brief > .bcard__thumb,.bslide--0 > img{transform:translateX(-33%);}}   /* 카드가 좁을 땐 로고가 잘리지 않게 덜 밀기 */
 /* 좁은 화면은 카드가 작아 정보 칸을 숨기고 이미지만 */
 @media (max-width:899px){
   .bcard__media--brief > .bcard__brief{display:none;}
   .bcard__media--brief{display:contents;}   /* 상자를 없애 이미지가 원래 카드 배치 그대로(크기 동일) */
   .bcard__media--brief > .bcard__thumb{position:static;width:100%;height:0;min-height:110px;transform:none;}
-  .bcard__play{display:none;}
+  .bcard__play,.bcard__gauge{display:none;}
 }
 .bcard__brief dt{font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--violet-deep);}
 .bcard__brief dd{margin:2px 0 0;font-size:14px;font-weight:600;line-height:1.45;}
@@ -2076,14 +2078,15 @@ var CONTENT = {
       var bf = it.brief, media = imgOr(it.thumb, it.title || '', 'bcard__thumb', 'bcard__thumb-ph', '대표 이미지');
       if (i === 0 && bf) {
         media = '<div class="bcard__media bcard__media--brief" style="--bimg:url(' + esc(it.thumb) + ')">' + media +
-          (hasList(it.preview) ? '<div class="bcard__play" aria-hidden="true"><div class="bcard__slides" style="--n:' + it.preview.length + '">' +
-            it.preview.map(function (v) { return '<video src="' + esc(v) + '" muted playsinline preload="none" tabindex="-1"></video>'; }).join('') + '</div></div>' : '') +
+          (hasList(it.preview) ? '<div class="bcard__play" aria-hidden="true"><div class="bcard__slides" style="--n:' + (it.preview.length + 1) + '">' +
+            '<div class="bslide bslide--0"><img src="' + esc(it.thumb) + '" alt=""></div>' +
+            it.preview.map(function (v) { return '<div class="bslide"><video src="' + esc(v) + '" muted playsinline preload="none" tabindex="-1"></video></div>'; }).join('') + '</div></div>' : '') +
           '<dl class="bcard__brief">' +
           (has(bf.team) ? '<div class="bcard__team"><span class="bcard__team-k">팀</span> <span class="bcard__team-v">' + esc(bf.team) + '</span></div>' : '') +
           (has(bf.role) ? '<div><dt>' + esc(bf.roleLabel || '역할') + '</dt><dd>' + esc(bf.role).replace(/\n/g, '<br>') + '</dd></div>' : '') +
           (has(bf.period) ? '<div><dt>제작 기간</dt><dd>' + esc(bf.period) + '</dd></div>' : '') +
           (hasList(bf.docs) ? '<div><ul>' + bf.docs.map(function (d) { return '<li>' + esc(d) + '</li>'; }).join('') + '</ul></div>' : '') +
-          '</dl></div>';
+          '</dl>' + (hasList(it.preview) ? '<span class="bcard__gauge" aria-hidden="true"><i></i></span>' : '') + '</div>';
       }
       return '<a class="bcard bcard--c' + (i + 1) + (i >= 2 ? ' bcard--sm' : '') + '" href="#post/' + esc(it.id || '') + '">' +
         media +
@@ -3035,44 +3038,49 @@ var CONTENT = {
   }
 
   /* 연출이 끝나면 애니메이션 클래스를 떼어 두 번 다시 재생되지 않게 한다 */
-  /* About 대표 프로젝트 플레이 영상: 마우스를 올리면 재생, 20초가 지나면 자동으로 재생 */
-  var bentoPlayTimer = null;
-  function bentoVideo(m) { return m && m.querySelector('.bcard__play'); }
-  function bentoOn(m) { return m.classList.contains('is-hover') || m.classList.contains('is-auto'); }
-  function bentoSync(m) {
-    var box = bentoVideo(m); if (!box) return;
-    var track = box.querySelector('.bcard__slides'), vs = track.querySelectorAll('video'), i = +(track.dataset.i || 0);
-    if (!track.dataset.bound) {   /* 한 편이 끝나면 다음 슬라이드로 넘기고 재생(마지막 다음은 1번) */
-      track.dataset.bound = '1';
-      Array.prototype.forEach.call(vs, function (v, k) {
-        v.addEventListener('ended', function () {
-          var nx = (k + 1) % vs.length;
-          track.dataset.i = nx; track.style.setProperty('--i', nx);
-          vs[nx].currentTime = 0;
-          if (bentoOn(m)) { var pr = vs[nx].play(); if (pr && pr.catch) pr.catch(function () {}); }
-        });
-      });
+  /* About 대표 프로젝트 슬라이드: 0(썸네일 20초) → 1 → 2 → 3(플레이 영상, 끝나면 다음) → 0 …
+     마우스를 올리면 썸네일을 건너뛰고 바로 1번부터. 보라색 게이지 = 다음 슬라이드까지 남은 시간 */
+  var BENTO_THUMB_MS = 20000, bentoRaf = null;
+  function bentoVids(m) { return m.querySelectorAll('.bcard__slides video'); }
+  function bentoGo(m, nx) {
+    var track = m.querySelector('.bcard__slides'), vs = bentoVids(m);
+    m._bi = nx; m._bt = performance.now();
+    track.style.setProperty('--i', nx);
+    Array.prototype.forEach.call(vs, function (v, k) {
+      if (k === nx - 1) { v.preload = 'auto'; v.currentTime = 0; var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+      else v.pause();
+      if (k === nx) v.preload = 'auto';   /* 다음 편 미리 받기 */
+    });
+  }
+  function bentoTick() {
+    var ms = document.querySelectorAll('#route-about .bcard__media--brief');
+    for (var i = 0; i < ms.length; i++) {
+      var m = ms[i], g = m.querySelector('.bcard__gauge > i'); if (!g || m._bi == null) continue;
+      var f;
+      if (m._bi === 0) { f = (performance.now() - m._bt) / BENTO_THUMB_MS; if (f >= 1) { bentoGo(m, 1); f = 0; } }
+      else { var v = bentoVids(m)[m._bi - 1]; f = v && v.duration ? v.currentTime / v.duration : 0; }
+      g.style.transform = 'scaleX(' + Math.min(1, Math.max(0, f)) + ')';
     }
-    if (bentoOn(m)) {
-      Array.prototype.forEach.call(vs, function (v) { v.preload = 'auto'; });
-      var pr = vs[i].play(); if (pr && pr.catch) pr.catch(function () {});
-    } else setTimeout(function () { if (!bentoOn(m)) Array.prototype.forEach.call(vs, function (v) { v.pause(); }); }, 450);
+    bentoRaf = requestAnimationFrame(bentoTick);
   }
   function armBentoPlay(on) {
-    clearTimeout(bentoPlayTimer);
+    cancelAnimationFrame(bentoRaf); bentoRaf = null;
     var ms = document.querySelectorAll('#route-about .bcard__media--brief');
-    for (var i = 0; i < ms.length; i++) { ms[i].classList.remove('is-auto'); bentoSync(ms[i]); }
-    if (on && ms.length) bentoPlayTimer = setTimeout(function () {
-      for (var k = 0; k < ms.length; k++) { ms[k].classList.add('is-auto'); bentoSync(ms[k]); }
-    }, 20000);
+    Array.prototype.forEach.call(ms, function (m) {
+      var vs = bentoVids(m); if (!vs.length) return;
+      if (!m._bound) {
+        m._bound = true;
+        Array.prototype.forEach.call(vs, function (v, k) {
+          v.addEventListener('ended', function () { if (m._bi === k + 1) bentoGo(m, (k + 2) % (vs.length + 1)); });
+        });
+      }
+      if (on) bentoGo(m, 0); else { m._bi = null; Array.prototype.forEach.call(vs, function (v) { v.pause(); }); }
+    });
+    if (on && ms.length) bentoRaf = requestAnimationFrame(bentoTick);
   }
   document.addEventListener('mouseover', function (e) {
     var c = e.target.closest && e.target.closest('.bcard'), m = c && c.querySelector('.bcard__media--brief');
-    if (m && bentoVideo(m) && !m.classList.contains('is-hover')) { m.classList.add('is-hover'); bentoSync(m); }
-  });
-  document.addEventListener('mouseout', function (e) {
-    var c = e.target.closest && e.target.closest('.bcard'), m = c && c.querySelector('.bcard__media--brief');
-    if (m && !(e.relatedTarget && c.contains(e.relatedTarget))) { m.classList.remove('is-hover'); bentoSync(m); }
+    if (m && m._bi === 0 && bentoVids(m).length) bentoGo(m, 1);
   });
 
   function armMosaic() {
