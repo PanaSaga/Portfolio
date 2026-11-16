@@ -426,7 +426,9 @@ a.card:active{transform:scale(.995);}
 .bcard__team-k{color:#4a30dd;}
 .bcard__team-v{color:#f88e20;}
 /* 플레이 영상 — 이미지 전체를 덮고(정보 칸 그라데이션은 위에 유지) 마우스를 올리거나(is-hover) 20초 뒤(is-auto) 나타남 */
-.bcard__play{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s ease;pointer-events:none;background:#3c5a3a;}
+.bcard__play{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity .45s ease;pointer-events:none;background:#1f3550;}
+.bcard__slides{display:flex;height:100%;width:calc(var(--n) * 100%);transform:translateX(calc(var(--i,0) * -100% / var(--n)));transition:transform .6s cubic-bezier(.6,0,.2,1);}
+.bcard__slides > video{flex:0 0 calc(100% / var(--n));width:calc(100% / var(--n));height:100%;object-fit:cover;display:block;}
 .bcard__media.is-hover .bcard__play,.bcard__media.is-auto .bcard__play{opacity:1;}
 /* 정보 칸 오른쪽으로 이미지를 밀어 로고가 그라데이션에 가리지 않게(이미지 왼쪽 25% = 하늘 부분만 정보 칸 뒤로) */
 .bcard__media--brief{--bw:min(40%,300px);}
@@ -1229,7 +1231,7 @@ var CONTENT = {
         id: 'moremustmush', title: 'More Must Mush',
         tagline: '핀볼로 버섯 군락을 부숴 수확하는 반자동 벽돌깨기 · 캐주얼 인크리멘탈',
         kind: 'game', thumb: 'assets/images/projects/mmm-thumb-v2.webp',
-        preview: 'assets/images/projects/mmm-play.mp4',   /* About 카드: 마우스를 올리거나 20초가 지나면 재생되는 플레이 영상 */
+        preview: ['assets/images/projects/mmm-play-1.mp4', 'assets/images/projects/mmm-play-2.mp4', 'assets/images/projects/mmm-play-3.mp4'],   /* About 카드: 마우스를 올리거나 20초가 지나면 1→2→3 순서로 슬라이드 재생 (Launch · Upgrade · Combos & Skills) */
         tags: ['캐주얼', '인크리멘탈', '벽돌깨기'],
         meta: [
           { label: '팀',       value: '숨쉬었음청년' },
@@ -2070,7 +2072,8 @@ var CONTENT = {
       var bf = it.brief, media = imgOr(it.thumb, it.title || '', 'bcard__thumb', 'bcard__thumb-ph', '대표 이미지');
       if (i === 0 && bf) {
         media = '<div class="bcard__media bcard__media--brief" style="--bimg:url(' + esc(it.thumb) + ')">' + media +
-          (has(it.preview) ? '<video class="bcard__play" src="' + esc(it.preview) + '" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>' : '') +
+          (hasList(it.preview) ? '<div class="bcard__play" aria-hidden="true"><div class="bcard__slides" style="--n:' + it.preview.length + '">' +
+            it.preview.map(function (v) { return '<video src="' + esc(v) + '" muted playsinline preload="none" tabindex="-1"></video>'; }).join('') + '</div></div>' : '') +
           '<dl class="bcard__brief">' +
           (has(bf.team) ? '<div class="bcard__team"><span class="bcard__team-k">팀</span> <span class="bcard__team-v">' + esc(bf.team) + '</span></div>' : '') +
           (has(bf.role) ? '<div><dt>' + esc(bf.roleLabel || '역할') + '</dt><dd>' + esc(bf.role).replace(/\n/g, '<br>') + '</dd></div>' : '') +
@@ -3031,10 +3034,25 @@ var CONTENT = {
   /* About 대표 프로젝트 플레이 영상: 마우스를 올리면 재생, 20초가 지나면 자동으로 재생 */
   var bentoPlayTimer = null;
   function bentoVideo(m) { return m && m.querySelector('.bcard__play'); }
+  function bentoOn(m) { return m.classList.contains('is-hover') || m.classList.contains('is-auto'); }
   function bentoSync(m) {
-    var v = bentoVideo(m); if (!v) return;
-    if (m.classList.contains('is-hover') || m.classList.contains('is-auto')) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
-    else setTimeout(function () { if (!m.classList.contains('is-hover') && !m.classList.contains('is-auto')) v.pause(); }, 450);
+    var box = bentoVideo(m); if (!box) return;
+    var track = box.querySelector('.bcard__slides'), vs = track.querySelectorAll('video'), i = +(track.dataset.i || 0);
+    if (!track.dataset.bound) {   /* 한 편이 끝나면 다음 슬라이드로 넘기고 재생(마지막 다음은 1번) */
+      track.dataset.bound = '1';
+      Array.prototype.forEach.call(vs, function (v, k) {
+        v.addEventListener('ended', function () {
+          var nx = (k + 1) % vs.length;
+          track.dataset.i = nx; track.style.setProperty('--i', nx);
+          vs[nx].currentTime = 0;
+          if (bentoOn(m)) { var pr = vs[nx].play(); if (pr && pr.catch) pr.catch(function () {}); }
+        });
+      });
+    }
+    if (bentoOn(m)) {
+      Array.prototype.forEach.call(vs, function (v) { v.preload = 'auto'; });
+      var pr = vs[i].play(); if (pr && pr.catch) pr.catch(function () {});
+    } else setTimeout(function () { if (!bentoOn(m)) Array.prototype.forEach.call(vs, function (v) { v.pause(); }); }, 450);
   }
   function armBentoPlay(on) {
     clearTimeout(bentoPlayTimer);
