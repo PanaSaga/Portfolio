@@ -270,7 +270,7 @@ a.card:active{transform:scale(.995);}
 /* 폰트는 화면 폭에 따라 계속 줄어들도록 vw 항을 크게(약 1240px 이하부터 작아짐) */
 .hero__logline{--ll-fs:clamp(26px,5.1vw,64px);font-size:var(--ll-fs);transition:font-size .25s ease;line-height:1.12;letter-spacing:-.03em;font-weight:700;
   color:var(--graphite);width:fit-content;max-width:100%;margin-inline:auto;}
-.hero__logline .zl{display:block;height:calc(var(--ll-fs) * 1.12);}   /* 줄 높이 고정 — 마우스를 올려 글자가 커져도 칸 높이가 그대로라 배너 이미지·인물 위치/크기가 흔들리지 않음 */
+.hero__logline .zl{display:block;}
 .hero__logline .ll-v{color:#4a30dd;}
 .hero__logline .ll-o{color:#f88e20;}
 /* [[기획자]] · [[박지수]] — 제목에 마우스를 올리면 6pt 커지고(옆 글자는 밀려남) #f31d5d */
@@ -533,6 +533,9 @@ a.card:active{transform:scale(.995);}
 .topblock.hero--banner{background:var(--canvas);}
 .hero__bgclip{position:absolute;top:0;bottom:0;left:0;right:0;overflow:hidden;z-index:0;pointer-events:none;}   /* 화면 폭 전체 — 좌우 여백 없음 */
 .hero__bgimg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-repeat:no-repeat;}
+/* 데스크톱: 배너 이미지 칸 높이를 평소 칸 높이(+여유 60px)로 고정(--bg-h, JS) —
+   '기획자·박지수'에 마우스를 올려 제목이 커지며 칸이 늘어나도 이미지 위치·크기는 그대로 */
+@media (min-width:900px){.hero__bgimg{bottom:auto;height:var(--bg-h,100%);}}
 .hero__person{position:absolute;bottom:0;z-index:0;display:block;height:var(--ps-h,72%);width:auto;left:var(--ps-l,0);}
 .topblock.hero .hero__anchor{z-index:1;}   /* 모자이크는 배경 위 */
 /* 모바일: 배너는 제목·연락처 부분(가로줄 위)에만 — 인물도 그 칸 바닥에 맞춰 작게 (크기·위치는 JS) */
@@ -2969,7 +2972,7 @@ var CONTENT = {
     var hidden = !sec.classList.contains('is-active'), old = sec.getAttribute('style');
     if (hidden) { sec.removeAttribute('hidden'); sec.style.cssText = 'display:block;position:absolute;left:0;right:0;top:0;visibility:hidden;'; }
     staggerLogline();
-    var clip = sec.querySelector('.hero__bgclip'), g = null;
+    var clip = sec.querySelector('.hero__bgimg'), g = null;   /* 실제 배너 이미지 칸 기준 */
     if (clip) {
       var sr = sec.getBoundingClientRect(), cr = clip.getBoundingClientRect();
       g = { top: cr.top - sr.top, w: cr.width, h: cr.height, vw: window.innerWidth };
@@ -3021,6 +3024,9 @@ var CONTENT = {
       hero.style.setProperty('--sin-x', mobile ? '0px' : Math.round(sinX) + 'px');
     }
     hero.style.setProperty('--bn-h', Math.round(rule.getBoundingClientRect().top - hr.top) + 'px');
+    /* 배너 이미지 고정 높이 — 마우스를 올리지 않은 평소 상태에서만 잰다 */
+    var llh = hero.querySelector('.hero__logline');
+    if (!(llh && llh.matches(':hover'))) hero.style.setProperty('--bg-h', Math.round(hr.height + 60) + 'px');
     /* 인물: 키 = 배너 높이의 78%, 아래는 배너 끝 (인물 원본 1150×1238).
        데스크톱: 인물 오른쪽 끝을 '신' 선보다 60px 더 왼쪽으로, 단 화면 왼쪽 끝에서 잘리지 않게(최소 0) */
     var ps = hero.querySelector('.hero__person'), clip = hero.querySelector('.hero__bgclip'),
