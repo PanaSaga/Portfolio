@@ -444,7 +444,7 @@ a.card:active{transform:scale(.995);}
 /* 정보 칸 오른쪽으로 이미지를 밀어 로고가 그라데이션에 가리지 않게(이미지 왼쪽 25% = 하늘 부분만 정보 칸 뒤로) */
 .bcard__media--brief{--bw:min(40%,300px);}
 .bcard__media--brief > .bcard__thumb{position:absolute;top:0;bottom:0;left:var(--bw);width:auto;height:100%;max-width:none;transform:translateX(calc(-25% - 60px));}   /* 60px 왼쪽으로 */
-.bcard__media--brief > .bcard__brief{width:calc(var(--bw) + 24px);}
+.bcard__media--brief > .bcard__brief{width:calc(var(--bw) + 24px);padding-left:36px;}   /* 왼쪽 여백 1.5배(24→36) */
 .bcard__media--brief{background:var(--bimg) left center / auto 100% no-repeat;}   /* 이미지 왼쪽 빈틈은 같은 그림의 왼쪽 하늘로 */
 @media (min-width:900px) and (max-width:1199px){.bcard__media--brief > .bcard__thumb,.bslide--0 > img{transform:translateX(-33%);}}   /* 카드가 좁을 땐 로고가 잘리지 않게 덜 밀기 */
 /* 좁은 화면은 카드가 작아 정보 칸을 숨기고 이미지만 */
