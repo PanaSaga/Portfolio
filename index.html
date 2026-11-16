@@ -316,7 +316,7 @@ a.card:active{transform:scale(.995);}
 /* 화면 크기와 상관없이 항상 라우트 우상단에 고정 (글자와 겹쳐도 됨) */
 .hero__anchor{position:absolute;top:0;left:0;right:0;height:0;z-index:0;}
 .hero__anchor .wrap{position:relative;height:0;padding:0;}
-.mosaic{position:absolute;top:0;right:var(--sa-r);z-index:0;--tile:30px;}   /* 페이지 틀(최대 1200px) 오른쪽 끝에 딱 붙임 — 모든 페이지 공통 */
+.mosaic{position:absolute;top:0;right:var(--sa-r);z-index:0;--tile:28px;}   /* 칸 30→28px(약 0.93배, 연락처 줄 높이에서 끝남) · 페이지 틀(최대 1200px) 오른쪽 끝에 딱 붙임 — 모든 페이지 공통 */
 /* About 이외의 페이지도 About 과 같은 10줄 (본문보다 뒤에 깔려 가려지는 순서는 그대로) */
 .route > .hero__anchor .mrow:nth-child(n+11){display:none;}
 /* 자기소개 탭: 모자이크가 아래 본문 띠에 가려 잘리지 않고 위에 겹쳐 보이게 */
@@ -330,8 +330,8 @@ a.card:active{transform:scale(.995);}
 /* 배너 뒤 바탕을 본문 띠와 같은 연한 베이지(--surface)로 깔아, 배너가 흐려지며 그대로 이어지게(턱 없음) */
 .route-body--intro{background:var(--surface);}
 .route-body--intro > .band--surface{background:transparent;}
-@media (max-width:899px){.mosaic{--tile:clamp(13px,3.4vw,22px);}}
-@media (max-width:559px){.mosaic{--tile:11px;opacity:.9;}}
+@media (max-width:899px){.mosaic{--tile:clamp(12px,3.2vw,20.5px);}}
+@media (max-width:559px){.mosaic{--tile:10.3px;opacity:.9;}}
 
 /* Work style — 3열, 헤어라인만으로 구분 */
 /* I Walk & My Work style — 2열 × 3행 (썸네일 + 이름 / 주황 한 줄) */
