@@ -422,6 +422,21 @@ a.card:active{transform:scale(.995);}
 .bcard__media .bcard__thumb{flex:1 1 auto;min-height:0;}
 .bcard__brief{position:absolute;inset:0 auto 0 0;margin:0;width:min(46%,340px);padding:var(--s20) var(--s24);display:flex;flex-direction:column;justify-content:center;gap:var(--s12);
   background:linear-gradient(90deg,rgba(255,255,255,.95) 0,rgba(255,255,255,.88) 62%,rgba(255,255,255,0) 100%);color:var(--graphite);}
+.bcard__team{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2;}
+.bcard__team-k{color:#4a30dd;}
+.bcard__team-v{color:#f88e20;}
+/* 정보 칸 오른쪽으로 이미지를 밀어 로고가 그라데이션에 가리지 않게(이미지 왼쪽 25% = 하늘 부분만 정보 칸 뒤로) */
+.bcard__media--brief{--bw:min(40%,300px);}
+.bcard__media--brief > .bcard__thumb{position:absolute;top:0;bottom:0;left:var(--bw);width:auto;height:100%;max-width:none;transform:translateX(-25%);}
+.bcard__media--brief > .bcard__brief{width:calc(var(--bw) + 24px);}
+.bcard__media--brief{background:var(--bimg) left center / auto 100% no-repeat;}   /* 이미지 왼쪽 빈틈은 같은 그림의 왼쪽 하늘로 */
+@media (min-width:900px) and (max-width:1199px){.bcard__media--brief > .bcard__thumb{transform:translateX(-33%);}}   /* 카드가 좁을 땐 로고가 잘리지 않게 덜 밀기 */
+/* 좁은 화면은 카드가 작아 정보 칸을 숨기고 이미지만 */
+@media (max-width:899px){
+  .bcard__media--brief > .bcard__brief{display:none;}
+  .bcard__media--brief{display:contents;}   /* 상자를 없애 이미지가 원래 카드 배치 그대로(크기 동일) */
+  .bcard__media--brief > .bcard__thumb{position:static;width:100%;height:0;min-height:110px;transform:none;}
+}
 .bcard__brief dt{font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--violet-deep);}
 .bcard__brief dd{margin:2px 0 0;font-size:14px;font-weight:600;line-height:1.45;}
 .bcard__brief ul{margin:0;padding-left:1.1em;list-style:disc;font-size:13px;font-weight:600;line-height:1.7;}
@@ -1219,7 +1234,7 @@ var CONTENT = {
           { label: '링크',     value: 'https://minsung0421.itch.io/moremustmush' }
         ],
         /* 대표 프로젝트(About) 큰 카드 이미지 왼쪽에 흰 그라데이션과 함께 표시 */
-        brief: { role: 'PD · 컨셉기획 · 모바일 출시 계획 · 모바일 UI', period: '2026.09 ~ 2026.11',
+        brief: { team: '숨쉬었음청년', role: 'PD\n컨셉기획\n모바일 출시 계획\n모바일 UI', period: '2026.09 ~ 2026.11',
                  docs: ['컨셉 기획서', '모바일 출시 기획서', '프로젝트 히스토리'] },
         embed: 'https://itch.io/embed-upload/20046927?color=f7f5f2',   // itch.io 웹빌드 — 상세에서 바로 실행
         plans: [
@@ -2048,8 +2063,9 @@ var CONTENT = {
       var kind = has(it.kind) ? (KIND_LABEL[it.kind] || String(it.kind).toUpperCase()) : '';
       var bf = it.brief, media = imgOr(it.thumb, it.title || '', 'bcard__thumb', 'bcard__thumb-ph', '대표 이미지');
       if (i === 0 && bf) {
-        media = '<div class="bcard__media">' + media + '<dl class="bcard__brief">' +
-          (has(bf.role) ? '<div><dt>역할</dt><dd>' + esc(bf.role) + '</dd></div>' : '') +
+        media = '<div class="bcard__media bcard__media--brief" style="--bimg:url(' + esc(it.thumb) + ')">' + media + '<dl class="bcard__brief">' +
+          (has(bf.team) ? '<div class="bcard__team"><span class="bcard__team-k">팀</span> <span class="bcard__team-v">' + esc(bf.team) + '</span></div>' : '') +
+          (has(bf.role) ? '<div><dt>역할</dt><dd>' + esc(bf.role).replace(/\n/g, '<br>') + '</dd></div>' : '') +
           (has(bf.period) ? '<div><dt>제작 기간</dt><dd>' + esc(bf.period) + '</dd></div>' : '') +
           (hasList(bf.docs) ? '<div><ul>' + bf.docs.map(function (d) { return '<li>' + esc(d) + '</li>'; }).join('') + '</ul></div>' : '') +
           '</dl></div>';
