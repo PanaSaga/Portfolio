@@ -731,19 +731,32 @@ mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;bo
 
 /* 납작한 프로젝트 카드 — 왼쪽 대표 이미지, 오른쪽 제목/설명 */
 .plist{display:grid;gap:var(--s12);}
-.pcard{display:grid;grid-template-columns:118px minmax(0,1fr);gap:var(--s16);align-items:center;
+.pcard{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1fr) minmax(0,1.15fr);gap:var(--s16) var(--s20);align-items:center;
   background:var(--surface);border:1px solid var(--ash);border-radius:var(--r-card);padding:var(--s12);
   transition:box-shadow .18s ease,border-color .18s ease;}
 .pcard:hover{border-color:transparent;box-shadow:var(--sh-card);}
 .pcard--sample{border-color:var(--ash);}
-.pcard__thumb{aspect-ratio:4/3;width:100%;border-radius:8px;object-fit:cover;background:var(--frost);}
-.pcard__thumb-ph{aspect-ratio:4/3;width:100%;border-radius:8px;background:var(--frost);display:grid;place-items:center;color:var(--steel);font-size:11px;}
-.pcard__head{display:flex;align-items:center;gap:6px;min-width:0;}
-.pcard__t{display:block;min-width:0;font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;line-height:1.35;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.pcard__d{margin-top:5px;color:var(--slate);font-size:var(--text-body-sm);line-height:1.55;}
-.pcard__kind{display:inline-flex;flex:0 0 auto;font-size:10px;font-weight:700;letter-spacing:.04em;
-  color:var(--violet-deep);background:var(--accent-soft);border-radius:4px;padding:2px 6px;}
+.pcard__media{align-self:stretch;position:relative;display:block;min-height:96px;}   /* 카드 높이만큼 커짐 */
+.pcard__thumb,.pcard__thumb-ph{position:absolute;inset:0;width:100%;height:100%;border-radius:8px;object-fit:cover;background:var(--frost);}
+.pcard__thumb-ph{display:grid;place-items:center;color:var(--steel);font-size:11px;}
+.pcard__info,.pcard__side{display:flex;flex-direction:column;gap:4px;min-width:0;}
+.pcard__t{font-size:18px;font-weight:700;letter-spacing:-.02em;line-height:1.3;}
+.pcard__date{font-size:12px;font-weight:600;color:var(--violet-deep);}
+.pcard__team{font-size:14px;font-weight:700;margin-top:2px;}
+.pcard__team-k{color:#f88e20;}
+.pcard__team-v{color:#4a30dd;}
+.pcard__role{font-size:13px;font-weight:700;color:var(--violet-deep);line-height:1.45;}
+.pcard__d{color:var(--slate);font-size:var(--text-body-sm);line-height:1.55;}
+/* 경력 칸과 아래 끝을 맞춤 — 카드가 남는 높이를 똑같이 나눠 가짐 */
+@media (min-width:900px){
+  .pcol{display:flex;flex-direction:column;min-width:0;}
+  .pcol > .plist:not(.is-collapsed){flex:1 1 auto;grid-auto-rows:1fr;}
+}
+@media (max-width:719px){
+  .pcard{grid-template-columns:120px minmax(0,1fr);}
+  .pcard__side{grid-column:1 / -1;}
+  .pcard__media{height:88px;}
+}
 .plist.is-collapsed .pcard:nth-child(n+5){display:none;}
 .plist-more{margin-top:var(--s12);width:100%;display:flex;align-items:center;justify-content:center;gap:6px;
   min-height:44px;border:1px solid var(--ash);border-radius:var(--r-btn);background:var(--surface);
@@ -751,9 +764,6 @@ mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;bo
 .plist-more:hover{border-color:var(--violet);color:var(--violet);}
 .plist-more__c{transition:transform .2s ease;}
 .plist-more[aria-expanded="true"] .plist-more__c{transform:rotate(180deg);}
-@supports not (aspect-ratio: 1 / 1){
-  .pcard__thumb,.pcard__thumb-ph{height:0;padding-bottom:75%;}
-}
 
 /* 포트폴리오 스티커 — 카드 위에 얹히는 장식 */
 .stickwrap{position:relative;}
@@ -1185,7 +1195,7 @@ var CONTENT = {
             tag: '6개월 · 교육', desc: '게임 기획자 양성 부트캠프', posts: [] },
           { image: '', org: '젠가 게임즈', start: '2026.03', end: '2026.05',
             tag: '2개월 · 외주', desc: '게임 비주얼 컨셉 제작 및 그래픽 리소스 제작', posts: [] },
-          { image: 'assets/images/games/g004.jpg', org: '㈜ 액션핏', start: '2023.08', end: '2026.02',
+          { image: 'assets/images/career/actionfit.jpg', org: '㈜ 액션핏', start: '2023.08', end: '2026.02',
             tag: '근무 2년 · 외주 5개월', desc: '아트 기획, 비주얼 컨셉, UI, 캐릭터, 광고 영상 제작 등 그래픽 관련 업무 전반 (대표작: 블럭냥!, 편의점 정리왕, 빠지냥 / 그 외 머지냥카페, 스크류 캣 등)', posts: [] },
           { image: 'assets/images/career/bridge-games.jpg', org: '브릿지 게임즈', start: '2021.06', end: '2022.03',
             tag: '근무 8개월 · 외주 2개월', desc: '캐릭터 · 배경 일러스트, SD 캐릭터 스파인', posts: [] }
@@ -1201,13 +1211,13 @@ var CONTENT = {
     skills: [
       { icons: [ 'assets/icons/skills/photoshop.svg' ], name: 'Adobe Photoshop', level: 5,
         note: '일러스트 · 편집 · 보정 · 리소스 제작 편집\n액션 제작으로 대량 리소스 보정 및 내보내기 반자동화' },
-      { icons: [ 'assets/icons/skills/claude.svg', 'assets/icons/skills/codex.svg' ], name: 'Claude · Codex',
+      { icons: [ 'assets/icons/skills/claude.svg', 'assets/icons/skills/codex.svg' ], name: 'Claude · Codex', level: 3,
         note: 'AI를 통한 이미지 생성 편집\n데이터 정리 및 검증\n웹 프로토타입 제작 및 바이브 코딩' },
       { icons: [ 'assets/icons/skills/ms-office.svg', 'assets/icons/skills/figma.svg', 'assets/icons/skills/google-docs.svg', 'assets/icons/skills/google-sheets.svg' ], name: 'MS Office · Figma · Google Docs · Sheets', level: 3,
         note: '기본 기능 숙지\n문서 작성 및 템플릿화\n레이아웃 디자인\n그 외 필요한 기능을 직접 찾아 적용 가능' },
       { icons: [ 'assets/icons/skills/spine.svg' ], name: 'Spine2D', level: 3,
         note: '기본 기능 사용\n응용 및 제작 가능' },
-      { icons: [ 'assets/icons/skills/unity.svg' ], name: 'Unity',
+      { icons: [ 'assets/icons/skills/unity.svg' ], name: 'Unity', level: 1,
         note: '프로그램 기본 기능 숙지\nAI와 바이브 코딩 협업으로 게임 제작 경험' },
       { icons: [ 'assets/icons/skills/after-effects.svg', 'assets/icons/skills/illustrator.svg' ], name: 'Adobe After Effects · Illustrator', level: 0,
         note: '기본 기능 사용\n필요한 기능을 찾아 적용 가능' }
@@ -2197,12 +2207,19 @@ var CONTENT = {
     var rest = items.length - PLIST_VISIBLE;
     var cards = items.map(function (it) {
       var kind = has(it.kind) ? (KIND_LABEL[it.kind] || String(it.kind).toUpperCase()) : '';
+      var bf = it.brief || {};
+      var role = has(bf.role) ? String(bf.role).split('\n').join(' · ') : '';
       return '<a class="pcard' + (it.sample ? ' pcard--sample' : '') + '" href="#post/' + esc(it.id || '') + '">' +
-        '<span>' + imgOr(it.thumb, it.title || '', 'pcard__thumb', 'pcard__thumb-ph', '대표 이미지') + '</span>' +
-        '<span>' +
-          '<span class="pcard__head">' + (kind ? '<span class="pcard__kind">' + esc(kind) + '</span>' : '') +
-            '<span class="pcard__t">' + txt(it.title, '게시물 제목') + '</span></span>' +
-          '<span class="pcard__d" style="display:block">' + txt(it.tagline, '설명') + '</span></span>' +
+        '<span class="pcard__media">' + imgOr(it.thumb, it.title || '', 'pcard__thumb', 'pcard__thumb-ph', '대표 이미지') + '</span>' +
+        '<span class="pcard__info">' +
+          '<span class="pcard__t">' + txt(it.title, '게시물 제목') + '</span>' +
+          '<span class="pcard__date">' + txt(bf.period, '0000.00 ~ 0000.00') + '</span>' +
+          '<span class="pcard__team"><span class="pcard__team-k">팀</span> <span class="pcard__team-v">' + txt(bf.team, '팀명') + '</span></span>' +
+        '</span>' +
+        '<span class="pcard__side">' +
+          '<span class="pcard__role">' + txt(role, '역할') + '</span>' +
+          '<span class="pcard__d">' + txt(it.tagline, '게임 설명') + '</span>' +
+        '</span>' +
         '</a>';
     }).join('');
 
@@ -2244,7 +2261,7 @@ var CONTENT = {
     /* 프로젝트 3/5(왼쪽) · 경력 2/5(오른쪽) */
     h.push('<div class="band"><div class="wrap"><div class="split split--32">');
 
-    h.push('<div>' + colHead('project', '01 · Projects', '프로젝트', 'projects') +
+    h.push('<div class="pcol">' + colHead('project', '01 · Projects', '프로젝트', 'projects') +
       projectList((CONTENT.portfolio || {}).main) + '</div>');
 
     h.push('<div>' + colHead('office', '02 · Career', '경력', 'career') +
