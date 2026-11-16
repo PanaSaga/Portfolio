@@ -426,10 +426,14 @@ a.card:active{transform:scale(.995);}
 .bcard__team-k{color:#4a30dd;}
 .bcard__team-v{color:#f88e20;}
 /* 플레이 영상 — 이미지 전체를 덮고(정보 칸 그라데이션은 위에 유지) 마우스를 올리거나(is-hover) 20초 뒤(is-auto) 나타남 */
-.bcard__play{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity .45s ease;pointer-events:none;background:#1f3550;}
+.bcard__play{position:absolute;inset:0;overflow:hidden;opacity:0;transition:opacity .45s ease;pointer-events:none;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,transparent calc(var(--bw,0px) - 30px),#000 calc(var(--bw,0px) + 50px));mask-image:linear-gradient(90deg,transparent 0,transparent calc(var(--bw,0px) - 30px),#000 calc(var(--bw,0px) + 50px));}   /* 정보 칸 뒤로는 영상이 비치지 않게(그라데이션이 어두워지지 않도록) */
 .bcard__slides{display:flex;height:100%;width:calc(var(--n) * 100%);transform:translateX(calc(var(--i,0) * -100% / var(--n)));transition:transform .6s cubic-bezier(.6,0,.2,1);}
 .bcard__slides > video{flex:0 0 calc(100% / var(--n));width:calc(100% / var(--n));height:100%;object-fit:cover;display:block;}
 .bcard__media.is-hover .bcard__play,.bcard__media.is-auto .bcard__play{opacity:1;}
+.bcard__media--brief > .bcard__thumb{transition:opacity .45s ease;}
+.bcard__media--brief.is-hover > .bcard__thumb,.bcard__media--brief.is-auto > .bcard__thumb{opacity:0;}   /* 재생 중엔 정보 칸 뒤를 흰 바탕으로 */
+.bcard__media--brief.is-hover,.bcard__media--brief.is-auto{background:#fff;}
 /* 정보 칸 오른쪽으로 이미지를 밀어 로고가 그라데이션에 가리지 않게(이미지 왼쪽 25% = 하늘 부분만 정보 칸 뒤로) */
 .bcard__media--brief{--bw:min(40%,300px);}
 .bcard__media--brief > .bcard__thumb{position:absolute;top:0;bottom:0;left:var(--bw);width:auto;height:100%;max-width:none;transform:translateX(calc(-25% - 60px));}   /* 60px 왼쪽으로 */
