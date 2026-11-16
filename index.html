@@ -432,6 +432,11 @@ a.card:active{transform:scale(.995);}
 .bslide--0{background:var(--bimg) left center / auto 100% no-repeat;}
 .bslide--0 > img{position:absolute;top:0;bottom:0;left:var(--bw);width:auto;height:100%;max-width:none;transform:translateX(calc(-25% - 60px));}
 .bslide > video{position:absolute;top:8px;right:8px;width:calc(85.5% - 8px);height:calc(100% - 16px);object-fit:cover;max-width:none;display:block;border-radius:10px;}   /* 위·아래·오른쪽 8px, 왼쪽 14.5%까지 키움 · 정보 칸 그라데이션(90%) 뒤로 살짝 비침 */
+/* 슬라이드 뒤 바탕은 베이지로 꽉 채움 — 가장자리 틈으로 0번 배너(하늘색)가 비치지 않게 */
+@media (min-width:900px){
+  .bcard__media--brief:has(.bcard__play){background:#faeed6;}
+  .bcard__media--brief:has(.bcard__play) > .bcard__thumb{visibility:hidden;}
+}
 /* 다음 슬라이드까지 남은 시간 게이지 — 썸네일과 제목 사이 */
 .bcard__gauge{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(108,76,245,.15);z-index:2;pointer-events:none;}
 .bcard__gauge > i{display:block;height:100%;background:var(--violet,#6c4cf5);transform-origin:left;transform:scaleX(0);}
