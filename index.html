@@ -1200,7 +1200,7 @@ var CONTENT = {
     /* 선호 장르 겹그래프(10각형, 별 모양) — 축: RPG·액션·어드벤처·전략·수집형·추리·협동·턴제 + 샌드박스·비주얼노벨.
        큰 축과 작은 축을 번갈아 배치. 두 다각형 모두 같은 눈금: 길이 = 5 × √(게임 수 ÷ 축 중 플레이한 게임 최댓값).
        base = 플레이한 게임(보라, 아래) / value = ★ 게임(주황, 위). ★ 게임은 플레이한 게임의 일부라 주황은 항상 보라 안.
-       n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 497개 기준) */
+       n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 498개 기준) */
     axes: [
       { label: "RPG", value: 2.08, base: 5.00, n: 25, total: 144 },
       { label: "샌드박스", value: 1.02, base: 1.61, n: 6, total: 15 },
@@ -1210,14 +1210,14 @@ var CONTENT = {
       { label: "턴제", value: 1.18, base: 1.77, n: 8, total: 18 },
       { label: "전략", value: 1.50, base: 3.68, n: 13, total: 78 },
       { label: "협동", value: 1.32, base: 2.04, n: 10, total: 24 },
-      { label: "수집형", value: 1.50, base: 3.63, n: 13, total: 76 },
+      { label: "수집형", value: 1.50, base: 3.66, n: 13, total: 77 },
       { label: "추리", value: 1.38, base: 2.00, n: 11, total: 23 }
     ],
 
     /* 플랫폼 분포 — 도넛 그래프 (value = %, 합 100). note 에 실제 게임 수 */
     platforms: [
       { label: "PC", value: 35, note: "PC 180개" },
-      { label: "모바일", value: 35, note: "모바일 182개" },
+      { label: "모바일", value: 35, note: "모바일 183개" },
       { label: "PC·모바일", value: 7, note: "PC·모바일 겸용 39개" },
       { label: "콘솔", value: 8, note: "콘솔 게임 44개" },
       { label: "보드게임", value: 8, note: "보드게임 42개" },
@@ -1227,9 +1227,9 @@ var CONTENT = {
     ],
 
     /* 총 개수 — 왼쪽 총합(큰 숫자) + 오른쪽 온라인/오프라인(제목 · 설명 · 숫자), 육각형 아래에 표시 */
-    total: { title: '총합', value: '497', star: '79' },   // star = ★ 게임 수(주황) / value = 전체(보라)
+    total: { title: '총합', value: '498', star: '79' },   // star = ★ 게임 수(주황) / value = 전체(보라)
     counts: [
-      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '439' },
+      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '440' },
       { title: '오프라인 게임', desc: 'TRPG · 보드게임 등', value: '58' }
     ],
 
@@ -1263,6 +1263,7 @@ var CONTENT = {
       {"title":"무기미도","image":"assets/images/games/add-path-to-nowhere.jpg","platforms":["모바일"],"date":"2022-10","genres":["전략","수집형","RPG"]},
       {"title":"페르소나 5 더 로열","image":"assets/images/games/g487.jpg","platforms":["PC","콘솔"],"date":"2022-10","genres":["RPG","턴제"]},
       {"title":"아웃 오브 핸즈","image":"assets/images/games/g488.jpg","platforms":["PC"],"date":"2025-04","genres":["카드","전략","호러"],"star":true},
+      {"title":"치이카와 포켓","image":"assets/images/games/add-chiikawa-pocket.jpg","platforms":["모바일"],"date":"2025-03","genres":["캐주얼","시뮬레이션","수집형"]},
       {"title":"길잃은 고양이의 영혼의 여정","image":"assets/images/games/g489.jpg","platforms":["PC"],"date":"2025-03","genres":["캐주얼","어드벤처"]},
       {"title":"던그리드","image":"assets/images/games/g490.jpg","platforms":["PC"],"date":"2018-02","genres":["액션","로그라이크","플랫포머"]},
       {"title":"스컬","image":"assets/images/games/g491.jpg","platforms":["PC","콘솔"],"date":"2021-01","genres":["액션","로그라이크","플랫포머"]},
