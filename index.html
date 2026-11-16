@@ -260,7 +260,7 @@ a.card:active{transform:scale(.995);}
   padding:var(--s40) 0;
 }
 @media (min-width:900px){.topblock{min-height:var(--top-h);padding:var(--s48) 0;}}
-.topblock__bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0;}
+.topblock__bg{position:absolute;inset:0;background-size:cover;background-position:center;background-repeat:no-repeat;z-index:0;}
 .topblock__bg::after{content:"";position:absolute;inset:0;background:rgba(243,240,236,0);}   /* 배너가 이미 옅어 막 없음 */
 .topblock > .wrap,.topblock .hero__inner{position:relative;z-index:2;width:100%;}
 
@@ -2934,7 +2934,11 @@ var CONTENT = {
 
     /* 히어로 Z자 정렬 — 컨테이너가 보인 뒤(위 is-active 토글 이후) 측정해야 한다.
        레이아웃/웹폰트 로드 타이밍 때문에 첫 로드에서 안 걸리던 문제를 방지: rAF·폰트 로드 후 재계산 */
-    if (state.route === 'resume') { sizeIntroBg(); window.requestAnimationFrame(sizeIntroBg); }
+    if (state.route === 'resume') {
+      sizeIntroBg(); matchResumeBanner();
+      window.requestAnimationFrame(function () { sizeIntroBg(); aboutGeom = null; matchResumeBanner(); });
+    }
+    if (state.route === 'about') aboutGeom = null;
     if (state.route === 'about') {
       staggerLogline();
       window.requestAnimationFrame(staggerLogline);
@@ -2952,6 +2956,46 @@ var CONTENT = {
     if (!el || mosaicPlayed) return;
     mosaicPlayed = true;
     setTimeout(function () { el.classList.remove('mosaic--in'); }, 1900);
+  }
+
+  /* Resume(이력서 프로필·자기소개 상단) 배너를 About 배너와 '같은 위치·크기'로 맞춘다.
+     About 배너 칸(라우트 맨 위부터, 화면 폭 × 칸 높이)에 cover 로 놓인 이미지를 그대로 재현하고,
+     Resume 쪽 칸은 그 이미지의 해당 부분만 잘라 보여 준다. 배너 원본 크기 1764×891 */
+  var BANNER_W = 1764, BANNER_H = 891, aboutGeom = null;
+  function measureAboutBanner() {
+    var sec = document.getElementById('route-about');
+    if (!sec) return null;
+    if (!sec.querySelector('.hero__bgclip')) { sec.innerHTML = renderAbout(); rendered.about = 'about/'; }
+    var hidden = !sec.classList.contains('is-active'), old = sec.getAttribute('style');
+    if (hidden) { sec.removeAttribute('hidden'); sec.style.cssText = 'display:block;position:absolute;left:0;right:0;top:0;visibility:hidden;'; }
+    staggerLogline();
+    var clip = sec.querySelector('.hero__bgclip'), g = null;
+    if (clip) {
+      var sr = sec.getBoundingClientRect(), cr = clip.getBoundingClientRect();
+      g = { top: cr.top - sr.top, w: cr.width, h: cr.height, vw: window.innerWidth };
+    }
+    if (hidden) { if (old === null) sec.removeAttribute('style'); else sec.setAttribute('style', old); sec.setAttribute('hidden', ''); }
+    return g;
+  }
+  function matchResumeBanner() {
+    var sec = document.getElementById('route-resume');
+    if (!sec || !sec.classList.contains('is-active')) return;
+    var els = sec.querySelectorAll('.topblock__bg, .intro-bg');
+    if (!els.length) return;
+    /* 모바일은 About 배너가 제목 칸(약 200px)뿐이라 그대로 맞추면 Resume 칸이 대부분 비게 되어, 각 칸에 꽉 채우는 방식 유지 */
+    if (window.innerWidth < 900) {
+      for (var j = 0; j < els.length; j++) { els[j].style.backgroundSize = ''; els[j].style.backgroundPosition = ''; }
+      return;
+    }
+    if (!aboutGeom || aboutGeom.vw !== window.innerWidth) aboutGeom = measureAboutBanner();
+    if (!aboutGeom) return;
+    var sc = Math.max(aboutGeom.w / BANNER_W, aboutGeom.h / BANNER_H), iw = BANNER_W * sc, ih = BANNER_H * sc;
+    var sTop = sec.getBoundingClientRect().top;
+    for (var i = 0; i < els.length; i++) {
+      var r = els[i].getBoundingClientRect(), dy = r.top - sTop - aboutGeom.top;
+      els[i].style.backgroundSize = Math.round(iw) + 'px ' + Math.round(ih) + 'px';
+      els[i].style.backgroundPosition = Math.round((aboutGeom.w - iw) / 2 - r.left) + 'px ' + Math.round((aboutGeom.h - ih) / 2 - dy) + 'px';
+    }
   }
 
   /* 자기소개 탭 배너 높이 = 라우트 맨 위 ~ 로그라인 칸 아래 가로줄 */
@@ -3056,7 +3100,7 @@ var CONTENT = {
     window.addEventListener('hashchange', function () { onRoute(true); }, false);
     window.addEventListener('resize', function () {
       if (parseHash().route === 'about') staggerLogline();
-      if (parseHash().route === 'resume') sizeIntroBg();
+      if (parseHash().route === 'resume') { sizeIntroBg(); aboutGeom = null; matchResumeBanner(); }
     }, false);
     customCursor();
   }
