@@ -2104,9 +2104,9 @@ var CONTENT = {
   }
 
   function renderResume(sub) {
-    /* 프로필·인적사항은 두 탭 모두에서 그대로 유지된다.
+    /* 프로필(배너)·인적사항은 이력서 탭에만 — 자기소개 탭은 탭 바로 아래 로그라인부터.
        코너 모자이크는 About 과 같은 위치(라우트 최상단 우측)에 붙는다. */
-    var h = [mosaicAnchor(false), '<div class="route-body">', resumeTabs(sub), profileBlock()];
+    var h = [mosaicAnchor(false), '<div class="route-body">', resumeTabs(sub), sub === 'intro' ? '' : profileBlock()];
     if (sub === 'intro') { h.push(renderIntro(), '</div>'); return h.join(''); }
 
     var r = CONTENT.resume || {};
