@@ -1295,26 +1295,26 @@ var CONTENT = {
     /* 선호 장르 겹그래프(10각형, 별 모양) — 축: RPG·액션·어드벤처·전략·수집형·추리·협동·턴제 + 샌드박스·비주얼노벨.
        큰 축과 작은 축을 번갈아 배치. 두 다각형 모두 같은 눈금: 길이 = 5 × √(게임 수 ÷ 축 중 플레이한 게임 최댓값).
        base = 플레이한 게임(보라, 아래) / value = ★ 게임(주황, 위). ★ 게임은 플레이한 게임의 일부라 주황은 항상 보라 안.
-       n = ★ 게임 수, total = 플레이한 게임 수 (★ 79개 · 전체 498개 기준) */
+       n = ★ 게임 수, total = 플레이한 게임 수 (★ 80개 · 전체 500개 기준) */
     axes: [
       { label: "RPG", value: 2.08, base: 5.00, n: 25, total: 144 },
       { label: "샌드박스", value: 1.02, base: 1.61, n: 6, total: 15 },
       { label: "액션", value: 1.95, base: 4.49, n: 22, total: 116 },
       { label: "비주얼노벨", value: 0.83, base: 1.61, n: 4, total: 15 },
-      { label: "어드벤처", value: 1.82, base: 4.02, n: 19, total: 93 },
+      { label: "어드벤처", value: 1.86, base: 4.06, n: 20, total: 95 },
       { label: "턴제", value: 1.18, base: 1.77, n: 8, total: 18 },
       { label: "전략", value: 1.50, base: 3.68, n: 13, total: 78 },
       { label: "협동", value: 1.32, base: 2.04, n: 10, total: 24 },
       { label: "수집형", value: 1.50, base: 3.66, n: 13, total: 77 },
-      { label: "추리", value: 1.38, base: 2.00, n: 11, total: 23 }
+      { label: "추리", value: 1.44, base: 2.04, n: 12, total: 24 }
     ],
 
     /* 플랫폼 분포 — 도넛 그래프 (value = %, 합 100). note 에 실제 게임 수 */
     platforms: [
-      { label: "PC", value: 35, note: "PC 180개" },
-      { label: "모바일", value: 35, note: "모바일 183개" },
+      { label: "PC", value: 34, note: "PC 181개" },
+      { label: "모바일", value: 35, note: "모바일 184개" },
       { label: "PC·모바일", value: 7, note: "PC·모바일 겸용 39개" },
-      { label: "콘솔", value: 8, note: "콘솔 게임 44개" },
+      { label: "콘솔", value: 9, note: "콘솔 게임 45개" },
       { label: "보드게임", value: 8, note: "보드게임 42개" },
       { label: "TRPG", value: 3, note: "TRPG 게임 16개" },
       { label: "아케이드", value: 2, note: "아케이드 게임 11개" },
@@ -1322,9 +1322,9 @@ var CONTENT = {
     ],
 
     /* 총 개수 — 왼쪽 총합(큰 숫자) + 오른쪽 온라인/오프라인(제목 · 설명 · 숫자), 육각형 아래에 표시 */
-    total: { title: '총합', value: '498', star: '79' },   // star = ★ 게임 수(주황) / value = 전체(보라)
+    total: { title: '총합', value: '500', star: '80' },   // star = ★ 게임 수(주황) / value = 전체(보라)
     counts: [
-      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '440' },
+      { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 · VR 등', value: '442' },
       { title: '오프라인 게임', desc: 'TRPG · 보드게임 등', value: '58' }
     ],
 
@@ -1333,6 +1333,8 @@ var CONTENT = {
        date  : 출시일(불명/미확인은 생략), 카드에 '플랫폼 | 출시일' 로 표시
        play  : 플레이타임(기록 없음·30시간 미만은 생략)                          */
     games: [
+      {"title":"Patch me if you can","image":"assets/images/games/add-patchme.jpg","platforms":["PC"],"date":"2025-07","genres":["퍼즐","어드벤처","캐주얼"]},
+      {"title":"레이튼 교수와 이상한 마을","image":"assets/images/games/add-layton1.jpg","platforms":["콘솔","모바일"],"date":"2007-02","genres":["퍼즐","어드벤처","추리"],"star":true},
       {"title":"어쌔신 크리드 3","image":"assets/images/games/g465.jpg","platforms":["PC","콘솔"],"date":"2012-10","genres":["액션","어드벤처","오픈월드"]},
       {"title":"Brawlhalla","image":"assets/images/games/g466.jpg","platforms":["PC","콘솔","모바일"],"date":"2017-10","genres":["액션","파티게임"]},
       {"title":"Astrea: Six-Sided Oracles","image":"assets/images/games/g467.jpg","platforms":["PC","콘솔"],"date":"2023-09","genres":["덱빌딩","로그라이크"]},
