@@ -515,10 +515,10 @@ a.card:active{transform:scale(.995);}
 .topblock.hero{display:block;min-height:0;padding:var(--s24) 0 var(--s8);}           /* 하단 여백 1/2 (32+16 → 8+16) */
 @media (min-width:900px){.topblock.hero{min-height:0;padding:76px 0 var(--s8);}}
 /* About 배너 — 배경 이미지(about.banner) + 인물 컷(about.bannerPerson, 투명 PNG/WebP).
-   배경은 페이지 틀(최대 1200px, 가운데) 폭으로 잘라 꽉 채움(cover) — 오른쪽 끝 = 픽셀 모자이크 끝.
+   배경은 화면 폭 전체를 꽉 채움(cover, 좌우 여백 없음).
    인물은 아래가 배너 끝에 딱 닿고, 머리 오른쪽이 제목 첫 글자에 겹칠 듯 말 듯(JS 가 위치·크기 계산) */
 .topblock.hero--banner{background:var(--canvas);}
-.hero__bgclip{position:absolute;top:0;bottom:0;left:0;right:0;margin:0 auto;max-width:var(--page-max);overflow:hidden;z-index:0;pointer-events:none;}
+.hero__bgclip{position:absolute;top:0;bottom:0;left:0;right:0;overflow:hidden;z-index:0;pointer-events:none;}   /* 화면 폭 전체 — 좌우 여백 없음 */
 .hero__bgimg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-repeat:no-repeat;}
 .hero__person{position:absolute;bottom:0;z-index:0;display:block;height:var(--ps-h,72%);width:auto;left:var(--ps-l,0);}
 .topblock.hero .hero__anchor{z-index:1;}   /* 모자이크는 배경 위 */
@@ -1056,7 +1056,7 @@ var CONTENT = {
        제목에 마우스를 올리면 [[…]] 가 6pt 커지며 #f31d5d 로 바뀐다 */
     logline: '**의도를 디자인**하는 [[기획자]]\n__신작 발사대__ [[박지수]] 입니다.',   // **보라** · __주황__ · [[강조·Resume 링크]]
     intro: '',            // (선택) 히어로 보조 문단. 비우면 표시 안 함
-    banner: 'assets/images/about/banner-bg-v4.webp',     // 제목 ~ Work style 덩어리 배경 (권장 2:1, 예 2400×1212)
+    banner: 'assets/images/about/banner-bg-v5.webp',     // 제목 ~ Work style 덩어리 배경 (권장 2:1, 예 2400×1212)
     bannerPerson: 'assets/images/about/person-v2.webp',  // 배경 위 인물(투명 배경). 아래가 배너 끝에 닿고 제목 왼쪽에 겹칠 듯 말 듯
 
     /* 대표 프로젝트(벤토 4칸)에 띄울 게시물 id — 메인·기획서·아트 어디서든 고를 수 있음.
