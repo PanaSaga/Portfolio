@@ -413,10 +413,19 @@ a.card:active{transform:scale(.995);}
   transition:box-shadow .18s ease,border-color .18s ease,transform .12s ease;}
 .bcard:hover{border-color:transparent;box-shadow:var(--sh-card);}
 .bcard:active{transform:scale(.995);}
-.bcard__thumb{flex:1 1 auto;min-height:110px;object-fit:cover;width:100%;background:var(--frost);}
+.bcard__thumb{flex:1 1 auto;height:0;min-height:110px;object-fit:cover;width:100%;background:var(--frost);}   /* height:0 — 이미지 원본 크기가 칸 높이를 늘리지 않게(자리표시와 같은 크기) */
 .bcard__thumb-ph{flex:1 1 auto;min-height:110px;background:var(--frost);display:grid;place-items:center;
   color:var(--slate);font-size:var(--text-caption);}
 .bcard__b{padding:var(--s16);}
+/* 대표 이미지 왼쪽 흰 그라데이션 + 정보(brief) */
+.bcard__media{position:relative;flex:1 1 auto;display:flex;flex-direction:column;min-height:110px;overflow:hidden;}
+.bcard__media .bcard__thumb{flex:1 1 auto;min-height:0;}
+.bcard__brief{position:absolute;inset:0 auto 0 0;margin:0;width:min(46%,340px);padding:var(--s20) var(--s24);display:flex;flex-direction:column;justify-content:center;gap:var(--s12);
+  background:linear-gradient(90deg,rgba(255,255,255,.95) 0,rgba(255,255,255,.88) 62%,rgba(255,255,255,0) 100%);color:var(--graphite);}
+.bcard__brief dt{font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--violet-deep);}
+.bcard__brief dd{margin:2px 0 0;font-size:14px;font-weight:600;line-height:1.45;}
+.bcard__brief ul{margin:0;padding-left:1.1em;list-style:disc;font-size:13px;font-weight:600;line-height:1.7;}
+@media (max-width:559px){.bcard__brief{width:62%;padding:var(--s12);gap:6px;} .bcard__brief dd,.bcard__brief ul{font-size:12px;} .bcard__brief dt{font-size:11px;}}
 .bcard__head{display:flex;align-items:center;gap:6px;min-width:0;}
 .bcard__kind{display:inline-flex;flex:0 0 auto;font-size:10px;font-weight:700;letter-spacing:.04em;
   color:var(--violet-deep);background:var(--accent-soft);border-radius:4px;padding:2px 6px;}
@@ -427,7 +436,8 @@ a.card:active{transform:scale(.995);}
   /* 대(1) 왼쪽 2/3 · 세로 전체 / 중(2) 오른쪽 위 1/3폭 / 소(3·4) 그 아래 1/2씩 */
   .bento{grid-template-columns:2fr 0.5fr 0.5fr;grid-template-rows:3fr 2fr;grid-auto-rows:1fr;}
   .bcard--c1{grid-column:1;grid-row:1 / 3;}
-  .bcard--c1 .bcard__thumb,.bcard--c1 .bcard__thumb-ph{flex:0 0 76%;min-height:0;}
+  .bcard--c1 .bcard__thumb,.bcard--c1 .bcard__thumb-ph,.bcard--c1 .bcard__media{flex:0 0 76%;min-height:0;}
+  .bcard--c1 .bcard__media .bcard__thumb{flex:1 1 auto;}
   .bcard--c1 .bcard__b{flex:1 1 auto;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;}
   .bcard--c2{grid-column:2 / 4;grid-row:1;}
   .bcard--c3{grid-column:2;grid-row:2;}
@@ -714,7 +724,7 @@ mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;bo
 .stickwrap{position:relative;}
 .stick{position:absolute;z-index:3;pointer-events:none;
   filter:drop-shadow(0 6px 12px rgba(39,40,53,.14));}
-.stick--chess{width:41px;left:-18px;top:36%;transform:rotate(-8deg);}
+.stick--chess{width:41px;left:-18px;top:12%;transform:rotate(-8deg);}   /* 카드 이미지 쪽 — 글자를 가리지 않게 */
 .stick--dice{width:46px;left:24%;top:-26px;transform:rotate(6deg);}
 .stick--sword{width:43px;left:63%;top:34%;transform:rotate(4deg);}
 .stick--pad{width:49px;left:calc(50% + 73px);bottom:-16px;transform:rotate(-6deg);}
@@ -736,6 +746,10 @@ mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;bo
 
 /* 웹빌드 · 사이트 재생 플레이어 */
 .webplay{margin-top:var(--s40);}
+/* 데스크톱: 웹빌드·기획서는 본문 열(840px)을 넘어 페이지 틀(최대 1200px, 모자이크 끝)까지 넓게 */
+@media (min-width:900px){
+  .detail-col .webplay,.detail-col .planner{width:min(var(--page-max),100vw - 40px);margin-left:calc((100% - min(var(--page-max),100vw - 40px)) / 2);}
+}
 .webplay__frame{margin-top:var(--s16);border-radius:var(--r-card);overflow:hidden;background:var(--frost);
   aspect-ratio:16/9;width:100%;}
 .webplay__frame iframe{width:100%;height:100%;border:0;display:block;}
@@ -763,7 +777,7 @@ mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;bo
 .planner__list::-webkit-scrollbar-track{background:transparent;}
 .planner__list::-webkit-scrollbar-thumb{background:var(--mist);border-radius:3px;}
 .ppage{display:block;width:100%;text-align:left;background:transparent;border:0;padding:0;cursor:pointer;}
-.ppage__img{aspect-ratio:297/210;width:100%;border-radius:8px;object-fit:cover;
+.ppage__img{aspect-ratio:16/9;width:100%;border-radius:8px;object-fit:cover;
   background:var(--frost);border:2px solid transparent;
   transition:box-shadow .16s ease,border-color .16s ease;display:grid;place-items:center;
   color:var(--slate);font-size:11px;overflow:hidden;}
@@ -772,17 +786,15 @@ img.ppage__img{display:block;}
 .ppage.is-on .ppage__img{border-color:var(--violet);}
 .ppage__n{margin-top:5px;font-size:var(--text-caption);color:var(--slate);text-align:center;}
 .planner__view{position:relative;background:var(--frost);border-radius:var(--r-card);overflow:hidden;}
-/* 세로 스크롤로 페이지를 넘긴다 — 한 화면에 한 쪽 + 다음 쪽 살짝 */
-.planner__scroll{height:min(72vh,620px);overflow-y:auto;-webkit-overflow-scrolling:touch;
+/* 세로 스크롤로 페이지를 넘긴다 — 보이는 칸 = 슬라이드 한 쪽(16:9) 크기 그대로, 위아래 여백 없음 */
+.planner__scroll{aspect-ratio:16/9;overflow-y:auto;-webkit-overflow-scrolling:touch;
   scroll-snap-type:y mandatory;scrollbar-width:none;padding:0;}
 .planner__scroll::-webkit-scrollbar{display:none;}
-.pv-page{scroll-snap-align:start;width:100%;aspect-ratio:297/210;background:#fff;
+.pv-page{scroll-snap-align:start;width:100%;aspect-ratio:16/9;background:#fff;
   display:flex;align-items:center;justify-content:center;color:var(--slate);}
-.pv-page + .pv-page{margin-top:var(--s12);}
+.pv-page + .pv-page{margin-top:0;}
 .pv-page img{width:100%;height:100%;object-fit:contain;display:block;}
-/* 아래에 다음 쪽이 있음을 알리는 그라데이션 */
-.planner__view::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;pointer-events:none;
-  background:linear-gradient(to top,var(--frost),transparent);border-radius:0 0 var(--r-card) var(--r-card);}
+
 .planner__empty{color:var(--slate);opacity:.72;font-weight:500;text-align:center;line-height:1.7;padding:var(--s24);}
 
 /* 상세 */
@@ -1201,11 +1213,14 @@ var CONTENT = {
         tags: ['캐주얼', '인크리멘탈', '벽돌깨기'],
         meta: [
           { label: '팀',       value: '숨쉬었음청년' },
-          { label: '역할',     value: 'PD · 컨셉 기획' },
+          { label: '역할',     value: 'PD · 컨셉기획 · 모바일 출시 계획 · 모바일 UI' },
           { label: '제작 기간', value: '2026.09 ~ 2026.11' },
           { label: '플랫폼',   value: 'PC (itch.io · Steam) · 모바일 출시 기획' },
           { label: '링크',     value: 'https://minsung0421.itch.io/moremustmush' }
         ],
+        /* 대표 프로젝트(About) 큰 카드 이미지 왼쪽에 흰 그라데이션과 함께 표시 */
+        brief: { role: 'PD · 컨셉기획 · 모바일 출시 계획 · 모바일 UI', period: '2026.09 ~ 2026.11',
+                 docs: ['컨셉 기획서', '모바일 출시 기획서', '프로젝트 히스토리'] },
         embed: 'https://itch.io/embed-upload/20046927?color=f7f5f2',   // itch.io 웹빌드 — 상세에서 바로 실행
         plans: [
           { title: '컨셉기획서',      pdf: 'assets/docs/mmm/MoreMustMush_컨셉기획서.pdf',      pages: [{ img: 'assets/docs/mmm/concept-01.webp' }, { img: 'assets/docs/mmm/concept-02.webp' }, { img: 'assets/docs/mmm/concept-03.webp' }, { img: 'assets/docs/mmm/concept-04.webp' }, { img: 'assets/docs/mmm/concept-05.webp' }, { img: 'assets/docs/mmm/concept-06.webp' }, { img: 'assets/docs/mmm/concept-07.webp' }, { img: 'assets/docs/mmm/concept-08.webp' }, { img: 'assets/docs/mmm/concept-09.webp' }, { img: 'assets/docs/mmm/concept-10.webp' }, { img: 'assets/docs/mmm/concept-11.webp' }, { img: 'assets/docs/mmm/concept-12.webp' }, { img: 'assets/docs/mmm/concept-13.webp' }, { img: 'assets/docs/mmm/concept-14.webp' }, { img: 'assets/docs/mmm/concept-15.webp' }, { img: 'assets/docs/mmm/concept-16.webp' }, { img: 'assets/docs/mmm/concept-17.webp' }, { img: 'assets/docs/mmm/concept-18.webp' }, { img: 'assets/docs/mmm/concept-19.webp' }, { img: 'assets/docs/mmm/concept-20.webp' }, { img: 'assets/docs/mmm/concept-21.webp' }, { img: 'assets/docs/mmm/concept-22.webp' }] },
@@ -2031,8 +2046,16 @@ var CONTENT = {
     if (!hasList(list)) return phBlock('대표 프로젝트에 표시할 게시물', 'CONTENT.portfolio.main');
     function bcard(it, i) {
       var kind = has(it.kind) ? (KIND_LABEL[it.kind] || String(it.kind).toUpperCase()) : '';
+      var bf = it.brief, media = imgOr(it.thumb, it.title || '', 'bcard__thumb', 'bcard__thumb-ph', '대표 이미지');
+      if (i === 0 && bf) {
+        media = '<div class="bcard__media">' + media + '<dl class="bcard__brief">' +
+          (has(bf.role) ? '<div><dt>역할</dt><dd>' + esc(bf.role) + '</dd></div>' : '') +
+          (has(bf.period) ? '<div><dt>제작 기간</dt><dd>' + esc(bf.period) + '</dd></div>' : '') +
+          (hasList(bf.docs) ? '<div><ul>' + bf.docs.map(function (d) { return '<li>' + esc(d) + '</li>'; }).join('') + '</ul></div>' : '') +
+          '</dl></div>';
+      }
       return '<a class="bcard bcard--c' + (i + 1) + (i >= 2 ? ' bcard--sm' : '') + '" href="#post/' + esc(it.id || '') + '">' +
-        imgOr(it.thumb, it.title || '', 'bcard__thumb', 'bcard__thumb-ph', '대표 이미지') +
+        media +
         '<span class="bcard__b">' +
           '<span class="bcard__head">' + (kind ? '<span class="bcard__kind">' + esc(kind) + '</span>' : '') +
             '<span class="bcard__t">' + txt(it.title, '게시물 제목') + '</span></span>' +
