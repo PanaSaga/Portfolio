@@ -637,18 +637,17 @@ a.card:active{transform:scale(.995);}
 .titem__tag{color:var(--slate);font-weight:500;}
 .titem__desc{margin-top:var(--s8);color:var(--slate);font-size:var(--text-body-sm);line-height:1.65;}
 .titem__links{margin-top:var(--s12);}
-.titem__name{margin-top:-.28em;}   /* 제목 글자 윗선을 이미지 윗선에 맞춤(경력·대외활동 공통) */
 /* 경력: 회사 이름은 크게, 경력 설명은 작게 (대외활동은 그대로) */
-.titem--lg .titem__name{font-size:18px;font-weight:700;}
+.titem--lg .titem__name{font-size:16px;font-weight:700;}
 .titem--lg .titem__date{font-size:var(--text-body-sm);}
 .titem--lg .titem__desc{font-size:var(--text-body-sm);}
 .titem__list{margin:4px 0 0;padding-left:1.1em;list-style:disc;}
-/* 경력: 로고 96px(제목~설명 높이에 맞춤) · 본문 사이 간격은 일정(항목 아래 18px) */
+/* 경력: 로고 104px(제목~설명보다 위아래로 살짝 크게) · 본문 사이 간격은 일정(항목 아래 18px) */
 .titems--career .titem{padding-bottom:18px;}
 .titems--career .titem:last-child{padding-bottom:0;}
-.titems--career .titem{grid-template-columns:96px minmax(0,1fr);}
-.titems--career .titem__img,.titems--career .titem__img-ph{width:96px;height:96px;}
-.titems--career .titem:not(:last-child)::before{left:47px;top:104px;}
+.titems--career .titem{grid-template-columns:104px minmax(0,1fr);}
+.titems--career .titem__img,.titems--career .titem__img-ph{width:104px;height:104px;}
+.titems--career .titem:not(:last-child)::before{left:51px;top:112px;}
 @media (max-width:479px){
   .titem{grid-template-columns:88px minmax(0,1fr);}
   .titem__img,.titem__img-ph{width:88px;height:88px;}
