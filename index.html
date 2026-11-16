@@ -341,7 +341,7 @@ a.card:active{transform:scale(.995);}
 @media (min-width:820px){.ws__col + .ws__col{padding-left:var(--s32);border-left:1px solid var(--ash);}}
 @media (max-width:819px){.ws__col + .ws__col{border-top:1px solid var(--frost);}}
 .ws__row{display:flex;align-items:flex-start;gap:var(--s12);}
-.ws__role{color:#4a30dd;font-weight:700;}
+.ws__role{color:#f31d5d;font-weight:700;}   /* 아트 기획 전담 = 빨강 */
 /* 설명이 있는 행: [게임 제목 | 설명 1] / [역할 | 설명 2] 2×2 */
 .ws__txt--grid{display:grid;grid-template-columns:minmax(140px,auto) minmax(0,1fr);column-gap:var(--s12);row-gap:2px;align-items:baseline;}
 .ws__txt--grid .ws__sub{margin-top:0;}
@@ -525,8 +525,8 @@ a.card:active{transform:scale(.995);}
 .sec-head--tight{margin-bottom:var(--s16);}
 /* About 상단 — 제목 · 연락처 · Work style 을 한 덩어리로 오밀조밀하게.
    덩어리 전체에 배경 이미지 한 장(about.banner)을 깔 수 있다 */
-.topblock.hero{display:block;min-height:0;padding:var(--s24) 0 var(--s8);}           /* 하단 여백 1/2 (32+16 → 8+16) */
-@media (min-width:900px){.topblock.hero{min-height:0;padding:76px 0 var(--s8);}}
+.topblock.hero{display:block;min-height:0;padding:var(--s24) 0 13px;}   /* 목록 ↔ 배너 끝 1.2배(24→29) */           /* 하단 여백 1/2 (32+16 → 8+16) */
+@media (min-width:900px){.topblock.hero{min-height:0;padding:76px 0 13px;}}
 /* About 배너 — 배경 이미지(about.banner) + 인물 컷(about.bannerPerson, 투명 PNG/WebP).
    배경은 화면 폭 전체를 꽉 채움(cover, 좌우 여백 없음).
    인물은 아래가 배너 끝에 딱 닿고, 머리 오른쪽이 제목 첫 글자에 겹칠 듯 말 듯(JS 가 위치·크기 계산) */
@@ -541,7 +541,7 @@ a.card:active{transform:scale(.995);}
 }
 /* 제목 ↔ Work style 사이 가로줄, Work style 은 오른쪽 끝으로 */
 .hero__rule{margin-top:var(--s32);margin-left:auto;max-width:720px;border-top:1px solid var(--ash);}   /* I Walk 블록 시작점부터 */
-.hero__ws{max-width:720px;margin:var(--s16) 0 0 auto;text-align:left;}
+.hero__ws{max-width:720px;margin:19px 0 0 auto;text-align:left;}   /* 가로줄 ↔ I Walk 간격 1.2배(16→19) */
 /* 데스크톱: 연락처·가로줄·Work style 을 둘째 줄 '신' 글자 선(--sin-x, JS)에 왼쪽 정렬 */
 @media (min-width:900px){
   .hero__contact{justify-content:flex-start;margin-left:var(--sin-x,0px);}
@@ -549,7 +549,7 @@ a.card:active{transform:scale(.995);}
 }
 .hero__ws .sec-head--tight{margin-bottom:0;}
 /* 제목(두 줄)과 소개 2줄 — 소개는 제목 오른쪽에 붙는다 (좁은 화면은 제목 아래) */
-.ws-head{display:flex;flex-direction:column;gap:var(--s8);margin-bottom:var(--s20);}  /* 아래 프로젝트와 간격 2배 (8+4 → 20+4) */
+.ws-head{display:flex;flex-direction:column;gap:var(--s8);margin-bottom:25px;}   /* 제목 ↔ 목록 간격 1.2배(24→29) */  /* 아래 프로젝트와 간격 2배 (8+4 → 20+4) */
 .ws-head .sec-title{line-height:1.15;}
 .ws-intro{margin:0;color:var(--slate);font-size:16px;font-weight:500;line-height:1.6;container-type:inline-size;}
 /* 두 줄이 한 줄씩 다 들어갈 폭일 때만 줄을 나누고, 좁아서 접히면 엔터 없이 이어서 흐른다 */
@@ -1090,9 +1090,9 @@ var CONTENT = {
     workStyleIntro: '독창성과 익숙함의 결합, 경험에서 오는 빠른 아이디어 도출로\n아트부터 개발까지 시작을 열고 결과를 디자인하는 기획자입니다.',
     /* role = 이름 뒤에 붙는 보라 역할 / sub = 아래 색 한 줄 / desc = sub 오른쪽에 붙는 회색 설명(여러 줄) */
     workStyle: [
-      { thumb: 'assets/images/about/blocknyang.jpg', title: '블럭냥!',       role: '아트 기획 전담', sub: '[[100만+]] 다운로드' },
-      { thumb: 'assets/images/games/g391.jpg', title: '편의점 정리왕', role: '아트 기획 전담', sub: '[[100만+]] 다운로드' },
-      { thumb: 'assets/images/games/g004.jpg', title: '빠지냥!',       role: '아트 기획 전담', sub: '[[100만+]] 다운로드' },
+      { thumb: 'assets/images/about/blocknyang.jpg', title: '블럭냥!',       role: '아트 기획 전담', sub: '**100만+** 다운로드' },
+      { thumb: 'assets/images/games/g391.jpg', title: '편의점 정리왕', role: '아트 기획 전담', sub: '**100만+** 다운로드' },
+      { thumb: 'assets/images/games/g004.jpg', title: '빠지냥!',       role: '아트 기획 전담', sub: '**100만+** 다운로드' },
       { thumb: '', title: 'Check Matter',     desc: ['체스 + 실시간 턴제', '캐주얼 아케이드 퍼즐'],       sub: '**PD** [[컨셉 기획]]' },
       { thumb: '', title: 'High Num',         desc: ['빠른 템포와 직관적인 진행', '합/곱연산 + 로그라이트'], sub: '**PD** [[컨셉 기획]]' },
       { thumb: '', title: 'More Must Mush!',  desc: ['벽돌깨기 + 반자동 시스템', '캐주얼 인크리멘탈'],   sub: '**PD** [[컨셉 기획]]' }
