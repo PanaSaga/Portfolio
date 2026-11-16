@@ -329,7 +329,9 @@ a.card:active{transform:scale(.995);}
   -webkit-mask-image:linear-gradient(to bottom,#000 0,#000 45%,transparent 100%);mask-image:linear-gradient(to bottom,#000 0,#000 45%,transparent 100%);}
 .route-body--intro > .wrap,.route-body--intro > .band{position:relative;z-index:1;}
 /* 로그라인 칸까지는 띠 배경을 투명하게(배너가 비치게), 그 아래부터 원래 띠 색 */
-.route-body--intro > .band--surface{background:linear-gradient(to bottom,transparent 0,transparent var(--ib-band,0px),var(--surface) var(--ib-band,0px));}
+/* 배너 뒤 바탕을 본문 띠와 같은 연한 베이지(--surface)로 깔아, 배너가 흐려지며 그대로 이어지게(턱 없음) */
+.route-body--intro{background:var(--surface);}
+.route-body--intro > .band--surface{background:transparent;}
 @media (max-width:899px){.mosaic{--tile:clamp(13px,3.4vw,22px);}}
 @media (max-width:559px){.mosaic{--tile:11px;opacity:.9;}}
 
