@@ -425,6 +425,9 @@ a.card:active{transform:scale(.995);}
 .bcard__team{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2;}
 .bcard__team-k{color:#4a30dd;}
 .bcard__team-v{color:#f88e20;}
+/* 플레이 영상 — 이미지 전체를 덮고(정보 칸 그라데이션은 위에 유지) 마우스를 올리거나(is-hover) 20초 뒤(is-auto) 나타남 */
+.bcard__play{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s ease;pointer-events:none;background:#3c5a3a;}
+.bcard__media.is-hover .bcard__play,.bcard__media.is-auto .bcard__play{opacity:1;}
 /* 정보 칸 오른쪽으로 이미지를 밀어 로고가 그라데이션에 가리지 않게(이미지 왼쪽 25% = 하늘 부분만 정보 칸 뒤로) */
 .bcard__media--brief{--bw:min(40%,300px);}
 .bcard__media--brief > .bcard__thumb{position:absolute;top:0;bottom:0;left:var(--bw);width:auto;height:100%;max-width:none;transform:translateX(calc(-25% - 60px));}   /* 60px 왼쪽으로 */
@@ -436,6 +439,7 @@ a.card:active{transform:scale(.995);}
   .bcard__media--brief > .bcard__brief{display:none;}
   .bcard__media--brief{display:contents;}   /* 상자를 없애 이미지가 원래 카드 배치 그대로(크기 동일) */
   .bcard__media--brief > .bcard__thumb{position:static;width:100%;height:0;min-height:110px;transform:none;}
+  .bcard__play{display:none;}
 }
 .bcard__brief dt{font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--violet-deep);}
 .bcard__brief dd{margin:2px 0 0;font-size:14px;font-weight:600;line-height:1.45;}
@@ -1225,6 +1229,7 @@ var CONTENT = {
         id: 'moremustmush', title: 'More Must Mush',
         tagline: '핀볼로 버섯 군락을 부숴 수확하는 반자동 벽돌깨기 · 캐주얼 인크리멘탈',
         kind: 'game', thumb: 'assets/images/projects/mmm-thumb-v2.webp',
+        preview: 'assets/images/projects/mmm-play.mp4',   /* About 카드: 마우스를 올리거나 20초가 지나면 재생되는 플레이 영상 */
         tags: ['캐주얼', '인크리멘탈', '벽돌깨기'],
         meta: [
           { label: '팀',       value: '숨쉬었음청년' },
@@ -2064,7 +2069,9 @@ var CONTENT = {
       var kind = has(it.kind) ? (KIND_LABEL[it.kind] || String(it.kind).toUpperCase()) : '';
       var bf = it.brief, media = imgOr(it.thumb, it.title || '', 'bcard__thumb', 'bcard__thumb-ph', '대표 이미지');
       if (i === 0 && bf) {
-        media = '<div class="bcard__media bcard__media--brief" style="--bimg:url(' + esc(it.thumb) + ')">' + media + '<dl class="bcard__brief">' +
+        media = '<div class="bcard__media bcard__media--brief" style="--bimg:url(' + esc(it.thumb) + ')">' + media +
+          (has(it.preview) ? '<video class="bcard__play" src="' + esc(it.preview) + '" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>' : '') +
+          '<dl class="bcard__brief">' +
           (has(bf.team) ? '<div class="bcard__team"><span class="bcard__team-k">팀</span> <span class="bcard__team-v">' + esc(bf.team) + '</span></div>' : '') +
           (has(bf.role) ? '<div><dt>' + esc(bf.roleLabel || '역할') + '</dt><dd>' + esc(bf.role).replace(/\n/g, '<br>') + '</dd></div>' : '') +
           (has(bf.period) ? '<div><dt>제작 기간</dt><dd>' + esc(bf.period) + '</dd></div>' : '') +
@@ -2993,6 +3000,8 @@ var CONTENT = {
       if (on) sections[i].removeAttribute('hidden'); else sections[i].setAttribute('hidden', '');
     }
 
+    armBentoPlay(state.route === 'about');
+
     var navActive = state.route === 'post' ? 'portfolio' : state.route;
     var links = document.querySelectorAll('.navlink');
     for (var j = 0; j < links.length; j++) {
@@ -3019,6 +3028,31 @@ var CONTENT = {
   }
 
   /* 연출이 끝나면 애니메이션 클래스를 떼어 두 번 다시 재생되지 않게 한다 */
+  /* About 대표 프로젝트 플레이 영상: 마우스를 올리면 재생, 20초가 지나면 자동으로 재생 */
+  var bentoPlayTimer = null;
+  function bentoVideo(m) { return m && m.querySelector('.bcard__play'); }
+  function bentoSync(m) {
+    var v = bentoVideo(m); if (!v) return;
+    if (m.classList.contains('is-hover') || m.classList.contains('is-auto')) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+    else setTimeout(function () { if (!m.classList.contains('is-hover') && !m.classList.contains('is-auto')) v.pause(); }, 450);
+  }
+  function armBentoPlay(on) {
+    clearTimeout(bentoPlayTimer);
+    var ms = document.querySelectorAll('#route-about .bcard__media--brief');
+    for (var i = 0; i < ms.length; i++) { ms[i].classList.remove('is-auto'); bentoSync(ms[i]); }
+    if (on && ms.length) bentoPlayTimer = setTimeout(function () {
+      for (var k = 0; k < ms.length; k++) { ms[k].classList.add('is-auto'); bentoSync(ms[k]); }
+    }, 20000);
+  }
+  document.addEventListener('mouseover', function (e) {
+    var c = e.target.closest && e.target.closest('.bcard'), m = c && c.querySelector('.bcard__media--brief');
+    if (m && bentoVideo(m) && !m.classList.contains('is-hover')) { m.classList.add('is-hover'); bentoSync(m); }
+  });
+  document.addEventListener('mouseout', function (e) {
+    var c = e.target.closest && e.target.closest('.bcard'), m = c && c.querySelector('.bcard__media--brief');
+    if (m && !(e.relatedTarget && c.contains(e.relatedTarget))) { m.classList.remove('is-hover'); bentoSync(m); }
+  });
+
   function armMosaic() {
     var el = document.querySelector('.mosaic--in');
     if (!el || mosaicPlayed) return;
