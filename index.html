@@ -274,7 +274,9 @@ a.card:active{transform:scale(.995);}
 .hero__logline .ll-v{color:#4a30dd;}
 .hero__logline .ll-o{color:#f88e20;}
 /* [[기획자]] · [[박지수]] — 제목에 마우스를 올리면 6pt 커지고(옆 글자는 밀려남) #f31d5d */
-.hero__logline .ll-k{color:inherit;text-decoration:none;font-size:1em;transition:font-size .25s ease,color .25s ease;}
+.hero__logline .ll-k{position:relative;color:inherit;text-decoration:none;font-size:1em;transition:font-size .25s ease,color .25s ease;}
+/* 알림 뱃지 — '기획자' 오른쪽 위 (Resume 자기소개 탭의 점과 같은 색) */
+.hero__logline .ll-dot{position:absolute;top:.04em;right:-.2em;width:max(8px,.17em);height:max(8px,.17em);border-radius:50%;background:#f31d5d;pointer-events:none;}
 .hero__logline:hover .ll-k,.hero__logline:active .ll-k{font-size:calc(var(--ll-fs) + 6pt);color:#f31d5d;}
 /* 모바일: 기획자·박지수가 커지는 만큼 나머지 글자를 줄여 줄이 바뀌지 않게 (줄이는 비율은 JS 가 --ll-shrink 로 계산) */
 @media (max-width:899px){
@@ -317,6 +319,8 @@ a.card:active{transform:scale(.995);}
 .mosaic{position:absolute;top:0;right:var(--sa-r);z-index:0;--tile:30px;}   /* 페이지 틀(최대 1200px) 오른쪽 끝에 딱 붙임 — 모든 페이지 공통 */
 /* About 이외의 페이지는 조밀한 코너 부분만 */
 .route > .hero__anchor .mrow:nth-child(n+8){display:none;}
+/* 자기소개 탭: 모자이크가 아래 본문 띠에 가려 잘리지 않고 위에 겹쳐 보이게 */
+.route > .hero__anchor--top{z-index:2;}
 @media (max-width:899px){.mosaic{--tile:clamp(13px,3.4vw,22px);}}
 @media (max-width:559px){.mosaic{--tile:11px;opacity:.9;}}
 
@@ -624,6 +628,8 @@ a.card:active{transform:scale(.995);}
 .intro-toc{position:-webkit-sticky;position:sticky;top:calc(var(--nav-h) + 24px);align-self:start;
   max-height:calc(100vh - var(--nav-h) - 48px);overflow-y:auto;-webkit-overflow-scrolling:touch;}
 @media (max-width:899px){.intro-toc{position:static;order:-1;}}
+/* 데스크톱: 목차 시작선을 왼쪽 첫 문항(주황 제목)과 같은 높이로 — 가로줄과 붙지 않게 */
+@media (min-width:900px){.intro-toc{margin-top:var(--s40);}}
 .intro-toc__l{color:var(--steel);font-size:var(--text-caption);font-weight:600;letter-spacing:.08em;margin-bottom:var(--s12);}
 .intro-toc__i{display:block;padding:9px 0 9px var(--s16);border-left:2px solid var(--ash);
   color:var(--steel);font-size:var(--text-body-sm);line-height:1.4;transition:color .15s ease,border-color .15s ease;}
@@ -1896,13 +1902,18 @@ var CONTENT = {
       (has(a.banner) ? '<div class="hero__bgclip" aria-hidden="true"><div class="hero__bgimg" style="background-image:url(' + esc(a.banner) + ')"></div>' +
         (has(a.bannerPerson) ? '<img class="hero__person" src="' + esc(a.bannerPerson) + '" alt="">' : '') + '</div>' : '') +
       mosaicAnchor(!mosaicPlayed) + '<div class="wrap hero__inner">');
+    var dotDone = false;   /* 알림 뱃지는 첫 [[…]](기획자)에만 */
     h.push('<h1 class="hero__logline">' +
       (has(a.logline)
         ? a.logline.split('\n').map(function (ln) {
             return '<span class="zl">' + esc(ln)
               .replace(/\*\*([^*]+)\*\*/g, '<span class="ll-v">$1</span>')
               .replace(/__([^_]+)__/g, '<span class="ll-o">$1</span>')
-              .replace(/\[\[([^\]]+)\]\]/g, '<a class="ll-k" href="#resume">$1</a>') + '</span>';
+              .replace(/\[\[([^\]]+)\]\]/g, function (_, w) {
+                var dot = (!dotDone && !introSeen) ? '<span class="ll-dot" aria-hidden="true"></span>' : '';
+                dotDone = true;
+                return '<a class="ll-k" href="#resume">' + w + dot + '</a>';
+              }) + '</span>';
           }).join('')
         : '<span class="zl">' + ph('로그라인 1 — 첫 페이지 헤드라인') + '</span>') + '</h1>');
     if (has(a.intro)) h.push('<div class="hero__sub">' + body(a.intro, '') + '</div>');
@@ -1999,12 +2010,14 @@ var CONTENT = {
   /* ================================================================
    *  2. Resume
    * ================================================================ */
-  /* 자기소개 알림 점 — 한 번 열어 보면 사라진다(이 브라우저에 기억) */
+  /* 자기소개 알림 점(Resume 자기소개 탭 · About '기획자' 오른쪽 위) — 자기소개를 열면 사라지고,
+     페이지를 새로 열면 다시 나타난다(방문할 때마다 알림처럼) */
   var introSeen = false;
-  try { introSeen = localStorage.getItem('introSeen') === '1'; } catch (e) {}
+  try { localStorage.removeItem('introSeen'); } catch (e) {}   /* 예전 '영구 숨김' 기록 정리 */
   function markIntroSeen() {
     introSeen = true;
-    try { localStorage.setItem('introSeen', '1'); } catch (e) {}
+    var ds = document.querySelectorAll('.ll-dot');   /* 이미 그려진 About 뱃지도 지운다 */
+    for (var i = 0; i < ds.length; i++) ds[i].parentNode.removeChild(ds[i]);
   }
 
   function resumeTabs(sub) {
@@ -2106,7 +2119,8 @@ var CONTENT = {
   function renderResume(sub) {
     /* 프로필(배너)·인적사항은 이력서 탭에만 — 자기소개 탭은 탭 바로 아래 로그라인부터.
        코너 모자이크는 About 과 같은 위치(라우트 최상단 우측)에 붙는다. */
-    var h = [mosaicAnchor(false), '<div class="route-body">', resumeTabs(sub), sub === 'intro' ? '' : profileBlock()];
+    var h = [sub === 'intro' ? mosaicAnchor(false).replace('class="hero__anchor"', 'class="hero__anchor hero__anchor--top"') : mosaicAnchor(false),
+      '<div class="route-body">', resumeTabs(sub), sub === 'intro' ? '' : profileBlock()];
     if (sub === 'intro') { h.push(renderIntro(), '</div>'); return h.join(''); }
 
     var r = CONTENT.resume || {};
