@@ -2978,7 +2978,7 @@ var CONTENT = {
     }
     hero.style.setProperty('--bn-h', Math.round(rule.getBoundingClientRect().top - hr.top) + 'px');
     /* 인물: 키 = 배너 높이의 78%, 아래는 배너 끝 (인물 원본 773×833).
-       데스크톱: 인물 오른쪽 끝을 '신' 선보다 120px 더 왼쪽으로, 단 화면 왼쪽 끝에서 잘리지 않게(최소 0) */
+       데스크톱: 인물 오른쪽 끝을 '신' 선보다 60px 더 왼쪽으로, 단 화면 왼쪽 끝에서 잘리지 않게(최소 0) */
     var ps = hero.querySelector('.hero__person'), clip = hero.querySelector('.hero__bgclip'),
         ll = hero.querySelector('.hero__logline');
     if (ps && clip && ll) {
@@ -2988,7 +2988,7 @@ var CONTENT = {
       var cl = clip.getBoundingClientRect().left;
       var left = mobile
         ? (ll.getBoundingClientRect().left - cl) + 156 * fs / 64 - W * 0.777
-        : Math.max(0, (sin ? sin.getBoundingClientRect().left : ll.getBoundingClientRect().left) - cl - W - 120);   /* '신' 선보다 120px 더 왼쪽 */
+        : Math.max(0, (sin ? sin.getBoundingClientRect().left : ll.getBoundingClientRect().left) - cl - W - 60);   /* '신' 선보다 60px 더 왼쪽 */
       hero.style.setProperty('--ps-h', Math.round(H) + 'px');
       hero.style.setProperty('--ps-l', Math.round(left) + 'px');
     }
