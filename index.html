@@ -270,7 +270,7 @@ a.card:active{transform:scale(.995);}
 /* 폰트는 화면 폭에 따라 계속 줄어들도록 vw 항을 크게(약 1240px 이하부터 작아짐) */
 .hero__logline{--ll-fs:clamp(26px,5.1vw,64px);font-size:var(--ll-fs);transition:font-size .25s ease;line-height:1.12;letter-spacing:-.03em;font-weight:700;
   color:var(--graphite);width:fit-content;max-width:100%;margin-inline:auto;}
-.hero__logline .zl{display:block;}
+.hero__logline .zl{display:block;height:calc(var(--ll-fs) * 1.12);}   /* 줄 높이 고정 — 마우스를 올려 글자가 커져도 칸 높이가 그대로라 배너 이미지·인물 위치/크기가 흔들리지 않음 */
 .hero__logline .ll-v{color:#4a30dd;}
 .hero__logline .ll-o{color:#f88e20;}
 /* [[기획자]] · [[박지수]] — 제목에 마우스를 올리면 6pt 커지고(옆 글자는 밀려남) #f31d5d */
