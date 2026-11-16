@@ -595,10 +595,10 @@ a.card:active{transform:scale(.995);}
 .titem__tag{color:var(--slate);font-weight:500;}
 .titem__desc{margin-top:var(--s8);color:var(--slate);font-size:var(--text-body-sm);line-height:1.65;}
 .titem__links{margin-top:var(--s12);}
-/* 경력만 글자를 2pt 씩 키운다 (대외활동은 그대로) */
-.titem--lg .titem__name{font-size:12px;}
+/* 경력: 회사 이름은 크게, 경력 설명은 작게 (대외활동은 그대로) */
+.titem--lg .titem__name{font-size:18px;font-weight:700;}
 .titem--lg .titem__date{font-size:var(--text-body-sm);}
-.titem--lg .titem__desc{font-size:var(--text-body);}
+.titem--lg .titem__desc{font-size:var(--text-body-sm);}
 @media (max-width:479px){
   .titem{grid-template-columns:88px minmax(0,1fr);}
   .titem__img,.titem__img-ph{width:88px;height:88px;}
@@ -1120,7 +1120,7 @@ var CONTENT = {
       desc: '기획자가 되기까지 많은 길을 돌아왔으나, 그럼에도 목표를 향해 똑바로 나아가 더 단단하게 자리잡게 됐습니다.\n빙 돌아온 만큼 겪어온 다양한 경험을 통해, 기초부터 견고하게 설계하는 기획자가 되고 싶습니다.',
       /* 인적사항 — 아이콘과 함께 세 줄로 표시됩니다.
          1줄: 생년월일 | 학력   2줄: 이메일 · 연락처(1.5배)                  */
-      birth: '',                          // 0000.00.00 (자료 없음)
+      birth: '1995.07.12',
       education: '호서대학교 아산캠퍼스 시각디자인학과 (4년제 졸업)',
       email: 'jisoo752@naver.com',
       phone: '010 6747 6881'
@@ -1132,7 +1132,7 @@ var CONTENT = {
       {
         year: '',                   // 연도 머리말 없이 최신순으로 나열
         items: [
-          { image: '', org: '디벨로켓 · AI 데이터 분석 기반 게임콘텐츠 제작자 양성', start: '2026.06', end: '2026.12',
+          { image: 'assets/images/career/develrocket.jpg', org: '디벨로켓 · AI 데이터 분석 기반 게임콘텐츠 제작자 양성', start: '2026.06', end: '2026.12',
             tag: '6개월 · 교육', desc: '게임 기획자 양성 부트캠프', posts: [] },
           { image: '', org: '젠가 게임즈', start: '2026.03', end: '2026.05',
             tag: '2개월 · 외주', desc: '게임 비주얼 컨셉 제작 및 그래픽 리소스 제작', posts: [] },
