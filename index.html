@@ -426,7 +426,7 @@ a.card:active{transform:scale(.995);}
 .bcard__team-k{color:#4a30dd;}
 .bcard__team-v{color:#f88e20;}
 /* 슬라이드 0(썸네일) → 1 → 2 → 3(플레이 GIF) → 0 … 썸네일 위에 겹친 트랙이 옆으로 넘어감 */
-.bcard__play{position:absolute;inset:0;overflow:hidden;pointer-events:none;}
+.bcard__play{position:absolute;inset:0;overflow:hidden;pointer-events:none;clip-path:inset(0 round calc(var(--r-card) - 1px) calc(var(--r-card) - 1px) 0 0);}   /* 움직이는 슬라이드 층이 카드 둥근 모서리 밖으로 삐져나오지 않게 */
 .bcard__slides{display:flex;height:100%;width:calc(var(--n) * 100%);transform:translateX(calc(var(--i,0) * -100% / var(--n)));transition:transform .6s cubic-bezier(.6,0,.2,1);}
 .bslide{position:relative;flex:0 0 calc(100% / var(--n));height:100%;overflow:hidden;background:#faeed6;}   /* 영상 좌우 여백 = itch 카드 바탕색 */
 .bslide--0{background:var(--bimg) left center / auto 100% no-repeat;}
