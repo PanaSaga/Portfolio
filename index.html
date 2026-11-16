@@ -431,8 +431,7 @@ a.card:active{transform:scale(.995);}
 .bslide{position:relative;flex:0 0 calc(100% / var(--n));height:100%;overflow:hidden;background:#fff;}
 .bslide--0{background:var(--bimg) left center / auto 100% no-repeat;}
 .bslide--0 > img{position:absolute;top:0;bottom:0;left:var(--bw);width:auto;height:100%;max-width:none;transform:translateX(calc(-25% - 60px));}
-.bslide > video{position:absolute;left:0;bottom:0;width:100%;height:auto;display:block;   /* 가로 폭에 맞춤(그 이상 확대 안 함) · 아래 기준(발사대가 잘리지 않게) */
-  -webkit-mask-image:linear-gradient(90deg,transparent 0,transparent calc(var(--bw,0px) - 30px),#000 calc(var(--bw,0px) + 50px));mask-image:linear-gradient(90deg,transparent 0,transparent calc(var(--bw,0px) - 30px),#000 calc(var(--bw,0px) + 50px));}   /* 정보 칸 뒤로는 영상이 비치지 않게 */
+.bslide > video{position:absolute;left:0;bottom:0;width:100%;height:auto;display:block;}   /* 가로 폭에 맞춤(그 이상 확대 안 함) · 아래 기준(발사대가 잘리지 않게) · 정보 칸 그라데이션(90%) 뒤로 살짝 비침 */
 /* 다음 슬라이드까지 남은 시간 게이지 — 썸네일과 제목 사이 */
 .bcard__gauge{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(108,76,245,.15);z-index:2;pointer-events:none;}
 .bcard__gauge > i{display:block;height:100%;background:var(--violet,#6c4cf5);transform-origin:left;transform:scaleX(0);}
@@ -3038,9 +3037,9 @@ var CONTENT = {
   }
 
   /* 연출이 끝나면 애니메이션 클래스를 떼어 두 번 다시 재생되지 않게 한다 */
-  /* About 대표 프로젝트 슬라이드: 0(썸네일 20초) → 1 → 2 → 3(플레이 영상, 끝나면 다음) → 0 …
-     마우스를 올리면 썸네일을 건너뛰고 바로 1번부터. 보라색 게이지 = 다음 슬라이드까지 남은 시간 */
-  var BENTO_THUMB_MS = 20000, bentoRaf = null;
+  /* About 대표 프로젝트 슬라이드: 0(썸네일 7초) → 1 → 2 → 3(플레이 영상, 끝나면 다음) → 0 …
+     보라색 게이지 = 다음 슬라이드까지 남은 시간 */
+  var BENTO_THUMB_MS = 7000, bentoRaf = null;
   function bentoVids(m) { return m.querySelectorAll('.bcard__slides video'); }
   function bentoGo(m, nx) {
     var track = m.querySelector('.bcard__slides'), vs = bentoVids(m);
@@ -3078,10 +3077,6 @@ var CONTENT = {
     });
     if (on && ms.length) bentoRaf = requestAnimationFrame(bentoTick);
   }
-  document.addEventListener('mouseover', function (e) {
-    var c = e.target.closest && e.target.closest('.bcard'), m = c && c.querySelector('.bcard__media--brief');
-    if (m && m._bi === 0 && bentoVids(m).length) bentoGo(m, 1);
-  });
 
   function armMosaic() {
     var el = document.querySelector('.mosaic--in');
