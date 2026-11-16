@@ -642,7 +642,9 @@ a.card:active{transform:scale(.995);}
 .titem--lg .titem__date{font-size:var(--text-body-sm);}
 .titem--lg .titem__desc{font-size:var(--text-body-sm);}
 .titem__list{margin:4px 0 0;padding-left:1.1em;list-style:disc;}
-/* 경력: 로고 작게(88px) · 본문 사이 간격은 일정(항목 아래 24px) */
+/* 경력: 로고 작게(88px) · 본문 사이 간격은 일정(항목 아래 12px) */
+.titems--career .titem{padding-bottom:var(--s12);}
+.titems--career .titem:last-child{padding-bottom:0;}
 .titems--career .titem{grid-template-columns:88px minmax(0,1fr);}
 .titems--career .titem__img,.titems--career .titem__img-ph{width:88px;height:88px;}
 .titems--career .titem:not(:last-child)::before{left:43px;top:96px;}
@@ -741,7 +743,7 @@ mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;bo
   transition:box-shadow .18s ease,border-color .18s ease;}
 .pcard:hover{border-color:transparent;box-shadow:var(--sh-card);}
 .pcard--sample{border-color:var(--ash);}
-.pcard__media{align-self:stretch;position:relative;display:block;min-height:96px;}   /* 카드 높이만큼 커짐 */
+.pcard__media{align-self:stretch;position:relative;display:block;min-height:72px;}   /* 카드 높이만큼 커짐 */
 .pcard__thumb,.pcard__thumb-ph{position:absolute;inset:0;width:100%;height:100%;border-radius:8px;object-fit:cover;background:var(--frost);}
 .pcard__thumb-ph{display:grid;place-items:center;color:var(--steel);font-size:11px;}
 .pcard__info,.pcard__side{display:flex;flex-direction:column;gap:4px;min-width:0;}
@@ -1201,7 +1203,7 @@ var CONTENT = {
           { image: 'assets/images/career/zenga.jpg', org: '젠가 게임즈', start: '2026.03', end: '2026.05',
             tag: '2개월 · 외주', desc: '게임 비주얼 컨셉 제작 및 그래픽 리소스 제작\n* 머지 포레스트', posts: [] },
           { image: 'assets/images/career/actionfit.jpg', org: '㈜ 액션핏', start: '2023.08', end: '2026.02',
-            tag: '근무 2년 · 외주 5개월', desc: '아트 기획, 비주얼 컨셉, UI, 캐릭터, 광고 영상 제작 등 그래픽 관련 업무 전반\n* 블럭냥! 편의점 정리왕, 빠지냥, 머지냥카페\n* 그 외 스크류캣, 매치 편의점, 머지냥탐정 등', posts: [] },
+            tag: '근무 2년 · 외주 5개월', desc: '아트 기획, 비주얼 컨셉, UI, 캐릭터, 광고 영상 제작 등\n그래픽 관련 업무 전반\n* 블럭냥! 편의점 정리왕, 빠지냥, 머지냥카페\n* 그 외 스크류캣, 매치 편의점, 머지냥탐정 등', posts: [] },
           { image: 'assets/images/career/bridge-games.jpg', org: '브릿지 게임즈', start: '2021.06', end: '2022.03',
             tag: '근무 8개월 · 외주 2개월', desc: '캐릭터 · 배경 일러스트, SD 캐릭터 스파인', posts: [] }
         ]
