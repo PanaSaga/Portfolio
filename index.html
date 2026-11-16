@@ -669,6 +669,7 @@ a.card:active{transform:scale(.995);}
 .skills{background:var(--surface);border:1px solid var(--ash);border-radius:var(--r-card);
   padding:var(--s24);display:grid;gap:var(--s32) var(--s40);}
 @media (min-width:720px){.skills{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (min-width:1000px){.skills{grid-template-columns:repeat(3,minmax(0,1fr));}}   /* 3열 2행 */
 .skill__icons{display:inline-flex;align-items:center;gap:6px;height:44px;padding:6px;border-radius:10px;background:var(--cloud);vertical-align:top;}   /* 아이콘 박스 하나 — 2개 이상이면 오른쪽으로 늘어남 */
 .skill__icon{width:32px;height:32px;object-fit:contain;flex:0 0 auto;}
 .skill__icons:has(.skill__icon-ph){padding:0;background:none;}
@@ -678,6 +679,7 @@ a.card:active{transform:scale(.995);}
 .skill__dots i{width:8px;height:8px;border-radius:2px;background:var(--frost);display:block;}
 .skill__dots i.on{background:var(--violet);}
 .skill__note{margin-top:var(--s8);color:var(--slate);font-size:var(--text-body-sm);line-height:1.65;}
+.skill__list{padding-left:1.1em;list-style:disc;margin-bottom:0;}
 
 /* ============================================================
    자기소개 — 칸 없이 한 페이지, 가로줄로만 문단 구분 + 오른쪽 목차
@@ -1198,13 +1200,17 @@ var CONTENT = {
        level: 0~5 (0 이면 숙련도 점을 표시하지 않습니다)                       */
     skills: [
       { icons: [ 'assets/icons/skills/photoshop.svg' ], name: 'Adobe Photoshop', level: 5,
-        note: '일러스트 · 편집 · 보정 · 리소스 제작 편집, 액션 제작으로 대량 리소스 보정 및 내보내기 반자동화.' },
+        note: '일러스트 · 편집 · 보정 · 리소스 제작 편집\n액션 제작으로 대량 리소스 보정 및 내보내기 반자동화' },
+      { icons: [ 'assets/icons/skills/claude.svg', 'assets/icons/skills/codex.svg' ], name: 'Claude · Codex',
+        note: 'AI를 통한 이미지 생성 편집\n데이터 정리 및 검증\n웹 프로토타입 제작 및 바이브 코딩' },
       { icons: [ 'assets/icons/skills/ms-office.svg', 'assets/icons/skills/figma.svg', 'assets/icons/skills/google-docs.svg', 'assets/icons/skills/google-sheets.svg' ], name: 'MS Office · Figma · Google Docs · Sheets', level: 3,
-        note: '기본 기능 숙지, 문서 작성 및 템플릿화, 레이아웃 디자인, 그 외 필요한 기능을 직접 찾아 적용 가능.' },
+        note: '기본 기능 숙지\n문서 작성 및 템플릿화\n레이아웃 디자인\n그 외 필요한 기능을 직접 찾아 적용 가능' },
       { icons: [ 'assets/icons/skills/spine.svg' ], name: 'Spine2D', level: 3,
-        note: '기본 기능 사용, 응용 및 제작 가능.' },
+        note: '기본 기능 사용\n응용 및 제작 가능' },
+      { icons: [ 'assets/icons/skills/unity.svg' ], name: 'Unity',
+        note: '프로그램 기본 기능 숙지\nAI와 바이브 코딩 협업으로 게임 제작 경험' },
       { icons: [ 'assets/icons/skills/after-effects.svg', 'assets/icons/skills/illustrator.svg' ], name: 'Adobe After Effects · Illustrator', level: 0,
-        note: '기본 기능 사용, 필요한 기능을 찾아 적용 가능.' }
+        note: '기본 기능 사용\n필요한 기능을 찾아 적용 가능' }
     ],
 
     /* 대외활동 (중요도 4) — 경력과 같은 칸 구성 */
@@ -2276,7 +2282,9 @@ var CONTENT = {
               }).join('') + '</div>' +
               '<h3 class="skill__name">' + txt(sk.name, '기술명') + '</h3>' +
               (lv ? '<div class="skill__dots" aria-label="숙련도 ' + lv + '/5">' + dots + '</div>' : '') +
-              '<div class="skill__note">' + txt(sk.note, '설명 1~2줄') + '</div>' +
+              (has(sk.note) && String(sk.note).indexOf('\n') > -1
+                ? '<ul class="skill__note skill__list">' + String(sk.note).split('\n').map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul>'
+                : '<div class="skill__note">' + txt(sk.note, '설명 1~2줄') + '</div>') +
               '</article>';
           }).join('') + '</div>'
         : phBlock('기술 항목 — 아이콘 · 이름 · 설명', 'CONTENT.resume.skills')) + '</div>');
