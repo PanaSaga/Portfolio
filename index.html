@@ -261,7 +261,7 @@ a.card:active{transform:scale(.995);}
 }
 @media (min-width:900px){.topblock{min-height:var(--top-h);padding:var(--s48) 0;}}
 .topblock__bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0;}
-.topblock__bg::after{content:"";position:absolute;inset:0;background:rgba(243,240,236,.55);}
+.topblock__bg::after{content:"";position:absolute;inset:0;background:rgba(243,240,236,0);}   /* 배너가 이미 옅어 막 없음 */
 .topblock > .wrap,.topblock .hero__inner{position:relative;z-index:2;width:100%;}
 
 .hero{position:relative;padding:0;}
@@ -1086,7 +1086,7 @@ var CONTENT = {
 
     /* 프로필 — 이메일·연락처는 한 행, 학력 한 행 */
     profile: {
-      banner: '',           // 상단 구역 배경 배너 이미지 경로 (비우면 단색)
+      banner: 'assets/images/about/banner-bg-v5.webp',   // 상단 구역 배경 배너 (About 배너와 같은 이미지, 비우면 단색)
       name: '박지수',
       nameEn: 'Park Jisoo', // 이름 옆에 작게 들어가는 영어 이름
       logline2: '돌고 돌아 더 단단히 자리 잡는 나사못처럼.',
