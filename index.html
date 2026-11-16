@@ -317,12 +317,10 @@ a.card:active{transform:scale(.995);}
 .hero__anchor{position:absolute;top:0;left:0;right:0;height:0;z-index:0;}
 .hero__anchor .wrap{position:relative;height:0;padding:0;}
 .mosaic{position:absolute;top:0;right:var(--sa-r);z-index:0;--tile:30px;}   /* 페이지 틀(최대 1200px) 오른쪽 끝에 딱 붙임 — 모든 페이지 공통 */
-/* About 이외의 페이지는 조밀한 코너 부분만 */
-.route > .hero__anchor .mrow:nth-child(n+8){display:none;}
+/* About 이외의 페이지도 About 과 같은 10줄 (본문보다 뒤에 깔려 가려지는 순서는 그대로) */
+.route > .hero__anchor .mrow:nth-child(n+11){display:none;}
 /* 자기소개 탭: 모자이크가 아래 본문 띠에 가려 잘리지 않고 위에 겹쳐 보이게 */
 .route > .hero__anchor--top{z-index:2;}
-.route > .hero__anchor--top .mrow:nth-child(n+8){display:flex;}   /* 자기소개 탭은 About 과 같은 모양(10줄) */
-.route > .hero__anchor--top .mrow:nth-child(n+11){display:none;}
 /* 자기소개 탭 상단(탭 ~ 로그라인) 배너 — 아래로 갈수록 흐려져 본문 시작(가로줄)에서 사라짐. 높이는 JS(sizeIntroBg) */
 .route-body--intro > .intro-bg{position:absolute;left:0;right:0;top:0;height:var(--ib-h,520px);z-index:0;pointer-events:none;
   background-size:cover;background-position:center top;background-repeat:no-repeat;
