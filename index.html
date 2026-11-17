@@ -1316,6 +1316,7 @@ var CONTENT = {
     /* 아트 작업물 — 3열 (데이터 키는 기존 그대로 ai) */
     ai: [
       { id: 'art-work', title: '포트폴리오 (회사 작업물)', tagline: '액션핏 · 브릿지 게임즈 게임 아트 작업', kind: 'image',
+        detailDesc: '1. 박스 캣 & 스크류 캣 (액션핏)\n2. 편의점 정리왕 & 매치 편의점 (액션핏)\n3. 머지냥카페 (액션핏)\n4. 캐릭터 - 캐주얼풍 & 반실사풍 (브릿지 게임즈)\n5. 캐릭터 SD 및 몬스터 (브릿지 게임즈)\n6. 배경 (브릿지 게임즈)',   /* 상세 페이지 제목 아래 설명(카드는 tagline 한 줄) */
         thumb: 'assets/images/art/work-thumb.webp', tags: ['게임 아트', '회사 작업물'],
         images: [ { src: 'assets/images/art/work-01.jpg' }, { src: 'assets/images/art/work-02.jpg' }, { src: 'assets/images/art/work-03.jpg' },
                   { src: 'assets/images/art/work-04.jpg' }, { src: 'assets/images/art/work-05.jpg' }, { src: 'assets/images/art/work-06.jpg' } ] },
@@ -2588,7 +2589,7 @@ var CONTENT = {
     h.push('<header class="detail__head' + (hasList(m.meta) ? '' : ' detail__head--bare') + '">');
     h.push(imgOr(m.thumb, m.title || '', 'detail__thumb', 'detail__thumb-ph', '대표 이미지'));
     h.push('<div><h1 class="detail__title">' + twoTone(m.title, '게시물 제목') + '</h1>' +
-      '<p class="detail__tagline">' + txt(m.tagline, '한 줄 설명') + '</p>' +
+      '<p class="detail__tagline">' + (has(m.detailDesc) ? esc(m.detailDesc).replace(/\n/g, '<br>') : txt(m.tagline, '한 줄 설명')) + '</p>' +
       (hasList(m.meta)
         ? '<ul class="dmeta">' + m.meta.map(function (f) {
             var v = f.value;
