@@ -891,7 +891,17 @@ img.ppage__img{display:block;}
 /* 1열 — 이미지를 본문 폭 가득, 위에서 아래로 나열. 비율은 1920×1080(16:9) 고정 */
 .gallery{margin-top:var(--s32);display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s24);}
 .gallery__it{margin:0;}
-.gallery__it img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:var(--r-card);border:1px solid var(--ash);background:var(--frost);}
+.gallery__view{overflow:auto;border-radius:var(--r-card);border:1px solid var(--ash);background:var(--frost);cursor:grab;overscroll-behavior:contain;}
+.gallery__view.is-drag{cursor:grabbing;}
+.gallery__view img{display:block;width:calc(var(--z,1) * 100%);max-width:none;height:auto;user-select:none;-webkit-user-drag:none;}   /* 원래 비율 · 가로 폭에 맞춤 × 확대율 */
+@media (min-width:900px){ .detail-col .gallery{width:min(var(--page-max),100vw - 40px);margin-left:calc((100% - min(var(--page-max),100vw - 40px)) / 2);} }
+/* 돋보기 슬라이드바 — 갤러리 위에 붙어 따라옴 */
+.gzoom{position:sticky;top:72px;z-index:5;justify-self:center;display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;
+  background:var(--surface);border:1px solid var(--ash);box-shadow:var(--sh-card);color:var(--slate);}
+.gzoom__r{width:min(280px,46vw);accent-color:var(--violet);}
+.gzoom__b{width:28px;height:28px;border-radius:50%;border:1px solid var(--ash);background:var(--cloud);font-size:16px;line-height:1;color:var(--graphite);}
+.gzoom__b:hover{border-color:var(--violet);color:var(--violet);}
+.gzoom__v{min-width:44px;text-align:right;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--violet-deep);}
 .gallery__it figcaption{margin-top:6px;color:var(--steel);font-size:var(--text-caption);}
 .gallery__ph{display:grid;place-items:center;aspect-ratio:16/9;width:100%;border-radius:var(--r-card);background:var(--frost);color:var(--steel);font-size:var(--text-caption);}
 .figure{margin-top:var(--s16);}
@@ -1157,7 +1167,7 @@ var CONTENT = {
 
     /* 대표 프로젝트(벤토 4칸)에 띄울 게시물 id — 메인·기획서·아트 어디서든 고를 수 있음.
        비우면 메인 프로젝트 앞 4개를 그대로 사용 */
-    featured: [ 'moremustmush', 'sample-2', 'sample-3', 'sample-art' ],
+    featured: [ 'moremustmush', 'sample-2', 'sample-3', 'art-chara' ],
 
     /* I Walk & My Work style — 2열 × 3행. 앞 3개는 왼쪽, 뒤 3개는 오른쪽 열.
        thumb = 1:1 썸네일(비우면 자리표시) / title = 이름 / sub = 주황 굵은 한 줄
@@ -1311,7 +1321,10 @@ var CONTENT = {
 
     /* 아트 작업물 — 3열 (데이터 키는 기존 그대로 ai) */
     ai: [
-      SAMPLE_ART('sample-art',   '샘플 아트 작업물 1'),
+      { id: 'art-chara', title: '캐릭터 원화 (개인작)', tagline: '개인 작업 캐릭터 원화 일러스트', kind: 'image',
+        thumb: 'assets/images/art/chara-thumb.webp', tags: ['캐릭터', '원화', '개인작'],
+        images: [ { src: 'assets/images/art/chara-01.webp' }, { src: 'assets/images/art/chara-02.webp' }, { src: 'assets/images/art/chara-03.webp' },
+                  { src: 'assets/images/art/chara-04.webp' }, { src: 'assets/images/art/chara-05.webp' } ] },
       SAMPLE_ART('sample-art-2', '샘플 아트 작업물 2'),
       SAMPLE_ART('sample-art-3', '샘플 아트 작업물 3')
       // { id: '', title: '', tagline: '한 줄 설명', kind: 'image', thumb: '대표(카드) 이미지', tags: [],
@@ -2644,11 +2657,18 @@ var CONTENT = {
       var gal = m.images.map(function (im) {
         im = typeof im === 'string' ? { src: im } : (im || {});
         if (!has(im.src)) return SHOW_PLACEHOLDER ? '<figure class="gallery__it"><div class="gallery__ph">이미지</div></figure>' : '';
-        return '<figure class="gallery__it"><a ' + linkAttrs(im.src) + '>' +
-          '<img src="' + esc(im.src) + '" alt="' + esc(im.caption || m.title || '') + '" loading="lazy"></a>' +
+        return '<figure class="gallery__it"><div class="gallery__view">' +
+          '<img src="' + esc(im.src) + '" alt="' + esc(im.caption || m.title || '') + '" loading="lazy"></div>' +
           (has(im.caption) ? '<figcaption>' + esc(im.caption) + '</figcaption>' : '') + '</figure>';
       }).join('');
-      if (gal) h.push('<section class="gallery">' + gal + '</section>');
+      if (gal) h.push('<section class="gallery" id="gallery" style="--z:1">' +
+        '<div class="gzoom" role="group" aria-label="확대 · 축소">' +
+          '<button type="button" class="gzoom__b" data-z="-1" aria-label="축소">−</button>' +
+          '<span class="gzoom__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></span>' +
+          '<input type="range" class="gzoom__r" id="gzoom" min="100" max="400" step="10" value="100" aria-label="확대 비율">' +
+          '<button type="button" class="gzoom__b" data-z="1" aria-label="확대">+</button>' +
+          '<output class="gzoom__v" id="gzoomV">100%</output>' +
+        '</div>' + gal + '</section>');
     }
 
     /* 프로젝트에서 경험한 일들 — 제목 + (부제목·본문) 여러 개 */
@@ -3053,7 +3073,7 @@ var CONTENT = {
       if (state.route === 'about') { host.innerHTML = renderAbout(); armMosaic(); }
       else if (state.route === 'resume') { host.innerHTML = renderResume(state.param); bindProjectList(); bindIntro(); }
       else if (state.route === 'portfolio') host.innerHTML = withMosaic(renderPortfolio());
-      else if (state.route === 'post') { host.innerHTML = withMosaic(renderPost(state.param)); bindPlanner(); }
+      else if (state.route === 'post') { host.innerHTML = withMosaic(renderPost(state.param)); bindPlanner(); bindGallery(); }
       else if (state.route === 'history') { host.innerHTML = withMosaic(renderHistory()); bindHistory(); }
       rendered[state.route] = key;
     }
@@ -3132,6 +3152,40 @@ var CONTENT = {
       if (on) bentoGo(m, 0); else { m._bi = null; Array.prototype.forEach.call(vs, function (v) { v.pause(); }); }
     });
     if (on && ms.length) bentoRaf = requestAnimationFrame(bentoTick);
+  }
+
+  /* 아트 갤러리 돋보기: 슬라이더·± 버튼으로 100~400% 확대, 확대 중엔 끌어서 이동 */
+  function bindGallery() {
+    var g = document.getElementById('gallery'), r = document.getElementById('gzoom'), out = document.getElementById('gzoomV');
+    if (!g || !r) return;
+    function set(v) {
+      v = Math.max(100, Math.min(400, Math.round(v / 10) * 10));
+      var views = g.querySelectorAll('.gallery__view'), keep = [];
+      for (var i = 0; i < views.length; i++) {   /* 확대해도 보고 있던 가운데가 유지되게 */
+        var w = views[i];
+        keep.push([(w.scrollLeft + w.clientWidth / 2) / (w.scrollWidth || 1), (w.scrollTop + w.clientHeight / 2) / (w.scrollHeight || 1)]);
+      }
+      r.value = v; out.textContent = v + '%'; g.style.setProperty('--z', v / 100);
+      for (var k = 0; k < views.length; k++) {
+        views[k].style.maxHeight = v > 100 ? '82vh' : '';
+        views[k].scrollLeft = keep[k][0] * views[k].scrollWidth - views[k].clientWidth / 2;
+        views[k].scrollTop = keep[k][1] * views[k].scrollHeight - views[k].clientHeight / 2;
+      }
+    }
+    r.addEventListener('input', function () { set(+r.value); });
+    Array.prototype.forEach.call(g.querySelectorAll('.gzoom__b'), function (b) {
+      b.addEventListener('click', function () { set(+r.value + (+b.getAttribute('data-z')) * 50); });
+    });
+    Array.prototype.forEach.call(g.querySelectorAll('.gallery__view'), function (w) {
+      var sx, sy, sl, st, down = false;
+      w.addEventListener('pointerdown', function (e) {
+        if (+r.value <= 100 || e.pointerType === 'touch') return;
+        down = true; sx = e.clientX; sy = e.clientY; sl = w.scrollLeft; st = w.scrollTop; w.classList.add('is-drag'); w.setPointerCapture(e.pointerId);
+      });
+      w.addEventListener('pointermove', function (e) { if (!down) return; w.scrollLeft = sl - (e.clientX - sx); w.scrollTop = st - (e.clientY - sy); });
+      function up() { down = false; w.classList.remove('is-drag'); }
+      w.addEventListener('pointerup', up); w.addEventListener('pointercancel', up);
+    });
   }
 
   function armMosaic() {
