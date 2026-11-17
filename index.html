@@ -856,13 +856,13 @@ img.ppage__img{display:block;}
 .detail-back{display:inline-flex;align-items:center;gap:6px;color:var(--slate);font-size:var(--text-body-sm);font-weight:500;margin-bottom:var(--s20);}
 .detail-back:hover{color:var(--violet);}
 .detail-backrow{margin-top:var(--s40);display:flex;justify-content:flex-end;}
-.detail-top{display:flex;align-items:center;justify-content:space-between;gap:var(--s12);flex-wrap:wrap;margin-bottom:var(--s20);}
+.detail-top{display:flex;justify-content:flex-end;margin-bottom:40px;}   /* 아래 여백 2배(20→40) ≈ 위 여백의 3/5 */
 .detail-top .detail-back{margin-bottom:0;}
-.pnav{display:inline-flex;align-items:stretch;border:1px solid var(--ash);border-radius:var(--r-btn);background:var(--surface);overflow:hidden;margin-left:auto;}
-.pnav__b{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:6px 14px;font-size:var(--text-body-sm);font-weight:500;color:var(--graphite);transition:background-color .15s ease,color .15s ease;}
-.pnav__b + .pnav__b{border-left:1px solid var(--ash);}
+.pnav{display:inline-flex;align-items:stretch;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+.pnav__b{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:6px 14px;font-size:var(--text-body-sm);font-weight:500;color:var(--graphite);
+  border:1px solid var(--ash);border-radius:var(--r-btn);background:var(--surface);transition:background-color .15s ease,color .15s ease,border-color .15s ease;}   /* 버튼 따로따로 */
 .pnav__list{padding-left:28px;padding-right:28px;}   /* 목록으로 좌우 여백 2배 */
-a.pnav__b:hover{background:var(--accent-soft);color:var(--violet-deep);}
+a.pnav__b:hover{background:var(--accent-soft);color:var(--violet-deep);border-color:var(--violet);}
 .pnav__th{width:30px;height:30px;border-radius:6px;object-fit:cover;flex:0 0 auto;background:var(--frost);display:block;}
 .pnav__b--off{color:#b4b2ad;background:#efede9;cursor:default;}
 .pnav__b--off .pnav__th{opacity:.5;}
@@ -2606,7 +2606,7 @@ var CONTENT = {
   function renderPost(id) {
     var m = findPost(id);
     var h = ['<div class="band"><div class="wrap"><div class="detail-col">'];
-    h.push('<div class="detail-top"><a class="detail-back" href="#portfolio">← Portfolio</a>' + postNav(id) + '</div>');
+    h.push('<div class="detail-top">' + postNav(id) + '</div>');
 
     if (!m) {
       h.push('<h1 class="detail__title">게시물을 찾을 수 없습니다</h1>');
