@@ -855,7 +855,7 @@ img.ppage__img{display:block;}
 /* 상세 */
 .detail-back{display:inline-flex;align-items:center;gap:6px;color:var(--slate);font-size:var(--text-body-sm);font-weight:500;margin-bottom:var(--s20);}
 .detail-back:hover{color:var(--violet);}
-.detail-backrow{margin-top:var(--s40);display:flex;justify-content:flex-start;}
+.detail-backrow{margin-top:var(--s40);display:flex;justify-content:center;}   /* 하단은 가운데 */
 .detail-top{display:flex;justify-content:flex-start;margin-bottom:40px;}   /* 아래 여백 2배(20→40) ≈ 위 여백의 3/5 */
 .detail-top .detail-back{margin-bottom:0;}
 .pnav{display:grid;grid-template-columns:auto 1fr auto;gap:8px;width:min(100%,420px);}   /* 게시글 왼쪽 위 · 남는 길이만큼 '목록으로'가 늘어남 */
@@ -2723,7 +2723,7 @@ var CONTENT = {
 
     h.push('</div>');
 
-    h.push('<div class="detail-backrow">' + postNav(id) + '</div>');   /* 게시글 왼쪽 아래 */
+    h.push('<div class="detail-backrow">' + postNav(id) + '</div>');   /* 게시글 아래 가운데 */
     return h.join('') + '</div></div></div>';
   }
 
