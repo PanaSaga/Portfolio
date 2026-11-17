@@ -423,9 +423,10 @@ a.card:active{transform:scale(.995);}
 .bcard__media .bcard__thumb{flex:1 1 auto;min-height:0;}
 .bcard__brief{position:absolute;inset:0 auto 0 0;margin:0;width:min(46%,340px);padding:var(--s20) var(--s24);display:flex;flex-direction:column;justify-content:center;gap:var(--s12);
   background:linear-gradient(90deg,rgba(255,255,255,.9) 0,rgba(255,255,255,.9) 62%,rgba(255,255,255,0) 100%);color:var(--graphite);}
-.bcard__team{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.2;}
-.bcard__team-k{color:#4a30dd;}
-.bcard__team-v{color:#f88e20;}
+.bcard__brief dd.bcard__team{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.2;color:#f88e20;}
+.bcard__role{display:flex;align-items:baseline;gap:4px;}
+.bcard__role dt{font-size:15px;}
+.bcard__brief .bcard__role dd{margin:0;font-size:16px;font-weight:800;}
 /* 슬라이드 0(썸네일) → 1 → 2 → 3(플레이 GIF) → 0 … 썸네일 위에 겹친 트랙이 옆으로 넘어감 */
 .bcard__play{position:absolute;inset:0;overflow:hidden;pointer-events:none;clip-path:inset(0 round calc(var(--r-card) - 1px) calc(var(--r-card) - 1px) 0 0);}   /* 움직이는 슬라이드 층이 카드 둥근 모서리 밖으로 삐져나오지 않게 */
 .bcard__slides{display:flex;height:100%;width:calc(var(--n) * 100%);transform:translateX(calc(var(--i,0) * -100% / var(--n)));transition:transform .6s cubic-bezier(.6,0,.2,1);}
@@ -454,9 +455,10 @@ a.card:active{transform:scale(.995);}
   .bcard__media--brief > .bcard__thumb{position:static;width:100%;height:0;min-height:110px;transform:none;}
   .bcard__play,.bcard__gauge{display:none;}
 }
-.bcard__brief dt{font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--violet-deep);}
-.bcard__brief dd{margin:2px 0 0;font-size:14px;font-weight:600;line-height:1.45;}
-.bcard__brief ul{margin:0;padding-left:1.1em;list-style:disc;font-size:13px;font-weight:600;line-height:1.7;}
+.bcard__brief dt{font-size:14px;font-weight:700;letter-spacing:.02em;color:var(--violet-deep);}
+.bcard__brief dd{margin:2px 0 0;font-size:16px;font-weight:600;line-height:1.45;}
+.bcard__brief dd.bcard__period{font-size:14px;}   /* 제작 기간 숫자는 그대로 */
+.bcard__brief ul{margin:0;padding-left:1.1em;list-style:disc;font-size:15px;font-weight:600;line-height:1.65;}
 @media (max-width:559px){.bcard__brief{width:62%;padding:var(--s12);gap:6px;} .bcard__brief dd,.bcard__brief ul{font-size:12px;} .bcard__brief dt{font-size:11px;}}
 .bcard__head{display:flex;align-items:center;gap:6px;min-width:0;}
 .bcard__kind{display:inline-flex;flex:0 0 auto;font-size:10px;font-weight:700;letter-spacing:.04em;
@@ -1279,8 +1281,8 @@ var CONTENT = {
           { label: '링크',     value: 'https://minsung0421.itch.io/moremustmush' }
         ],
         /* 대표 프로젝트(About) 큰 카드 이미지 왼쪽에 흰 그라데이션과 함께 표시 */
-        brief: { team: '숨쉬었음청년', roleLabel: '역할(PD)', role: '컨셉기획\n모바일 출시 계획\n모바일 UI', period: '2026.09 ~ 2026.11',
-                 docs: ['컨셉 기획서', '모바일 출시 기획서', '모바일 UI', '프로젝트 히스토리'] },
+        brief: { team: '숨쉬었음청년', roleShort: 'PD', role: '컨셉기획\n모바일 출시 계획\n모바일 UI', period: '2026.09 ~ 2026.11',
+                 docs: ['컨셉 기획서', '모바일 출시 기획서', '모바일 UI 목업', '프로젝트 히스토리'] },
         embed: 'https://itch.io/embed-upload/20046927?color=f7f5f2',   // itch.io 웹빌드 — 상세에서 바로 실행
         plans: [
           { title: '컨셉기획서',      pdf: 'assets/docs/mmm/MoreMustMush_컨셉기획서.pdf',      pages: [{ img: 'assets/docs/mmm/concept-01.webp' }, { img: 'assets/docs/mmm/concept-02.webp' }, { img: 'assets/docs/mmm/concept-03.webp' }, { img: 'assets/docs/mmm/concept-04.webp' }, { img: 'assets/docs/mmm/concept-05.webp' }, { img: 'assets/docs/mmm/concept-06.webp' }, { img: 'assets/docs/mmm/concept-07.webp' }, { img: 'assets/docs/mmm/concept-08.webp' }, { img: 'assets/docs/mmm/concept-09.webp' }, { img: 'assets/docs/mmm/concept-10.webp' }, { img: 'assets/docs/mmm/concept-11.webp' }, { img: 'assets/docs/mmm/concept-12.webp' }, { img: 'assets/docs/mmm/concept-13.webp' }, { img: 'assets/docs/mmm/concept-14.webp' }, { img: 'assets/docs/mmm/concept-15.webp' }, { img: 'assets/docs/mmm/concept-16.webp' }, { img: 'assets/docs/mmm/concept-17.webp' }, { img: 'assets/docs/mmm/concept-18.webp' }, { img: 'assets/docs/mmm/concept-19.webp' }, { img: 'assets/docs/mmm/concept-20.webp' }, { img: 'assets/docs/mmm/concept-21.webp' }, { img: 'assets/docs/mmm/concept-22.webp' }] },
@@ -2117,9 +2119,10 @@ var CONTENT = {
             '<div class="bslide bslide--0"><img src="' + esc(it.thumb) + '" alt=""></div>' +
             it.preview.map(function (v) { return '<div class="bslide"><video src="' + esc(v) + '" muted playsinline preload="none" tabindex="-1"></video></div>'; }).join('') + '</div></div>' : '') +
           '<dl class="bcard__brief">' +
-          (has(bf.team) ? '<div class="bcard__team"><span class="bcard__team-k">팀</span> <span class="bcard__team-v">' + esc(bf.team) + '</span></div>' : '') +
-          (has(bf.role) ? '<div><dt>' + esc(bf.roleLabel || '역할') + '</dt><dd>' + esc(bf.role).replace(/\n/g, '<br>') + '</dd></div>' : '') +
-          (has(bf.period) ? '<div><dt>제작 기간</dt><dd>' + esc(bf.period) + '</dd></div>' : '') +
+          (has(bf.team) ? '<div><dt>팀</dt><dd class="bcard__team">' + esc(bf.team) + '</dd></div>' : '') +
+          (has(bf.roleShort) ? '<div class="bcard__role"><dt>역할:</dt> <dd>' + esc(bf.roleShort) + '</dd></div>'
+            : has(bf.role) ? '<div><dt>역할</dt><dd>' + esc(bf.role).replace(/\n/g, '<br>') + '</dd></div>' : '') +
+          (has(bf.period) ? '<div><dt>제작 기간</dt><dd class="bcard__period">' + esc(bf.period) + '</dd></div>' : '') +
           (hasList(bf.docs) ? '<div><ul>' + bf.docs.map(function (d) { return '<li>' + esc(d) + '</li>'; }).join('') + '</ul></div>' : '') +
           '</dl>' + (hasList(it.preview) ? '<span class="bcard__gauge" aria-hidden="true"><i></i></span>' : '') + '</div>';
       }
