@@ -855,10 +855,11 @@ img.ppage__img{display:block;}
 /* 상세 */
 .detail-back{display:inline-flex;align-items:center;gap:6px;color:var(--slate);font-size:var(--text-body-sm);font-weight:500;margin-bottom:var(--s20);}
 .detail-back:hover{color:var(--violet);}
-.detail-backrow{margin-top:var(--s40);display:flex;justify-content:flex-end;}
-.detail-top{display:flex;justify-content:flex-end;margin-bottom:40px;}   /* 아래 여백 2배(20→40) ≈ 위 여백의 3/5 */
+.detail-backrow{margin-top:var(--s40);display:flex;justify-content:flex-start;}
+.detail-top{display:flex;justify-content:flex-start;margin-bottom:40px;}   /* 아래 여백 2배(20→40) ≈ 위 여백의 3/5 */
 .detail-top .detail-back{margin-bottom:0;}
-.pnav{display:inline-flex;align-items:stretch;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+.pnav{display:grid;grid-template-columns:auto 1fr auto;gap:8px;width:min(100%,420px);}   /* 게시글 왼쪽 위 · 남는 길이만큼 '목록으로'가 늘어남 */
+.pnav__list{justify-content:center;}
 .pnav__b{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:6px 14px;font-size:var(--text-body-sm);font-weight:500;color:var(--graphite);
   border:1px solid var(--ash);border-radius:var(--r-btn);background:var(--surface);transition:background-color .15s ease,color .15s ease,border-color .15s ease;}   /* 버튼 따로따로 */
 .pnav__list{padding-left:28px;padding-right:28px;}   /* 목록으로 좌우 여백 2배 */
@@ -873,7 +874,7 @@ a.pnav__b:hover{background:var(--accent-soft);color:var(--violet-deep);border-co
 .detail-col{max-width:840px;margin:0 auto;text-align:left;}
 .detail__head{text-align:left;display:flex;align-items:stretch;gap:var(--s24);}
 /* 대표 이미지: 위는 제목, 아래는 링크(마지막 정보 줄)에 맞춰 세로로 늘어난다 */
-.detail__head > div{flex:1 1 auto;min-width:0;}
+.detail__head > div:not(.detail__thumb-ph){flex:1 1 auto;min-width:0;}   /* 자리표시 썸네일이 늘어나지 않게 */
 .detail__thumb{flex:0 0 auto;align-self:stretch;width:clamp(180px,24vw,260px);
   border-radius:var(--r-card);object-fit:cover;background:var(--frost);}
 .detail__thumb-ph{flex:0 0 auto;align-self:stretch;width:clamp(180px,24vw,260px);
@@ -2722,7 +2723,7 @@ var CONTENT = {
 
     h.push('</div>');
 
-    h.push('<div class="detail-backrow">' + postNav(id) + '</div>');   /* 게시글 오른쪽 아래 */
+    h.push('<div class="detail-backrow">' + postNav(id) + '</div>');   /* 게시글 왼쪽 아래 */
     return h.join('') + '</div></div></div>';
   }
 
