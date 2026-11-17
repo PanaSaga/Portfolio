@@ -899,6 +899,9 @@ img.ppage__img{display:block;}
 .gzoom{position:sticky;top:72px;z-index:5;justify-self:center;display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;
   background:var(--surface);border:1px solid var(--ash);box-shadow:var(--sh-card);color:var(--slate);}
 .gzoom__r{width:min(280px,46vw);accent-color:var(--violet);}
+.gzoom{opacity:0;transition:opacity .2s ease;}
+.gallery:hover .gzoom,.gzoom:focus-within{opacity:1;}   /* 마우스를 올렸을 때만 보임 */
+@media (hover:none){.gzoom{opacity:1;}}   /* 터치 기기는 항상 */
 .gzoom__b{width:28px;height:28px;border-radius:50%;border:1px solid var(--ash);background:var(--cloud);font-size:16px;line-height:1;color:var(--graphite);}
 .gzoom__b:hover{border-color:var(--violet);color:var(--violet);}
 .gzoom__v{min-width:44px;text-align:right;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--violet-deep);}
@@ -1322,7 +1325,7 @@ var CONTENT = {
     /* 아트 작업물 — 3열 (데이터 키는 기존 그대로 ai) */
     ai: [
       { id: 'art-chara', title: '캐릭터 원화 (개인작)', tagline: '개인 작업 캐릭터 원화 일러스트', kind: 'image',
-        thumb: 'assets/images/art/chara-thumb.webp', tags: ['캐릭터', '원화', '개인작'],
+        thumb: 'assets/images/art/chara-thumb.webp?v=2', tags: ['캐릭터', '원화', '개인작'],
         images: [ { src: 'assets/images/art/chara-01.webp' }, { src: 'assets/images/art/chara-02.webp' }, { src: 'assets/images/art/chara-03.webp' },
                   { src: 'assets/images/art/chara-04.webp' }, { src: 'assets/images/art/chara-05.webp' } ] },
       SAMPLE_ART('sample-art-2', '샘플 아트 작업물 2'),
