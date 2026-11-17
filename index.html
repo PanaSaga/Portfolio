@@ -877,7 +877,7 @@ a.pnav__b:hover{background:var(--accent-soft);color:var(--violet-deep);border-co
 .detail__head{text-align:left;display:flex;align-items:stretch;gap:var(--s24);}
 .detail-col{--dthumb:480px;--dthumb-h:288px;--dtop:20px;}   /* 대표 이미지 고정 크기(화면 크기와 무관) */
 /* 버튼 · 대표 이미지+제목 · 키워드 묶음을 통째로 화면 가운데에 */
-.detail-intro{width:fit-content;max-width:min(1120px,calc(100vw - 40px));margin-left:50%;transform:translateX(-50%);}
+.detail-intro{width:1108px;max-width:calc(100vw - 40px);margin-left:50%;transform:translateX(-50%);}   /* 좌우 위치 고정(캐릭터 원화 기준) — 내용 길이와 무관 */
 .detail-intro .detail__head{gap:48px;align-items:flex-start;}
 .detail__head > div:not(.detail__thumb-ph){flex:0 1 auto;min-width:0;width:max-content;max-width:min(580px,calc(100vw - 40px - var(--dthumb) - 48px));
   height:var(--dthumb-h);padding-top:var(--dtop);display:flex;flex-direction:column;}   /* 제목 위치는 모든 게시글이 More Must Mush와 같은 높이 */
