@@ -892,7 +892,9 @@ img.ppage__img{display:block;}
 .gallery{margin-top:var(--s32);display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s24);}
 .gallery__it{margin:0;}
 .gallery__view{overflow:hidden;border-radius:var(--r-card);border:1px solid var(--ash);background:var(--frost);}
-.gallery__view img{display:block;width:100%;height:auto;}   /* 원래 비율 · 가로 폭에 맞춤 */
+.gallery__view img{display:block;width:100%;height:auto;}
+.gallery__row{display:flex;gap:var(--s24);align-items:flex-start;}
+.gallery__row > .gallery__it{min-width:0;}   /* 원래 비율 · 가로 폭에 맞춤 */
 @media (min-width:900px){ .detail-col .gallery{width:min(var(--page-max),100vw - 40px);margin-left:calc((100% - min(var(--page-max),100vw - 40px)) / 2);} }
 .gallery__it figcaption{margin-top:6px;color:var(--steel);font-size:var(--text-caption);}
 .gallery__ph{display:grid;place-items:center;aspect-ratio:16/9;width:100%;border-radius:var(--r-card);background:var(--frost);color:var(--steel);font-size:var(--text-caption);}
@@ -1315,7 +1317,7 @@ var CONTENT = {
     ai: [
       { id: 'art-chara', title: '캐릭터 원화 (개인작)', tagline: '개인 작업 캐릭터 원화 일러스트(NO AI)', kind: 'image',
         thumb: 'assets/images/art/chara-thumb.webp?v=2', tags: ['캐릭터', '원화', '개인작'],
-        images: [ { src: 'assets/images/art/chara-01.webp?v=2' }, { src: 'assets/images/art/chara-02.webp?v=2' }, { src: 'assets/images/art/chara-03.webp?v=2' },
+        images: [ { src: 'assets/images/art/chara-01.webp?v=2' }, { row: [ { src: 'assets/images/art/chara-02.webp?v=2', ratio: 1125/2000 }, { src: 'assets/images/art/chara-03.webp?v=2', ratio: 1429/2000 } ] },   /* 세로로 긴 두 장은 나란히 */
                   { src: 'assets/images/art/chara-04.webp?v=2' }, { src: 'assets/images/art/chara-05.webp?v=2' },
                   { src: 'assets/images/art/chara-06.jpg?v=2' }, { src: 'assets/images/art/chara-07.jpg?v=2' } ] },
       SAMPLE_ART('sample-art-2', '샘플 아트 작업물 2'),
@@ -2649,6 +2651,12 @@ var CONTENT = {
     if (hasList(m.images)) {
       var gal = m.images.map(function (im) {
         im = typeof im === 'string' ? { src: im } : (im || {});
+        if (hasList(im.row)) {   /* 나란히 놓기 — 높이가 같도록 각 그림 비율만큼 폭을 나눔 */
+          return '<div class="gallery__row">' + im.row.map(function (c) {
+            return '<figure class="gallery__it" style="flex:' + (+c.ratio || 1) + ' 1 0"><div class="gallery__view">' +
+              '<img src="' + esc(c.src) + '" alt="' + esc(c.caption || m.title || '') + '" loading="lazy"></div></figure>';
+          }).join('') + '</div>';
+        }
         if (!has(im.src)) return SHOW_PLACEHOLDER ? '<figure class="gallery__it"><div class="gallery__ph">이미지</div></figure>' : '';
         return '<figure class="gallery__it">' +
           '<div class="gallery__view">' +
