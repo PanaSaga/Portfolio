@@ -2032,7 +2032,7 @@ var CONTENT = {
               .replace(/\*\*([^*]+)\*\*/g, '<span class="ll-v">$1</span>')
               .replace(/__([^_]+)__/g, '<span class="ll-o">$1</span>')
               .replace(/\[\[([^\]]+)\]\]/g, function (_, w) {
-                var dot = (!dotDone && !introSeen) ? '<span class="ll-dot" aria-hidden="true"></span>' : '';
+                var dot = !dotDone ? '<span class="ll-dot" aria-hidden="true"></span>' : '';
                 dotDone = true;
                 return '<a class="ll-k" href="#resume">' + w + dot + '</a>';
               }) + '</span>';
@@ -2150,11 +2150,7 @@ var CONTENT = {
      페이지를 새로 열면 다시 나타난다(방문할 때마다 알림처럼) */
   var introSeen = false;
   try { localStorage.removeItem('introSeen'); } catch (e) {}   /* 예전 '영구 숨김' 기록 정리 */
-  function markIntroSeen() {
-    introSeen = true;
-    var ds = document.querySelectorAll('.ll-dot');   /* 이미 그려진 About 뱃지도 지운다 */
-    for (var i = 0; i < ds.length; i++) ds[i].parentNode.removeChild(ds[i]);
-  }
+  function markIntroSeen() { introSeen = true; }   /* About '기획자' 뱃지는 확인해도 그대로 남김 — 자기소개 탭 점만 사라짐 */
 
   function resumeTabs(sub) {
     if (sub === 'intro') markIntroSeen();
