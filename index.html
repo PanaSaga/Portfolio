@@ -875,27 +875,26 @@ a.pnav__b:hover{background:var(--accent-soft);color:var(--violet-deep);border-co
 /* 본문 블록은 가운데, 글자는 왼쪽 */
 .detail-col{max-width:840px;margin:0 auto;text-align:left;}
 .detail__head{text-align:left;display:flex;align-items:stretch;gap:var(--s24);}
-.detail-col{--dthumb:clamp(220px,34vw,480px);}   /* 대표 이미지 가로(모든 게시글 같은 크기) */
+.detail-col{--dthumb:480px;--dthumb-h:288px;--dtop:20px;}   /* 대표 이미지 고정 크기(화면 크기와 무관) */
 /* 버튼 · 대표 이미지+제목 · 키워드 묶음을 통째로 화면 가운데에 */
 .detail-intro{width:fit-content;max-width:min(1120px,calc(100vw - 40px));margin-left:50%;transform:translateX(-50%);}
-.detail-intro .detail__head{gap:48px;align-items:center;}   /* 썸네일 ↔ 제목 묶음 세로 가운데 */
-.detail-intro .detail__head > div:not(.detail__thumb-ph){padding:18px 0;}   /* 썸네일이 제목 위 · 링크 아래로 같은 만큼 더 나오게 */
-.detail-intro .detail__head > div:not(.detail__thumb-ph){flex:0 1 auto;width:max-content;max-width:min(580px,calc(100vw - 40px - var(--dthumb) - 48px));}   /* 제목 칸은 내용 길이만큼 */
+.detail-intro .detail__head{gap:48px;align-items:flex-start;}
+.detail__head > div:not(.detail__thumb-ph){flex:0 1 auto;min-width:0;width:max-content;max-width:min(580px,calc(100vw - 40px - var(--dthumb) - 48px));
+  height:var(--dthumb-h);padding-top:var(--dtop);display:flex;flex-direction:column;}   /* 제목 위치는 모든 게시글이 More Must Mush와 같은 높이 */
 .detail__tags{margin-top:var(--s16);}
-.detail-intro .detail__head--bare > div:not(.detail__thumb-ph){align-self:flex-start;}   /* 정보 목록 없는 아트 작업물도 제목 위치를 More Must Mush와 같게(위쪽) */
-/* 대표 이미지: 위는 제목, 아래는 링크(마지막 정보 줄)에 맞춰 세로로 늘어난다 */
-.detail__head > div:not(.detail__thumb-ph){flex:1 1 auto;min-width:0;}   /* 자리표시 썸네일이 늘어나지 않게 */
-.detail__thumb{flex:0 0 auto;align-self:stretch;width:var(--dthumb);height:auto;min-height:calc(var(--dthumb) * .6);contain:size;
-  border-radius:var(--r-card);object-fit:cover;background:var(--frost);}
-.detail__thumb-ph{flex:0 0 auto;align-self:stretch;width:var(--dthumb);height:auto;min-height:calc(var(--dthumb) * .6);contain:size;
-  border-radius:var(--r-card);background:var(--frost);display:grid;place-items:center;
-  color:var(--slate);font-size:var(--text-body-sm);text-align:center;}
-/* 정보 목록이 없는 게시물(아트 작업물)도 대표 이미지 높이를 다른 게시물과 같게 유지 */
-.detail__head--bare .detail__thumb,.detail__head--bare .detail__thumb-ph{min-height:calc(var(--dthumb) * .6);}
+.detail__thumb,.detail__thumb-ph{flex:0 0 auto;width:var(--dthumb);height:var(--dthumb-h);border-radius:var(--r-card);background:var(--frost);}
+.detail__thumb{object-fit:cover;}
+.detail__thumb-ph{display:grid;place-items:center;color:var(--slate);font-size:var(--text-body-sm);text-align:center;}
+/* 아트 작업물: 제목 아래 남는 칸을 작은 썸네일 2장으로 채움 */
+.detail__side{flex:1 1 0;min-height:0;display:flex;justify-content:center;gap:12px;margin-top:var(--s16);}
+.detail__side img{height:100%;width:auto;max-width:calc(50% - 6px);aspect-ratio:1;object-fit:cover;border-radius:10px;background:var(--frost);}
+.detail__tagline--fit{font-size:14px;line-height:1.5;}   /* 요약이 길면 글씨를 줄여 칸 안에 */
 @media (max-width:559px){
-  .detail__thumb,.detail__thumb-ph{width:96px;}
+  .detail-col{--dthumb:96px;}
   .detail__head{gap:var(--s16);}
   .detail__thumb,.detail__thumb-ph{height:auto;align-self:stretch;}
+  .detail__head > div:not(.detail__thumb-ph){height:auto;padding-top:0;}
+  .detail__side{display:none;}
 }
 .detail__title{font-size:clamp(28px,7vw,48px);font-weight:700;letter-spacing:-.03em;line-height:1.05;color:var(--graphite);}
 .detail__tagline{margin-top:var(--s12);color:var(--violet-deep);font-weight:500;font-size:clamp(15px,3.8vw,18px);line-height:1.6;max-width:60ch;}
@@ -1346,6 +1345,7 @@ var CONTENT = {
         images: [ { src: 'assets/images/art/work-01.jpg' }, { src: 'assets/images/art/work-02.jpg' }, { src: 'assets/images/art/work-03.jpg' },
                   { src: 'assets/images/art/work-04.jpg' }, { src: 'assets/images/art/work-05.jpg' }, { src: 'assets/images/art/work-06.jpg' } ] },
       { id: 'art-chara', title: '캐릭터 원화 (개인작)', tagline: '개인 작업 캐릭터 원화 일러스트(NO AI)', kind: 'image',
+        sideThumbs: ['assets/images/art/chara-04.webp?v=2', 'assets/images/art/chara-08.webp'],
         thumb: 'assets/images/art/chara-thumb.webp?v=2', tags: ['캐릭터', '원화', '개인작'],
         images: [ { src: 'assets/images/art/chara-01.webp?v=2' }, { row: [ { src: 'assets/images/art/chara-02.webp?v=2', ratio: 1125/2000 }, { src: 'assets/images/art/chara-03.webp?v=2', ratio: 1429/2000 } ] },   /* 빨간 정장 | 녹색 꽃 */
                   { src: 'assets/images/art/chara-08.webp' },   /* 보라 가시 캐릭터 */
@@ -1353,6 +1353,7 @@ var CONTENT = {
                   { src: 'assets/images/art/chara-04.webp?v=2' }, { src: 'assets/images/art/chara-05.webp?v=2' },
                   { src: 'assets/images/art/chara-06.jpg?v=2' }, { src: 'assets/images/art/chara-07.jpg?v=2' } ] },
       { id: 'art-illust', title: '일러스트 (개인작)', tagline: '개인 작업 일러스트(NO AI)', kind: 'image',
+        sideThumbs: ['assets/images/art/illust-02.webp', 'assets/images/art/illust-05.webp'],
         thumb: 'assets/images/art/illust-thumb.webp', tags: ['일러스트', '개인작'],
         images: [ { src: 'assets/images/art/illust-01.webp' },
                   { row: [ { src: 'assets/images/art/illust-02.webp', ratio: 800/1000 }, { src: 'assets/images/art/illust-03.webp', ratio: 800/1000 } ] },
@@ -2629,7 +2630,8 @@ var CONTENT = {
     h.push('<header class="detail__head' + (hasList(m.meta) ? '' : ' detail__head--bare') + '">');
     h.push(imgOr(m.thumb, m.title || '', 'detail__thumb', 'detail__thumb-ph', '대표 이미지'));
     h.push('<div><h1 class="detail__title">' + twoTone(m.title, '게시물 제목') + '</h1>' +
-      '<p class="detail__tagline">' + (has(m.detailDesc) ? esc(m.detailDesc).replace(/\n/g, '<br>') : txt(m.tagline, '한 줄 설명')) + '</p>' +
+      '<p class="detail__tagline' + (has(m.detailDesc) ? ' detail__tagline--fit' : '') + '">' + (has(m.detailDesc) ? esc(m.detailDesc).replace(/\n/g, '<br>') : txt(m.tagline, '한 줄 설명')) + '</p>' +
+      (hasList(m.sideThumbs) ? '<div class="detail__side">' + m.sideThumbs.map(function (u) { return '<img src="' + esc(u) + '" alt="" loading="lazy">'; }).join('') + '</div>' : '') +
       (hasList(m.meta)
         ? '<ul class="dmeta">' + m.meta.map(function (f) {
             var v = f.value;
