@@ -891,22 +891,9 @@ img.ppage__img{display:block;}
 /* 1열 — 이미지를 본문 폭 가득, 위에서 아래로 나열. 비율은 1920×1080(16:9) 고정 */
 .gallery{margin-top:var(--s32);display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s24);}
 .gallery__it{margin:0;}
-.gallery__it{position:relative;}
-.gallery__view{overflow:hidden;border-radius:var(--r-card);border:1px solid var(--ash);background:var(--frost);}   /* 휠은 사이트 스크롤 그대로 · 이동은 끌어서 */
-.gallery__it.is-zoom .gallery__view{cursor:grab;touch-action:pan-y;}
-.gallery__view.is-drag{cursor:grabbing;}
-.gallery__view img{display:block;width:calc(var(--z,1) * 100%);max-width:none;height:auto;user-select:none;-webkit-user-drag:none;}   /* 원래 비율 · 가로 폭에 맞춤 × 확대율 */
+.gallery__view{overflow:hidden;border-radius:var(--r-card);border:1px solid var(--ash);background:var(--frost);}
+.gallery__view img{display:block;width:100%;height:auto;}   /* 원래 비율 · 가로 폭에 맞춤 */
 @media (min-width:900px){ .detail-col .gallery{width:min(var(--page-max),100vw - 40px);margin-left:calc((100% - min(var(--page-max),100vw - 40px)) / 2);} }
-/* 돋보기 슬라이드바 — 그림마다 따로, 우상단(80% 크기). 그림 위에 마우스를 올렸을 때만 보임 */
-.gzoom-wrap{position:sticky;top:76px;z-index:5;height:0;display:flex;justify-content:flex-end;align-items:flex-start;}
-.gzoom{margin:12px 12px 0 0;transform:scale(.8);transform-origin:top right;display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:999px;
-  background:var(--surface);border:1px solid var(--ash);box-shadow:var(--sh-card);color:var(--slate);opacity:0;transition:opacity .2s ease;}
-.gallery__it:hover .gzoom,.gzoom:focus-within{opacity:1;}
-@media (hover:none){.gzoom{opacity:1;}}   /* 터치 기기는 항상 */
-.gzoom__r{width:min(220px,40vw);accent-color:var(--violet);}
-.gzoom__b{width:28px;height:28px;border-radius:50%;border:1px solid var(--ash);background:var(--cloud);font-size:16px;line-height:1;color:var(--graphite);}
-.gzoom__b:hover{border-color:var(--violet);color:var(--violet);}
-.gzoom__v{min-width:44px;text-align:right;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--violet-deep);}
 .gallery__it figcaption{margin-top:6px;color:var(--steel);font-size:var(--text-caption);}
 .gallery__ph{display:grid;place-items:center;aspect-ratio:16/9;width:100%;border-radius:var(--r-card);background:var(--frost);color:var(--steel);font-size:var(--text-caption);}
 .figure{margin-top:var(--s16);}
@@ -2663,12 +2650,7 @@ var CONTENT = {
       var gal = m.images.map(function (im) {
         im = typeof im === 'string' ? { src: im } : (im || {});
         if (!has(im.src)) return SHOW_PLACEHOLDER ? '<figure class="gallery__it"><div class="gallery__ph">이미지</div></figure>' : '';
-        return '<figure class="gallery__it" style="--z:1"><div class="gzoom-wrap"><div class="gzoom" role="group" aria-label="확대 · 축소">' +
-          '<button type="button" class="gzoom__b" data-z="-1" aria-label="축소">−</button>' +
-          '<span class="gzoom__ico" aria-hidden="true"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg></span>' +
-          '<input type="range" class="gzoom__r" min="100" max="400" step="10" value="100" aria-label="확대 비율">' +
-          '<button type="button" class="gzoom__b" data-z="1" aria-label="확대">+</button>' +
-          '<output class="gzoom__v">100%</output></div></div>' +
+        return '<figure class="gallery__it">' +
           '<div class="gallery__view">' +
           '<img src="' + esc(im.src) + '" alt="' + esc(im.caption || m.title || '') + '" loading="lazy"></div>' +
           (has(im.caption) ? '<figcaption>' + esc(im.caption) + '</figcaption>' : '') + '</figure>';
@@ -3078,7 +3060,7 @@ var CONTENT = {
       if (state.route === 'about') { host.innerHTML = renderAbout(); armMosaic(); }
       else if (state.route === 'resume') { host.innerHTML = renderResume(state.param); bindProjectList(); bindIntro(); }
       else if (state.route === 'portfolio') host.innerHTML = withMosaic(renderPortfolio());
-      else if (state.route === 'post') { host.innerHTML = withMosaic(renderPost(state.param)); bindPlanner(); bindGallery(); }
+      else if (state.route === 'post') { host.innerHTML = withMosaic(renderPost(state.param)); bindPlanner(); }
       else if (state.route === 'history') { host.innerHTML = withMosaic(renderHistory()); bindHistory(); }
       rendered[state.route] = key;
     }
@@ -3157,41 +3139,6 @@ var CONTENT = {
       if (on) bentoGo(m, 0); else { m._bi = null; Array.prototype.forEach.call(vs, function (v) { v.pause(); }); }
     });
     if (on && ms.length) bentoRaf = requestAnimationFrame(bentoTick);
-  }
-
-  /* 아트 갤러리 돋보기 — 그림마다 따로 100~400% 확대. 휠은 사이트 스크롤, 확대 중엔 끌어서 이동 */
-  function bindGallery() {
-    var g = document.getElementById('gallery'); if (!g) return;
-    Array.prototype.forEach.call(g.querySelectorAll('.gallery__it'), function (fig) {
-      var r = fig.querySelector('.gzoom__r'), out = fig.querySelector('.gzoom__v'), w = fig.querySelector('.gallery__view');
-      if (!r || !w) return;
-      function set(v) {
-        v = Math.max(100, Math.min(400, Math.round(v / 10) * 10));
-        var cx = (w.scrollLeft + w.clientWidth / 2) / (w.scrollWidth || 1), cy = (w.scrollTop + w.clientHeight / 2) / (w.scrollHeight || 1);
-        r.value = v; out.textContent = v + '%'; fig.style.setProperty('--z', v / 100);
-        fig.classList.toggle('is-zoom', v > 100);
-        w.style.maxHeight = v > 100 ? '82vh' : '';   /* 확대하면 화면 높이 틀 안에서 보기 */
-        w.scrollLeft = cx * w.scrollWidth - w.clientWidth / 2;
-        w.scrollTop = cy * w.scrollHeight - w.clientHeight / 2;
-      }
-      r.addEventListener('input', function () { set(+r.value); });
-      Array.prototype.forEach.call(fig.querySelectorAll('.gzoom__b'), function (b) {
-        b.addEventListener('click', function () { set(+r.value + (+b.getAttribute('data-z')) * 50); });
-      });
-      var sx, sy, sl, st, down = false, touch = false;
-      w.addEventListener('pointerdown', function (e) {
-        if (+r.value <= 100) return;
-        down = true; touch = e.pointerType === 'touch'; sx = e.clientX; sy = e.clientY; sl = w.scrollLeft; st = w.scrollTop;
-        w.classList.add('is-drag'); if (!touch) w.setPointerCapture(e.pointerId);
-      });
-      w.addEventListener('pointermove', function (e) {
-        if (!down) return;
-        w.scrollLeft = sl - (e.clientX - sx);
-        if (!touch) w.scrollTop = st - (e.clientY - sy);   /* 터치는 위아래를 사이트 스크롤에 양보 */
-      });
-      function up() { down = false; w.classList.remove('is-drag'); }
-      w.addEventListener('pointerup', up); w.addEventListener('pointercancel', up);
-    });
   }
 
   function armMosaic() {
