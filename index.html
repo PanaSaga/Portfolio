@@ -740,6 +740,9 @@ mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;bo
 .post-kind{display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:5px;background:var(--accent-soft);color:var(--violet-deep);font-size:11px;font-weight:700;letter-spacing:.03em;}
 /* 태그 안 아이콘·글자 정렬 미세조정: 글자 1px 아래로, 아이콘 2px·글자 4px 왼쪽으로 당겨 폭 축소 */
 .post-kind .pico{margin-left:-2px;}
+/* 종류 태그 색: PROJECT 빨강 · PDF 주황 · IMAGE 보라(기본) */
+.kind--project{background:#ffe1e8 !important;color:#d4174c !important;}
+.kind--pdf{background:#ffead2 !important;color:#c95f00 !important;}
 .post-kind .kind__t{position:relative;top:1px;margin-left:-4px;}
 .post--sample{border-color:var(--ash);}
 /* 태그 + 제목을 한 줄에 — 아래 한 줄 설명 공간 확보 */
@@ -1307,7 +1310,7 @@ var CONTENT = {
       {  // 대 (bento 왼쪽 큰 카드)
         id: 'moremustmush', title: 'More Must Mush',
         tagline: '핀볼로 버섯 군락을 부숴 수확하는 반자동 벽돌깨기 · 캐주얼 인크리멘탈',
-        kind: 'game', thumb: 'assets/images/projects/mmm-thumb-v2.webp',
+        kind: 'project', thumb: 'assets/images/projects/mmm-thumb-v2.webp',
         preview: ['assets/images/projects/mmm-play-1.mp4', 'assets/images/projects/mmm-play-2.mp4', 'assets/images/projects/mmm-play-3.mp4'],   /* About 카드: 마우스를 올리거나 20초가 지나면 1→2→3 순서로 슬라이드 재생 (Launch · Upgrade · Combos & Skills) */
         tags: ['캐주얼', '인크리멘탈', '벽돌깨기'],
         meta: [
@@ -2182,7 +2185,7 @@ var CONTENT = {
       return '<a class="bcard bcard--c' + (i + 1) + (i >= 2 ? ' bcard--sm' : '') + '" href="#post/' + esc(it.id || '') + '">' +
         media +
         '<span class="bcard__b">' +
-          '<span class="bcard__head">' + (kind ? '<span class="bcard__kind">' + esc(kind) + '</span>' : '') +
+          '<span class="bcard__head">' + (kind ? '<span class="bcard__kind kind--' + esc(it.kind) + '">' + esc(kind) + '</span>' : '') +
             '<span class="bcard__t">' + txt(it.title, '게시물 제목') + '</span></span>' +
           '<span class="bcard__d">' + txt(it.tagline, '한 줄 설명') + '</span></span>' +
         '</a>';
@@ -2498,7 +2501,7 @@ var CONTENT = {
     return '<a class="card' + (p.sample ? ' post--sample' : '') + '" href="#post/' + esc(p.id || '') + '">' +
       imgOr(p.thumb, p.title || '', 'post-thumb', 'post-thumb-ph', '대표 이미지') +
       '<span class="post__head">' +
-        (kind ? '<span class="post-kind">' + pico(KIND_ICON[p.kind] || 'project') + '<span class="kind__t">' + esc(kind) + '</span></span>' : '') +
+        (kind ? '<span class="post-kind kind--' + esc(p.kind) + '">' + pico(KIND_ICON[p.kind] || 'project') + '<span class="kind__t">' + esc(kind) + '</span></span>' : '') +
         '<span class="post__title">' + txt(p.title, '게시물 제목') + '</span>' +
       '</span>' +
       '<p class="post__desc">' + txt(p.tagline, '한 줄 설명') + '</p>' +
