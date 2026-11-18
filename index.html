@@ -717,11 +717,12 @@ a.card:active{transform:scale(.995);}
 .qsec + .qsec{border-top:1px solid var(--ash);}
 .qsec__q{font-size:clamp(17px,3.4vw,24px);font-weight:700;letter-spacing:-.025em;line-height:1.3;color:#f88e20;}
 .qsec__q-a{font-size:calc(1em + 12pt);}           /* 제목 앞부분 +12pt (4pt → 8pt 추가) */
-.qsec__q-b{font-size:calc(1em - 4pt);color:#241a8f;} /* 제목 뒷부분 -4pt · 남색 */
-.qsec__a{margin-top:var(--s16);color:var(--graphite);font-size:clamp(13px,3.6vw,15px);line-height:1.9;max-width:72ch;}   /* 본문 진회색 · 2px 작게 */
+.qsec__q-b{font-size:calc(1em - 4pt);color:#f31d5d;} /* 제목 뒷부분 -4pt · 남색 */
+.qsec__a{position:relative;margin-top:16px;padding-top:16px;width:fit-content;max-width:min(72ch,100%);color:var(--graphite);font-size:clamp(13px,3.6vw,15px);line-height:1.9;}   /* 제목↔본문 간격 2배 */
+.qsec__a::before{content:"";position:absolute;top:0;left:0;width:calc(100% + 24px);max-width:100vw;height:1px;background:var(--ash);}   /* 가운데 가는 선 — 본문 폭보다 살짝 길게 */   /* 본문 진회색 · 2px 작게 */
 .qsec__a .qb{color:#4a30dd;font-weight:700;}   /* 굵게 = 보라 */
-.qsec__a .qul{background:linear-gradient(transparent 58%,rgba(248,142,32,.5) 58%,rgba(248,142,32,.5) 92%,transparent 92%);-webkit-box-decoration-break:clone;box-decoration-break:clone;}   /* 밑줄 = 연주황(50%)이 글자 아랫부분을 살짝 덮음 */
-.qsep{width:44px;height:3px;border:0;border-radius:2px;background:#f88e20;margin:2.2em 0;}   /* --- 짧은 주황 선 */
+.qsec__a .qul{background:linear-gradient(transparent 58%,rgba(156,140,245,.45) 58%,rgba(156,140,245,.45) 92%,transparent 92%);-webkit-box-decoration-break:clone;box-decoration-break:clone;}   /* 밑줄 = 연보라가 글자 아랫부분을 살짝 덮음 */
+.qsep{margin:1.6em 0;color:var(--slate);font-weight:700;}   /* --- → * 한 개 */
 .qtag{display:inline-block;vertical-align:.12em;margin-right:8px;padding:2px 10px;border-radius:999px;background:var(--accent-soft);color:var(--violet-deep);font-size:.72em;font-weight:700;letter-spacing:0;}
 mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
 .qsec__a p + p{margin-top:1.9em;}   /* 문단 사이 = 빈 줄 한 줄 */
@@ -1063,10 +1064,10 @@ a.pnav__b:hover{background:var(--accent-soft);color:var(--violet-deep);border-co
       <span class="brand__name" id="brandName">Portfolio</span>
     </a>
     <nav class="navlinks" id="navlinks" aria-label="주요 메뉴">
-      <a class="navlink" href="#about"     data-route="about">About</a>
-      <a class="navlink" href="#resume"    data-route="resume">Resume</a>
-      <a class="navlink" href="#portfolio" data-route="portfolio">Portfolio</a>
-      <a class="navlink" href="#history"   data-route="history">History</a>
+      <a class="navlink" href="#about"     data-route="about">프로필</a>
+      <a class="navlink" href="#resume"    data-route="resume">이력 · 자기소개</a>
+      <a class="navlink" href="#portfolio" data-route="portfolio">포트폴리오</a>
+      <a class="navlink" href="#history"   data-route="history">히스토리</a>
     </nav>
   </div>
 </header>
@@ -2394,7 +2395,7 @@ var CONTENT = {
   function introBody(v) {
     if (!has(v)) return '<p>' + phPlain('내용') + '</p>';
     return String(v).split(/\n\s*\n/).map(function (p) {
-      if (/^\s*-{3,}\s*$/.test(p)) return '<hr class="qsep">';
+      if (/^\s*-{3,}\s*$/.test(p)) return '<p class="qsep" aria-hidden="true">*</p>';
       var x = esc(p).replace(/\n/g, '<br>')
         .replace(/__([\s\S]+?)__/g, '<span class="qul">$1</span>')
         .replace(/\*\*([\s\S]+?)\*\*/g, '<b class="qb">$1</b>');
