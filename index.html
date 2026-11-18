@@ -715,10 +715,14 @@ a.card:active{transform:scale(.995);}
 .qsec{padding:var(--s40) 0;}
 .qsec:first-child{padding-top:var(--s32);}
 .qsec + .qsec{border-top:1px solid var(--ash);}
-.qsec__q{font-size:clamp(19px,3.4vw,26px);font-weight:700;letter-spacing:-.025em;line-height:1.3;color:#f88e20;}
+.qsec__q{font-size:clamp(17px,3.4vw,24px);font-weight:700;letter-spacing:-.025em;line-height:1.3;color:#f88e20;}
 .qsec__q-a{font-size:calc(1em + 12pt);}           /* 제목 앞부분 +12pt (4pt → 8pt 추가) */
 .qsec__q-b{font-size:calc(1em - 4pt);color:#241a8f;} /* 제목 뒷부분 -4pt · 남색 */
-.qsec__a{margin-top:var(--s16);color:var(--slate);font-size:clamp(15px,3.6vw,17px);line-height:1.9;max-width:70ch;}
+.qsec__a{margin-top:var(--s16);color:var(--graphite);font-size:clamp(13px,3.6vw,15px);line-height:1.9;max-width:72ch;}   /* 본문 진회색 · 2px 작게 */
+.qsec__a .qb{color:#4a30dd;font-weight:700;}   /* 굵게 = 보라 */
+.qsec__a .qul{background:linear-gradient(transparent 58%,rgba(248,142,32,.5) 58%,rgba(248,142,32,.5) 92%,transparent 92%);-webkit-box-decoration-break:clone;box-decoration-break:clone;}   /* 밑줄 = 연주황(50%)이 글자 아랫부분을 살짝 덮음 */
+.qsep{width:44px;height:3px;border:0;border-radius:2px;background:#f88e20;margin:2.2em 0;}   /* --- 짧은 주황 선 */
+.qtag{display:inline-block;vertical-align:.12em;margin-right:8px;padding:2px 10px;border-radius:999px;background:var(--accent-soft);color:var(--violet-deep);font-size:.72em;font-weight:700;letter-spacing:0;}
 mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
 .qsec__a p + p{margin-top:1.9em;}   /* 문단 사이 = 빈 줄 한 줄 */
 .qsec__a mark.hl{background:#c9c2f5;}   /* 자기소개 형광펜은 연보라 박스 */
@@ -1278,13 +1282,13 @@ var CONTENT = {
   intro: {
     logline: '',
     desc: '',
-    /* q = 제목 / a = 내용(중요한 부분은 **형광펜** 표시) / label = 오른쪽 목차 이름 */
+    /* q = '큰 제목|[태그] 부제' / a = 본문 (**굵게=보라**, __밑줄=연주황__, 빈 줄=문단, --- = 짧은 주황 구분선) / label = 오른쪽 목차 */
     items: [
-      { label: '‘기획자’라는 단어도 몰랐던', q: '‘기획자’라는 단어도 몰랐던 때부터|이 곳까지 무턱대고 걸어왔습니다.',
-        a: '__‘차라리 미술을 해라.’__ 당시의 게임산업은 생소한 영역이었기에 제 꿈은 응원받지 못했습니다. 미대 진학을 가능케한 창의성도 만들고 싶은 게임을 구현하고픈 욕구로 성장한 재능이었는데도, 안정적인 미래가 아니라는 주변의 말에 겁을 먹은 겁니다.\n\n그럼에도 게임을 포기할 수 없어 갈피를 잡지 못했습니다. 이 선택이 정당했다고 자신을 설득하고자 미래에 대한 두려움을 되뇌어오다, 역으로 미래가 왜 두려웠는지 반추하게 됐습니다.\n**왜 다른 사람의 말에 휘둘려 온 걸까? 게임에 대해 잘 아는건 나인데.** 그 결과, 저 스스로에 대한 믿음이 없었단 사실을 발견했습니다. 이 열망을 놓든가, 저 자신을 믿든가. 해답이 명확해지자 선택은 명쾌했습니다.\n\n게임업계에 진학하려면 다시 긴 공부 과정을 거쳐야 했고, 이 기간 동안 가족이 저를 믿고 기다릴 수 있도록 타인에게도 믿음을 줘야 했습니다. 그래서 ‘게임 업계에 그래픽 디자이너로 취업한 뒤 경험을 쌓아 게임 기획자로 이직’한다는 미래를 설계해 가족을 설득했습니다. 기획자가 되기까지는 더 오래 걸리겠지만, 전공을 기반으로 공부 기간을 단축한 뒤 결과를 만들 수 있는 방법이었습니다. 계획은 성공했고, 현장에서 많은 것을 배울 수 있었습니다.\n\n약 3년. 제작자의 위치에선 기획에 대한 배움에 한계를 느끼고 퇴사했습니다. 이후 기획자에 대해 기초부터 공부하며 다시 출발선으로 돌아왔습니다. 하지만 그때와는 달리 지금은 제 꿈에 대한 응원을 받고 있으며, 저에 대한 끈기와 업무능력을 기반한 스스로에 대한 믿음이 생겼습니다. 비록 긴 시간을 돌아왔지만, 그렇기에 저라는 사람은 더 단단하게 뿌리내릴 수 있었습니다. 이 경험을 토대로 끈기 있게 신뢰를 보여줄 수 있는 기획자로서 자리 잡고자 노력하겠습니다.' },
-      { label: '', q: '이어지는 제목', a: '' },
-      { label: '', q: '', a: '' },
-      { label: '', q: '', a: '' }
+      { label: '성장과정', q: '‘기획자’라는 단어도 몰랐던 때부터|[성장과정] 게임 업계를 피해 진학하고, 게임 업계에 취업하기까지',
+        a: '**‘게임이 어떻게 일이 되니? 너 그러다 백수 돼. 차라리 미술을 해.’** 진학 과정에서 실제로 들은 말입니다.\n당시 게임 산업에 대해 알려진 정보가 적었고, 게임에 대한 시선은 너그럽지 않았기에\n어른들의 시선에 __게임 업계로 가는 길은 투명 다리__와 마찬가지였습니다.\n\n주변 사람들이 툭툭 내뱉는 비관적 미래는 어린 제가 감당하기엔 절망적이었고,\n타협안으로 내밀어진 것은 디자인과의 취업 전망이 좋다는 감언이설이었습니다.\n\n아이러니하게도, 디자인과 진학을 노릴 수 있게 해준 미술 실력은\n__만들고 싶은 게임을 종이 위에 그려서 구현하던 놀이__로 만들어진 것이었습니다.\n\n---\n\n투명 다리를 피한 결과는 불투명한 미래였습니다. 저는 여전히 불안했고, 두려웠습니다.\n\n그럼에도 취업은 해야 하니 **디자인 포트폴리오를 만들어봤지만 이내 그만뒀습니다.**\n__4년간의 디자인 작업물을 정리하고 보니, 디자인 테마조차 게임__이었습니다.\n게임업계에 취업할 수 있을진 알 수 없었지만, 게임 업계에 취업하고 싶다는 것은 확실했습니다.\n\n---\n\n길은 여전히 투명했고, 주변 사람들의 비관적 우려는 여전했습니다. 저 자신도 확신이 서지 않았습니다.\n\n그래서, **‘게임 업계에 그래픽 디자이너로 취업해 경험을 쌓고 기획자로 이직’**한다는\n눈에 보이는 긴 다리를 설계하기로 했습니다.\n\n처음부터 다시 공부하기보다, 지금까지 공부한 것들을 뼈대 삼아 취업이라는 나사를 박기 위함이었습니다.\n__**‘게임도 미래가 될 수 있다.’**는 것을 겁 많은 저 자신에게 보여주고 싶었습니다.__\n\n---\n\n게임 그래픽 디자이너로서 3년간의 경험은 __겁 많고 우유부단했던 저 자신을 단단하게 뿌리내리게 해줬습니다.__\n제게 **책임감과 성실함**이 있음을 알게 되었으며, 직무 경험을 통해 **‘할 수 있다’는 확신**을 갖게 되었습니다.\n그렇기에 두렵더라도 도전할 수 있는 사람이 되었으며, 실패하더라도 다음을 위한 발판으로 삼을 수 있는\n사람을 목표로 지금도 계속 성장하고 있습니다.' },
+      { label: '경험 및 역량', q: '제목|[경험 및 역량] …', a: '내용수정중…' },
+      { label: '성격의 장단점', q: '좌우명 ‘너의 감정을 강요하지 마.’|[성격의 장단점] 하지만 나는 지금 빨간 색을 볼 수 없는 사람에게 빨간 색을 설명해야 한다.', a: '내용 수정중…' },
+      { label: '입사 후 포부', q: '제목|[입사 후 포부]', a: '감이안옴' }
     ]
   },
 
@@ -2380,11 +2384,24 @@ var CONTENT = {
   function qTitle(q) {
     if (!has(q) || String(q).indexOf('|') < 0) return txt(q, '제목');
     var i = String(q).indexOf('|');
+    var b = esc(q.slice(i + 1)).replace(/^\[([^\]]+)\]\s*/, '<span class="qtag">$1</span>');   /* [태그] → 태그 칩 */
     return '<span class="qsec__q-a">' + esc(q.slice(0, i)) + '</span><br>' +
-      '<span class="qsec__q-b">' + esc(q.slice(i + 1)) + '</span>';
+      '<span class="qsec__q-b">' + b + '</span>';
   }
 
   /* ---------- 자기소개 — 칸 없이 한 페이지, 오른쪽에 목차 ---------- */
+  /* 자기소개 본문: **보라 굵게** · __연주황 밑줄__ · 빈 줄 = 문단 · --- = 짧은 주황 선 */
+  function introBody(v) {
+    if (!has(v)) return '<p>' + phPlain('내용') + '</p>';
+    return String(v).split(/\n\s*\n/).map(function (p) {
+      if (/^\s*-{3,}\s*$/.test(p)) return '<hr class="qsep">';
+      var x = esc(p).replace(/\n/g, '<br>')
+        .replace(/__([\s\S]+?)__/g, '<span class="qul">$1</span>')
+        .replace(/\*\*([\s\S]+?)\*\*/g, '<b class="qb">$1</b>');
+      return '<p>' + x + '</p>';
+    }).join('');
+  }
+
   function renderIntro() {
     var it = CONTENT.intro || {};
     var list = it.items || [];
@@ -2405,7 +2422,7 @@ var CONTENT = {
     h.push('<div class="intro-main">' + list.map(function (item, i) {
       return '<section class="qsec" id="q' + (i + 1) + '">' +
         '<h2 class="qsec__q">' + qTitle(item.q) + '</h2>' +
-        '<div class="qsec__a">' + bodyPlain(item.a, '내용 — 중요한 부분은 **형광펜** 으로 감싸세요') + '</div>' +
+        '<div class="qsec__a">' + introBody(item.a) + '</div>' +
         '</section>';
     }).join('') + '</div>');
 
