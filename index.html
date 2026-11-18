@@ -198,6 +198,8 @@ h1,h2,h3,h4,p{margin:0;}
 .brand{display:flex;align-items:center;gap:var(--s8);flex:0 0 auto;}
 .brand__mark{width:22px;height:22px;border-radius:5px;background:var(--accent-soft);display:grid;place-items:center;color:var(--violet-deep);font-size:12px;font-weight:700;letter-spacing:-.02em;}
 .brand__name{font-size:var(--text-body-sm);font-weight:600;letter-spacing:-.02em;white-space:nowrap;}
+.navlink{position:relative;}
+.nav__dot{position:absolute;top:6px;right:4px;width:8px;height:8px;border-radius:50%;background:#f31d5d;pointer-events:none;}   /* 알림 점 — 한 번 누르면 사라짐 */
 .navlinks{display:flex;align-items:center;gap:var(--s4);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -4px;padding:0 4px;}
 .navlinks::-webkit-scrollbar{display:none;}
 .navlink{flex:0 0 auto;padding:8px 12px;border-radius:var(--r-btn);font-size:calc(var(--text-body-sm) + 2pt);font-weight:700;color:#241a8f;white-space:nowrap;transition:color .15s ease,background-color .15s ease;}
@@ -723,7 +725,7 @@ a.card:active{transform:scale(.995);}
 .qsec__a{position:relative;margin-top:24px;padding-top:28px;width:fit-content;max-width:min(72ch,100%);color:#2a2c31;font-size:clamp(13px,3.6vw,15px);line-height:1.9;}   /* 제목↔본문 간격 2배 */
 .qsec__a::before{content:"";position:absolute;top:0;left:0;width:calc(100% + 24px);max-width:100vw;height:1px;background:var(--ash);}   /* 가운데 가는 선 — 본문 폭보다 살짝 길게 */   /* 본문 진회색 · 2px 작게 */
 .qsec__a .qb{color:#4a30dd;font-weight:700;}   /* 굵게 = 보라 */
-.qsec__a .qul{background:#ebe7fd;padding:1px 2px;border-radius:2px;-webkit-box-decoration-break:clone;box-decoration-break:clone;}   /* 형광펜 = 글씨 뒷배경 전체를 연한 연보라로 */
+.qsec__a .qul{background:#dcd6f8;padding:1px 2px;border-radius:2px;-webkit-box-decoration-break:clone;box-decoration-break:clone;}   /* 형광펜 = 글씨 뒷배경 전체를 연한 연보라로 */
 .qsep{margin:1.6em 0;color:#f88e20;font-weight:700;}   /* --- → * 한 개 */
 .qtag{display:inline-block;vertical-align:.12em;margin-right:8px;padding:2px 10px;border-radius:999px;background:var(--accent-soft);color:var(--violet-deep);font-size:.72em;font-weight:700;letter-spacing:0;}
 mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
@@ -1067,7 +1069,7 @@ a.pnav__b:hover{background:var(--accent-soft);color:var(--violet-deep);border-co
     </a>
     <nav class="navlinks" id="navlinks" aria-label="주요 메뉴">
       <a class="navlink" href="#about"     data-route="about">프로필</a>
-      <a class="navlink" href="#resume"    data-route="resume">이력 · 자기소개</a>
+      <a class="navlink" href="#resume"    data-route="resume" id="navResume">이력 · 자기소개<span class="nav__dot" aria-hidden="true"></span></a>
       <a class="navlink" href="#portfolio" data-route="portfolio">포트폴리오</a>
       <a class="navlink" href="#history"   data-route="history">히스토리</a>
     </nav>
@@ -3223,6 +3225,12 @@ var CONTENT = {
     });
     if (on && ms.length) bentoRaf = requestAnimationFrame(bentoTick);
   }
+
+  /* 상단 '이력 · 자기소개' 알림 점: 한 번 누르면 사라짐 */
+  (function () {
+    var a = document.getElementById('navResume');
+    if (a) a.addEventListener('click', function () { var d = a.querySelector('.nav__dot'); if (d) d.parentNode.removeChild(d); });
+  })();
 
   function armMosaic() {
     var el = document.querySelector('.mosaic--in');
