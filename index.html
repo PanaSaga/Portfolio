@@ -194,17 +194,24 @@ h1,h2,h3,h4,p{margin:0;}
   border-bottom:1px solid var(--ash);
   padding-top:env(safe-area-inset-top, 0px);
 }
-.nav__inner{display:flex;align-items:center;justify-content:space-between;gap:var(--s12);height:var(--nav-h);}
-.brand{display:flex;align-items:center;gap:var(--s8);flex:0 0 auto;}
+.nav__inner{display:flex;align-items:center;justify-content:center;gap:var(--s12);height:var(--nav-h);}
+.brand{display:none !important;}   /* 좌상단 로고 숨김 — 메뉴는 가운데 */
+.brand-x{display:flex;align-items:center;gap:var(--s8);flex:0 0 auto;}
 .brand__mark{width:22px;height:22px;border-radius:5px;background:var(--accent-soft);display:grid;place-items:center;color:var(--violet-deep);font-size:12px;font-weight:700;letter-spacing:-.02em;}
 .brand__name{font-size:var(--text-body-sm);font-weight:600;letter-spacing:-.02em;white-space:nowrap;}
 .navlink{position:relative;}
 .nav__dot{position:absolute;top:6px;right:4px;width:8px;height:8px;border-radius:50%;background:#f31d5d;pointer-events:none;}   /* 알림 점 — 한 번 누르면 사라짐 */
-.navlinks{display:flex;align-items:center;gap:var(--s4);overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -4px;padding:0 4px;}
+.navlinks{display:flex;align-items:center;gap:10px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -4px;padding:0 4px;}
 .navlinks::-webkit-scrollbar{display:none;}
-.navlink{flex:0 0 auto;padding:8px 12px;border-radius:var(--r-btn);font-size:calc(var(--text-body-sm) + 2pt);font-weight:700;color:#241a8f;white-space:nowrap;transition:color .15s ease,background-color .15s ease;}
+.navlink{flex:0 0 auto;padding:8px 12px;border-radius:var(--r-btn);font-size:calc(var(--text-body-sm) + 4pt);font-weight:700;color:#241a8f;white-space:nowrap;transition:color .15s ease,background-color .15s ease;}
 .navlink:hover{color:#241a8f;background:var(--cloud);}
 .navlink.is-active{color:#f88e20;background:var(--frost);}   /* 선택 = 주황, 나머지 = 남색 */
+/* 메뉴 버튼: 칸마다 나눠진 상자 + 픽토그램 */
+.navlink{display:inline-flex;align-items:center;gap:8px;padding:8px 16px 8px 12px;font-size:calc(var(--text-body-sm) + 4pt + 2px);border:1px solid var(--ash);background:var(--surface);box-shadow:rgba(39,40,53,.05) 0 1px 3px 0;}
+.navlink:hover{border-color:var(--violet);background:var(--surface);}
+.navlink.is-active{border-color:#f88e20;background:#fff4e8;}
+.navlink__ico{width:26px;height:26px;flex:0 0 auto;display:block;}
+@media (max-width:600px){.navlink__ico{width:20px;height:20px;} .navlink{padding:5px 10px 5px 8px;gap:6px;}}
 @media (max-width:560px){.brand__name{display:none;}.navlink{padding:8px 8px;}}   /* 글씨가 커진 만큼 좁혀 4개가 다 보이게 */
 
 /* ============================================================
@@ -281,10 +288,10 @@ a.card:active{transform:scale(.995);}
 .hero__logline .ll-k{position:relative;color:inherit;text-decoration:none;font-size:1em;transition:font-size .25s ease,color .25s ease;}
 /* 알림 뱃지 — '기획자' 오른쪽 위 (Resume 자기소개 탭의 점과 같은 색) */
 .hero__logline .ll-dot{position:absolute;top:.04em;right:-.2em;width:max(8px,.17em);height:max(8px,.17em);border-radius:50%;background:#f31d5d;pointer-events:none;}
-.hero__logline:hover .ll-k,.hero__logline:active .ll-k{font-size:calc(var(--ll-fs) + 6pt);color:#f31d5d;}
+.hero__logline:hover .ll-k,.hero__logline:active .ll-k,body.nav-hot .hero__logline .ll-k{font-size:calc(var(--ll-fs) + 6pt);color:#f31d5d;}
 /* 모바일: 기획자·박지수가 커지는 만큼 나머지 글자를 줄여 줄이 바뀌지 않게 (줄이는 비율은 JS 가 --ll-shrink 로 계산) */
 @media (max-width:899px){
-  .hero__logline:hover,.hero__logline:active{font-size:calc(var(--ll-fs) * var(--ll-shrink,.9));}
+  .hero__logline:hover,.hero__logline:active,body.nav-hot .hero__logline{font-size:calc(var(--ll-fs) * var(--ll-shrink,.9));}
 }
 /* 아주 좁은 폰(≈420px 이하)에서는 평소에도 둘째 줄이 넘치지 않게 제목 크기를 화면 폭에 맞춤 */
 @media (max-width:420px){.hero__logline{--ll-fs:min(26px,6.65vw);}}
@@ -358,7 +365,9 @@ a.card:active{transform:scale(.995);}
 /* '기획자·박지수'에 마우스를 올리면(모바일은 누르고 있으면) 아트 기획 전담·컨셉 기획도 함께 1.2배 */
 .ws__role,.ws__k{display:inline-block;transition:transform .25s ease;transform-origin:left center;}
 .hero__inner:has(.hero__logline:hover) .ws__role,.hero__inner:has(.hero__logline:hover) .ws__k,
-.hero__inner:has(.hero__logline:active) .ws__role,.hero__inner:has(.hero__logline:active) .ws__k{transform:scale(1.2);}
+.hero__inner:has(.hero__logline:active) .ws__role,.hero__inner:has(.hero__logline:active) .ws__k,
+body.nav-hot .hero__inner .ws__role,body.nav-hot .hero__inner .ws__k{   /* 상단 '이력 · 자기소개'에 마우스를 올려도 같은 애니메이션 */
+transform:scale(1.2);}
 .ws__n{color:#4a30dd;}
 
 /* 대표 프로젝트 — 게시물 카드가 오른쪽에서 왼쪽으로 흐른다 */
@@ -510,8 +519,9 @@ a.card:active{transform:scale(.995);}
   transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease,transform .12s ease;}
 .jump__btn:hover{border-color:var(--violet);box-shadow:rgba(74,48,221,.16) 0 4px 14px 0;}
 .jump__btn:active{transform:translateY(1px);}
-.jump__l{display:grid;gap:2px;min-width:0;}
-.jump__t{font-size:var(--text-body);font-weight:600;letter-spacing:-.02em;}
+.jump__l{display:grid;gap:2px;min-width:0;flex:1 1 auto;}
+.jump__ico{width:44px;height:44px;flex:0 0 auto;display:block;}
+.jump__t{font-size:calc(var(--text-body) + 2pt);font-weight:600;letter-spacing:-.02em;}
 .jump__d{font-size:var(--text-caption);color:var(--steel);}
 .jump__arrow{flex:0 0 auto;font-size:17px;color:var(--violet);font-weight:600;}
 
@@ -1071,10 +1081,10 @@ a.pnav__b:hover{background:var(--accent-soft);color:var(--violet-deep);border-co
       <span class="brand__name" id="brandName">Portfolio</span>
     </a>
     <nav class="navlinks" id="navlinks" aria-label="주요 메뉴">
-      <a class="navlink" href="#about"     data-route="about">프로필</a>
-      <a class="navlink" href="#resume"    data-route="resume" id="navResume">이력 · 자기소개<span class="nav__dot" aria-hidden="true"></span></a>
-      <a class="navlink" href="#portfolio" data-route="portfolio">포트폴리오</a>
-      <a class="navlink" href="#history"   data-route="history">히스토리</a>
+      <a class="navlink" href="#about"     data-route="about"><img class="navlink__ico" src="assets/icons/nav-profile.png" alt="" aria-hidden="true">프로필</a>
+      <a class="navlink" href="#resume"    data-route="resume" id="navResume"><img class="navlink__ico" src="assets/icons/nav-resume.png" alt="" aria-hidden="true">이력 · 자기소개<span class="nav__dot" aria-hidden="true"></span></a>
+      <a class="navlink" href="#portfolio" data-route="portfolio"><img class="navlink__ico" src="assets/icons/nav-portfolio.png" alt="" aria-hidden="true">포트폴리오</a>
+      <a class="navlink" href="#history"   data-route="history"><img class="navlink__ico" src="assets/icons/nav-history.png" alt="" aria-hidden="true">히스토리</a>
     </nav>
   </div>
 </header>
@@ -1262,15 +1272,15 @@ var CONTENT = {
       { icons: [ 'assets/icons/skills/photoshop.svg' ], name: 'Adobe Photoshop', level: 5,
         note: '게임 캐릭터 · 배경 일러스트\n편집 · 보정 · 리소스 제작 편집\n액션 제작으로 반복 작업 자동화' },
       { icons: [ 'assets/icons/skills/claude.svg', 'assets/icons/skills/codex.svg' ], name: 'Claude · Codex', level: 3,
-        note: 'AI를 통한 이미지 생성 편집\n데이터 정리 및 검증\n웹 프로토타입 제작 및 바이브 코딩' },
+        note: 'AI를 통한 이미지 생성 편집\n데이터 정리 및 검증\n웹 프로토타입 제작 및 바이브 코딩\nAI로 워크플로우 작성 · 스킬 생성' },
       { icons: [ 'assets/icons/skills/ms-office.svg', 'assets/icons/skills/figma.svg', 'assets/icons/skills/google-docs.svg', 'assets/icons/skills/google-sheets.svg' ], name: 'MS Office · Figma · Google Docs · Sheets', level: 3,
         note: '기본 기능 숙지\n문서 작성 및 템플릿화\n레이아웃 디자인\n그 외 기능 학습 및 적용 가능' },
       { icons: [ 'assets/icons/skills/spine.svg' ], name: 'Spine2D', level: 3,
-        note: '기본 기능 숙달\n키프레임 애니메이션 숙달\n심화 기능 숙지\n응용 및 제작 가능' },
+        note: '기본 기능 숙달\n키프레임 애니메이션 숙달\n심화 기능 숙지\n게임 캐릭터 애니메이션 제작\n광고용 리소스 제작' },
       { icons: [ 'assets/icons/skills/unity.svg' ], name: 'Unity', level: 1,
         note: '프로그램 기본 기능 숙지\nAI와 바이브 코딩 협업으로 게임 제작 경험' },
       { icons: [ 'assets/icons/skills/after-effects.svg', 'assets/icons/skills/illustrator.svg' ], name: 'Adobe After Effects · Illustrator', level: 1,
-        note: '기본 기능 사용\n필요한 기능을 찾아 적용 가능' }
+        note: '기본 기능 사용\n필요한 기능을 찾아 적용 가능\n게임 광고 영상 제작\n벡터 이미지 생성 · 명함, 문서 편집' }
     ],
 
     /* 대외활동 (중요도 4) — 경력과 같은 칸 구성 */
@@ -2139,11 +2149,12 @@ var CONTENT = {
 
     /* 하단 바로가기 — 버튼 */
     h.push('<div class="band"><div class="wrap"><div class="jump">' + [
-      ['Resume', '경력 · 프로젝트 · 기술 · 자기소개', '#resume'],
-      ['Portfolio', '메인 프로젝트 · 기획서 · 아트 작업물', '#portfolio'],
-      ['History', '선호 장르 그래프 · 플레이한 게임', '#history']
+      ['이력 · 자기소개', '경력 · 프로젝트 · 기술 · 자기소개', '#resume', 'resume'],
+      ['포트폴리오', '메인 프로젝트 · 기획서 · 아트 작업물', '#portfolio', 'portfolio'],
+      ['히스토리', '선호 장르 그래프 · 플레이한 게임', '#history', 'history']
     ].map(function (x) {
       return '<a class="jump__btn" href="' + x[2] + '">' +
+        '<img class="jump__ico" src="assets/icons/nav-' + x[3] + '.png" alt="" aria-hidden="true">' +
         '<span class="jump__l"><span class="jump__t">' + x[0] + '</span>' +
         '<span class="jump__d">' + x[1] + '</span></span>' +
         '<span class="jump__arrow" aria-hidden="true">→</span></a>';
@@ -3233,6 +3244,8 @@ var CONTENT = {
   (function () {
     var a = document.getElementById('navResume');
     if (a) a.addEventListener('click', function () { var d = a.querySelector('.nav__dot'); if (d) d.parentNode.removeChild(d); });
+    if (a) { a.addEventListener('mouseenter', function () { document.body.classList.add('nav-hot'); });
+             a.addEventListener('mouseleave', function () { document.body.classList.remove('nav-hot'); }); }   /* 마우스를 올리면 기획자·박지수 강조 */
   })();
 
   function armMosaic() {
