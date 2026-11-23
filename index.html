@@ -195,6 +195,7 @@ h1,h2,h3,h4,p{margin:0;}
   padding-top:env(safe-area-inset-top, 0px);
 }
 .nav__inner{display:flex;align-items:center;justify-content:center;gap:var(--s12);height:var(--nav-h);}
+.nav__lights{display:none;}
 .brand{display:none !important;}   /* 좌상단 로고 숨김 — 메뉴는 가운데 */
 .brand-x{display:flex;align-items:center;gap:var(--s8);flex:0 0 auto;}
 .brand__mark{width:22px;height:22px;border-radius:5px;background:var(--accent-soft);display:grid;place-items:center;color:var(--violet-deep);font-size:12px;font-weight:700;letter-spacing:-.02em;}
@@ -207,7 +208,7 @@ h1,h2,h3,h4,p{margin:0;}
 .navlink:hover{color:#241a8f;background:var(--cloud);}
 .navlink.is-active{color:#f88e20;background:var(--frost);}   /* 선택 = 주황, 나머지 = 남색 */
 /* 메뉴 버튼: 칸마다 나눠진 상자 + 픽토그램 */
-.navlink{display:inline-flex;align-items:center;gap:8px;padding:8px 16px 8px 12px;font-size:calc(var(--text-body-sm) + 4pt + 2px);border:1px solid var(--ash);background:var(--surface);box-shadow:rgba(39,40,53,.05) 0 1px 3px 0;}
+.navlink{display:inline-flex;align-items:center;gap:8px;padding:8px 16px 8px 12px;font-size:calc(var(--text-body-sm) + 4pt);border:1px solid var(--ash);background:var(--surface);box-shadow:rgba(39,40,53,.05) 0 1px 3px 0;}
 .navlink:hover{border-color:var(--violet);background:var(--surface);}
 .navlink.is-active{border-color:#f88e20;background:#fff4e8;}
 .navlink__ico{width:26px;height:26px;flex:0 0 auto;display:block;}
@@ -217,6 +218,9 @@ h1,h2,h3,h4,p{margin:0;}
 @media (min-width:601px){
   .nav{--nav-h:70px;background:rgba(243,241,253,.94);border-bottom-color:#e6e2fa;}   /* 경계선 = 두 번째로 연한 보라 */   /* 상단 바 = 가장 연한 연보라(#e6e2fa) */
   .nav__inner{align-items:flex-end;}
+  .nav__lights{position:absolute;left:22px;top:calc(env(safe-area-inset-top,0px) + 50%);transform:translateY(-50%);display:flex;gap:9px;pointer-events:none;}   /* 창 버튼처럼 보이는 원 3개 */
+  .nav__lights i{display:block;width:13px;height:13px;border-radius:50%;}
+  .nav__lights i:nth-child(1){background:#f31d5d;} .nav__lights i:nth-child(2){background:#f88e20;} .nav__lights i:nth-child(3){background:#4a30dd;}
   .navlinks{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:end;gap:4px;overflow:visible;margin:0;padding:0;}   /* 탭 폭 고정 = 가장 긴 '이력 · 자기소개'에 맞춤 */
   .navlink{justify-content:center;}
   .navlink{padding:12px 22px 12px 16px;border-radius:12px 12px 0 0;border:1px solid transparent;border-bottom:0;background:transparent;box-shadow:none;margin-bottom:-1px;}
@@ -553,7 +557,17 @@ transform:scale(1.2);}
 .tab.is-active{background:var(--surface);color:#f88e20;border:1px solid var(--ash);padding:8px 19px;box-shadow:rgba(39,40,53,.06) 0 2px 4px 0;}
 /* 앱 푸시 알림처럼 글자 왼쪽 위에 붙는 작은 빨간 점 */
 .tab__dot{position:absolute;top:7px;right:10px;width:8px;height:8px;border-radius:50%;background:#f31d5d;pointer-events:none;}
-.tab.is-active .tab__dot{top:6px;right:9px;}   /* 활성 탭은 테두리 1px 만큼 보정 */
+.tab.is-active .tab__dot{top:6px;right:9px;}
+/* 이력서 / 자기소개 전환 — 가운데 큰 버튼 */
+.rtabs-wrap{padding-top:var(--s40);padding-bottom:var(--s16);display:flex;justify-content:center;position:relative;z-index:2;}
+.rtabs{display:inline-flex;gap:4px;padding:6px;border-radius:999px;background:#2a2160;box-shadow:rgba(42,33,96,.28) 0 6px 18px 0;}   /* 어두운 알약 하나 안에 두 칸 */
+.rtab{position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:120px;min-height:46px;padding:8px 26px;border-radius:999px;
+  font-size:calc(var(--text-body-sm) + 2pt + 2px);font-weight:700;white-space:nowrap;color:rgba(255,255,255,.6);transition:color .15s ease,background-color .15s ease;}
+.rtab:hover{color:#fff;}
+.rtab.is-active{color:#fff;background:rgba(255,255,255,.12);}
+.rtab.is-active::before{content:"";position:absolute;top:-6px;left:50%;width:28px;height:3px;margin-left:-14px;border-radius:0 0 3px 3px;background:#f88e20;}   /* 선택 표시: 위쪽 짧은 주황 막대 */
+.rtab__dot{position:absolute;top:8px;right:12px;width:9px;height:9px;border-radius:50%;background:#f31d5d;pointer-events:none;}
+@media (max-width:480px){.rtab{min-width:100px;min-height:42px;padding:6px 18px;}}
 
 /* ============================================================
    Profile
@@ -606,7 +620,7 @@ transform:scale(1.2);}
    인물은 아래가 배너 끝에 딱 닿고, 머리 오른쪽이 제목 첫 글자에 겹칠 듯 말 듯(JS 가 위치·크기 계산) */
 .topblock.hero--banner{background:var(--canvas);}
 .hero__bgclip{position:absolute;top:0;bottom:0;left:0;right:0;overflow:hidden;z-index:0;pointer-events:none;}   /* 화면 폭 전체 — 좌우 여백 없음 */
-.hero__bgimg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center;background-repeat:no-repeat;}
+.hero__bgimg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center calc(50% + 4px);background-repeat:no-repeat;}   /* 배너 4px 아래로 */
 /* 데스크톱: 배너 이미지 칸 높이를 평소 칸 높이(+여유 60px)로 고정(--bg-h, JS) —
    '기획자·박지수'에 마우스를 올려 제목이 커지며 칸이 늘어나도 이미지 위치·크기는 그대로 */
 @media (min-width:900px){.hero__bgimg{bottom:auto;height:var(--bg-h,100%);}}
@@ -1087,6 +1101,7 @@ a.pnav__b:hover{background:var(--accent-soft);color:var(--violet-deep);border-co
 <body>
 
 <header class="nav">
+  <span class="nav__lights" aria-hidden="true"><i></i><i></i><i></i></span>
   <div class="wrap nav__inner">
     <a class="brand" href="#about">
       <span class="brand__mark" id="brandMark">P</span>
@@ -2233,10 +2248,10 @@ var CONTENT = {
 
   function resumeTabs(sub) {
     if (sub === 'intro') markIntroSeen();
-    return '<div class="wrap" style="padding-top:var(--s48);padding-bottom:var(--s16)"><div class="tabs" role="tablist">' +
-      '<a class="tab' + (sub !== 'intro' ? ' is-active' : '') + '" href="#resume">이력서</a>' +
-      '<a class="tab' + (sub === 'intro' ? ' is-active' : '') + '" href="#resume/intro">' +
-        (introSeen ? '' : '<span class="tab__dot" aria-hidden="true"></span>') + '자기소개</a>' +
+    return '<div class="wrap rtabs-wrap"><div class="rtabs" role="tablist">' +
+      '<a class="rtab' + (sub !== 'intro' ? ' is-active' : '') + '" href="#resume">이력서</a>' +
+      '<a class="rtab' + (sub === 'intro' ? ' is-active' : '') + '" href="#resume/intro">자기소개' +
+        (introSeen ? '' : '<span class="rtab__dot" aria-hidden="true"></span>') + '</a>' +
       '</div></div>';
   }
 
@@ -3328,7 +3343,7 @@ var CONTENT = {
     for (var i = 0; i < els.length; i++) {
       var r = els[i].getBoundingClientRect(), dy = r.top - sTop - aboutGeom.top;
       els[i].style.backgroundSize = Math.round(iw) + 'px ' + Math.round(ih) + 'px';
-      els[i].style.backgroundPosition = Math.round((aboutGeom.w - iw) / 2 - r.left) + 'px ' + Math.round((aboutGeom.h - ih) / 2 - dy) + 'px';
+      els[i].style.backgroundPosition = Math.round((aboutGeom.w - iw) / 2 - r.left) + 'px ' + Math.round((aboutGeom.h - ih) / 2 - dy + 4) + 'px';   /* About 과 같이 4px 아래로 */
     }
   }
 
