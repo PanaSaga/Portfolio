@@ -3268,9 +3268,9 @@ var CONTENT = {
     if (!t || !nav) return;
     var r = t.getBoundingClientRect(), y = nav.getBoundingClientRect().bottom + 2, x = r.left + r.width / 2;
     var el = document.elementFromPoint(x, y), col = '', PIC = '#fffbf9';   /* 그림 위 = 가장 밝은 색 */
-    var ib = document.querySelector('.route.is-active .intro-bg');
-    if (ib) { var br = ib.getBoundingClientRect(); if (y >= br.top && y <= br.bottom) col = PIC; }
-    if (!col && el && (el.closest('.topblock.hero, .bcard__media, .bcard__thumb, .post-thumb, .detail__thumb, .gallery, figure, .webplay__frame, .planner__scroll') || /^(IMG|VIDEO|IFRAME|PICTURE)$/.test(el.tagName))) col = PIC;
+    var ibs = document.querySelectorAll('.route.is-active .intro-bg, .route.is-active .topblock__bg, .route.is-active .topblock');   /* 배경 그림 구역 */
+    for (var q = 0; q < ibs.length && !col; q++) { var br = ibs[q].getBoundingClientRect(); if (br.height && y >= br.top && y <= br.bottom) col = PIC; }
+    if (!col && el && el.closest('.topblock')) col = PIC;   /* 배경 그림이 깔린 맨 위 구역(프로필·이력서) = 가장 밝은 색. 카드·그림 카드는 본문 배경색 */
     /* 카드·버튼은 건너뛰고 구역(본문) 배경색을 따른다 */
     var sec = el && el.closest('.band, .topblock, .route-body, .route');
     for (; !col && sec && sec !== document.documentElement; sec = sec.parentElement) {
