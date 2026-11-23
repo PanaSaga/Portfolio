@@ -215,15 +215,15 @@ h1,h2,h3,h4,p{margin:0;}
 @media (max-width:560px){.brand__name{display:none;}.navlink{padding:8px 8px;}}   /* 글씨가 커진 만큼 좁혀 4개가 다 보이게 */
 /* 브라우저 탭처럼: 탭이 상단 바 아래쪽에 붙고, 선택된 탭은 아래 페이지와 이어짐 */
 @media (min-width:601px){
-  .nav{--nav-h:70px;background:rgba(230,226,250,.94);border-bottom-color:#c9c2f5;}   /* 경계선 = 두 번째로 연한 보라 */   /* 상단 바 = 가장 연한 연보라(#e6e2fa) */
+  .nav{--nav-h:70px;background:rgba(243,241,253,.94);border-bottom-color:#e6e2fa;}   /* 경계선 = 두 번째로 연한 보라 */   /* 상단 바 = 가장 연한 연보라(#e6e2fa) */
   .nav__inner{align-items:flex-end;}
   .navlinks{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:end;gap:4px;overflow:visible;margin:0;padding:0;}   /* 탭 폭 고정 = 가장 긴 '이력 · 자기소개'에 맞춤 */
   .navlink{justify-content:center;}
   .navlink{padding:12px 22px 12px 16px;border-radius:12px 12px 0 0;border:1px solid transparent;border-bottom:0;background:transparent;box-shadow:none;margin-bottom:-1px;}
   .navlink:not(.is-active):hover{background:rgba(255,255,255,.55);border-color:transparent;}
   .navlink:not(.is-active) + .navlink:not(.is-active)::before{content:"";position:absolute;left:-3px;top:14px;bottom:14px;width:1px;background:#c9c2f5;}   /* 탭 사이 구분선 */
-  .navlink.is-active{background:#fdfafa;border-color:#c9c2f5;z-index:2;}
-  .navlink.is-active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:#fdfafa;}   /* 아래 줄을 지워 페이지와 이어지게 */
+  .navlink.is-active{background:var(--tabbg,#f3f0ec);border-color:#e6e2fa;z-index:2;transition:background-color .2s ease;}
+  .navlink.is-active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--tabbg,#f3f0ec);transition:background-color .2s ease;}   /* 탭 색 = 바로 아래 맞닿은 본문 색(스크롤 따라 바뀜) */   /* 아래 줄을 지워 페이지와 이어지게 */
 }
 
 /* ============================================================
@@ -3259,6 +3259,31 @@ var CONTENT = {
     if (a) { a.addEventListener('mouseenter', function () { document.body.classList.add('nav-hot'); });
              a.addEventListener('mouseleave', function () { document.body.classList.remove('nav-hot'); }); }   /* 마우스를 올리면 기획자·박지수 강조 */
   })();
+
+  /* 선택된 탭 색을 바로 아래 맞닿은 본문 색에 맞춘다 (스크롤할 때마다) */
+  var tabRaf = 0;
+  function syncTabBg() {
+    tabRaf = 0;
+    var t = document.querySelector('.navlink.is-active'), nav = document.querySelector('.nav');
+    if (!t || !nav) return;
+    var r = t.getBoundingClientRect(), y = nav.getBoundingClientRect().bottom + 2, x = r.left + r.width / 2;
+    var el = document.elementFromPoint(x, y), col = '', PIC = '#fffbf9';   /* 그림 위 = 가장 밝은 색 */
+    var ib = document.querySelector('.route.is-active .intro-bg');
+    if (ib) { var br = ib.getBoundingClientRect(); if (y >= br.top && y <= br.bottom) col = PIC; }
+    if (!col && el && (el.closest('.topblock.hero, .bcard__media, .bcard__thumb, .post-thumb, .detail__thumb, .gallery, figure, .webplay__frame, .planner__scroll') || /^(IMG|VIDEO|IFRAME|PICTURE)$/.test(el.tagName))) col = PIC;
+    /* 카드·버튼은 건너뛰고 구역(본문) 배경색을 따른다 */
+    var sec = el && el.closest('.band, .topblock, .route-body, .route');
+    for (; !col && sec && sec !== document.documentElement; sec = sec.parentElement) {
+      var bg = getComputedStyle(sec).backgroundColor;
+      if (bg && bg !== 'transparent' && !/rgba\([^)]*,\s*0\)$/.test(bg)) { col = bg; break; }
+    }
+    document.documentElement.style.setProperty('--tabbg', col || getComputedStyle(document.body).backgroundColor);
+  }
+  function queueTabBg() { if (!tabRaf) tabRaf = requestAnimationFrame(syncTabBg); }
+  window.addEventListener('scroll', queueTabBg, { passive: true });
+  window.addEventListener('resize', queueTabBg);
+  window.addEventListener('hashchange', function () { setTimeout(syncTabBg, 60); });
+  setTimeout(syncTabBg, 300);
 
   function armMosaic() {
     var el = document.querySelector('.mosaic--in');
