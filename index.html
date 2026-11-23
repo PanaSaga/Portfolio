@@ -22,7 +22,7 @@
   --cloud:#efebe6;
   --frost:#e7e2db;
   --accent-soft:#e2c2ff;
-  --violet-deep:#6230dd;
+  --violet-deep:#4a30dd;
   --ash:#e6dccb;
   --mist:#e6dccb;              /* 테두리 → --ash 와 통일 */
   --fog:#444d60;
@@ -31,15 +31,15 @@
   --graphite:#36394a;
   --midnight:#272835;
   --onyx:#1a1b25;
-  --violet:#6230dd;            /* 보조 보라 → 메인 보라와 통일 */
-  --lavender:#dbc2f5;          /* 연보라 → 모자이크 px2 와 통일 */
+  --violet:#4a30dd;            /* 보조 보라 → 메인 보라와 통일 */
+  --lavender:#dac2f5;          /* 연보라 → 모자이크 px2 와 통일 */
   --lilac:#e2c2ff;
 
   /* 모자이크 톤 (레퍼런스 히어로 그라데이션) */
-  --px1:#f1e2fa;
-  --px2:#dbc2f5;
-  --px3:#a876ec;
-  --px4:#6230dd;
+  --px1:#f0e2fa;
+  --px2:#dac2f5;
+  --px3:#a576ec;
+  --px4:#4a30dd;
   --px5:#241a8f;
 
   --font-sans:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Noto Sans KR','Malgun Gothic',Roboto,'Helvetica Neue',sans-serif;
@@ -83,7 +83,7 @@ body{
   letter-spacing:-.01em;
   -webkit-font-smoothing:antialiased;
   -moz-osx-font-smoothing:grayscale;
-  -webkit-tap-highlight-color:rgba(98,48,221,.12);
+  -webkit-tap-highlight-color:rgba(74,48,221,.12);
   word-break:keep-all;
   overflow-wrap:break-word;
 }
@@ -216,18 +216,18 @@ h1,h2,h3,h4,p{margin:0;}
 @media (max-width:560px){.brand__name{display:none;}.navlink{padding:8px 8px;}}   /* 글씨가 커진 만큼 좁혀 4개가 다 보이게 */
 /* 브라우저 탭처럼: 탭이 상단 바 아래쪽에 붙고, 선택된 탭은 아래 페이지와 이어짐 */
 @media (min-width:601px){
-  .nav{--nav-h:59px;background:rgba(248,241,253,.94);border-bottom-color:#f1e2fa;}   /* 경계선 = 두 번째로 연한 보라 */   /* 상단 바 = 가장 연한 연보라(#f1e2fa) */
+  .nav{--nav-h:59px;background:rgba(247,241,253,.94);border-bottom-color:#f0e2fa;}   /* 경계선 = 두 번째로 연한 보라 */   /* 상단 바 = 가장 연한 연보라(#f0e2fa) */
   .nav__inner{align-items:flex-end;}
   .nav__lights{position:absolute;right:22px;top:calc(env(safe-area-inset-top,0px) + 50%);transform:translateY(-50%);display:flex;gap:9px;pointer-events:none;}   /* 창 버튼처럼 보이는 원 3개 */
   .nav__lights i{display:block;width:11px;height:11px;border-radius:50%;}
-  .nav__lights i:nth-child(1){background:#6230dd;} .nav__lights i:nth-child(2){background:#f88e20;} .nav__lights i:nth-child(3){background:#f31d5d;}   /* 오른쪽 · 보 주 빨 */
+  .nav__lights i:nth-child(1){background:#4a30dd;} .nav__lights i:nth-child(2){background:#f88e20;} .nav__lights i:nth-child(3){background:#f31d5d;}   /* 오른쪽 · 보 주 빨 */
   .navlinks{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;align-items:end;gap:4px;overflow:visible;margin:0;padding:0;}   /* 탭 폭 고정 = 가장 긴 '이력 · 자기소개'에 맞춤 */
   .navlink{justify-content:center;}
   .navlink{padding:9px 18px 9px 13px;gap:6px;font-size:calc((var(--text-body-sm) + 4pt) * .85);border-radius:10px 10px 0 0;border:1px solid transparent;border-bottom:0;background:transparent;box-shadow:none;margin-bottom:-1px;}
   .navlink:not(.is-active):hover{background:rgba(255,255,255,.55);border-color:transparent;}
-  .navlink:not(.is-active) + .navlink:not(.is-active)::before{content:"";position:absolute;left:-3px;top:11px;bottom:11px;width:1px;background:#dbc2f5;}   /* 탭 사이 구분선 */
+  .navlink:not(.is-active) + .navlink:not(.is-active)::before{content:"";position:absolute;left:-3px;top:11px;bottom:11px;width:1px;background:#dac2f5;}   /* 탭 사이 구분선 */
   .navlink__ico{width:21px;height:21px;}
-  .navlink.is-active{background:var(--tabbg,#f3f0ec);border-color:#f1e2fa;z-index:2;transition:background-color .2s ease;}
+  .navlink.is-active{background:var(--tabbg,#f3f0ec);border-color:#f0e2fa;z-index:2;transition:background-color .2s ease;}
   .navlink.is-active::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--tabbg,#f3f0ec);transition:background-color .2s ease;}   /* 탭 색 = 바로 아래 맞닿은 본문 색(스크롤 따라 바뀜) */   /* 아래 줄을 지워 페이지와 이어지게 */
 }
 
@@ -299,7 +299,7 @@ a.card:active{transform:scale(.995);}
   color:var(--graphite);width:fit-content;max-width:100%;margin-inline:auto;}
 .hero__logline .zl{display:block;}
 .hero__logline{-webkit-text-stroke:.16em #fff;paint-order:stroke fill;}   /* 흰 바깥 외곽선 — 배경 사진이 겹쳐도 글씨가 보이게 */
-.hero__logline .ll-v{color:#6230dd;}
+.hero__logline .ll-v{color:#4a30dd;}
 .hero__logline .ll-o{color:#f88e20;}
 /* [[기획자]] · [[박지수]] — 제목에 마우스를 올리면 6pt 커지고(옆 글자는 밀려남) #f31d5d */
 .hero__logline .ll-k{position:relative;color:inherit;text-decoration:none;font-size:1em;transition:font-size .25s ease,color .25s ease;}
@@ -385,7 +385,7 @@ a.card:active{transform:scale(.995);}
 .hero__inner:has(.hero__logline:active) .ws__role,.hero__inner:has(.hero__logline:active) .ws__k,
 body.nav-hot .hero__inner .ws__role,body.nav-hot .hero__inner .ws__k{   /* 상단 '이력 · 자기소개'에 마우스를 올려도 같은 애니메이션 */
 transform:scale(1.2);}
-.ws__n{color:#6230dd;}
+.ws__n{color:#4a30dd;}
 
 /* 대표 프로젝트 — 게시물 카드가 오른쪽에서 왼쪽으로 흐른다 */
 /* 페이드가 본문 열(1200px)의 좌우 끝에 맞춰 거의 다 빠지도록 */
@@ -469,8 +469,8 @@ transform:scale(1.2);}
   .bcard__media--brief:has(.bcard__play) > .bcard__thumb{visibility:hidden;}
 }
 /* 다음 슬라이드까지 남은 시간 게이지 — 썸네일과 제목 사이 */
-.bcard__gauge{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(128,76,245,.15);z-index:2;pointer-events:none;}
-.bcard__gauge > i{display:block;height:100%;background:var(--violet,#854cf5);transform-origin:left;transform:scaleX(0);}
+.bcard__gauge{position:absolute;left:0;right:0;bottom:0;height:3px;background:rgba(108,76,245,.15);z-index:2;pointer-events:none;}
+.bcard__gauge > i{display:block;height:100%;background:var(--violet,#6c4cf5);transform-origin:left;transform:scaleX(0);}
 /* 정보 칸 오른쪽으로 이미지를 밀어 로고가 그라데이션에 가리지 않게(이미지 왼쪽 25% = 하늘 부분만 정보 칸 뒤로) */
 .bcard__media--brief{--bw:min(40%,300px);}
 .bcard__media--brief > .bcard__thumb{position:absolute;top:0;bottom:0;left:var(--bw);width:auto;height:100%;max-width:none;transform:translateX(calc(-25% - 60px));}   /* 60px 왼쪽으로 */
@@ -534,7 +534,7 @@ transform:scale(1.2);}
   min-height:64px;padding:16px 20px;border-radius:var(--r-btn);
   background:var(--surface);border:1px solid var(--ash);box-shadow:rgba(39,40,53,.06) 0 2px 4px 0;
   transition:background-color .15s ease,border-color .15s ease,box-shadow .15s ease,transform .12s ease;}
-.jump__btn:hover{border-color:var(--violet);box-shadow:rgba(98,48,221,.16) 0 4px 14px 0;}
+.jump__btn:hover{border-color:var(--violet);box-shadow:rgba(74,48,221,.16) 0 4px 14px 0;}
 .jump__btn:active{transform:translateY(1px);}
 .jump__l{display:grid;gap:2px;min-width:0;flex:1 1 auto;}
 .jump__ico{width:44px;height:44px;flex:0 0 auto;display:block;}
@@ -761,13 +761,13 @@ transform:scale(1.2);}
 .qsec__q-b{font-size:calc(1em - 4pt);color:#f31d5d;} /* 제목 뒷부분 -4pt · 남색 */
 .qsec__a{position:relative;margin-top:24px;padding-top:28px;width:fit-content;max-width:min(72ch,100%);color:#2a2c31;font-size:clamp(13px,3.6vw,15px);line-height:2.35;}   /* 줄 사이 간격 1.5배(0.9em→1.35em) */   /* 제목↔본문 간격 2배 */
 .qsec__a::before{content:"";position:absolute;top:0;left:0;width:calc(100% + 24px);max-width:100vw;height:1px;background:var(--ash);}   /* 가운데 가는 선 — 본문 폭보다 살짝 길게 */   /* 본문 진회색 · 2px 작게 */
-.qsec__a .qb{color:#6230dd;font-weight:700;}   /* 굵게 = 보라 */
-.qsec__a .qul{background:#e7d6f8;padding:1px 2px;border-radius:2px;-webkit-box-decoration-break:clone;box-decoration-break:clone;}   /* 형광펜 = 글씨 뒷배경 전체를 연한 연보라로 */
+.qsec__a .qb{color:#4a30dd;font-weight:700;}   /* 굵게 = 보라 */
+.qsec__a .qul{background:#e6d6f8;padding:1px 2px;border-radius:2px;-webkit-box-decoration-break:clone;box-decoration-break:clone;}   /* 형광펜 = 글씨 뒷배경 전체를 연한 연보라로 */
 .qsep{margin:1.6em 0;color:#f88e20;font-weight:700;}   /* --- → * 한 개 */
 .qtag{display:inline-block;vertical-align:.12em;margin-right:8px;padding:2px 10px;border-radius:999px;background:var(--accent-soft);color:var(--violet-deep);font-size:.72em;font-weight:700;letter-spacing:0;}
 mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;box-decoration-break:clone;-webkit-box-decoration-break:clone;}
 .qsec__a p + p{margin-top:1.9em;}   /* 문단 사이 = 빈 줄 한 줄 */
-.qsec__a mark.hl{background:#dbc2f5;}   /* 자기소개 형광펜은 연보라 박스 */
+.qsec__a mark.hl{background:#dac2f5;}   /* 자기소개 형광펜은 연보라 박스 */
 
 /* ============================================================
    Portfolio 게시물
@@ -804,7 +804,7 @@ mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;bo
 .pcard__date{font-size:12px;font-weight:600;color:var(--graphite);}
 .pcard__team{font-size:14px;font-weight:700;margin-top:2px;}
 .pcard__team-k{color:#f88e20;}
-.pcard__team-v{color:#6230dd;}
+.pcard__team-v{color:#4a30dd;}
 .pcard__role{font-size:13px;font-weight:700;color:var(--violet-deep);line-height:1.45;}
 .pcard__d{color:var(--slate);font-size:var(--text-body-sm);line-height:1.55;}
 /* 경력 칸과 아래 끝을 맞춤 — 카드가 남는 높이를 똑같이 나눠 가짐 */
@@ -920,7 +920,7 @@ a.pnav__b:hover{background:var(--accent-soft);color:var(--violet-deep);border-co
 .pnav__b--off .pnav__th{opacity:.5;}
 @media (max-width:559px){.pnav__th{display:none;} .pnav__b{padding:6px 10px;font-size:13px;}}
 .btn--back{min-height:53px;padding:13px 22px;font-size:calc(var(--text-body-sm) * 1.2);transition:border-color .15s ease,box-shadow .15s ease;}   /* 기존 목록 버튼의 120% */
-.btn--back:hover{border-color:var(--violet);box-shadow:rgba(98,48,221,.16) 0 4px 14px 0;}   /* About 하단 버튼과 같은 진한 보라 테두리 */
+.btn--back:hover{border-color:var(--violet);box-shadow:rgba(74,48,221,.16) 0 4px 14px 0;}   /* About 하단 버튼과 같은 진한 보라 테두리 */
 /* 본문 블록은 가운데, 글자는 왼쪽 */
 .detail-col{max-width:840px;margin:0 auto;text-align:left;}
 .detail__head{text-align:left;display:flex;align-items:stretch;gap:var(--s24);}
@@ -1004,7 +1004,7 @@ a.pnav__b:hover{background:var(--accent-soft);color:var(--violet-deep);border-co
 .gtotal__v{white-space:nowrap;}
 .gtotal__s{color:#f88e20;}                                  /* ★ 게임 수 — 크기 그대로 */
 .gtotal__sep{color:#cdd2d9;font-weight:500;margin:0 .06em;font-size:calc(1em - 6pt);}
-.gtotal__a{color:#6230dd;font-size:calc(1em - 6pt);}         /* 전체 수 — 6pt 작게 */
+.gtotal__a{color:#4a30dd;font-size:calc(1em - 6pt);}         /* 전체 수 — 6pt 작게 */
 .gcounts{display:grid;gap:var(--s16);align-content:center;padding-top:var(--s16);border-top:1px solid var(--frost);}
 @container (min-width:500px){.gcounts{padding:0 0 0 var(--s20);border-top:0;border-left:1px solid var(--frost);}}
 .gcount{display:flex;align-items:center;justify-content:space-between;gap:var(--s16);}
@@ -1049,7 +1049,7 @@ a.pnav__b:hover{background:var(--accent-soft);color:var(--violet-deep);border-co
   padding:11px 34px 11px 12px;font-size:16px;letter-spacing:-.01em;color:var(--graphite);
   line-height:1.2;min-height:44px;
 }
-.fsel select:focus{outline:2px solid rgba(98,48,221,.35);outline-offset:0;border-color:var(--violet);}
+.fsel select:focus{outline:2px solid rgba(74,48,221,.35);outline-offset:0;border-color:var(--violet);}
 .fsel__caret{position:absolute;right:12px;top:50%;margin-top:-3px;pointer-events:none;color:var(--fog);}
 .filter__foot{display:flex;align-items:center;gap:var(--s12);flex:0 0 auto;padding-bottom:2px;}
 .filter__count{color:var(--slate);font-size:var(--text-caption);font-weight:500;white-space:nowrap;}
@@ -1225,7 +1225,7 @@ var CONTENT = {
   /* ── 1. About ────────────────────────────────────────────── */
   about: {
     /* 히어로 한 문장 — 줄바꿈(\n)한 둘째 줄은 첫 줄 둘째 어절 아래에서 시작(Z자 배열), 전체 가운데 정렬.
-       **…** 은 보라(#6230dd), __…__ 는 주황(#f88e20).
+       **…** 은 보라(#4a30dd), __…__ 는 주황(#f88e20).
        [[…]] 은 누르면 Resume 으로 이동하고, 두 줄에 하나씩 있으면 같은 열에 맞춰 세운다.
        제목에 마우스를 올리면 [[…]] 가 6pt 커지며 #f31d5d 로 바뀐다 */
     logline: '**의도를 디자인**하는 [[기획자]]\n__신작 발사대__ [[박지수]] 입니다.',   // **보라** · __주황__ · [[강조·Resume 링크]]
@@ -1239,7 +1239,7 @@ var CONTENT = {
 
     /* I Walk & My Work style — 2열 × 3행. 앞 3개는 왼쪽, 뒤 3개는 오른쪽 열.
        thumb = 1:1 썸네일(비우면 자리표시) / title = 이름 / sub = 주황 굵은 한 줄
-       (sub 안에서 [[…]] 은 빨강 #f31d5d, **…** 은 보라 #6230dd) */
+       (sub 안에서 [[…]] 은 빨강 #f31d5d, **…** 은 보라 #4a30dd) */
     /* I Walk & My Work style 소개 문단 (제목 바로 아래) */
     workStyleIntro: '독창성과 익숙함의 결합, 경험에서 오는 빠른 아이디어 도출로\n아트부터 기획까지 시작을 열고 결과를 보여주는 디자이너입니다.',
     /* role = 이름 뒤에 붙는 보라 역할 / sub = 아래 색 한 줄 / desc = sub 오른쪽에 붙는 회색 설명(여러 줄) */
@@ -1323,7 +1323,7 @@ var CONTENT = {
 
   /* ── 자기소개 ─────────────────────────────────────────────
      상단에 큰 로그라인 제목과 설명, 아래에 문항이 가로줄로만 나뉩니다.
-     제목에 \n 을 넣어 두 줄로 쓰면 둘째 줄이 #6230dd 로 나옵니다.
+     제목에 \n 을 넣어 두 줄로 쓰면 둘째 줄이 #4a30dd 로 나옵니다.
      label 은 오른쪽 목차에 뜨는 짧은 이름입니다.                        */
   intro: {
     logline: '',
@@ -2019,7 +2019,7 @@ var CONTENT = {
     return 'href="' + esc(href) + '"' +
       (isExternal(href) || /\.pdf($|\?)/i.test(href) ? ' target="_blank" rel="noopener noreferrer"' : '');
   }
-  /* 제목이 두 줄이면 둘째 줄부터 #6230dd */
+  /* 제목이 두 줄이면 둘째 줄부터 #4a30dd */
   function twoTone(text, label) {
     if (!has(text)) return ph(label);
     return String(text).split('\n').map(function (line, i) {
@@ -2844,7 +2844,7 @@ var CONTENT = {
       s.push(dots.join(''));
     }
     var dual = axes.some(function (x) { return x.base != null; });
-    if (dual) layer('base', '#6230dd');   /* 아래: 플레이한 게임(보라) */
+    if (dual) layer('base', '#4a30dd');   /* 아래: 플레이한 게임(보라) */
     layer('value', '#f88e20');            /* 위: 선호 ★(주황) */
     /* 축 이름 — 겹그래프면 아래에 '★n · 전체m' 작게 */
     for (var m = 0; m < n; m++) {
@@ -2859,7 +2859,7 @@ var CONTENT = {
       if (dual && axes[m].n != null) {
         s.push('<text x="' + lp[0].toFixed(1) + '" y="' + (y1 + 14).toFixed(1) + '" text-anchor="' + anchor + '" font-size="10.5" font-weight="600">' +
           '<tspan fill="#f88e20">★' + esc(axes[m].n) + '</tspan><tspan fill="#a4abb8"> · </tspan>' +
-          '<tspan fill="#6230dd">' + esc(axes[m].total) + '</tspan></text>');
+          '<tspan fill="#4a30dd">' + esc(axes[m].total) + '</tspan></text>');
       }
     }
     return s.join('') + '</svg>';
@@ -2867,9 +2867,9 @@ var CONTENT = {
 
   /* 플랫폼 분포 도넛 그래프 */
   /* 진한 보라 → 옅은 보라 (앞쪽일수록 진함). 우상단 픽셀 모자이크 5색(--px5~--px1)에
-     메인 보라 #6230dd 의 채도를 그대로 두고 명도만 바꾼 중간색 3개를 끼워 8단계로 만든다.
+     메인 보라 #4a30dd 의 채도를 그대로 두고 명도만 바꾼 중간색 3개를 끼워 8단계로 만든다.
      (1·2번째 PC·모바일은 서로 색을 맞바꿈) */
-  var DONUT_TONES = ['#4a1fbc', '#241a8f', '#6230dd', '#8254e3', '#a876ec', '#bf9eef', '#dbc2f5', '#f1e2fa'];
+  var DONUT_TONES = ['#361fbc', '#241a8f', '#4a30dd', '#7a54e3', '#a576ec', '#bc9eef', '#dac2f5', '#f0e2fa'];
   function donut(list) {
     if (!hasList(list)) return phBlock('플랫폼 분포', 'CONTENT.history.platforms');
 
@@ -3048,7 +3048,7 @@ var CONTENT = {
       '<div class="radar-wrap-inner">' + radarSVG(t.axes || []) + '</div>' +
       ((t.axes || []).some(function (x) { return x.base != null; })
         ? '<div class="radar-legend"><span><i style="background:#f88e20"></i>선호 ★ 게임</span>' +
-          '<span><i style="background:#6230dd"></i>플레이한 게임</span></div>' : '') +
+          '<span><i style="background:#4a30dd"></i>플레이한 게임</span></div>' : '') +
       '<div class="gstats">' +
       (t.total ? '<div class="gtotal"><span class="gtotal__t">' + txt(t.total.title, '총합') + '</span>' +
         '<span class="gtotal__v">' + (has(t.total.star)
