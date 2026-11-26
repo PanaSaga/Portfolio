@@ -523,10 +523,12 @@ transform:scale(1.2);}
 .bcard__media--b2:has(.bcard__loop) > .bcard__thumb{visibility:hidden;}
 .bcard__yt{position:absolute;top:0;bottom:0;right:0;left:34%;overflow:hidden;container-type:size;pointer-events:none;}
 .bcard__yt iframe{position:absolute;left:50%;top:50%;width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw);transform:translate(-50%,-50%);border:0;}
-.bcard__brief--b2{width:52%;padding:var(--s16) var(--s20);gap:6px;background:linear-gradient(90deg,rgba(255,255,255,.96) 0,rgba(255,255,255,.92) 62%,rgba(255,255,255,0) 100%);}
-.bcard__brief--b2 dd.bcard__team{font-size:19px;}
-.bcard__brief--b2 dt{font-size:12px;} .bcard__brief--b2 .bcard__role dt{font-size:13px;} .bcard__brief--b2 .bcard__role dd{font-size:14px;}
-.bcard__brief--b2 dd.bcard__period{font-size:13px;}
+.bcard__brief--b2{width:52%;padding:8px var(--s20);gap:3px;background:linear-gradient(90deg,rgba(255,255,255,.96) 0,rgba(255,255,255,.92) 62%,rgba(255,255,255,0) 100%);}
+.bcard__brief--b2 dd.bcard__team{font-size:15px;line-height:1.2;}   /* 내용이 많아 제목 크기를 줄임 */
+.bcard__brief--b2 .bcard__roles{margin:0;padding-left:1.1em;list-style:disc;font-size:12px;font-weight:600;line-height:1.4;}
+.bcard__brief--b2 dd{line-height:1.3;margin-top:0;}
+.bcard__brief--b2 dt{font-size:11px;} .bcard__brief--b2 .bcard__role dt{font-size:13px;} .bcard__brief--b2 .bcard__role dd{font-size:14px;}
+.bcard__brief--b2 dd.bcard__period{font-size:12px;}
 @media (max-width:899px){ .bcard__brief--b2{display:none;} .bcard__media--b2 > .bcard__thumb,.bcard__loop{width:100%;} .bcard__yt{left:0;} }
 
 /* 경험 섹션 (상세 하단) — 자기소개서와 같은 리듬 */
@@ -1394,7 +1396,7 @@ var CONTENT = {
           { label: '플랫폼', value: 'PC (itch.io)' },
           { label: '링크',   value: 'https://panasaga.itch.io/highnum' }
         ],
-        brief: { team: '낫휴먼', roleShort: 'PD', role: '컨셉 기획', period: '2026.08.18 ~ 2026.08.27' },
+        brief: { team: '낫휴먼', roleShort: 'PD', role: '컨셉 기획', roles: ['컨셉 기획', '전투 시스템 기획', '아이템 기획', '밸런스 기획'], period: '2026.08.18\n~ 2026.08.27' },
         loopVideo: 'assets/images/projects/highnum-play.mp4',   /* About 대표 2 카드 썸네일 자리 반복 영상 */
         embed: 'https://itch.io/embed-upload/19070255?color=f7f5f2',   // itch.io 웹빌드 — 상세에서 바로 실행
         plans: [
@@ -2249,7 +2251,8 @@ var CONTENT = {
           '<dl class="bcard__brief bcard__brief--b2">' +
           (has(bf.team) ? '<div><dt>팀</dt><dd class="bcard__team">' + esc(bf.team) + '</dd></div>' : '') +
           (has(bf.roleShort) ? '<div class="bcard__role"><dt>역할:</dt> <dd>' + esc(bf.roleShort) + '</dd></div>' : '') +
-          (has(bf.period) ? '<div><dt>제작 기간</dt><dd class="bcard__period">' + esc(bf.period) + '</dd></div>' : '') +
+          (hasList(bf.roles) ? '<div><ul class="bcard__roles">' + bf.roles.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul></div>' : '') +
+          (has(bf.period) ? '<div><dt>제작 기간</dt><dd class="bcard__period">' + esc(bf.period).replace(/\n/g, '<br>') + '</dd></div>' : '') +
           '</dl></div>';
       }
       if (i === 0 && bf) {
