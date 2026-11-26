@@ -520,7 +520,9 @@ transform:scale(1.2);}
 .bcard__media--b2{position:relative;background:#000;}   /* 썸네일 뒷배경 검정 */
 .bcard__media--b2 > .bcard__thumb{position:absolute;top:0;bottom:0;right:0;left:auto;width:66%;height:100%;max-width:none;object-fit:cover;}
 .bcard__loop{position:absolute;top:0;bottom:0;right:0;width:66%;height:100%;object-fit:contain;display:block;}   /* 영상 전체가 보이게, 남는 곳은 검정 */
-.bcard__media--b2:has(.bcard__loop) > .bcard__thumb{visibility:hidden;}
+.bcard__loop,.bcard__media--b2 > .bcard__thumb{transition:opacity .45s ease;}
+.bcard__media--b2:has(.bcard__loop):not(.is-thumb) > .bcard__thumb{opacity:0;}
+.bcard__media--b2.is-thumb > .bcard__loop{opacity:0;}   /* 영상이 끝나면 썸네일을 대표 1과 같은 시간만큼 */
 .bcard__yt{position:absolute;top:0;bottom:0;right:0;left:34%;overflow:hidden;container-type:size;pointer-events:none;}
 .bcard__yt iframe{position:absolute;left:50%;top:50%;width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw);transform:translate(-50%,-50%);border:0;}
 .bcard__brief--b2{width:52%;padding:8px var(--s20);gap:3px;background:linear-gradient(90deg,rgba(255,255,255,.96) 0,rgba(255,255,255,.92) 62%,rgba(255,255,255,0) 100%);}
@@ -2245,7 +2247,7 @@ var CONTENT = {
       var bf = it.brief, media = imgOr(it.thumb, it.title || '', 'bcard__thumb', 'bcard__thumb-ph', '대표 이미지');
       if (i === 1 && bf) {   /* 대표 2: 왼쪽 그라데이션 정보 + 오른쪽 영상(또는 썸네일) */
         var yt = has(it.loopVideo)
-          ? '<video class="bcard__loop" src="' + esc(it.loopVideo) + '" muted autoplay loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>'
+          ? '<video class="bcard__loop" src="' + esc(it.loopVideo) + '" muted autoplay playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>'
           : has(it.ytPreview)
           ? '<span class="bcard__yt" aria-hidden="true"><iframe src="https://www.youtube-nocookie.com/embed/' + esc(it.ytPreview) +
             '?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=' + esc(it.ytPreview) + '&amp;controls=0&amp;playsinline=1&amp;modestbranding=1&amp;rel=0" title="" tabindex="-1" allow="autoplay; encrypted-media" loading="lazy"></iframe></span>' : '';
@@ -3305,7 +3307,19 @@ var CONTENT = {
     }
     bentoRaf = requestAnimationFrame(bentoTick);
   }
+  /* 대표 2: 영상 → (끝나면) 썸네일 BENTO_THUMB_MS → 다시 영상 */
+  function armLoop2() {
+    var v = document.querySelector('#route-about .bcard__loop'); if (!v || v._armed) return;
+    v._armed = true;
+    var m = v.parentNode;
+    v.addEventListener('ended', function () {
+      m.classList.add('is-thumb');
+      clearTimeout(v._t);
+      v._t = setTimeout(function () { m.classList.remove('is-thumb'); v.currentTime = 0; var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }, BENTO_THUMB_MS);
+    });
+  }
   function armBentoPlay(on) {
+    if (on) armLoop2();
     cancelAnimationFrame(bentoRaf); bentoRaf = null;
     var ms = document.querySelectorAll('#route-about .bcard__media--brief');
     Array.prototype.forEach.call(ms, function (m) {
