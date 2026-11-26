@@ -2257,7 +2257,7 @@ var CONTENT = {
           (has(bf.roleShort) ? '<div class="bcard__role"><dt>역할:</dt> <dd>' + esc(bf.roleShort) + '</dd></div>' : '') +
           (has(bf.period) ? '<div><dt>제작 기간</dt><dd class="bcard__period">' + esc(bf.period).replace(/\n/g, '<br>') + '</dd></div>' : '') +
           (hasList(bf.roles) ? '<div><ul class="bcard__roles">' + bf.roles.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul></div>' : '') +
-          '</dl></div>';
+          '</dl>' + (has(it.loopVideo) ? '<span class="bcard__gauge" aria-hidden="true"><i></i></span>' : '') + '</div>';
       }
       if (i === 0 && bf) {
         media = '<div class="bcard__media bcard__media--brief" style="--bimg:url(' + esc(it.thumb) + ')">' + media +
@@ -3312,7 +3312,16 @@ var CONTENT = {
     var v = document.querySelector('#route-about .bcard__loop'); if (!v || v._armed) return;
     v._armed = true;
     var m = v.parentNode;
+    var g = m.querySelector('.bcard__gauge > i');
+    (function tick() {   /* 게이지: 영상 진행 → 썸네일 남은 시간 */
+      if (g) {
+        var f = m.classList.contains('is-thumb') ? (performance.now() - (m._tt || 0)) / BENTO_THUMB_MS : (v.duration ? v.currentTime / v.duration : 0);
+        g.style.transform = 'scaleX(' + Math.min(1, Math.max(0, f)) + ')';
+      }
+      requestAnimationFrame(tick);
+    })();
     v.addEventListener('ended', function () {
+      m._tt = performance.now();
       m.classList.add('is-thumb');
       clearTimeout(v._t);
       v._t = setTimeout(function () { m.classList.remove('is-thumb'); v.currentTime = 0; var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }, BENTO_THUMB_MS);
