@@ -516,6 +516,16 @@ transform:scale(1.2);}
 .bcard--sm .bcard__kind{margin-bottom:0;flex:0 0 auto;}
 .bcard--sm .bcard__t{font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .bcard--sm .bcard__d{display:none;}
+/* 대표 2: 썸네일(영상)을 오른쪽으로 줄이고 왼쪽에 흰 그라데이션 + 팀·역할·제작 기간 */
+.bcard__media--b2{position:relative;background:#f3e4c4 var(--bimg) left center / cover no-repeat;}
+.bcard__media--b2 > .bcard__thumb{position:absolute;top:0;bottom:0;right:0;left:auto;width:66%;height:100%;max-width:none;object-fit:cover;}
+.bcard__yt{position:absolute;top:0;bottom:0;right:0;left:34%;overflow:hidden;container-type:size;pointer-events:none;}
+.bcard__yt iframe{position:absolute;left:50%;top:50%;width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw);transform:translate(-50%,-50%);border:0;}
+.bcard__brief--b2{width:52%;padding:var(--s16) var(--s20);gap:6px;background:linear-gradient(90deg,rgba(255,255,255,.96) 0,rgba(255,255,255,.92) 62%,rgba(255,255,255,0) 100%);}
+.bcard__brief--b2 dd.bcard__team{font-size:19px;}
+.bcard__brief--b2 dt{font-size:12px;} .bcard__brief--b2 .bcard__role dt{font-size:13px;} .bcard__brief--b2 .bcard__role dd{font-size:14px;}
+.bcard__brief--b2 dd.bcard__period{font-size:13px;}
+@media (max-width:899px){ .bcard__brief--b2{display:none;} .bcard__media--b2 > .bcard__thumb{width:100%;} .bcard__yt{left:0;} }
 
 /* 경험 섹션 (상세 하단) — 자기소개서와 같은 리듬 */
 .exp{margin-top:var(--s48);}
@@ -1330,7 +1340,7 @@ var CONTENT = {
     desc: '',
     /* q = '큰 제목|[태그] 부제' / a = 본문 (**굵게=보라**, __밑줄=연주황__, 빈 줄=문단, --- = 짧은 주황 구분선) / label = 오른쪽 목차 */
     items: [
-      { label: '성장과정', q: '‘기획자’라는 단어도 몰랐던 때부터|[성장과정]',
+      { label: '성장과정', q: '‘기획자’라는 단어도 몰랐던 때부터|[성장과정][직무 지원 동기]',
         a: '**‘게임이 어떻게 일이 되니? 차라리 미술을 해.’** 진학 과정에서 실제로 들은 말입니다.\n당시 게임 산업에 대해 알려진 정보가 적었고, 게임에 대한 시선은 너그럽지 않았기에\n어른들의 시선에 __게임 업계로 가는 길은 투명 다리__와 마찬가지였습니다.\n\n주변 사람들이 툭툭 내뱉는 비관적 미래는 어린 제가 감당하기엔 절망적이었고,\n타협안으로 내밀어진 것은 디자인과의 취업 전망이 좋다는 감언이설이었습니다.\n\n아이러니하게도, **디자인과 진학을 노릴 수 있게 해준 미술 실력**은\n__만들고 싶은 게임을 종이 위에 그려서 구현하던 놀이로 만들어진 것__이었습니다.\n\n---\n\n투명 다리를 피한 결과는 불투명한 미래였습니다. 저는 여전히 불안했고, 두려웠습니다.\n\n그럼에도 취업은 해야 하니 디자인 포트폴리오를 만들어봤지만 이내 그만뒀습니다.\n4년간의 디자인 작업물을 정리하고 보니, 대부분의 주제가 게임 관련이었습니다.\n__게임업계에 취업할 수 있을진 알 수 없었지만, **게임 업계에 취업하고 싶다는 것은 확실**__했습니다.\n\n‘누구보다 게임을 사랑하는건 난데, 왜 게임에 대해 알지 못하는 사람들의 말을 듣고 도망쳤을까.’\n이를 깨닫고 나니, 제 삶에서 처음으로 **안전보다 도전을 선택**할 용기가 생겼습니다.\n실패하더라도 자신의 선택으로 실패해야 의미가 있다는 것을 깨달았기 때문입니다.\n\n---\n\n길이 투명하다면 보이는 길을 설계하면 되겠지. 확신이 생길 때까지 공부하면 되겠지.\n그래서, **‘게임 업계에 그래픽 디자이너로 취업해 경험을 쌓고 기획자로 이직’**한다는\n눈에 보이는 긴 다리를 설계하기로 했습니다.\n\n처음부터 다시 공부하기보다, 지금까지 공부한 것들을 뼈대 삼아 취업이라는 나사를 박기 위함이었습니다.\n__**‘게임도 미래가 될 수 있다.’**는 것을 겁 많은 저 자신에게 보여주고 싶었습니다.__\n\n---\n\n게임 그래픽 디자이너로서 3년간의 경험은 __겁 많고 우유부단했던 저 자신을 단단하게 뿌리내리게 해줬습니다.__\n제게 **책임감과 성실함**이 있음을 알게 되었으며, 직무 경험을 통해 **‘할 수 있다’는 확신**을 갖게 되었습니다.\n\n그렇기에 __두렵더라도 도전할 수 있는 사람__이 되었으며,\n**실패하더라도 다음을 위한 발판으로 삼을 수 있는 사람을 목표**로 지금도 계속 성장하고 있습니다.' },
       { label: '경험 및 역량', q: '제목|[경험 및 역량] …', a: '내용수정중…' },
       { label: '성격의 장단점', q: '좌우명 ‘너의 감정을 강요하지 마.’|[성격의 장단점] 하지만 나는 지금 빨간 색을 볼 수 없는 사람에게 빨간 색을 설명해야 한다.', a: '내용 수정중…' },
@@ -1348,7 +1358,7 @@ var CONTENT = {
     main: [
       {  // 대 (bento 왼쪽 큰 카드)
         id: 'moremustmush', title: 'More Must Mush',
-        tagline: '핀볼로 버섯 군락을 부숴 수확하는 반자동 벽돌깨기 · 캐주얼 인크리멘탈',
+        tagline: '핀볼로 버섯 군락을 부숴 수확하는\n반자동 벽돌깨기 · 캐주얼 인크리멘탈',
         kind: 'project', thumb: 'assets/images/projects/mmm-thumb-v2.webp',
         preview: ['assets/images/projects/mmm-play-1.mp4', 'assets/images/projects/mmm-play-2.mp4', 'assets/images/projects/mmm-play-3.mp4'],   /* About 카드: 마우스를 올리거나 20초가 지나면 1→2→3 순서로 슬라이드 재생 (Launch · Upgrade · Combos & Skills) */
         tags: ['캐주얼', '인크리멘탈', '벽돌깨기'],
@@ -1372,16 +1382,17 @@ var CONTENT = {
       },
       {  // 중 (오른쪽 위)
         id: 'highnum', title: 'High Num',
-        tagline: '주사위를 장전하고, 적을 쏴 죽여라. 주사위와 아이템을 사용한 전략 로그라이크',
+        tagline: '주사위를 장전하고, 적을 쏴 죽여라.\n주사위와 아이템을 사용한 전략 로그라이크',
         kind: 'project', thumb: 'assets/images/projects/highnum-thumb.webp',
         tags: ['로그라이트', '덱빌딩', '전략'],
         meta: [
           { label: '팀',     value: '낫휴먼' },
           { label: '역할',   value: 'PD · 컨셉 기획' },
+          { label: '제작 기간', value: '2026.08.18 ~ 2026.08.27' },
           { label: '플랫폼', value: 'PC (itch.io)' },
           { label: '링크',   value: 'https://panasaga.itch.io/highnum' }
         ],
-        brief: { team: '낫휴먼', roleShort: 'PD', role: '컨셉 기획', period: '' },
+        brief: { team: '낫휴먼', roleShort: 'PD', role: '컨셉 기획', period: '2026.08.18 ~ 2026.08.27' },
         embed: 'https://itch.io/embed-upload/19070255?color=f7f5f2',   // itch.io 웹빌드 — 상세에서 바로 실행
         plans: [
           { title: '기획서', pdf: 'assets/docs/highnum/HighNum_기획서.pdf', pages: [{ img: 'assets/docs/highnum/hn-01.webp' }, { img: 'assets/docs/highnum/hn-02.webp' }, { img: 'assets/docs/highnum/hn-03.webp' }, { img: 'assets/docs/highnum/hn-04.webp' }, { img: 'assets/docs/highnum/hn-05.webp' }, { img: 'assets/docs/highnum/hn-06.webp' }, { img: 'assets/docs/highnum/hn-07.webp' }, { img: 'assets/docs/highnum/hn-08.webp' }, { img: 'assets/docs/highnum/hn-09.webp' }, { img: 'assets/docs/highnum/hn-10.webp' }, { img: 'assets/docs/highnum/hn-11.webp' }, { img: 'assets/docs/highnum/hn-12.webp' }, { img: 'assets/docs/highnum/hn-13.webp' }, { img: 'assets/docs/highnum/hn-14.webp' }, { img: 'assets/docs/highnum/hn-15.webp' }, { img: 'assets/docs/highnum/hn-16.webp' }, { img: 'assets/docs/highnum/hn-17.webp' }, { img: 'assets/docs/highnum/hn-18.webp' }, { img: 'assets/docs/highnum/hn-19.webp' }] }
@@ -2225,6 +2236,17 @@ var CONTENT = {
     function bcard(it, i) {
       var kind = has(it.kind) ? (KIND_LABEL[it.kind] || String(it.kind).toUpperCase()) : '';
       var bf = it.brief, media = imgOr(it.thumb, it.title || '', 'bcard__thumb', 'bcard__thumb-ph', '대표 이미지');
+      if (i === 1 && bf) {   /* 대표 2: 왼쪽 그라데이션 정보 + 오른쪽 영상(또는 썸네일) */
+        var yt = has(it.ytPreview)
+          ? '<span class="bcard__yt" aria-hidden="true"><iframe src="https://www.youtube-nocookie.com/embed/' + esc(it.ytPreview) +
+            '?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=' + esc(it.ytPreview) + '&amp;controls=0&amp;playsinline=1&amp;modestbranding=1&amp;rel=0" title="" tabindex="-1" allow="autoplay; encrypted-media" loading="lazy"></iframe></span>' : '';
+        media = '<div class="bcard__media bcard__media--b2" style="--bimg:url(' + esc(it.thumb) + ')">' + media + yt +
+          '<dl class="bcard__brief bcard__brief--b2">' +
+          (has(bf.team) ? '<div><dt>팀</dt><dd class="bcard__team">' + esc(bf.team) + '</dd></div>' : '') +
+          (has(bf.roleShort) ? '<div class="bcard__role"><dt>역할:</dt> <dd>' + esc(bf.roleShort) + '</dd></div>' : '') +
+          (has(bf.period) ? '<div><dt>제작 기간</dt><dd class="bcard__period">' + esc(bf.period) + '</dd></div>' : '') +
+          '</dl></div>';
+      }
       if (i === 0 && bf) {
         media = '<div class="bcard__media bcard__media--brief" style="--bimg:url(' + esc(it.thumb) + ')">' + media +
           (hasList(it.preview) ? '<div class="bcard__play" aria-hidden="true"><div class="bcard__slides" style="--n:' + (it.preview.length + 1) + '">' +
@@ -2243,7 +2265,7 @@ var CONTENT = {
         '<span class="bcard__b">' +
           '<span class="bcard__head">' + (kind ? '<span class="bcard__kind kind--' + esc(it.kind) + '">' + esc(kind) + '</span>' : '') +
             '<span class="bcard__t">' + txt(it.title, '게시물 제목') + '</span></span>' +
-          '<span class="bcard__d">' + txt(it.tagline, '한 줄 설명') + '</span></span>' +
+          '<span class="bcard__d">' + txt(it.tagline, '한 줄 설명').replace(/\n/g, '<br>') + '</span></span>' +
         '</a>';
     }
     var head = list.slice(0, 4).map(bcard).join('');
@@ -2351,7 +2373,7 @@ var CONTENT = {
         '</span>' +
         '<span class="pcard__side">' +
           '<span class="pcard__role">' + txt(role, '역할') + '</span>' +
-          '<span class="pcard__d">' + txt(it.tagline, '게임 설명') + '</span>' +
+          '<span class="pcard__d">' + txt(it.tagline, '게임 설명').replace(/\n/g, '<br>') + '</span>' +
         '</span>' +
         '</a>';
     }).join('');
@@ -2448,7 +2470,7 @@ var CONTENT = {
   function qTitle(q) {
     if (!has(q) || String(q).indexOf('|') < 0) return txt(q, '제목');
     var i = String(q).indexOf('|');
-    var b = esc(q.slice(i + 1)).replace(/^\[([^\]]+)\]\s*/, '<span class="qtag">$1</span>');   /* [태그] → 태그 칩 */
+    var b = esc(q.slice(i + 1)).replace(/^((?:\[[^\]]+\]\s*)+)/, function (t) { return t.replace(/\[([^\]]+)\]\s*/g, '<span class="qtag">$1</span>'); });   /* [태그] → 태그 칩 */
     return '<span class="qsec__q-a">' + esc(q.slice(0, i)) + '</span><br>' +
       '<span class="qsec__q-b">' + b + '</span>';
   }
@@ -2560,7 +2582,7 @@ var CONTENT = {
         (kind ? '<span class="post-kind kind--' + esc(p.kind) + '">' + pico(KIND_ICON[p.kind] || 'project') + '<span class="kind__t">' + esc(kind) + '</span></span>' : '') +
         '<span class="post__title">' + txt(p.title, '게시물 제목') + '</span>' +
       '</span>' +
-      '<p class="post__desc">' + txt(p.tagline, '한 줄 설명') + '</p>' +
+      '<p class="post__desc">' + txt(p.tagline, '한 줄 설명').replace(/\n/g, '<br>') + '</p>' +
       (hasList(p.tags) ? '<div style="margin-top:10px">' + chips(p.tags, 'chip--xs') + '</div>' : '') +
       '</a>';
   }
@@ -2713,7 +2735,7 @@ var CONTENT = {
     h.push('<header class="detail__head' + (hasList(m.meta) ? '' : ' detail__head--bare') + '">');
     h.push(imgOr(m.thumb, m.title || '', 'detail__thumb', 'detail__thumb-ph', '대표 이미지'));
     h.push('<div><h1 class="detail__title">' + twoTone(m.title, '게시물 제목') + '</h1>' +
-      '<p class="detail__tagline' + (has(m.detailDesc) ? ' detail__tagline--fit' : '') + '">' + (has(m.detailDesc) ? esc(m.detailDesc).replace(/\n/g, '<br>') : txt(m.tagline, '한 줄 설명')) + '</p>' +
+      '<p class="detail__tagline' + (has(m.detailDesc) ? ' detail__tagline--fit' : '') + '">' + (has(m.detailDesc) ? esc(m.detailDesc).replace(/\n/g, '<br>') : txt(m.tagline, '한 줄 설명').replace(/\n/g, ' ')) + '</p>' +
       (hasList(m.sideThumbs) ? '<div class="detail__side">' + m.sideThumbs.map(function (u) { return '<img src="' + esc(u) + '" alt="" loading="lazy">'; }).join('') + '</div>' : '') +
       (hasList(m.meta)
         ? '<ul class="dmeta">' + m.meta.map(function (f) {
