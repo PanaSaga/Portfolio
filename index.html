@@ -519,13 +519,15 @@ transform:scale(1.2);}
 /* 대표 2: 썸네일(영상)을 오른쪽으로 줄이고 왼쪽에 흰 그라데이션 + 팀·역할·제작 기간 */
 .bcard__media--b2{position:relative;background:#000;}   /* 썸네일 뒷배경 검정 */
 .bcard__media--b2 > .bcard__thumb{position:absolute;top:0;bottom:0;right:0;left:auto;width:66%;height:100%;max-width:none;object-fit:cover;}
+.bcard__loop{position:absolute;top:0;bottom:0;right:0;width:66%;height:100%;object-fit:contain;display:block;}   /* 영상 전체가 보이게, 남는 곳은 검정 */
+.bcard__media--b2:has(.bcard__loop) > .bcard__thumb{visibility:hidden;}
 .bcard__yt{position:absolute;top:0;bottom:0;right:0;left:34%;overflow:hidden;container-type:size;pointer-events:none;}
 .bcard__yt iframe{position:absolute;left:50%;top:50%;width:max(100cqw,177.78cqh);height:max(100cqh,56.25cqw);transform:translate(-50%,-50%);border:0;}
 .bcard__brief--b2{width:52%;padding:var(--s16) var(--s20);gap:6px;background:linear-gradient(90deg,rgba(255,255,255,.96) 0,rgba(255,255,255,.92) 62%,rgba(255,255,255,0) 100%);}
 .bcard__brief--b2 dd.bcard__team{font-size:19px;}
 .bcard__brief--b2 dt{font-size:12px;} .bcard__brief--b2 .bcard__role dt{font-size:13px;} .bcard__brief--b2 .bcard__role dd{font-size:14px;}
 .bcard__brief--b2 dd.bcard__period{font-size:13px;}
-@media (max-width:899px){ .bcard__brief--b2{display:none;} .bcard__media--b2 > .bcard__thumb{width:100%;} .bcard__yt{left:0;} }
+@media (max-width:899px){ .bcard__brief--b2{display:none;} .bcard__media--b2 > .bcard__thumb,.bcard__loop{width:100%;} .bcard__yt{left:0;} }
 
 /* 경험 섹션 (상세 하단) — 자기소개서와 같은 리듬 */
 .exp{margin-top:var(--s48);}
@@ -1393,6 +1395,7 @@ var CONTENT = {
           { label: '링크',   value: 'https://panasaga.itch.io/highnum' }
         ],
         brief: { team: '낫휴먼', roleShort: 'PD', role: '컨셉 기획', period: '2026.08.18 ~ 2026.08.27' },
+        loopVideo: 'assets/images/projects/highnum-play.mp4',   /* About 대표 2 카드 썸네일 자리 반복 영상 */
         embed: 'https://itch.io/embed-upload/19070255?color=f7f5f2',   // itch.io 웹빌드 — 상세에서 바로 실행
         plans: [
           { title: '기획서', pdf: 'assets/docs/highnum/HighNum_기획서.pdf', pages: [{ img: 'assets/docs/highnum/hn-01.webp' }, { img: 'assets/docs/highnum/hn-02.webp' }, { img: 'assets/docs/highnum/hn-03.webp' }, { img: 'assets/docs/highnum/hn-04.webp' }, { img: 'assets/docs/highnum/hn-05.webp' }, { img: 'assets/docs/highnum/hn-06.webp' }, { img: 'assets/docs/highnum/hn-07.webp' }, { img: 'assets/docs/highnum/hn-08.webp' }, { img: 'assets/docs/highnum/hn-09.webp' }, { img: 'assets/docs/highnum/hn-10.webp' }, { img: 'assets/docs/highnum/hn-11.webp' }, { img: 'assets/docs/highnum/hn-12.webp' }, { img: 'assets/docs/highnum/hn-13.webp' }, { img: 'assets/docs/highnum/hn-14.webp' }, { img: 'assets/docs/highnum/hn-15.webp' }, { img: 'assets/docs/highnum/hn-16.webp' }, { img: 'assets/docs/highnum/hn-17.webp' }, { img: 'assets/docs/highnum/hn-18.webp' }, { img: 'assets/docs/highnum/hn-19.webp' }] }
@@ -2237,7 +2240,9 @@ var CONTENT = {
       var kind = has(it.kind) ? (KIND_LABEL[it.kind] || String(it.kind).toUpperCase()) : '';
       var bf = it.brief, media = imgOr(it.thumb, it.title || '', 'bcard__thumb', 'bcard__thumb-ph', '대표 이미지');
       if (i === 1 && bf) {   /* 대표 2: 왼쪽 그라데이션 정보 + 오른쪽 영상(또는 썸네일) */
-        var yt = has(it.ytPreview)
+        var yt = has(it.loopVideo)
+          ? '<video class="bcard__loop" src="' + esc(it.loopVideo) + '" muted autoplay loop playsinline preload="metadata" aria-hidden="true" tabindex="-1"></video>'
+          : has(it.ytPreview)
           ? '<span class="bcard__yt" aria-hidden="true"><iframe src="https://www.youtube-nocookie.com/embed/' + esc(it.ytPreview) +
             '?autoplay=1&amp;mute=1&amp;loop=1&amp;playlist=' + esc(it.ytPreview) + '&amp;controls=0&amp;playsinline=1&amp;modestbranding=1&amp;rel=0" title="" tabindex="-1" allow="autoplay; encrypted-media" loading="lazy"></iframe></span>' : '';
         media = '<div class="bcard__media bcard__media--b2" style="--bimg:url(' + esc(it.thumb) + ')">' + media + yt +
