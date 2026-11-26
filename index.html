@@ -1235,7 +1235,7 @@ var CONTENT = {
 
     /* 대표 프로젝트(벤토 4칸)에 띄울 게시물 id — 메인·기획서·아트 어디서든 고를 수 있음.
        비우면 메인 프로젝트 앞 4개를 그대로 사용 */
-    featured: [ 'moremustmush', 'sample-2', 'sample-3', 'art-chara' ],
+    featured: [ 'moremustmush', 'highnum', 'sample-3', 'art-chara' ],
 
     /* I Walk & My Work style — 2열 × 3행. 앞 3개는 왼쪽, 뒤 3개는 오른쪽 열.
        thumb = 1:1 썸네일(비우면 자리표시) / title = 이름 / sub = 주황 굵은 한 줄
@@ -1370,7 +1370,23 @@ var CONTENT = {
           { title: '프로젝트 히스토리', pdf: 'assets/docs/mmm/MoreMustMush_프로젝트히스토리.pdf?v=4', pages: [{ img: 'assets/docs/mmm/history-01.webp?v=4' }, { img: 'assets/docs/mmm/history-02.webp?v=4' }, { img: 'assets/docs/mmm/history-03.webp?v=4' }, { img: 'assets/docs/mmm/history-04.webp?v=4' }, { img: 'assets/docs/mmm/history-05.webp?v=4' }, { img: 'assets/docs/mmm/history-06.webp?v=4' }, { img: 'assets/docs/mmm/history-07.webp?v=4' }, { img: 'assets/docs/mmm/history-08.webp?v=4' }] }
         ]
       },
-      SAMPLE_POST('sample-2', '샘플 게시물 2', 'project'),        // 중 (오른쪽 위)
+      {  // 중 (오른쪽 위)
+        id: 'highnum', title: 'High Num',
+        tagline: '주사위를 장전하고, 적을 쏴 죽여라. 주사위와 아이템을 사용한 전략 로그라이크',
+        kind: 'project', thumb: 'assets/images/projects/highnum-thumb.webp',
+        tags: ['로그라이트', '덱빌딩', '전략'],
+        meta: [
+          { label: '팀',     value: '낫휴먼' },
+          { label: '역할',   value: 'PD · 컨셉 기획' },
+          { label: '플랫폼', value: 'PC (itch.io)' },
+          { label: '링크',   value: 'https://panasaga.itch.io/highnum' }
+        ],
+        brief: { team: '낫휴먼', roleShort: 'PD', role: '컨셉 기획', period: '' },
+        embed: 'https://itch.io/embed-upload/19070255?color=f7f5f2',   // itch.io 웹빌드 — 상세에서 바로 실행
+        plans: [
+          { title: '기획서', pdf: 'assets/docs/highnum/HighNum_기획서.pdf', pages: [{ img: 'assets/docs/highnum/hn-01.webp' }, { img: 'assets/docs/highnum/hn-02.webp' }, { img: 'assets/docs/highnum/hn-03.webp' }, { img: 'assets/docs/highnum/hn-04.webp' }, { img: 'assets/docs/highnum/hn-05.webp' }, { img: 'assets/docs/highnum/hn-06.webp' }, { img: 'assets/docs/highnum/hn-07.webp' }, { img: 'assets/docs/highnum/hn-08.webp' }, { img: 'assets/docs/highnum/hn-09.webp' }, { img: 'assets/docs/highnum/hn-10.webp' }, { img: 'assets/docs/highnum/hn-11.webp' }, { img: 'assets/docs/highnum/hn-12.webp' }, { img: 'assets/docs/highnum/hn-13.webp' }, { img: 'assets/docs/highnum/hn-14.webp' }, { img: 'assets/docs/highnum/hn-15.webp' }, { img: 'assets/docs/highnum/hn-16.webp' }, { img: 'assets/docs/highnum/hn-17.webp' }, { img: 'assets/docs/highnum/hn-18.webp' }, { img: 'assets/docs/highnum/hn-19.webp' }] }
+        ]
+      },
       SAMPLE_POST('sample-3', '샘플 게시물 3', 'project'),        // 소 (오른쪽 아래 왼)
       SAMPLE_POST('sample-4', '샘플 게시물 4', 'project')         // 소 (오른쪽 아래 오)
       // { id: '', title: '', tagline: '', kind: '', thumb: '', tags: [],
