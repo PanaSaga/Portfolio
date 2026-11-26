@@ -876,6 +876,8 @@ mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;bo
 .webplay__frame{margin-top:var(--s16);border-radius:var(--r-card);overflow:hidden;background:var(--frost);
   aspect-ratio:16/9;width:100%;}
 .webplay__frame iframe{width:100%;height:100%;border:0;display:block;}
+.webplay__frame--fit{position:relative;}
+.webplay__frame--fit iframe{position:absolute;left:0;top:0;transform-origin:0 0;}
 .webplay__ph{width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:10px;color:var(--slate);}
 .webplay__ph .pico{width:44px;height:44px;}
@@ -1402,7 +1404,8 @@ var CONTENT = {
         ],
         brief: { team: '낫휴먼', roleShort: 'PD', role: '컨셉 기획\n전투 시스템 기획\n아이템 기획\n밸런스 기획', roles: ['컨셉 기획', '전투 시스템 기획', '아이템 기획', '밸런스 기획'], period: '2026.08.18\n~ 2026.08.27' },
         loopVideo: 'assets/images/projects/highnum-play.mp4',   /* About 대표 2 카드 썸네일 자리 반복 영상 */
-        embed: 'https://itch.io/embed-upload/19070255?color=f7f5f2',   // itch.io 웹빌드 — 상세에서 바로 실행
+        embed: 'https://itch.io/embed-upload/19070255?color=f7f5f2',
+        embedNative: [960, 675],   /* Unity 화면(960×600)+하단바를 칸 폭에 꽉 차게 확대 */   // itch.io 웹빌드 — 상세에서 바로 실행
         plans: [
           { title: '기획서', pdf: 'assets/docs/highnum/HighNum_기획서.pdf', pages: [{ img: 'assets/docs/highnum/hn-01.webp' }, { img: 'assets/docs/highnum/hn-02.webp' }, { img: 'assets/docs/highnum/hn-03.webp' }, { img: 'assets/docs/highnum/hn-04.webp' }, { img: 'assets/docs/highnum/hn-05.webp' }, { img: 'assets/docs/highnum/hn-06.webp' }, { img: 'assets/docs/highnum/hn-07.webp' }, { img: 'assets/docs/highnum/hn-08.webp' }, { img: 'assets/docs/highnum/hn-09.webp' }, { img: 'assets/docs/highnum/hn-10.webp' }, { img: 'assets/docs/highnum/hn-11.webp' }, { img: 'assets/docs/highnum/hn-12.webp' }, { img: 'assets/docs/highnum/hn-13.webp' }, { img: 'assets/docs/highnum/hn-14.webp' }, { img: 'assets/docs/highnum/hn-15.webp' }, { img: 'assets/docs/highnum/hn-16.webp' }, { img: 'assets/docs/highnum/hn-17.webp' }, { img: 'assets/docs/highnum/hn-18.webp' }, { img: 'assets/docs/highnum/hn-19.webp' }] }
         ]
@@ -2771,7 +2774,8 @@ var CONTENT = {
     if (has(m.embed) || m.kind === 'game' || m.kind === 'site' || m.kind === 'project') {
       h.push('<section class="webplay">');
       h.push('<h2 class="detail-sec__h">' + pico('gamepad') + '웹빌드 재생</h2>');
-      h.push('<div class="webplay__frame">' +
+      var nat = hasList(m.embedNative) ? m.embedNative : null;   /* [폭, 높이] — 고정 크기 웹빌드(Unity 등)를 칸 폭에 맞춰 확대 */
+      h.push('<div class="webplay__frame' + (nat ? ' webplay__frame--fit' : '') + '"' + (nat ? ' data-w="' + nat[0] + '" data-h="' + nat[1] + '" style="aspect-ratio:' + nat[0] + '/' + nat[1] + '"' : '') + '>' +
         (has(m.embed)
           ? '<iframe src="' + esc(m.embed) + '" title="웹빌드" loading="lazy" allowfullscreen allow="autoplay; fullscreen; gamepad"></iframe>'
           : '<div class="webplay__ph">' + pico('gamepad') +
@@ -3238,7 +3242,7 @@ var CONTENT = {
       if (state.route === 'about') { host.innerHTML = renderAbout(); armMosaic(); }
       else if (state.route === 'resume') { host.innerHTML = renderResume(state.param); bindProjectList(); bindIntro(); }
       else if (state.route === 'portfolio') host.innerHTML = withMosaic(renderPortfolio());
-      else if (state.route === 'post') { host.innerHTML = withMosaic(renderPost(state.param)); bindPlanner(); }
+      else if (state.route === 'post') { host.innerHTML = withMosaic(renderPost(state.param)); bindPlanner(); setTimeout(fitWebplay, 0); }
       else if (state.route === 'history') { host.innerHTML = withMosaic(renderHistory()); bindHistory(); }
       rendered[state.route] = key;
     }
@@ -3376,6 +3380,17 @@ var CONTENT = {
   window.addEventListener('resize', queueTabBg);
   window.addEventListener('hashchange', function () { setTimeout(syncTabBg, 60); });
   setTimeout(syncTabBg, 300);
+
+  /* 고정 크기 웹빌드를 칸 폭에 맞춰 확대 */
+  function fitWebplay() {
+    var fs = document.querySelectorAll('.webplay__frame--fit');
+    for (var i = 0; i < fs.length; i++) {
+      var f = fs[i], ifr = f.querySelector('iframe'); if (!ifr) continue;
+      var w = +f.dataset.w, h = +f.dataset.h, k = f.clientWidth / w;
+      ifr.style.width = w + 'px'; ifr.style.height = h + 'px'; ifr.style.transform = 'scale(' + k + ')';
+    }
+  }
+  window.addEventListener('resize', fitWebplay);
 
   function armMosaic() {
     var el = document.querySelector('.mosaic--in');
