@@ -1,187 +1,116 @@
 # Portfolio
 
-게임 기획 포트폴리오 랜딩 페이지. HTML 파일 하나로 동작하며 빌드 과정이 없습니다.
+게임 기획자 박지수의 포트폴리오 사이트입니다. HTML 파일 하나로 동작하며 빌드 과정이 없습니다.
 
-- **파일**: `index.html` 단일 파일 + 해시 라우팅
-  (`#about`, `#resume`, `#resume/intro`, `#portfolio`, `#post/<id>`, `#history`)
-- **폰트**: Pretendard (jsDelivr CDN, 동적 서브셋)
-- **디자인**: 배경1 `#f7f5f2`(카드 · 작은 글씨 면) / 배경2 `#f3f0ec`(기본 톤) /
-  배경3 `#efebe6`(진한 구역) / 배경4 `#e2c2ff`(글씨가 얹히는 보라).
-  제목 `#36394a` 볼드, 부제목·도입 문단 `#4a30dd` 미디엄, 본문 `#444d60`.
-  회색 톤(fog/steel/slate)은 모두 본문색으로 통일했고, 자리표시는 색이 아니라 흐림으로 표시합니다.
-  아이콘·스티커는 `assets/icons`, `assets/stickers` (게임 스티커는 포트폴리오 메인에 장식).
-  About 로그라인과 Resume 인적사항은 같은 높이의 상단 블록이고, 하단 흰색에서
-  위로 아이보리가 올라오는 그라데이션이 깔립니다 (`resume.profile.banner` 로 배너 이미지 지정 가능).
-  모든 페이지 우상단에 픽셀 모자이크가 붙습니다.
-- **아이콘**: `assets/icons/*.png` (보라 + 주황 라인 아이콘 15종).
-  `CONTENT` 에서는 `gamepad` · `poker` · `video` · `domino` · `target` · `project` · `office` ·
-  `resume` · `school` · `chart` · `pdf` · `birth` · `email` · `phone` · `pin` 이름으로 지정합니다.
-- **연출**: About 에 처음 들어갈 때 코너 모자이크가 오른쪽 위 → 왼쪽 아래 순서로 나타납니다.
-  연출은 페이지를 새로 열 때 한 번만 재생되고, 탭을 오가는 것으로는 다시 재생되지 않습니다.
-- **대응**: 모바일 우선 반응형, iOS Safari 대응 (safe-area, `-webkit-` 프리픽스, 터치 스크롤, `aspect-ratio` 폴백)
+- **사이트:** https://panasaga.github.io/Portfolio/
+- **배포 브랜치:** `Portfolio_Ver01` — 푸시하면 GitHub Pages 에 자동 반영됩니다.
+- **작업 인수인계:** 작업 방식 · 배포 절차 · 남은 일은 [`HANDOFF.md`](HANDOFF.md) 를 먼저 읽어 주세요.
 
 ---
 
-## 내용 채우는 법
+## 구조
 
-`index.html` 안 `<script>` 맨 위의 **`CONTENT` 객체 한 곳만** 고치면 됩니다.
+| 경로 | 내용 |
+|---|---|
+| `index.html` | 사이트 전체(약 3,500줄). 화면 · 스타일 · 스크립트와 모든 내용(`CONTENT` 객체)이 들어 있습니다. |
+| `assets/images/` | about · career · activities · projects · games · art 이미지 |
+| `assets/docs/` | 기획서 PDF 와 페이지 이미지(webp, 1600×900) — `mmm/` · `highnum/` · `quest/` · `enchant/` |
+| `assets/icons/` | 섹션 아이콘 15종, 상단 탭 아이콘 `nav-*.png`, 기술 아이콘 `skills/*.svg` |
+| `assets/stickers/` | 장식용 스티커 |
+| `tools/recalc_games.py` | 플레이한 게임을 추가 · 삭제한 뒤 통계(장르 레이더 · 플랫폼 도넛 · 총합)를 다시 계산 |
+| `.claude/skills/add-played-game/` | 플레이한 게임을 규칙대로 추가하는 Claude 스킬 |
+
+- **라우팅(해시):** `#about` · `#resume` · `#resume/intro` · `#portfolio` · `#post/<id>` · `#history`
+- **폰트:** Pretendard Variable (jsDelivr CDN, 동적 서브셋)
+- **색:** 보라 `#f0e2fa` · `#dac2f5` · `#a576ec` · `#4a30dd` · `#241a8f`, 강조 주황 `#f88e20` · 빨강 `#f31d5d`,
+  제목 `#36394a`, 바탕 `#f7f5f2` · `#efebe6`. 모든 페이지 오른쪽 위에 픽셀 모자이크가 붙습니다.
+- **대응:** 모바일 우선 반응형, iOS Safari 대응(safe-area, `-webkit-` 프리픽스, `aspect-ratio` 폴백)
+
+---
+
+## 내용 고치는 법
+
+`index.html` 의 `<script>` 맨 위 **`CONTENT` 객체 한 곳만** 고치면 됩니다.
 
 ```js
 var SHOW_PLACEHOLDER = true;   // false 로 바꾸면 빈 항목이 화면에서 사라집니다
-var CONTENT = { ... };
+var CONTENT = { meta, descs, about, resume, intro, portfolio, history };
 ```
 
-- 값이 비어 있으면(`''`, `[]`) 화면에 점선 안내가 뜹니다. 어디를 채워야 하는지 바로 보입니다.
-- 배열 항목은 주석으로 형태만 적어 두었습니다. 주석을 풀고 복사해서 개수를 늘리면 됩니다.
+- 값이 비어 있으면(`''`, `[]`) 화면에 점선 자리표시가 떠서 채울 곳이 바로 보입니다.
 - 줄바꿈은 `\n`, 문단 나눔은 빈 줄(`\n\n`)입니다.
-
-### 구성
 
 | 영역 | CONTENT 경로 | 비고 |
 |---|---|---|
-| 대단원 설명문 | `descs` | 비워 두면 아무것도 표시하지 않습니다 (채운 것만 제목 아래에 표시) |
-| About · 헤드라인 | `about.logline` / `about.intro` | 도입 문단은 로그라인의 2/3 크기 |
-| About · 상단 배경 | `about.banner` | 제목 ~ I Walk & My Work style 덩어리 전체에 깔리는 배경 이미지 한 장 (비우면 단색) |
-| About · Work style | `about.workStyle` | 3열, 큰 픽토그램 + 제목 / 하단 설명. `icon` 은 게임 아이콘(`gamepad` · `pawn` · `monitor` · `dice` · `trophy` · `heart`) 또는 `blocks` · `target` · `bars` · `bolt` · `flag` · `chat` · `box` |
-| About · 대표 프로젝트 | (자동) | 메인 · 기획서 · 아트 작업물 게시물 카드가 오른쪽 → 왼쪽으로 흐름. 엷은 회색 구역, 좌우 페이드 |
-| 푸터 | `meta.footerName` / `meta.updated` | 오른쪽에 이름과 최종 수정 일자. **파일을 고칠 때마다 `updated` 를 함께 바꿔 주세요** |
-| Resume · 프로필 | `resume.profile` | 증명사진(3:4) · 이름 + `nameEn` · 로그라인 2 · 인적사항 3줄 |
-| 기술 아이콘 | `resume.skills[].icons` | 1:1 이미지 경로 **배열** (여러 개 가능) |
-| Resume · 프로젝트 | `portfolio.main` | **01 · 왼쪽 3/5**, 납작한 카드(이미지 + 제목/설명). 4개까지 보이고 나머지는 '더 보기' 로 펼침 |
-| Resume · 경력 | `resume.career` | **02 · 오른쪽 2/5**, 연도별 묶음 · 세로선을 따라 내려오는 타임라인 |
-| Resume · 대외활동 | `resume.activities` | **03 · 왼쪽 1/3**, 경력과 같은 세로 타임라인 |
-| Resume · 기술 | `resume.skills` | **04 · 오른쪽 2/3**, 탭 하나가 통째로 한 판이고 그 안에서 2열 |
-| 자기소개 (탭) | `intro` | 큰 로그라인 제목 + 설명. 문항마다 `q`(큰 제목·검정) → `sub`(하위 제목·보라) → `a`(내용) 순서이고 가로줄로만 구분. 오른쪽 목차가 스크롤을 따라옵니다 |
-| Portfolio · 메인 | `portfolio.main` | **3열** |
-| Portfolio · 기획서 | `portfolio.docs` | **4열** |
-| Portfolio · 아트 작업물 | `portfolio.ai` | **3열** |
-| History | `history` | 다각형 그래프 · **출시 연식 도넛** · 게임 총 개수 · 플랫폼 선호도 · 게임 목록 |
+| 사이트 공통 | `meta` | 탭 제목(`siteTitle`), 푸터 이름 · 최종 수정일(`updated`) |
+| 섹션 설명문 | `descs` | 채운 것만 섹션 제목 아래에 표시 |
+| 프로필 | `about` | 로그라인 · 소개 · 배너, `workStyleIntro` + `workStyle`(I Walk & My Work style), `featured`(대표 프로젝트 4개 id) |
+| 이력서 | `resume` | `profile`(이름 · 로그라인 · 인적사항), `career`, `skills`(3열 × 2행), `activities` |
+| 자기소개 | `intro` | 문항 `items: [{ label, q, a }]` · 오른쪽 목차(CONTENTS) |
+| 포트폴리오 | `portfolio` | `main`(메인 프로젝트) · `docs`(기획서) · `ai`(아트 작업물) |
+| 히스토리 | `history` | `axes`(장르 레이더) · `platforms`(도넛) · `total` · `counts` · `games`(플레이한 게임) |
 
-### 인적사항
-
-아이콘과 함께 세 줄로 표시됩니다.
+### 자기소개 문항
 
 ```js
-profile: {
-  photo: 'assets/images/id.jpg',   // 증명사진 3:4
-  name: '', nameEn: '', logline2: '',
-  birth: '0000.00.00',             // 🎂  |  🏫
-  education: 'OO대학교 OOO학과 (4년제 졸업)',
-  email: 'jisoo752@naver.com',     // ✉︎  ·  ☎︎
-  phone: '010 6747 6881',
-  address: 'OO도 OO시 ...'          // 📍
-}
+{ label: '비전',                          // 오른쪽 목차에 뜨는 짧은 이름
+  q: '큰 제목|[태그][태그] 부제',           // 큰 제목(빨강) + 키워드 태그(주황)
+  a: '본문…' }
 ```
 
-### 경력 · 대외활동 칸
-
-연도별로 묶고, 한 칸에 1:1 이미지 / 이름 / 기간 / 설명이 들어갑니다.
-
-```js
-career: [
-  { year: '2025', items: [
-      { image: 'assets/images/logo.png', org: '㈜ 액션핏',
-        start: '2023.03.01', end: '2025.04.30',
-        desc: '한 문단 설명',
-        posts: [ 'blocknyang' ]      // 선택 — Portfolio 게시물 id, 칩으로 연결됩니다
-      }
-  ] }
-]
-activities: [ { image: '', title: '', start: '', end: '', desc: '' } ]
-```
-
-Resume 의 프로젝트 칸은 `CONTENT.portfolio.main` 을 그대로 보여줍니다.
-따로 입력할 필요 없이 Portfolio 쪽만 채우면 됩니다.
-
-### 기술
-
-```js
-skills: [ { icons: [ 'assets/images/ps.png', 'assets/images/ai.png' ],
-            name: 'Adobe', level: 5, note: '설명 1~2줄' } ]
-```
+본문 표기: `**굵게(보라)**`, `__형광펜(연보라)__`, 빈 줄 = 문단 구분, `---` 한 줄 = 주황 `*` 구분 기호.
 
 ### 게시물 (메인 · 기획서 · 아트 작업물)
 
-세 목록 모두 형태가 같고, 카드를 누르면 `#post/<id>` 상세 페이지로 들어갑니다.
+카드를 누르면 `#post/<id>` 상세 페이지로 들어갑니다. 쓰는 필드만 채우면 됩니다.
 
 ```js
 {
-  id: 'check-matter',
-  title: '', tagline: '',
-  kind: 'project',      // project | pdf | site | game | image | doc  — 카드 좌상단 라벨/아이콘
-  thumb: 'assets/images/thumb.jpg',
-  tags: ['기획', '시스템'],
-  meta: [                              // 상세 페이지에서 표시되는 항목(팀·역할·기간·플랫폼·링크 등)
-    { label: '기간', value: '' }, { label: '플랫폼', value: '' },
-    { label: '팀',   value: '' }, { label: '역할',   value: '' }
-  ],
-  embed: '',            // 웹빌드/사이트 재생 주소 — 있으면 상세에 재생 플레이어 표시
-  // 기획서 PDF 뷰어 — 아래 둘 중 하나만 채웁니다
-  pages: [ { img: 'assets/docs/p1.png' } ],       // ① 단일 PDF: 페이지 이미지 배열
-  plans: [                                        // ② 여러 PDF: 상단에 기획서 토글 버튼 표시
-    { title: '기획서 1', pages: [ { img: '' } ] },
-    { title: '기획서 2', pages: [ { img: '' } ] }
-  ],
-  experience: {         // 하단 "프로젝트 경험" — 제목 + (부제목·본문) 여러 개
-    title: '',
-    items: [ { sub: '', body: '' }, { sub: '', body: '' }, { sub: '', body: '' } ]
-  }
+  id: 'highnum', title: 'High Num', tagline: '한 줄 설명\n둘째 줄',
+  kind: 'project',            // project | pdf | game | image … — 카드 라벨
+  thumb: 'assets/images/projects/highnum-thumb.webp',
+  tags: ['로그라이트', '덱빌딩'],
+  meta: [ { label: '팀', value: '' }, { label: '역할', value: '' }, { label: '제작 기간', value: '' } ],
+
+  // 웹빌드 플레이 (선택)
+  embed: 'https://…',         // iframe 주소
+  embedNative: [960, 675],    // 고정 크기 빌드(Unity 등)를 칸 폭에 맞춰 확대
+  embedPortrait: true,        // 세로형(모바일) 게임: 가운데 세로 프레임
+  embedDefer: true,           // 무거운 빌드: ▶ 플레이를 눌러야 로드
+  embedPoster: 'assets/…',    // 로드 전 표지
+
+  // 기획서 뷰어 (선택) — 여러 개면 상단 토글로 전환
+  plans: [ { title: '기획서', pdf: 'assets/docs/…/원본.pdf', pages: [ { img: 'assets/docs/…/slide-01.webp' } ] } ]
 }
 ```
 
-- **아트 작업물**(`portfolio.ai`)은 정보 목록(팀·역할 등)과 '프로젝트 경험' 없이
-  **한 줄 설명(`tagline`) + 이미지 여러 장(`images`)** 으로 구성합니다.
-  `images: [ { src: 'assets/images/art/a1.jpg', caption: '' }, 'assets/images/art/a2.jpg' ]`
-  (문자열만 넣어도 되고, `caption` 은 선택). 상세에서 1열로 본문 폭 가득 **16:9(1920×1080) 비율**로 나오고(다른 비율은 가운데 기준으로 잘림), 누르면 새 탭에서 크게 열립니다.
-- **여러 기획서**를 넣으려면 `plans` 배열을 채우세요 — 상세 상단에 `기획서 1 / 기획서 2 …`
-  토글 버튼이 생기고 각 버튼이 해당 PDF 뷰어로 전환됩니다. PDF 가 하나면 `pages` 만 채우면 됩니다.
-- 본문(`experience` 의 `body` 등)에서 **강조할 부분은 `**형광펜**`** 처럼 `**…**` 로 감싸면
-  연보라 형광펜 박스로 표시됩니다. **굵게** 하려면 `__굵게__` 처럼 밑줄 두 개로 감쌉니다.
+- 아트 작업물(`portfolio.ai`)은 `images`(여러 장, `{ row: [...] }` 로 나란히 배치), `sideThumbs`, `detailDesc` 를 씁니다.
+- 대표 프로젝트 카드는 `brief` · `preview`(재생 영상) · `loopVideo` 를 씁니다.
+- 게시물 본문 표기: `**형광펜**`, `__굵게__`
+- 기획서 페이지 이미지는 PDF 를 가로 1600px webp 로 변환해 넣습니다.
 
-상세 페이지는 **제목과 한 줄 설명만 왼쪽 정렬**이고, 그 아래는 전부 중앙 정렬입니다.
-
-- 저장소 안 파일: `assets/docs/…`, `assets/images/…` / 외부는 전체 URL
-- 외부 링크와 PDF 는 새 탭에서 열립니다 (iOS Safari 인라인 PDF 뷰어 이슈 회피)
-- 세 목록에 **상세 페이지 레이아웃 확인용 샘플**이 하나씩 들어 있습니다
-  (`main` → `sample`, `docs` → `sample-doc`, `ai`(아트 작업물) → `sample-art`).
-  실제 게시물을 넣을 때 해당 항목을 지우면 사라집니다.
-
-### History
+### 플레이한 게임
 
 ```js
-freshness: [                                            // 도넛 그래프 (합이 100)
-  { label: '신규 게임', value: 66, note: '2025년 신규 출시 게임 플레이 비율' },
-  { label: '최신 게임', value: 25, note: '1~7년 내 출시작 플레이 비율' },
-  { label: '고전 게임', value: 9,  note: '8년 이상된 출시작 플레이 비율' }
-],
-axes: [ { label: '로그라이트 덱빌딩', value: 5 }, ... ],  // value 0~5, 항목을 늘리면 8각형까지 그대로
-counts: [                                               // 육각형 카드 하단 총 개수(큰 제목 + 작은 설명 + 숫자)
-  { title: '온라인 게임', desc: 'PC · 모바일 · 콘솔 등', value: '' },
-  { title: '오프라인 게임', desc: 'TRPG · 보드 등', value: '' }
-],
-games: [ { title: '', image: 'assets/images/games/g001.jpg',
-           platforms: ['PC'], date: '2026-07', genres: ['로그라이크', '공포'], play: '134시간' } ]
+{"title":"게임명","image":"assets/images/games/<id>.jpg","platforms":["PC"],"date":"2024-05","genres":["RPG"],"play":"120시간","ending":true,"star":true}
 ```
 
-- 왼쪽 카드에 **육각형 + 총 개수**가 한 네모로 묶여 있고, 오른쪽 도넛 카드와 세로 높이가 같습니다.
-- 축 이름은 **다각형 위에만** 표시됩니다 (별도 범례 없음).
-- 게임 커버는 **4:3**, 하단에 **6열**(모바일 2~4열)로 나열됩니다.
-- 카드는 **이름 / 플랫폼 태그 | 출시일 / 장르 태그 / 플레이타임** 순으로 표시됩니다.
-- `platforms` · `genres` 는 **배열**(여러 개 가능)이고 드롭다운 필터에 자동으로 목록이 만들어집니다.
-- `date`(출시일)가 비어 있으면 표시하지 않고, 목록은 **출시일 최신순**으로 정렬됩니다.
-- `play`(플레이타임)는 값이 있을 때만 표시합니다(기록 없음·30시간 미만은 생략).
-- 커버 썸네일은 `assets/images/games/` 에 4:3 로 리사이즈되어 들어갑니다.
+- 한 줄에 게임 하나. 썸네일은 4:3(320×240), 장르는 정규 33종 안에서만 씁니다.
+- `play` · `ending` · `star` 는 있을 때만 넣습니다. 자세한 규칙은 `add-played-game` 스킬 문서에 있습니다.
+- 추가 · 삭제 후에는 `python3 tools/recalc_games.py index.html` 로 통계를 다시 계산합니다.
 
 ---
 
 ## 미리보기
 
 ```bash
-npx http-server . -p 8080
-# 또는
-python3 -m http.server 8080
+python3 -m http.server 8080   # http://localhost:8080/#about
 ```
 
 ## 배포
 
-GitHub Pages: Settings → Pages → Source 를 브랜치 루트로 지정하면 `index.html` 이 그대로 서비스됩니다.
+```bash
+git commit -am "메시지" && git push origin HEAD:Portfolio_Ver01
+```
+
+`Portfolio_Ver01` 브랜치 루트가 GitHub Pages 로 서비스됩니다. 보통 1~2분 안에 https://panasaga.github.io/Portfolio/ 에 반영됩니다.
