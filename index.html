@@ -871,7 +871,7 @@ mark.hl{background:var(--px3);color:inherit;padding:1px 4px;border-radius:3px;bo
 .webplay{margin-top:var(--s40);}
 /* 데스크톱: 웹빌드·기획서는 본문 열(840px)을 넘어 페이지 틀(최대 1200px, 모자이크 끝)까지 넓게 */
 @media (min-width:900px){
-  .detail-col .webplay,.detail-col .planner{width:min(var(--page-max),100vw - 40px);margin-left:calc((100% - min(var(--page-max),100vw - 40px)) / 2);}
+  .detail-col .webplay,.detail-col .planner,.detail-col .splitplay{width:min(var(--page-max),100vw - 40px);margin-left:calc((100% - min(var(--page-max),100vw - 40px)) / 2);}
 }
 .webplay__frame{margin-top:var(--s16);border-radius:var(--r-card);overflow:hidden;background:var(--frost);
   aspect-ratio:16/9;width:100%;}
@@ -921,6 +921,10 @@ img.ppage__img{display:block;}
 .pv-page img{width:100%;height:100%;object-fit:contain;display:block;}
 
 .planner__empty{color:var(--slate);opacity:.72;font-weight:500;text-align:center;line-height:1.7;padding:var(--s24);}
+
+/* 세로형 웹빌드(모바일 게임) — 전체 폭을 쓰지 않고 가운데 세로 프레임으로 크게 */
+.webplay__frame--portrait{width:auto;aspect-ratio:1024/1536;height:min(74vh,720px);max-width:94vw;
+  margin-left:auto;margin-right:auto;background:#cfe9d8;}
 
 /* 상세 */
 .detail-back{display:inline-flex;align-items:center;gap:6px;color:var(--slate);font-size:var(--text-body-sm);font-weight:500;margin-bottom:var(--s20);}
@@ -1422,7 +1426,23 @@ var CONTENT = {
     docs: [
       SAMPLE_POST('sample-doc',   '샘플 기획서 1', 'pdf'),
       SAMPLE_POST('sample-doc-2', '샘플 기획서 2', 'pdf'),
-      SAMPLE_POST('sample-doc-3', '샘플 기획서 3', 'pdf')
+      {
+        id: 'sample-doc-3', title: '인챈트 인 차트',
+        tagline: '테라리움의 신이 되어버린\n꼬마 마녀 연구생의 관찰일지',
+        kind: 'game', thumb: 'assets/docs/enchant/slide-01.webp',
+        tags: ['퍼즐', '캐주얼', '모바일'],
+        meta: [
+          { label: '장르',   value: '캐주얼 · 워드 퍼즐' },
+          { label: '플랫폼', value: 'itch.io · 모바일' },
+          { label: '역할',   value: '기획 · 프로토타입 · 개선안' },
+          { label: '제작',   value: '2026.11 · Ver.02' }
+        ],
+        embed: 'assets/webplay/enchant/index.html?v=1',   // 로컬 웹빌드 — 상세에서 바로 플레이
+        embedPortrait: true,   // 세로형(모바일) 게임: 가운데 세로 프레임으로 표시
+        plans: [
+          { title: '기획서', pdf: 'assets/docs/enchant/인챈트인차트_기획서.pdf', pages: [{ img: 'assets/docs/enchant/slide-01.webp' }, { img: 'assets/docs/enchant/slide-02.webp' }, { img: 'assets/docs/enchant/slide-03.webp' }, { img: 'assets/docs/enchant/slide-04.webp' }, { img: 'assets/docs/enchant/slide-05.webp' }, { img: 'assets/docs/enchant/slide-06.webp' }, { img: 'assets/docs/enchant/slide-07.webp' }, { img: 'assets/docs/enchant/slide-08.webp' }, { img: 'assets/docs/enchant/slide-09.webp' }, { img: 'assets/docs/enchant/slide-10.webp' }, { img: 'assets/docs/enchant/slide-11.webp' }, { img: 'assets/docs/enchant/slide-12.webp' }] }
+        ]
+      }
       // { id: '', title: '', tagline: '', kind: 'pdf', thumb: '', tags: [],
       //   meta: [], links: [ { label: 'PDF 열기', href: 'assets/docs/파일.pdf' } ], sections: [] }
     ],
@@ -2773,9 +2793,10 @@ var CONTENT = {
     /* 웹빌드 · 사이트 재생 — 게임/사이트/프로젝트 게시물에 표시 */
     if (has(m.embed) || m.kind === 'game' || m.kind === 'site' || m.kind === 'project') {
       h.push('<section class="webplay">');
-      h.push('<h2 class="detail-sec__h">' + pico('gamepad') + '웹빌드 재생</h2>');
+      h.push('<h2 class="detail-sec__h">' + pico('gamepad') + '웹빌드 플레이</h2>');
       var nat = hasList(m.embedNative) ? m.embedNative : null;   /* [폭, 높이] — 고정 크기 웹빌드(Unity 등)를 칸 폭에 맞춰 확대 */
-      h.push('<div class="webplay__frame' + (nat ? ' webplay__frame--fit' : '') + '"' + (nat ? ' data-w="' + nat[0] + '" data-h="' + nat[1] + '" style="aspect-ratio:' + nat[0] + '/' + nat[1] + '"' : '') + '>' +
+      var portrait = !!m.embedPortrait;   /* 세로형 웹빌드(모바일)는 가운데 세로 프레임으로 */
+      h.push('<div class="webplay__frame' + (nat ? ' webplay__frame--fit' : '') + (portrait ? ' webplay__frame--portrait' : '') + '"' + (nat ? ' data-w="' + nat[0] + '" data-h="' + nat[1] + '" style="aspect-ratio:' + nat[0] + '/' + nat[1] + '"' : '') + '>' +
         (has(m.embed)
           ? '<iframe src="' + esc(m.embed) + '" title="웹빌드" loading="lazy" allowfullscreen allow="autoplay; fullscreen; gamepad"></iframe>'
           : '<div class="webplay__ph">' + pico('gamepad') +
