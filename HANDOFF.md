@@ -80,7 +80,9 @@
 ## 5. 남은 일 / 미완성
 - **자기소개:** '경험 및 역량'은 '…그러나'까지만 쓰여 있습니다. '성격의 장단점'은 '내용 수정중…' 상태입니다.
 - **포트폴리오 샘플:** sample-3, sample-4(메인 프로젝트), 기획서 샘플 2개(sample-doc·sample-doc-2), sample-art-2가 아직 비어 있습니다.
-  - `sample-doc-3`은 **인챈트 인 차트**로 채웠습니다: 세로형 로컬 웹빌드(`assets/webplay/enchant/`, 자체 스케일 1024×1536) + 기획서(`assets/docs/enchant/`). 상세는 **위=웹빌드 플레이(세로 프레임 `embedPortrait`), 아래=기획서 뷰어** 입니다.
+  - `sample-doc-3`은 **인챈트 인 차트**로 채웠습니다. 상세는 **위=웹빌드 플레이, 아래=기획서 뷰어(`assets/docs/enchant/`)** 입니다.
+    - 웹빌드는 외부 전용 리포(https://panasaga.github.io/Enchant_In_Chart/)를 iframe으로 임베드합니다. 용량이 커서 포트폴리오 리포에는 호스팅하지 않습니다(이전 로컬 `assets/webplay/enchant/` 23MB는 제거).
+    - `embedPortrait`(세로 프레임) + `embedDefer`(클릭 시 로드, 페이지는 즉시 표시) + `embedPoster`(로드 전 세로 타이틀 표지 `assets/docs/enchant/game-cover.webp`). 관련 로직은 `bindWebplay()`.
 - **I Walk & My Work style:** Check Matter 썸네일이 비어 있습니다.
 - **자기소개 로그라인:** 로그라인 제목과 하단 설명이 비어 있어서 화면에 표시하지 않고 있습니다.
 
