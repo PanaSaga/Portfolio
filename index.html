@@ -925,6 +925,14 @@ img.ppage__img{display:block;}
 /* 세로형 웹빌드(모바일 게임) — 전체 폭을 쓰지 않고 가운데 세로 프레임으로 크게 */
 .webplay__frame--portrait{width:auto;aspect-ratio:1024/1536;height:min(74vh,720px);max-width:94vw;
   margin-left:auto;margin-right:auto;background:#cfe9d8;}
+/* 지연 로드 웹빌드 — 표지 + 플레이 버튼(누를 때 로드) */
+.webplay__play{position:relative;display:block;width:100%;height:100%;padding:0;border:0;background:#cfe9d8;cursor:pointer;overflow:hidden;}
+.webplay__poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+.webplay__cue{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  display:inline-flex;align-items:center;gap:7px;padding:13px 26px;border-radius:var(--r-pill);
+  background:rgba(36,26,143,.86);color:#fff;font-weight:700;font-size:15px;letter-spacing:.01em;
+  box-shadow:0 8px 22px rgba(36,26,143,.32);transition:transform .14s ease,background .14s ease;}
+.webplay__play:hover .webplay__cue{transform:translate(-50%,-50%) scale(1.06);background:var(--violet-deep);}
 
 /* 상세 */
 .detail-back{display:inline-flex;align-items:center;gap:6px;color:var(--slate);font-size:var(--text-body-sm);font-weight:500;margin-bottom:var(--s20);}
@@ -1355,7 +1363,7 @@ var CONTENT = {
     /* q = '큰 제목|[태그] 부제' / a = 본문 (**굵게=보라**, __밑줄=연주황__, 빈 줄=문단, --- = 짧은 주황 구분선) / label = 오른쪽 목차 */
     items: [
       { label: '성장과정 · 직무 지원 동기', q: '‘기획자’라는 단어도 몰랐던 때부터|[성장과정][직무 지원 동기]',
-        a: '**‘게임이 어떻게 일이 되니? 차라리 미술을 해.’** 진학 과정에서 실제로 들은 말입니다. 당시 게임 산업에 대해\n알려진 정보가 적었고, 게임에 대한 시선은 너그럽지 않았기에 어른들의 시선에 게임 업계로 가는 길은\n투명 다리와 마찬가지였습니다. 타협안으로 내밀어진 것은 디자인과의 취업 전망이 좋다는 감언이설이었습니다.\n\n아이러니하게도, **디자인과 진학을 노릴 수 있게 해준 미술 실력**은\n__만들고 싶은 게임을 종이 위에 그려서 구현하던 놀이로 만들어진 것__이었습니다.\n\n---\n\n대학을 졸업 직후 저는 디자이너 취업을 그만뒀습니다. 4년간의 과제물을 정리하고 나니, 과제물 전체를 관통하는 주제가 ‘게임’이었기 때문입니다. __게임 업계에 취업할 수 있을진 알 수 없었지만, **저 자신은 게임 업계에 취업하고 싶다는 꿈을 놓지 못했다는 것만은 확실**__했습니다.\n\n누구보다 게임을 사랑하는건 난데, 왜 게임에 대해 알지 못하는 사람들의 말을 듣고 도망쳤을까.\n이를 깨닫고 나니, 제 삶에서 처음으로 **안전보다 도전을 선택**할 용기가 생겼습니다. 실패하더라도 자신의 선택으로 실패해야 의미가 있다는 것을 깨달았기 때문입니다.\n\n---\n\n길이 투명하다면 보이는 길을 설계하고, 자신이 없다면 확신이 생길 때까지 공부해서\n**‘게임 업계에 그래픽 디자이너로 취업해 경험을 쌓고 기획자로 이직’**한다는 다리를 설계하기로 했습니다.\n처음부터 다시 공부하기보다, 지금까지 공부한 것들을 뼈대 삼아 취업이라는 나사를 박기 위함이었습니다.\n__**‘게임도 미래가 될 수 있다.’**는 것을 겁 많은 저 자신에게 보여주고 싶었습니다.__\n\n---\n\n긴 준비 기간동안, 나는 어떤 기획자가 되고 싶은가에 대해 많이 고민 했습니다.\n공부할 것이 많은데 문제에 대한 정답은 없다고 느껴, 기획자가 된 뒤에도 잘 해낼 수 있을지 걱정되었습니다.\n그렇기에 **실패하더라도 다음을 위한 발판으로 삼을 수 있는 기획자**가 되고자 합니다.' },
+        a: '**‘게임이 어떻게 일이 되니? 차라리 미술을 해.’** 진학 과정에서 실제로 들은 말입니다. 당시 게임 산업에 대해\n알려진 정보가 적었고, 게임에 대한 시선은 너그럽지 않았기에 어른들의 시선에 게임 업계로 가는 길은\n투명 다리와 마찬가지였습니다. 타협안으로 내밀어진 것은 디자인과의 취업 전망이 좋다는 감언이설이었습니다.\n\n아이러니하게도, **디자인과 진학을 노릴 수 있게 해준 미술 실력**은\n__만들고 싶은 게임을 종이 위에 그려서 구현하던 놀이로 만들어진 것__이었습니다.\n\n---\n\n대학을 졸업 직후 저는 디자이너 취업을 그만뒀습니다. 4년간의 과제물을 정리하고 나니, 과제물 전체를 관통하는 주제가 ‘게임’이었기 때문입니다. __게임 업계에 취업할 수 있을진 알 수 없었지만, **저 자신은 게임 업계에 취업하고 싶다는 꿈을 놓지 못했다는 것만은 확실**__했습니다.\n\n이를 깨닫고 나니, 제 삶에서 처음으로 **안전보다 도전을 선택**할 용기가 생겼습니다. 실패하더라도 자신의 선택으로 실패해야 의미가 있다는 것을 깨달았기 때문입니다.\n\n---\n\n길이 투명하다면 보이는 길을 설계하고, 자신이 없다면 확신이 생길 때까지 공부해서\n**‘게임 업계에 그래픽 디자이너로 취업해 경험을 쌓고 기획자로 이직’**한다는 다리를 설계하기로 했습니다.\n처음부터 다시 공부하기보다, 지금까지 공부한 것들을 뼈대 삼아 취업이라는 나사를 박기 위함이었습니다.\n__**‘게임도 미래가 될 수 있다.’**는 것을 겁 많은 저 자신에게 보여주고 싶었습니다.__\n\n---\n\n긴 준비 기간동안, 저 자신이 어떤 기획자가 되고 싶은지, 나는 어떤 미래를 만들 수 있을까 고민 했습니다.\n기획자의 뜻을 모른 채 막연히 되고 싶다고 생각했고, 그러한 두루뭉술한 마음가짐 탓에\n앞을 보지 못했고, 그 때문에 두렵고 우유부단 했다고 생각합니다.\n\n그렇기에 앞으로는 **실패하더라도 다음을 위한 발판으로 삼을 수 있는 기획자**를 목표로,\n의도를 디자인하고, 결과를 시각화하여 비전을 제시할 수 있는 사람이 되도록 정진하고자 합니다.' },
       { label: '경험 및 역량', q: '실패 중, 다시 도전 중.|[경험 및 역량]', a: '게임 그래픽 디자이너로서 3년간의 경험은 __겁 많고 우유부단했던 저 자신을 단단하게 뿌리내리게 해줬습니다.__\n제게 **책임감과 성실함**이 있음을 알게 되었으며, 직무 경험을 통해 **‘할 수 있다’는 확신**을 갖게 되었습니다.\n그러나' },
       { label: '성격의 장단점', q: '좌우명 ‘너의 감정을 강요하지 마.’|[성격의 장단점]', a: '**하지만 나는 지금 빨간 색을 볼 수 없는 사람에게 빨간 색을 설명해야 한다.**\n\n내용 수정중…' },
       { label: '비전', q: '돌고 돌아 더 단단히 자리 잡는 나사못처럼.|[비전]',
@@ -1437,8 +1445,10 @@ var CONTENT = {
           { label: '역할',   value: '기획 · 프로토타입 · 개선안' },
           { label: '제작',   value: '2026.11 · Ver.02' }
         ],
-        embed: 'assets/webplay/enchant/index.html?v=1',   // 로컬 웹빌드 — 상세에서 바로 플레이
+        embed: 'https://panasaga.github.io/Enchant_In_Chart/',   // 외부 전용 리포 웹빌드(용량 커서 포트폴리오엔 미호스팅)
         embedPortrait: true,   // 세로형(모바일) 게임: 가운데 세로 프레임으로 표시
+        embedDefer: true,      // 무거운 빌드: 클릭할 때 로드(페이지는 즉시 뜨고 게임은 눌러야 다운로드)
+        embedPoster: 'assets/docs/enchant/game-cover.webp',   // 로드 전 표지(세로 타이틀 화면)
         plans: [
           { title: '기획서', pdf: 'assets/docs/enchant/인챈트인차트_기획서.pdf', pages: [{ img: 'assets/docs/enchant/slide-01.webp' }, { img: 'assets/docs/enchant/slide-02.webp' }, { img: 'assets/docs/enchant/slide-03.webp' }, { img: 'assets/docs/enchant/slide-04.webp' }, { img: 'assets/docs/enchant/slide-05.webp' }, { img: 'assets/docs/enchant/slide-06.webp' }, { img: 'assets/docs/enchant/slide-07.webp' }, { img: 'assets/docs/enchant/slide-08.webp' }, { img: 'assets/docs/enchant/slide-09.webp' }, { img: 'assets/docs/enchant/slide-10.webp' }, { img: 'assets/docs/enchant/slide-11.webp' }, { img: 'assets/docs/enchant/slide-12.webp' }] }
         ]
@@ -2796,13 +2806,20 @@ var CONTENT = {
       h.push('<h2 class="detail-sec__h">' + pico('gamepad') + '웹빌드 플레이</h2>');
       var nat = hasList(m.embedNative) ? m.embedNative : null;   /* [폭, 높이] — 고정 크기 웹빌드(Unity 등)를 칸 폭에 맞춰 확대 */
       var portrait = !!m.embedPortrait;   /* 세로형 웹빌드(모바일)는 가운데 세로 프레임으로 */
-      h.push('<div class="webplay__frame' + (nat ? ' webplay__frame--fit' : '') + (portrait ? ' webplay__frame--portrait' : '') + '"' + (nat ? ' data-w="' + nat[0] + '" data-h="' + nat[1] + '" style="aspect-ratio:' + nat[0] + '/' + nat[1] + '"' : '') + '>' +
-        (has(m.embed)
+      var defer = m.embedDefer && has(m.embed);   /* 무거운 웹빌드는 클릭할 때 로드 */
+      var inner = defer
+        ? '<button type="button" class="webplay__play" aria-label="웹빌드 실행">' +
+            (has(m.embedPoster) ? '<img class="webplay__poster" src="' + esc(m.embedPoster) + '" alt="" loading="lazy">' : '') +
+            '<span class="webplay__cue">▶ 플레이</span></button>'
+        : (has(m.embed)
           ? '<iframe src="' + esc(m.embed) + '" title="웹빌드" loading="lazy" allowfullscreen allow="autoplay; fullscreen; gamepad"></iframe>'
           : '<div class="webplay__ph">' + pico('gamepad') +
             '<b>웹빌드 · 사이트 재생 영역</b>' +
-            '<span>CONTENT 의 embed 에 주소를 넣으면 여기서 바로 실행됩니다.</span></div>') +
-        '</div>');
+            '<span>CONTENT 의 embed 에 주소를 넣으면 여기서 바로 실행됩니다.</span></div>');
+      h.push('<div class="webplay__frame' + (nat ? ' webplay__frame--fit' : '') + (portrait ? ' webplay__frame--portrait' : '') + (defer ? ' webplay__frame--defer' : '') + '"' +
+        (defer ? ' data-embed="' + esc(m.embed) + '"' : '') +
+        (nat ? ' data-w="' + nat[0] + '" data-h="' + nat[1] + '" style="aspect-ratio:' + nat[0] + '/' + nat[1] + '"' : '') + '>' +
+        inner + '</div>');
       h.push('</section>');
     }
 
@@ -3263,7 +3280,7 @@ var CONTENT = {
       if (state.route === 'about') { host.innerHTML = renderAbout(); armMosaic(); }
       else if (state.route === 'resume') { host.innerHTML = renderResume(state.param); bindProjectList(); bindIntro(); }
       else if (state.route === 'portfolio') host.innerHTML = withMosaic(renderPortfolio());
-      else if (state.route === 'post') { host.innerHTML = withMosaic(renderPost(state.param)); bindPlanner(); setTimeout(fitWebplay, 0); }
+      else if (state.route === 'post') { host.innerHTML = withMosaic(renderPost(state.param)); bindPlanner(); bindWebplay(); setTimeout(fitWebplay, 0); }
       else if (state.route === 'history') { host.innerHTML = withMosaic(renderHistory()); bindHistory(); }
       rendered[state.route] = key;
     }
@@ -3403,6 +3420,28 @@ var CONTENT = {
   setTimeout(syncTabBg, 300);
 
   /* 고정 크기 웹빌드를 칸 폭에 맞춰 확대 */
+  /* 지연 로드 웹빌드: 표지를 누르면 그때 iframe 을 삽입 */
+  function bindWebplay() {
+    var btns = document.querySelectorAll('.webplay__play');
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].addEventListener('click', function () {
+        var frame = this.closest('.webplay__frame');
+        if (!frame) return;
+        var url = frame.getAttribute('data-embed');
+        if (!url) return;
+        var ifr = document.createElement('iframe');
+        ifr.title = '웹빌드';
+        ifr.allowFullscreen = true;
+        ifr.setAttribute('allow', 'autoplay; fullscreen; gamepad');
+        ifr.src = url;
+        frame.classList.remove('webplay__frame--defer');
+        frame.innerHTML = '';
+        frame.appendChild(ifr);
+        fitWebplay();
+      });
+    }
+  }
+
   function fitWebplay() {
     var fs = document.querySelectorAll('.webplay__frame--fit');
     for (var i = 0; i < fs.length; i++) {
