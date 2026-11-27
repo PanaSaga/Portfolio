@@ -12,6 +12,13 @@
   # 반영 확인: 새로 넣은 고유 문자열이 라이브 페이지에 나타날 때까지 확인
   for i in $(seq 40); do curl -s "https://panasaga.github.io/Portfolio/?$RANDOM" | grep -q "고유문자열" && { echo LIVE; break; }; sleep 15; done
   ```
+- **`main` 반영 (사용자 지정 방식):** 작업은 `Portfolio_Ver01` 에서 하고, **한 단계가 끝나고 라이브에서 문제없음을 확인했을 때만** `main` 에도 반영합니다.
+  - `main` 은 `Portfolio_Ver01` 의 조상이므로 기록을 덮어쓰지 않는 fast-forward 로 올립니다(강제 푸시 금지).
+  ```bash
+  git fetch -q origin main && git merge-base --is-ancestor origin/main HEAD && git push -q origin HEAD:main
+  ```
+  - 미리보기 단계이거나 문제가 남아 있으면 `main` 에는 올리지 않습니다. 반영했으면 보고할 때 함께 알립니다.
+  - `main` 은 리포 첫 화면(README)용이고, 실제 사이트 배포는 계속 `Portfolio_Ver01` 입니다.
 - 커밋 메시지 끝에는 세션이 알려주는 Co-Authored-By / Claude-Session 줄을 붙입니다.
 
 ## 2. 사용자 작업 방식 (중요)
