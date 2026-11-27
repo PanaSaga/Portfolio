@@ -39,9 +39,9 @@
   - `portfolio.main`: 프로젝트 목록
     - moremustmush, highnum, sample-3, sample-4
     - 쓰는 필드: brief, meta, embed, embedNative, plans(기획서 페이지 이미지), preview, loopVideo 등
-  - `portfolio.docs`: 기획서 샘플 3개
+  - `portfolio.docs`: 기획서 3칸 — sample-doc(샘플 기획서 1, 비어 있음) · sample-doc-2(가상의 게임 서브퀘스트 기획, `assets/docs/quest/`) · sample-doc-3(인챈트 인 차트)
   - `portfolio.ai`: 아트 작업물
-    - art-work(회사 작업물), art-chara(캐릭터 원화), art-illust(일러스트), sample-art-2
+    - art-work(회사 작업물), art-chara(캐릭터 원화), art-illust(일러스트)
     - 쓰는 필드: images, `{row:[...]}`(나란히 배치), sideThumbs, detailDesc
   - `history.games`: 플레이한 게임. 한 줄에 JSON 하나이고, 현재 501개(★80)입니다.
 - 라우팅은 해시 방식입니다: `#about` `#resume` `#resume/intro` `#portfolio` `#post/<id>` `#history`
@@ -79,7 +79,8 @@
 
 ## 5. 남은 일 / 미완성
 - **자기소개:** '경험 및 역량'은 '…그러나'까지만 쓰여 있습니다. '성격의 장단점'은 '내용 수정중…' 상태입니다.
-- **포트폴리오 샘플:** sample-3, sample-4(메인 프로젝트), 기획서 샘플 2개(sample-doc·sample-doc-2), sample-art-2가 아직 비어 있습니다.
+- **포트폴리오 샘플:** sample-3, sample-4(메인 프로젝트), sample-doc(샘플 기획서 1)이 아직 비어 있습니다.
+  - 샘플 기획서 1 후보: '명조: 신규 캐릭터 동료 이야기 기획'(동료 이야기 퀘스트 기획서 Ver.05, 44쪽). 7·9·23쪽 등에 글이 칸 밖으로 넘치는 문제가 있어 수정본을 받은 뒤 올리기로 함.
   - `sample-doc-3`은 **인챈트 인 차트**로 채웠습니다. 상세는 **위=웹빌드 플레이, 아래=기획서 뷰어(`assets/docs/enchant/`)** 입니다.
     - 웹빌드는 외부 전용 리포(https://panasaga.github.io/Enchant_In_Chart/)를 iframe으로 임베드합니다. 용량이 커서 포트폴리오 리포에는 호스팅하지 않습니다(이전 로컬 `assets/webplay/enchant/` 23MB는 제거).
     - `embedPortrait`(세로 프레임) + `embedDefer`(클릭 시 로드, 페이지는 즉시 표시) + `embedPoster`(로드 전 세로 타이틀 표지 `assets/docs/enchant/game-cover.webp`). 관련 로직은 `bindWebplay()`.

@@ -6,7 +6,7 @@ description: >-
   (e.g. "○○ 게임 플레이한 게임에 추가해줘", "○○ 30시간 했어 추가해"). Uses playtime/ending
   only if the user stated them (never asks), looks up the game's platform·genre·release date,
   downloads and 4:3-crops a thumbnail, appends the entry in the exact project
-  schema in index.html (CONTENT.history.games), then rebuilds and commits.
+  schema in index.html (CONTENT.history.games), then recalculates stats and commits.
 ---
 
 # 플레이한 게임 추가
@@ -68,15 +68,16 @@ FPS·TPS→`슈팅` / 카드게임→`카드` / 라이프시뮬·목장시뮬→
    s=max(tw/w,th/h); nw,nh=int(w*s+.5),int(h*s+.5); im=im.resize((nw,nh),Image.LANCZOS)
    l=(nw-tw)//2; t=(nh-th)//2; im.crop((l,t,l+tw,t+th)).save('assets/images/games/<id>.jpg','JPEG',quality=78,optimize=True)
    ```
+   PIL 이 동작하지 않는 환경이면 ImageMagick 으로 같은 결과를 낸다:
+   `convert /tmp/thumb.src -resize 320x240^ -gravity center -extent 320x240 -quality 78 assets/images/games/<id>.jpg`
 4. **`<id>` 는 기존 파일과 겹치지 않게** 정한다. 예: 영문 슬러그 `add-<slug>.jpg` 또는 사용 중이 아닌 `gNNN`.
    (`ls assets/images/games` 로 중복 확인.)
 5. 저장한 경로를 4단계 항목의 `image` 에 그대로 쓴다.
 
 ## 6. 마무리 (반영)
-1. `python3 tools/build_standalone.py` 로 단일 파일 재생성(선택). 아이콘·게임 썸네일이 data URI 로 인라인된다.
-2. 변경 검증: `node --check` 는 불필요하지만, 최소한 브라우저/스크립트로 게임 수가 +1 됐는지 확인.
-3. `git add -A && git commit && git push` (현재 작업 브랜치로).
-4. 미리보기 아티팩트를 쓰던 세션이라면 같은 URL 로 republish + standalone 파일 전달.
+1. `python3 tools/recalc_games.py index.html` 로 장르 레이더 · 플랫폼 도넛 · 총합 통계를 다시 계산한다.
+2. 변경 검증: 최소한 브라우저/스크립트로 게임 수가 +1 됐는지 확인.
+3. 커밋 후 HANDOFF.md 의 배포 방법대로 작업 브랜치와 `Portfolio_Ver01` 에 함께 푸시하고, 라이브 반영을 확인한다.
 
 ## 참고
 - 좌측 **선호 장르 레이더 / 플랫폼 도넛 / 총합·온라인·오프라인 개수** 는 전체 집계 스냅샷이라
